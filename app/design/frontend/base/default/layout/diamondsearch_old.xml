@@ -1,0 +1,62 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <diamondsearch_index_index>
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+		<reference name="head">
+			<action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+			<action method="setTitle"><title>Diamond Search</title></action>
+		</reference>
+		<!-- reference name="content">
+				<block type="diamondsearch/diamondsearch" name="diamondsearch" template="diamondsearch/diamondsearch-mobile.phtml" />
+		</reference -->
+		<reference name="content">
+				<block type="diamondsearch/diamondsearch" name="diamondsearch"/>
+		</reference>
+    </diamondsearch_index_index>
+    <diamondsearch_index_view>
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+		<reference name="head">
+			<action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+			<action method="addItem"><type>skin_css</type><name>dsearch/css/global-mini.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>dsearch/css/magiczoom.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>dsearch/css/colorbox.css</name><params/></action>
+			<action method="addJs"><script>dsearch/magiczoomplus.js</script></action>
+			<action method="addItem"><type>skin_js</type><name>dsearch/js/jquery.colorbox.js</name><params/></action>
+			<!--action method="addItem"><type>skin_js</type><name>dsearch/js/jquery.fileDownload.js</name><params/></action-->
+			<!--action method="addItem"><type>skin_js</type><name>magiczoom/magiczoom.js</name><params/></action-->
+			<action method="setTitle"><title>Diamond Details</title></action>
+		</reference>
+		<reference name="content">
+				<block type="diamondsearch/diamondsearch" name="diamondsearch"/>
+		</reference>
+	</diamondsearch_index_view>
+	<diamondsearch_details_view>
+		<reference name="root">
+			<action method="setTemplate"><template>page/1column.phtml</template></action>
+		</reference>
+		<reference name="head">
+			<action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/lib/jquery.cycle2.swipe.min.js</name></action>
+			<action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+			<action method="addItem"><type>skin_css</type><name>dsearch/css/global-mini.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>dsearch/css/magiczoom.css</name><params/></action>
+			<action method="addItem"><type>skin_css</type><name>dsearch/css/colorbox.css</name><params/></action>
+			<action method="addJs"><script>dsearch/magiczoomplus.js</script></action>
+			<action method="addItem"><type>skin_js</type><name>dsearch/js/jquery.colorbox.js</name><params/></action>
+			<!--action method="addItem"><type>skin_js</type><name>dsearch/js/jquery.fileDownload.js</name><params/></action-->
+			<!--action method="addItem"><type>skin_js</type><name>magiczoom/magiczoom.js</name><params/></action-->
+			<action method="setTitle"><title>Diamond Details</title></action>
+		</reference>
+		<reference name="content">
+				<block type="diamondsearch/diamondsearch" name="diamondsearch" template="diamondsearch/diamondview.phtml" />
+		</reference>
+	</diamondsearch_details_view>
+</layout> 

@@ -1,0 +1,320 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mage_Uploadtool>
+            <version>0.1.6</version>
+        </Mage_Uploadtool>
+    </modules>
+    <frontend>
+        <routers>
+            <uploadtool>
+                <use>standard</use>
+                <args>
+                    <module>Mage_Uploadtool</module>
+                    <frontName>uploadtool</frontName>
+                </args>
+            </uploadtool>
+        </routers>
+        <layout>
+            <updates>
+                <uploadtool>
+                    <file>uploadtool.xml</file>
+                </uploadtool>
+            </updates>
+        </layout>
+    </frontend>
+    <!--<admin>
+        <routers>
+			<uploadtool>
+				<use>admin</use>
+				<args>
+					<module>Mage_Uploadtool</module>
+					<frontName>uploadtool</frontName>
+				</args>
+			</uploadtool>
+        </routers>
+    </admin>  --> 
+	<admin>
+		<routers>
+			<adminhtml>
+				<args>
+					<modules>
+						<uploadtool after="Mage_Adminhtml">Mage_Uploadtool_Adminhtml</uploadtool>
+					</modules>
+				</args>
+			</adminhtml>
+		</routers>        
+	</admin>
+
+    <adminhtml>
+		<menu>
+			<jewelryshare module="uploadtool">
+        		<children>
+					<uploadtool module="uploadtool">
+						<title>Manage Diamonds</title>
+						<sort_order>3</sort_order>
+						<action>adminhtml/uploadtool/new/</action>
+					</uploadtool>
+					<settings module="jewelryshare">
+						<title>Settings</title>
+						<sort_order>10</sort_order>
+						<action>adminhtml/uploadtool/settings/</action>
+					</settings>
+				</children>
+			</jewelryshare>
+			<message translate="title" module="uploadtool">
+				<title>Messages</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<uploadtoolitems module="uploadtool">
+						<title>Diamond Inquiries</title>
+						<sort_order>101</sort_order>
+						<action>adminhtml/diamondinquiries</action>
+					</uploadtoolitems>
+				</children>
+			</message>
+		</menu>
+		
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <jewelryshare>
+                            <children>
+								<uploadtool>
+										<title>Manage Diamonds</title>
+								</uploadtool>
+								<settings module="jewelryshare">
+									<title>Settings</title>
+									<sort_order>10</sort_order>
+								</settings>
+							</children>
+                        </jewelryshare>
+                        <message translate="title" module="uploadtool">
+							<title>Messages</title>
+							<sort_order>71</sort_order>               
+							<children>
+								<uploadtoolitems module="uploadtool">
+									<title>Diamond Inquiries</title>
+									<sort_order>101</sort_order>									
+								</uploadtoolitems>
+							</children>
+						</message>
+						<system>
+						  <children>
+							<config>
+							  <children>
+								<uploadtool>
+								  <title>Diamond Config</title>
+								</uploadtool>
+							  </children>
+							</config>
+						  </children>
+						</system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+		<layout>
+			<updates>
+				<uploadtool>
+					<file>uploadtool.xml</file>
+				</uploadtool>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <uploadtool>
+                <class>Mage_Uploadtool_Model</class>
+                <resourceModel>uploadtool_mysql4</resourceModel>
+            </uploadtool>
+            <uploadtool_mysql4>
+                <class>Mage_Uploadtool_Model_Mysql4</class>
+                <entities>
+                    <uploadtool>
+                        <table>uploadtool</table>
+                    </uploadtool>
+                    <diamondinquiries>
+                        <table>uploadtool_diamondinquiries</table>
+                    </diamondinquiries>
+                </entities>
+            </uploadtool_mysql4>
+        </models>
+        <resources>
+            <uploadtool_setup>
+                <setup>
+                    <module>Mage_Uploadtool</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </uploadtool_setup>
+            <uploadtool_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </uploadtool_write>
+            <uploadtool_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </uploadtool_read>
+        </resources>
+        <blocks>
+            <uploadtool>
+                <class>Mage_Uploadtool_Block</class>
+            </uploadtool>
+        </blocks>
+        <helpers>
+            <uploadtool>
+                <class>Mage_Uploadtool_Helper</class>
+            </uploadtool>
+        </helpers>
+        
+        <template>
+            <email>
+                <uploadtool_email_email_template translate="label" module="uploadtool">
+                    <label>Diamond Request Form (Admin)</label>
+                    <file>diamond_request_form_admin.html</file>
+                    <type>html</type>
+                </uploadtool_email_email_template>
+                <uploadtool_email_email_template_user translate="label" module="uploadtool">
+                    <label>Diamond Request Form (User)</label>
+                    <file>diamond_request_form_user.html</file>
+                    <type>html</type>
+                </uploadtool_email_email_template_user>
+            </email>
+        </template>
+    </global>
+    
+    <crontab>
+        <jobs>
+            <ideal_diamond_import_cron>
+            	<schedule>
+                    <config_path>cronjobs/uploadtool/cron_expr_import</config_path>
+                </schedule>
+                <run>
+                    <model>uploadtool/observer::diamondsImport</model>
+                </run>
+            </ideal_diamond_import_cron>
+            
+            <ideal_diamond_sendreport_cron>
+            	<schedule>
+                    <config_path>cronjobs/uploadtool/cron_expr_sendreport</config_path>
+                </schedule>
+                <run>
+                    <model>uploadtool/observer::sendReportDiamonds</model>
+                </run>
+            </ideal_diamond_sendreport_cron>
+            
+            <ideal_rapnet_import_cron>
+            	<schedule>
+                    <config_path>cronjobs/uploadtool_rapnet/cron_expr_import</config_path>
+                </schedule>
+                <run>
+                    <model>uploadtool/observer::rapnetImport</model>
+                </run>
+            </ideal_rapnet_import_cron>
+            
+            <ideal_polygon_import_cron>
+            	<schedule>
+                    <config_path>cronjobs/uploadtool_polygon/cron_expr_import</config_path>
+                </schedule>
+                <run>
+                    <model>uploadtool/observer::polygonImport</model>
+                </run>
+            </ideal_polygon_import_cron>
+    	</jobs>
+    </crontab>
+            
+	<default>
+		<uploadtool>
+			<user_detail>
+				<ideal_username>hello@example.com</ideal_username>
+				<ideal_password>12345678</ideal_password>
+			</user_detail>
+			<email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>general</sender_email_identity>
+                <email_template>uploadtool_email_email_template</email_template>
+                <email_template_user>uploadtool_email_email_template_user</email_template_user>
+            </email>
+            
+            <allowtabs>
+            	<enabled_jewelerslink>1</enabled_jewelerslink>
+            	<enabled_rapnet>0</enabled_rapnet>
+            	<enabled_polygon>0</enabled_polygon>
+            	<enabled_google>0</enabled_google>
+            	<enabled_custom>0</enabled_custom>
+            </allowtabs>
+            
+            <csv_title_possibilities>
+            	<lotno>LotID,Stock #,Lot #,Stock No,Lot No,Stock Num,Stock No.,Stock Number,ReferenceNum, ReferenceNumber,Stock,Stock_no,LotIDStr,Vender Stock Number,Vendor Stock Number,Lot ID,StockNum,Parcel,VendorStockNumber,Item #,sku,lot_number</lotno>
+            	<owner>Owner,Seller Name,Seller</owner>
+            	<shape>Shape,Shp,Sh</shape>
+            	<carat>Carat,Weight,Size,Carat Size,Carat Weight,Ct,Ct Size,Ct Weight,Sz,Ct.,Cts,Cts on hand,Stone Weight</carat>
+            	<color>Color,Colr,Colour,Col,Color(SG),Diamond Color From</color>
+            	<clarity>Clarity,Clar,Clearity,Purity,Cla,Quality(SG),Quality,Diamond Clarity From</clarity>
+            	<cut>Cut,Cut Grade,CutGradeID,Diamond Cut</cut>
+            	<culet>Culet,Culet Size,Cul,Culet_size,Culet Grade,Cullet,Cullet Grade,CuletCode,Cult,Diamond Culet</culet>
+            	<crown>Crown,Crown Angel,Crown Percent,Crown %,Crown Height,Crown Pct,Crown Angle,AvgCrownAngle,Crwon Angle,Diamond Crown</crown>
+            	<pavilion>Pavilion,Pavil,Pavilion Percent,Pavilion Depth,Pavilion Pct,Pavil.Angle,Diamond Pavilion</pavilion>
+            	<dimensions>Dimensions,Measurements,Dimension,Measurement,Meas,Diameter</dimensions>
+            	<m1>Measure 1,M1,Meas1,Dimension_1,Meas Length,Measurement Length</m1>
+            	<m2>Measure 2,M2,Meas2,Dimension_2,Meas Width,Measurement Width</m2>
+            	<m3>Measure 3,M3,Meas3,Dimension_3,Meas Depth,Measurement Depth</m3>
+            	<depth>Depth,Depth %,Dept,Depth Percent,Depth Pct,Dpth,Total Depth,DepthPrecent,Depth Percent,Dep.,DepthPct,Diamond Depth</depth>
+            	<tabl>Table,Table %,Tbl,Tabl,Table Percent,Table Pct,Table Percent,Tab.,TablePct,Diamond Table</tabl>
+            	<polish>Polish,Pol,Finish,Pols,Diamond Polish</polish>
+            	<symmetry>Symmetry,Sym,Symetry,Sym-metry,Diamond Symmetry</symmetry>
+            	<fluorescence>Fluorescence,Fluorescence Color,Fl,FlrColor,Fluo Color,Fluor Color,Flr,Fluor.,Fluo(SG),Fluo</fluorescence>
+            	<fluorescence_intensity>Fluorescence Intensity,Flr, FlrIntensity, Fluo Intensity, Fluor, Fluor Intensity, Fluorescence,Fluor Intensity,Fluorescence Color Intensity,Diamond Flourescence</fluorescence_intensity>
+            	<girdle>Girdle,Girdle %,Girdle Percent,Girdle Pct,Girdle Thickness In Pct,GirdleThickness</girdle>
+            	<girdle_thin>Girdle Thin,Girdle Min,GirdleMinCode,FrGrdl,Diamond Girdle From</girdle_thin>
+            	<girdle_thik>Girdle Thick,Girdle Max,GirdleMaxCode,ToGrdl,Diamond Girdle To</girdle_thik>
+            	<fancycolor>Fancy Color,Fancy Color Main Body,FC-Main Body,FC Main Body,Fancy Color Group,Fancy_Color</fancycolor>
+            	<fancy_intensity>Fancy Color Intensity,FC Intensity,FC-Intensity,Fancy_Color_Intensity</fancy_intensity>
+            	<fancy_overtone>Fancy Color Overtone,Fancy Color Overtones,FC Overtone,Fancy_Color_Overtone,Fancy color overtones</fancy_overtone>
+            	<price_per_carat>Price,Price Per Carat,Price / ct,Price / carat,Per Carat,Per Ct,Price Carat,Price Ct,Price Per Ct,PPC,Price P/CT,PricePerCt,$/Ct,Price/Ct,Target Price,F.Rate,P/C,Selling Price/CT</price_per_carat>
+            	<cash_price>Cash Price,Index Price,Index Asking Price,Cash_Price</cash_price>
+            	<rap_price>Seller Price,Owner Price,RapCt,Asking Price,Prc, Px,RapNet Price,rap_price,Rapnet Price (USD),Rap-Price,RAP/ct,RappPrice,List,List Price,Rapaport,RapPrice</rap_price>
+            	<rap_discount>PctRapNetDiscount, Rap netDisc, RapnetDiscount, RapnetDiscountPct, RapnetDiscountPercent, RapnetDiscPct, RapnetDpx, RapnetRapPct, RDisc, RDiscount, RDiscountPct, RDiscountPercent,RDiscPct,RDpx,RRapPct,RapNet Discount Price,RAPPctOff,Rapnet  Discount %,rap_discount,% Below,Rap%,Discount,-%,%,%(-) Target,F.Discount,Bellow,Disc,Disc%,% List,%</rap_discount>
+            	<totalprice>Total Price,RapNet Total Price,Total,Cost,F.Value,Tot $,TOTAL,Total Selling Value</totalprice>
+            	<lab>Lab,Certificate,Cert,Laboratory</lab>
+            	<labratory_comments>Cert comment,Certificate comment,Lab comment,Cert comments,Certificate comments,Lab comments,COMMENTS</labratory_comments>
+            	<number_stones># Stones,No of Stones,Stone,Parcel Stone Count,Parcel Stones,Stone Count,Stones,St,Pc</number_stones>
+            	<cert_number>Certificate #,Cert #,Cert No,Cert Number,Certificate Number,Certificate No,Cert Num,Cert ID,Certificate ID,Certificate Num,Cm Pub,CertificateID,CertificateNum,Certific #,Cert.nb.,cer No.,Cert. Number,Cert. No</cert_number>
+            	<make>Make</make>
+            	<city>City,City Location</city>
+            	<state>State,State Location</state>
+            	<country>Country,Country Location,Lot Country,Loc</country>
+            	<image>Certificate Image, Cert Image,image,Cert File,Cert Filename,Certificate File,Certificate Filename,File,Certificate URL,Cert. Image,Stone Cert URL,CertificateImage</image>
+            	<availability>availability,Status</availability>
+            	<clarity_char>Clarity Characteristics,Characteristics,clarity_char,Clarity Char</clarity_char>
+            	<inscription>Inscription,Laser Inscription,Laser_Inscription,Ins</inscription>
+            	<treatment>Treatment,Enhance, Enhancement,Enhancements,Enhance-ments,Treatments</treatment>
+            	<key_to_symbols>Key To Symbols,KeyToSymbols,Key</key_to_symbols>
+            	<shape_image>Diamond Image,Shape Image</shape_image>
+            	<full_description>full_description,full description,description</full_description>
+            </csv_title_possibilities>
+            
+		</uploadtool>
+		<cronjobs>
+            <uploadtool>
+                <enabled_import>1</enabled_import>
+                <cron_expr_import>20 1 * * *</cron_expr_import>
+                <enabled_sendreport>1</enabled_sendreport>
+                <cron_expr_sendreport>22 1 * * *</cron_expr_sendreport>
+            </uploadtool>
+            <uploadtool_rapnet>
+                <enabled_import>0</enabled_import>
+                <cron_expr_import>25 1 * * *</cron_expr_import>
+            </uploadtool_rapnet>
+            <uploadtool_polygon>
+                <enabled_import>0</enabled_import>
+                <cron_expr_import>30 1 * * *</cron_expr_import>
+            </uploadtool_polygon>
+        </cronjobs>
+	</default>
+</config>

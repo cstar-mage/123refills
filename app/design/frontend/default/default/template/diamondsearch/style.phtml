@@ -1,0 +1,15 @@
+<?php 
+
+$collection  = Mage::getModel('diamondsearch/diamondsearch')->getCollection();
+foreach($collection as $row) {
+
+	$id = $row['diamondsearch_id'];
+}
+$model  = Mage::getModel('diamondsearch/diamondsearch')->load($id);
+
+?>
+<style>
+.noUi-connect {
+	background-color:<?php echo $model['slider_color']." !important"; ?>;
+}
+</style>

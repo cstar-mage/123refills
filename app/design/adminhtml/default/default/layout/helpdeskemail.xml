@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+	    <reference name="head">
+	    <!-- 
+		    <action method="addItem"><type>skin_css</type><name>helpdeskemail/colorbox.css</name><params/></action>
+		    <action method="addItem"><type>skin_css</type><name>helpdeskemail/helpdeskemail.css</name><params/></action>
+  		    <action method="addItem"><type>skin_js</type><name>helpdeskemail/jquery-1.10.2.min.js</name><params/></action>
+  		    <action method="addItem"><type>skin_js</type><name>helpdeskemail/jquery.colorbox.js</name><params/></action>
+  		 -->
+	    </reference>
+        <reference name="content">
+            <block type="core/template" name="helpdeskemail" after="menu" template="helpdeskemail/helpdeskemail.phtml" />
+        </reference>
+       
+    </default>
+    
+</layout>

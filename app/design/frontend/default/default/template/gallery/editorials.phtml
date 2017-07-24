@@ -1,0 +1,38 @@
+<?php
+$parentItem = Mage::getModel('gallery/gallery')->getCollection()->addFieldToFilter('parent_id', 1)->setOrder('listorder', 'ASC')->load();
+?>
+<link rel="stylesheet" href="http://www.bavna.com/skin/frontend/default/magesupport/css/colorbox.css" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jqueryui/1.7.2/jquery-ui.js"></script>
+<script src="http://www.bavna.com/js/jquery.colorbox.js"></script>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery(".group1").colorbox({rel:'group1', transition:"fade", title:""});
+});
+</script> 
+<script type="text/javascript">
+jQuery(document).ready(function(){ 	
+   jQuery("#response").hide();
+	jQuery(function() {
+	jQuery("#list ul").sortable({ opacity: 0.8, cursor: 'move', update: function() {
+				var order = jQuery(this).sortable("serialize") + '&update=update'; 	
+				jQuery.post("http://www.bavna.com/gallery/index/update", order, function(theResponse){					jQuery("#response").html(theResponse);					jQuery("#response").slideDown('slow');					slideout();				}); 															 			}								  		});	
+	});
+});	
+</script>
+  
+  <div class="main_div">
+    	<div class="nav_div" id="vtab">
+          <div id="list">
+		    <div id="response"> </div> 
+			<?php $mainarray = array(); ?>		
+			<?php if(count($parentItem)): ?>			<ul> <?php 
+				foreach($parentItem as $item){ 
+					//$mainarray[] = array('mainimage'=>$item->getImageUrl(),'thumbnail'=>$item->getThumbnail1(),'maindesc'=>$item->getDescription(),'mainlist'=>$item->getListorder(),'mainid'=>$item->getId());
+				?>
+				<li id="thumborder_<?php echo $item->getId(); ?>" class="categories_img" >
+					<a class="group1" href="<?php echo $item->getImageUrl(); ?>" title="<?php echo $item->getTitle(); ?>" >
+						<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."/gallery/".$item->getThumbnail1(); ?>" alt="<?php echo $item->getDescription() ?>" title="<?php echo $item->getTitle() ?>"  />
+					</a>
+				</li>			<?php } ?>			</ul>
+			<?php endif; ?>		</div>	</div></div>

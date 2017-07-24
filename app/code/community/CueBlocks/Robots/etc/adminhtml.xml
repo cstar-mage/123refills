@@ -1,0 +1,60 @@
+<?xml version="1.0"?> 
+<!--
+ * @package     CueBlocks_
+ * @company     CueBlocks - http://www.cueblocks.com/
+ * @author      Francesco Magazzu' <francesco.magazzu at cueblocks.com>
+ -->    
+<adminhtml>
+    <menu>
+        <theme module="robots">
+            <children>
+                <robots module="robots">
+                    <title>Robots</title> 
+                    <sort_order>1000</sort_order> 
+                    <action>adminhtml/robots</action>
+                </robots>
+            </children>
+        </theme>    
+    </menu>
+    <acl>
+        <resources>
+            <all>
+                <title>Allow Everything</title>
+            </all>
+            <admin>
+                <children>
+                    <theme>
+						<children>
+                            <robots>
+                                <title>Robots Txt</title>
+                                <children>
+                                    <itemrobots>
+                                        <title>Robots</title>
+                                    </itemrobots>
+                                </children>
+                            </robots>
+                        </children>
+                    </theme>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <robotstxt translate="title" module="robots">
+                                        <title>Robots.txt</title>
+                                    </robotstxt>
+                                </children>
+                            </config>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>   
+    </acl>
+    <layout>
+        <updates>
+            <robots>
+                <file>robots.xml</file>
+            </robots>
+        </updates>
+    </layout>
+</adminhtml>

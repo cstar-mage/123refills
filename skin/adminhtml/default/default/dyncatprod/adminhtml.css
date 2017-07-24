@@ -1,0 +1,18 @@
+#category_info_tabs_products_content .raw-rule-view {
+    float:right;
+    cursor: pointer;
+}
+
+#category_info_tabs_products_content .raw-rule-fieldset button{
+    float:right;
+}
+
+
+#category_info_tabs_products_content .raw-rule-fieldset legend {
+    visibility: visible;
+    height: inherit;
+    width: inherit;
+    line-height: inherit;
+    overflow: visible;
+
+}

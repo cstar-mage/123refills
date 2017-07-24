@@ -1,0 +1,27 @@
+<?php
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	if($evolvedmethod->getBlockConfig('evolved_form_footerbar')['footer_footerbar_htmlblock'])
+	{
+		$content = $evolvedmethod->getBlockConfig('evolved_form_footerbar')['footer_footerbar_htmlblock'];
+	}
+	else
+	{
+		$theme = Mage::helper('evolved')->getThemeConfig();
+		$content = $theme['footer_footerbar_htmlblock'];
+	}
+}
+else
+{
+	$theme = Mage::helper('evolved')->getThemeConfig();
+	$content = $theme['footer_footerbar_htmlblock'];
+}
+
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<div class="subscribe_only">
+	<div class="left"><?php echo $processor->filter($content); ?></div>
+	<div class="right"><?php echo $this->getLayout()->createBlock('newsletter/subscribe')->setTemplate('page/html/footerbar/subscribe.phtml')->toHtml(); ?></div>
+</div>

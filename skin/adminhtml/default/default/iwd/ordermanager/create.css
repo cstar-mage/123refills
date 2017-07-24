@@ -1,0 +1,11 @@
+.top-actions .top-actions-buttons {float:right;}
+
+#order-user_activities {margin-bottom:15px;}
+#order-user_activities .content .auto-scroll {max-height:11em; height:auto;}
+#currency_switcher {margin-right:50px;}
+#order-giftmessage .giftmessage-order-create.box-left {width:100%;}
+#order-customer-selector .entry-edit-head button {margin: 0 0 0 5px;}
+
+#order-giftmessage .form-list td.value textarea {height: 13em;}
+
+#sales_order_create_search_grid_filter_sku {width:250px !important;}

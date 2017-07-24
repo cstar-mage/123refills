@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <contactform_index_index>
+        <reference name="content">
+            <block type="contactform/contactform" name="contactform" template="contactform/contactform.phtml" />
+        </reference>
+    </contactform_index_index>
+    
+    <contactform_contact_form>
+        <reference name="content">
+            <block type="contactform/form" name="contactform_form" template="contactform/contactform_form.phtml" />
+        </reference>
+    </contactform_contact_form>
+</layout> 

@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_evolved_index>
+        <reference name="content">
+            <block type="evolved/adminhtml_evolved" name="evolved" />
+        </reference>
+    </adminhtml_evolved_index>
+    <adminhtml_evolved_edit>
+    	<reference name="notifications">
+			   <block type="adminhtml/page_head" name="evolved_css" after="header" template="evolved/head.phtml" />
+		</reference>
+    </adminhtml_evolved_edit>
+    <adminhtml_evolved_settings>
+        <update handle="editor_index_index"/>
+        <reference name="head">
+		   <block type="core/text" name="custom_css">
+		      <action method="setText">
+		          <text><![CDATA[
+		             <style  type="text/css">
+		                .my-class  {
+		                    color: red;
+		                }
+		             </style> ]]>
+		        </text>
+		    </action>
+		   </block>
+		</reference>
+
+    </adminhtml_evolved_settings>
+    
+</layout>

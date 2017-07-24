@@ -1,0 +1,37 @@
+<?php
+/* @var $category Gri_CatalogCustom_Model_Category */
+if ($category = Mage::registry('current_category')) {
+    /* @var $categoryHelper Mage_Catalog_Helper_Category */
+    $categoryHelper = Mage::helper('catalog/category');
+    /* @var $dynHelper Ideal_DynCatProd_Helper_Data */
+    $dynHelper = Mage::helper('dyncatprod');
+    $currentPath = $categoryHelper->getCategoryUrlPath($category->getUrlPath());
+    if ($dynamicCategories = $dynHelper->getVertNavRoots()) {
+        $currentPath = explode('/', $currentPath);
+        if (isset($currentPath[0]) && in_array($currentPath[0], $dynamicCategories)) {
+            array_shift($currentPath);
+            if (isset($currentPath[0])) {
+                /* @var $baseCategory Gri_CatalogCustom_Model_Category */
+                $baseCategory = Mage::getModel('catalog/category')->setStoreId($category->getStoreId())->load($category->getIdByUrlPath($currentPath[0]));
+                $category->setBrandCategory($baseCategory->getBrandCategory())->setShopCategory($baseCategory->getShopCategory());
+            }
+        }
+        $currentPath = implode('/', $currentPath);
+?>
+<ul class="dyncat">
+<?php
+        $targets = array();
+        $roots = array();
+        /* @var $target Gri_CatalogCustom_Model_Category */
+        /* @var $root Gri_CatalogCustom_Model_Category */
+        foreach ($dynamicCategories as $urlKey) if ($id = $category->getIdByUrlPath($urlKey . '/' . $currentPath)) {
+            $target = isset($targets[$id]) ? $targets[$id] : Mage::getModel('catalog/category')->setStoreId($category->getStoreId())->load($id);
+            $root = isset($roots[$urlKey]) ? $roots[$urlKey] : Mage::getModel('catalog/category')->setStoreId($category->getStoreId())->load($category->getIdByUrlPath($urlKey));
+?>
+    <li class="<?php echo $root->getUrlKey(); ?> <?php if ($id == $category->getId()) { ?>open<?php } ?>"><a href="<?php echo $target->getUrl(); ?>"><?php echo $root->getName(); ?></a></li>
+<?php } ?>
+</ul>
+<?php
+    }
+}
+?>

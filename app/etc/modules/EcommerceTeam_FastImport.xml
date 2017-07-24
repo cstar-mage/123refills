@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+    	<EcommerceTeam_FastImport>
+            <active>true</active>
+            <codePool>local</codePool>
+        </EcommerceTeam_FastImport>
+	</modules>
+</config>

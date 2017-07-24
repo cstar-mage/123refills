@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <customrequest_index_index>
+        <reference name="content">
+            <block type="customrequest/customrequest" name="customrequest" template="customrequest/customrequest.phtml" />
+        </reference>
+    </customrequest_index_index>
+</layout> 

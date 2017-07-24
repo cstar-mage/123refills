@@ -1,0 +1,59 @@
+<?php 
+		$termscollectionmodel = Mage::getModel('evolved/evolved');
+		$termscollection = $termscollectionmodel->getCollection();
+		$termscollection->addFieldToFilter('field', array('like' => 'termsandcondition_form_%'));
+		//echo "<pre>";
+//		print_r($termscollection->getData());
+		$decimalindex = 1;
+		foreach($termscollection as $termscollection1)
+		{
+
+			//print_r($termscollection1->getData());
+			echo "id : ".$termscollection1->getData('evolved_id')."<br />";
+			echo "field : ".$termscollection1->getData('field')."<br />";
+			echo "value : ".$termscollection1->getData('value')."<br />";
+			$termsexplode = explode("_",$termscollection1->getData('field'));
+			//echo $termsexplode[3],"_".$termsexplode[4]."<br />";
+			if($termsexplode[3]."_".$termsexplode[4] == "sort_order")
+			{
+				print_r($termscollection1->getData());
+				//$terms[$termscollection1->getData('field')] = $termscollection1->getData('value');
+				//$terms[$termscollection1->getData('field')] = $termscollection1->getData('value');
+				
+				if(array_key_exists($termscollection1->getData('value'), $terms))
+				{
+					$index = $termscollection1->getData('value').".".$decimalindex;
+					$terms[$index] = $termscollection1->getData('field');
+					$decimalindex++;
+				}
+				else
+				{
+					$decimalindex = 1;
+					$terms[$termscollection1->getData('value')] = $termscollection1->getData('field');
+				}
+			}
+		}
+		
+		print_r($terms);
+		ksort($terms);
+		print_r($terms);
+		foreach($terms as $terms_key => $terms_value)
+		{
+			$termsindex = explode("_",$terms_value);
+			//echo $termsindex[2]."<br />";
+			 ?>
+
+			<?php 
+			$helper = Mage::helper('cms');
+			$processor = $helper->getPageTemplateProcessor();
+			?>
+			
+				<div class="home-info">
+					<?php $htmltitle = $processor->filter($theme['termsandcondition_form_'.$termsindex[2].'_title']); ?>
+					<?php $htmldescription = $processor->filter($theme['termsandcondition_form_'.$termsindex[2].'_description']); ?>
+					<?php echo nl2br($htmltitle); ?>
+					<?php echo nl2br($htmldescription); ?>
+				</div>
+
+		<?php }
+?>

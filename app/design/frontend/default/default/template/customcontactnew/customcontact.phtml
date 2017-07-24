@@ -1,0 +1,497 @@
+<?php
+$postData = Mage::app()->getRequest()->getPost(); 
+$prodname = $postData['prodname'];
+
+$prodsku = $postData['prodsku'];
+
+$producturl = $postData['producturl']; 
+ 
+?>
+
+
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+
+<div class="custmain">
+
+
+
+<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('custom-req')->toHtml(); ?>
+
+
+
+<div class="cutitle"> 
+
+CUSTOM JEWELRY <span class="bigt">REQUEST</span> &nbsp;&nbsp;<span class="itl">(Fill out the form below) :</span>
+
+</div>
+
+<div class="line"></div>
+
+<div class="customfrm">
+
+<div class="fieldset">
+
+	<?php /*?><h2 class="legend">Personal Information</h2><?php */?>
+
+	<form id="contactForm" method="post" action="<?php echo $this->getFormAction()?>" enctype="multipart/form-data">
+
+		<input type="hidden" name="productname" id="productname" value="<?php echo $prodname ?>" />
+
+        <input type="hidden" name="productsku" id="productsku" value="<?php echo $prodsku ?>" />
+        
+        <input type="hidden" name="producturl" id="producturl" value="<?php echo $producturl ?>" />
+
+		<ul class="form-list">
+
+			<li class="fields">
+
+				<div>
+
+				    <div class="field">
+
+				        <label class="required" for="name"><em>*</em>Name</label>
+
+				        <div class="input-box">
+
+				            <input type="text" class="input-text required-entry" title="Name" value="" name="name" id="name">
+
+				        </div>
+
+				    </div>
+
+				    <div class="field"> 
+
+				        <label class="required" for="email"><em>*</em>Email</label>
+
+				        <div class="input-box">
+
+				            <input type="text" class="input-text validate-email required-entry" title="Email" value="" name="email" id="email">
+
+				        </div>
+
+				    </div>
+
+				</div>
+
+			</li>
+
+			<li>
+
+				<div>
+
+				    <div class="field">
+
+				        <label class="required" for="phone"><!--<em>*</em>-->Phone</label>
+
+				        <div class="input-box">
+
+				            <input type="text" class="input-text" title="Phone" value="" name="phone" id="phone">
+
+				        </div>
+
+				    </div>
+
+				    <div class="field">
+
+				        <label for="email">What are you looking to purchase?</label>
+
+				        <div class="input-box">
+
+				            <select name="producttype" id="producttype" class="validation-passed">
+
+				            	<option value="ENGAGEMENT RING">ENGAGEMENT RING</option>
+
+				            	<option value="WEDDING BAND">WEDDING BAND</option>
+
+				            	<option value="EARRINGS">EARRINGS</option>
+
+				            	<option value="NECKLACE">NECKLACE</option>
+
+				            	<option value="BRACELETS">BRACELETS</option>
+
+								<option value="LOOSE STONE">LOOSE STONE</option>
+
+				            </select>
+
+				        </div>
+
+				    </div>
+
+				</div>
+
+			</li>
+
+			<div class="another">
+
+			<li>
+
+				<div>
+
+					<div class="field lilbig"> <!-- big-->
+
+				        <label for="moreimportant">What is more important?</label>
+
+				        <div class="input-box radioprop">
+
+				            <input type="radio" class="radio radiobuton" title="What is more important?" value="Size" name="moreimportant" id="moreimportant"><span>Size</span>
+
+							<input type="radio" class="radio radiobuton" title="What is more important?" value="Quality" name="moreimportant" id="moreimportant"><span>Quality</span>
+
+				        </div>
+
+				    </div>
+
+					
+
+					<div class="field lilsmall">
+
+				        <label for="pricerange">Do you have price range?</label>
+
+				        <div class="input-box">
+
+				            <!--<input type="text" class="input-text lilsmall" title="Do you have price range?" value="" name="pricerange" id="pricerange">-->
+
+							<select name="pricerange" id="pricerange" class="lilsmallselect" title="Do you have price range?">
+
+				            	<option value="">Select Price Range...</option>
+
+				            	<!--<option value="Below $500">Below $500</option>-->
+
+				            	<option value="$500">$500</option>
+
+				            	<option value="$500 - $1000">$500 - $1000</option>
+
+				            	<option value="$1000 - $5000">$1000 - $5000</option>
+
+								<option value="$5000 - $10,000">$5000 - $10,000</option>
+
+								<option value="$10,000 - $25,000">$10,000 - $25,000</option>
+
+								<option value="$25,000 - $50,000">$25,000 - $50,000</option>
+
+								<option value="$50,000 - $75,000">$50,000 - $75,000</option>
+
+								<option value="$75,000 - $100,000">$75,000 - $100,000</option>
+
+				            </select>
+
+
+
+				        </div>
+
+				    </div>
+
+			    </div>
+
+			</li>
+
+			<li>
+
+				<div>
+
+				    <div class="field big"> <!--lilbig-->
+
+				        <label for="stonetype">What kind of stone are you looking for?</label>
+
+				        <div class="input-box ckeckboxes">
+
+						<?php $mediaurl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Round" class="chks" /><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/round.png" alt="Round"/></div><span>Round</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Princess" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/princess.png" alt="Princess"/></div><span>Princess</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Emerald" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/emerald.png" alt="Emerald"/></div><span>Emerald</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Marquise" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/marquise.png" alt="Marquise"/></div><span>Marquise</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Asscher" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/asscher.png" alt="Asscher"/></div><span>Asscher</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Oval" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/oval.png" alt="Oval"/></div><span>Oval</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Radiant" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/radiant.png" alt="Radiant"/></div><span>Radiant</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Pear" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/pear.png" alt="Pear"/></div><span>Pear</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Heart" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/heart.png" alt="Heart"/></div><span>Heart</span></div>
+
+						<div class="ckcs"><input type="checkbox" name="stonetype[]" id="stonetype" value="Cushion" class="chks"/><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/cushion.png" alt="Cushion"/></div><span>Cushion</span></div>
+
+				           <!-- <select name="stonetype" id="stonetype" class="lilbig">
+
+				            	<option value="">Select Stone Type...</option>
+
+				            	<option value="Round">Round</option>
+
+				            	<option value="Princess">Princess</option>
+
+				            	<option value="Emerald">Emerald</option>
+
+				            	<option value="Marquise">Marquise</option>
+
+								<option value="Asscher">Asscher</option>
+
+								<option value="Oval">Oval</option>
+
+								<option value="Radiant">Radiant</option>
+
+								<option value="Pear">Pear</option>
+
+								<option value="Heart">Heart</option>
+
+								<option value="Cushion">Cushion</option>
+
+				            </select>-->
+
+				        </div>
+
+				    </div>
+
+				    <?php /*?><div class="field lilsmall">
+
+				        <label for="pricerange">Do you have price range?</label>
+
+				        <div class="input-box">
+
+				            <!--<input type="text" class="input-text lilsmall" title="Do you have price range?" value="" name="pricerange" id="pricerange">-->
+
+							<select name="pricerange" id="pricerange" class="lilsmallselect" title="Do you have price range?">
+
+				            	<option value="">Select Price Range...</option>
+
+				            	<!--<option value="Below $500">Below $500</option>-->
+
+				            	<option value="$500">$500</option>
+
+				            	<option value="$500 - $1000">$500 - $1000</option>
+
+				            	<option value="$1000 - $5000">$1000 - $5000</option>
+
+								<option value="$5000 - $10,000">$5000 - $10,000</option>
+
+								<option value="$10,000 - $25,000">$10,000 - $25,000</option>
+
+								<option value="$25,000 - $50,000">$25,000 - $50,000</option>
+
+								<option value="$50,000 - $75,000">$50,000 - $75,000</option>
+
+								<option value="$75,000 - $100,000">$75,000 - $100,000</option>
+
+				            </select>
+
+
+
+				        </div>
+
+				    </div><?php */?>
+
+				</div>
+
+			</li>
+
+			</div>
+
+			<li class="splline">
+
+				<label>below you can upload upto 6 images that are similar to the design you prefer ( Please Upload only jpg , jpeg , gif , png ):</label>
+
+				<div class="clearer" style="float:left;">
+
+				    <div class="field imgsel">
+
+				        <div class="input-box">
+
+				            <input type="file" name="image_1" id="image1" class="spc"/>
+
+				            <input type="file" name="image_2" id="image2" class="spc"/>
+
+				            <input type="file" name="image_3" id="image3" class="spc"/> 
+
+				        </div>
+
+				    </div>
+
+				    <div class="field imgsel1">
+
+				        <div class="input-box">
+
+				            <input type="file" name="image_4" id="image4" class="spc"/>
+
+				            <input type="file" name="image_5" id="image5" class="spc"/>
+
+							<input type="file" name="image_6" id="image6" class="spc"/>
+
+				        </div>
+
+				    </div>
+
+				</div>
+
+			</li>
+
+			<li class="cudate">
+
+				<label>WHEN DO YOU NEED YOUR FINISHED JEWELRY BY ?</label>
+
+				<div class="input-box customer-dob" id="">
+
+			    	 <div class="dob-month">
+
+					 <label for="month">MM</label>
+
+			             <input type="text" class="input-text small" title="Month" value="" name="month" id="month">
+
+			             
+
+			         </div>
+
+			         <div class="dob-day">
+
+					 <label for="day">DD</label>
+
+			             <input type="text" class="input-text small" title="Day" value="" name="day" id="day">
+
+			             
+
+			         </div>
+
+			         <div class="dob-year">
+
+					  <label for="year">YYYY</label>
+
+			             <input type="text" class="input-text small" title="Year" value="" name="year" id="year">
+
+			            
+
+			         </div>    				
+
+				    <div style="display:none;" class="validation-advice"></div>
+
+				</div>
+
+			</li>
+
+            <li class="cudate">
+
+            		<label for="month">Comment</label>
+
+                    <textarea rows="5" cols="10" name="comment" id="comment" style="width:450px;"></textarea>
+
+            </li>
+
+		</ul>
+
+		<div class="buttons-set">
+
+            <p class="required">* Required Fields</p>
+
+            <button class="custsub" title="Submit" type="submit"><?php /*?><span><span>Submit</span></span><?php */?></button>
+
+        </div>
+
+	</form>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+//<![CDATA[
+
+    var contactForm = new VarienForm('contactForm', true);
+
+//]]>
+
+</script>
+
+<?php /*?><script type="text/javascript">
+
+function checkform(frm) 
+
+{ 
+
+  sname = frm.name; 
+
+  semail = frm.email; 
+
+  phone = frm.phone; 
+
+
+
+  if (sname.value == "" || !removeSpaces(sname.value)) 
+
+  { 
+
+   	return false;  
+
+  } 
+
+  else if (semail.value == "" || !validate_email(semail.value)) 
+
+  { 
+
+    return false;  
+
+  }
+
+  else if (phone.value == "" || !removeSpaces(phone.value)) 
+
+  { 
+
+     return false; 
+
+  }
+
+ 
+
+} 
+
+ 
+
+function validate_email(e) 
+
+{ 
+
+var str=e; 
+
+var filter=/^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i; 
+
+ 
+
+if (!filter.test(str)) 
+
+  return false; 
+
+else 
+
+  return true; 
+
+} 
+
+
+
+function removeSpaces(string) { 
+
+var tstring = ""; 
+
+string = '' + string; 
+
+splitstring = string.split(" "); 
+
+for(i = 0; i < splitstring.length; i++) 
+
+tstring += splitstring[i]; 
+
+return tstring; 
+
+}
+
+</script>
+
+
+
+<?php */?>

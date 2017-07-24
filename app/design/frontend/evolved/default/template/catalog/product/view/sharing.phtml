@@ -1,0 +1,139 @@
+<?php 
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$socialview = array();
+	$socialview['productdetails_social_turn'] = $evolvedmethod->getBlockConfig('evolved_form_productdetails_generalsetting')['productdetails_social_turn'];
+	$socialview['productdetails_social_enable'] = $evolvedmethod->getBlockConfig('evolved_form_productdetails_generalsetting')['productdetails_social_enable'];
+	$theme = array_merge($socialview);
+}
+
+if(count($theme) == 0) { 
+	$theme = Mage::helper('evolved')->getThemeConfig(); 
+	$turnsocial = $theme['productdetails_social_turn'];
+	$enablesociallist = $theme['productdetails_social_enable'];
+}
+else 
+{
+	$turnsocial = $theme['productdetails_social_turn'];
+	$enablesociallist = $theme['productdetails_social_enable'];
+}
+?>
+<?php if($turnsocial == 1): ?>
+	<?php //$productdetailssocialenable = unserialize(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_form_productdetails_generalsetting')['productdetails_social_enable']); ?>
+	<?php $productdetailssocialenable = unserialize($enablesociallist); ?>
+	<?php if($productdetailssocialenable): ?>
+	<?php
+	/**
+	 * Magento
+	 *
+	 * NOTICE OF LICENSE
+	 *
+	 * This source file is subject to the Academic Free License (AFL 3.0)
+	 * that is bundled with this package in the file LICENSE_AFL.txt.
+	 * It is also available through the world-wide-web at this URL:
+	 * http://opensource.org/licenses/afl-3.0.php
+	 * If you did not receive a copy of the license and are unable to
+	 * obtain it through the world-wide-web, please send an email
+	 * to license@magentocommerce.com so we can send you a copy immediately.
+	 *
+	 * DISCLAIMER
+	 *
+	 * Do not edit or add to this file if you wish to upgrade Magento to newer
+	 * versions in the future. If you wish to customize Magento for your
+	 * needs please refer to http://www.magentocommerce.com for more information.
+	 *
+	 * @category    design
+	 * @package     rwd_default
+	 * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+	 * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+	 */
+	?>
+	<script type="text/javascript" src="//assets.pinterest.com/js/pinit.js"></script>
+
+
+	<?php /*?>onClick="MyWindow=window.open('http://pinterest.com/pin/create/bookmarklet/?media=<?php echo $media."catalog/product".$_product->getImage()?>&url=<?php echo $currentUrl; ?>&is_video=false&description=<?php echo $_product->getShortDescription()?>','MyWindow',width=600,height=300); return false;"<?php */?>
+
+	<?php $_helper = $this->helper('catalog/output'); ?>
+	<?php $_product = $this->getProduct(); ?>
+		<?php $_productName = urlencode(trim($_helper->productAttribute($_product, $_product->getName(), 'name')))?>
+		<?php $_productImageUrl = urlencode(trim($this->helper('catalog/image')->init($_product, 'image')))?>
+		<?php $_productUrl = urlencode(trim($_product->getProductUrl()))?>
+
+	<?php $_wishlistSubmitUrl = $this->helper('wishlist')->getAddUrl($_product); ?>
+
+	<ul class="sharing-links">
+	<li><?php echo $this->__('Share:'); ?></li>
+		<?php if(in_array('twittershare',$productdetailssocialenable)): ?>
+				<li id="twittershare">
+					<a href="#" onClick="MyWindow=window.open('<?php echo 'http://twitter.com/home?status=' . $_productName . '+' . $_productUrl; ?>','MyWindow',width=600,height=300); return false;" title="<?php echo $this->__('Share on Twitter') ?>" class="link-twitter"><?php echo $this->__('Share on Twitter') ?></a>
+				</li>
+		<?php endif; ?>
+		<?php if(in_array('facebooklike',$productdetailssocialenable)): ?>
+			 <li id="facebooklike">
+				 <div id="fb-root"></div>
+				<script>(function(d, s, id) {
+				  var js, fjs = d.getElementsByTagName(s)[0];
+				  if (d.getElementById(id)) return;
+				  js = d.createElement(s); js.id = id;
+				  js.src = "//connect.facebook.net/en_US/sdk.js#xfbml=1&version=v2.3";
+				  fjs.parentNode.insertBefore(js, fjs);
+				}(document, 'script', 'facebook-jssdk'));</script>
+				<div class="fb-like" data-href="<?php echo $_product->getProductUrl(); ?>" data-layout="button_count" data-action="like" data-show-faces="true" data-share="false"></div>
+			</li>
+		<?php endif; ?>
+		<?php if(in_array('facebookshare',$productdetailssocialenable)): ?>
+			 <li id="facebookshare">
+				<?php $_u = '?u=' . $_product->getProductUrl() . '&title=' . $_productName .'?image=' . $this->helper('catalog/image')->init($_product, 'image') . '?summary=' . $_product->getShortDescription(); ?>
+				
+				<a href="#" onClick="MyWindow=window.open('<?php echo 'http://www.facebook.com/sharer/sharer.php' . $_u; ?>','MyWindow',width=600,height=300); return false;" title="<?php echo $this->__('Share on Facebook') ?>" class="link-facebook">
+					<?php echo $this->__('Share Facebook') ?>
+				</a>
+			</li>
+		<?php endif; ?>
+		<?php if(in_array('pinterestshare',$productdetailssocialenable)): ?>
+			<li id="pinterestshare">    
+				 <?php $_uv = '?url=' . $_productUrl . '&media=' . $_productImageUrl . '&description=' . urlencode(trim($_helper->productAttribute($_product, nl2br($_product->getDescription()), 'description'))); ?>
+				<a style="background-image:none;" href="#" onClick="MyWindow=window.open('<?php echo 'http://www.pinterest.com/pin/create/button/' . $_uv; ?>','MyWindow',width=600,height=300); return false;" title="<?php echo $this->__('Share on Pinterest') ?>" class="link-pinterest"></a>
+			</li>
+		<?php endif; ?>
+		<?php if(in_array('emailtofriendshare',$productdetailssocialenable)): ?>
+			<?php if ($this->canEmailToFriend()): ?>
+				<li id="emailtofriendshare"><a href="<?php echo $this->helper('catalog/product')->getEmailToFriendUrl($_product) ?>" class="link-email-friend" title="<?php echo $this->__('Email to a Friend') ?>"><?php echo $this->__('Email to a Friend') ?></a></li>
+			<?php endif; ?>
+		<?php endif; ?>	
+		<?php if(in_array('instagramshare',$productdetailssocialenable)): ?>
+		<li id="instagramshare">
+				<span class="ig-follow" data-id="5479dee" data-handle="igfbdotcom" data-count="false" data-size="small" data-username="false"></span>
+				<script>(function(d,t){var g=d.createElement(t),s=d.getElementsByTagName(t)[0];g.src="//x.instagramfollowbutton.com/follow.js";s.parentNode.insertBefore(g,s);}(document,"script"));</script>
+		</li>
+		<?php endif; ?>
+		<?php if(in_array('googleplusshare',$productdetailssocialenable)): ?>
+			<li id="googleplusshare">
+				<a href="javascript:(
+				function(){
+				var w=480;var h=380;
+				var x=Number((window.screen.width-w)/2);
+				var y=Number((window.screen.height-h)/2);
+				window.open('https://plus.google.com/share?url='+encodeURIComponent(location.href)+'
+				  &title='+encodeURIComponent(document.title),'','width='+w+',height='+h+',left='+x+',top='+y+',
+				  scrollbars=no');
+				  })();"><img alt="google plus" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>media/wysiwyg/gplus.png">
+											</a>
+				                            <!-- Place this tag after the last share tag. -->
+				<script type="text/javascript">
+				  (function() {
+				    var po = document.createElement('script'); po.type = 'text/javascript'; po.async = true;
+				    po.src = 'https://apis.google.com/js/platform.js';
+				    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(po, s);
+				  })();
+				</script>
+				<!--  
+				<script src="https://apis.google.com/js/platform.js" async defer></script>
+				<div class="g-plusone" data-annotation="inline" data-width="50"></div>
+				-->
+			</li>
+		<?php endif; ?>		
+	</ul>
+	<?php endif; ?>
+<?php endif; ?>

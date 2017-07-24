@@ -1,0 +1,86 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Logo>
+            <version>0.1.0</version>
+        </Ideal_Logo>
+    </modules>
+
+    <!-- <admin>
+        <routers>
+			<logo>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Logo</module>
+					<frontName>logo</frontName>
+				</args>
+			</logo>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <logo after="Mage_Adminhtml">Ideal_Logo_Adminhtml</logo>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    <adminhtml>
+		<menu>
+			<theme module="logo">
+				<title>Theme</title>
+				<sort_order>74</sort_order>               
+				<children>
+					<logo module="logo">
+						<title>Manage Logo</title>
+						<sort_order>0</sort_order>
+						<action>adminhtml/logo/new/</action>
+					</logo>
+				</children>
+			</theme>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<theme>
+							<title>Theme</title>
+							<sort_order>74</sort_order>               
+							<children>
+								<logo module="logo">
+									<title>Manage Logo</title>
+									<sort_order>0</sort_order>
+								</logo>
+							</children>
+						</theme>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<logo>
+					<file>logo.xml</file>
+				</logo>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <blocks>
+            <logo>
+                <class>Ideal_Logo_Block</class>
+            </logo>
+        </blocks>
+        <helpers>
+            <logo>
+                <class>Ideal_Logo_Helper</class>
+            </logo>
+        </helpers>
+    </global>
+</config>

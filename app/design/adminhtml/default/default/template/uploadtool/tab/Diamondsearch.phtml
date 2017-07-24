@@ -1,0 +1,80 @@
+ 
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Lookup Stock#</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="vendor" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+			<tbody>
+				<tr>
+	        		<td class="label"><label for="multiline">Search Stock#</label></td>
+	    			<td class="value">
+	        		    <input type='text' 	name='diamond_Search' id='diamond_Search'  onkeypress="return searchdata(event)">
+					</td>
+				</tr>
+				<!-- <tr>
+	        		<td class="label"><label for="multiline"></label></td>
+	    			<td class="value">
+	        		    <button style="" onclick="search()" class="scalable add" type="button" title="search" id="diamond_search_button">
+	        		    		<span><span><span>Search</span></span></span></button>
+					</td>
+				</tr>  -->
+			</tbody>
+			</table>
+	    </div>
+	    <div class='response' id='response'></div>
+	</div>
+</div>
+
+
+<script>
+
+
+	 
+		function searchdata(e){
+		
+			var x = e.keyCode;
+			if(x==13)
+			{
+				search();
+			}	
+		}
+
+
+ 
+		function search()
+		{
+			document.getElementById("response").innerHTML="<b>Loading<b>";
+			var url="<?php echo  Mage::getUrl("adminhtml/uploadtool/searchstring") ?>";
+			//alert(url);				
+		    var search=document.getElementById("diamond_Search").value;
+		    //alert(search);
+			if (window.XMLHttpRequest) {
+				// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			} else {  // code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+
+			xmlhttp.onreadystatechange=function() {
+				if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+					//document.getElementById("livesearch").innerHTML=xmlhttp.responseText;
+					//document.getElementById("livesearch").style.border="1px solid #A5ACB2";
+					 document.getElementById("response").innerHTML=xmlhttp.responseText;
+					//alert(xmlhttp.responseText);
+				}
+			}
+			xmlhttp.open("GET",url+"?string="+search,true);
+			xmlhttp.send();
+		}
+
+		function updateProgress()
+		{
+			
+		}
+
+		
+</script>

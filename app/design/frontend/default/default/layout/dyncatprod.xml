@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+        <reference name="head">
+            <action method="addCss"><stylesheet>css/dyncatprod.css</stylesheet></action>
+        </reference>
+        <block type="core/template" name="catalog.vertnav.misc1" template="dyncatprod/left_nav.phtml"/>
+    </default>
+</layout>

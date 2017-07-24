@@ -1,0 +1,36 @@
+<?php
+/**
+ * @var $this IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Init
+ */
+?>
+
+<script type="text/javascript">
+    if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
+
+    if($ji("#sales_order_grid_table").length) {
+        IWD.OrderManager.Grid.colorGridRow();
+        IWD.OrderManager.Grid.initComplexFilterSelect();
+        IWD.OrderManager.Grid.initCellsWithLongString();
+        IWD.OrderManager.Grid.initGridColumnWidth();
+        IWD.OrderManager.Massaction.reInit();
+
+    <?php /* FIX HEADER IN ORDER GRID */ ?>
+        <?php if($this->isFixHeaderEnabled()): ?>
+            if ($ji.isFunction($ji.fn.stickyTableHeaders)) {
+                $ji("#sales_order_grid_table").stickyTableHeaders();
+            }
+        <?php endif; ?>
+    }
+
+    <?php /* LIMIT PERIOD FOR ORDER GRID (when we have many orders) */ ?>
+    <?php if($this->isLimitPeriod()): ?>
+        $ji("input[name=\'created_at[from]\']").val("<?php echo $this->getCreatedAtFrom() ?>");
+        $ji("input[name=\'created_at[to]\']").val("<?php echo $this->getCreatedAtTo() ?>");
+    <?php endif; ?>
+
+    <?php /* INIT ORDER TOTALS */ ?>
+    <?php if($this->isTotalsEnabled()): ?>
+        IWD.OrderManager.Totals.initTable(<?php echo $this->getTotalsGridOptionsJson() ?>, <?php echo $this->getTotalsJson() ?>);
+    <?php endif; ?>
+</script>
+

@@ -1,0 +1,102 @@
+<link rel="stylesheet" href="<?php echo $this->getSkinUrl(); ?>colorbox/colorbox.css" type="text/css" />
+<script src="<?php echo $this->getSkinUrl(); ?>colorbox/jquery.colorbox.js" type="text/javascript" ></script>
+<script>
+jQuery(window).load(function(){
+	jQuery(".show_main_div ul li .logo_img").each(function(){
+		jQuery(this).css('padding-top','20px').css('padding-bottom','20px');
+		jQuery(this).prev().css("height",(jQuery(this).height() + 40) + "px");
+	});
+});
+</script>
+<?php  
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_form_events'))
+{
+	$theme = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_form_events');
+}
+else 
+{
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();	
+}
+$news = Mage::getModel('dcevent/dcevent')->getCollection();
+//echo "<pre>"; print_r($news->getData()); echo "</pre>";
+$news->setOrder('start_date','ASC');
+?>
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('account_menu_static_block')->toHtml(); ?>
+<div class="event_main">
+<div class="show_main_div">
+	<ul>
+		<li><h1><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('event_title')->toHtml(); ?></h1></li>
+		<?php foreach($news as $newsas): ?>
+			<li>
+				<p>
+						<?php /* ?><?php if($theme['evolved_events_style_popup']): ?>
+							<a class="eventsimgpop" href="<?php if($newsas['filename'])  echo Mage::getBaseUrl('media').$newsas['filename']; ?>">
+						<?php endif; ?> <?php */ ?>
+								<span class="title detail-description"><strong><?php echo $newsas->getTitle(); ?></strong></span>
+								<span class="date-duration detail-description">
+									<?php $startdate = new DateTime($newsas->getStartDate());  ?>
+									<?php if($newsas->getEndDate()): ?>
+											<?php $enddate = new DateTime($newsas->getEndDate());  ?>
+											<?php if($startdate->format("Y") == $enddate->format("Y")): ?>
+													<?php echo $startdate->format("F jS")."-".$enddate->format("F jS Y"); ?>
+											<?php else: ?>
+													<?php echo $startdate->format("F jS Y")."-".$enddate->format("F jS Y"); ?>
+											<?php endif; ?>
+									<?php else: ?>
+										<?php echo $startdate->format("F jS Y"); ?>
+									<?php endif; ?>
+								</span>
+								<span class="place detail-description"><?php echo $newsas->getplace(); ?></span>
+						<?php /* ?><?php if($theme['evolved_events_style_popup']): ?>
+								</a>
+						<?php endif; ?>  <?php */ ?>
+				</p>
+				<div class="logo_img">
+					<?php if($newsas['filename']): ?>
+							<img alt="" src="<?php echo Mage::getBaseUrl('media').$newsas['filename']; ?>">
+					<?php endif; ?>
+				</div>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php /* ?>
+	<div class="event-left">
+		<h4 class="event-left-main-title"><?php echo $this->__('SHOW DATES FOR 2015') ?></h4>
+		<div class="content">
+			<?php foreach($news as $newsas): ?>
+				<div class="description">
+						<span class="title detail-description"><?php echo $newsas->getTitle(); ?></span>
+						<?php $startdate = new DateTime($newsas->getStartDate());  ?>
+						<?php $enddate = new DateTime($newsas->getEndDate());  ?>
+						<span class="date-duration detail-description">
+							<span class="start-date-duration"><?php echo $startdate->format("F jS");//echo $startdate->format("F jS Y"); ?></span>
+							<span class="seprator">-</span>
+							<span class="end-date-duration"><?php echo $enddate->format("jS Y");//echo $enddate->format("F jS Y"); ?></span>
+						</span>
+						<span class="place detail-description"><?php echo $newsas->getplace(); ?></span>
+						<?php //echo "<pre>"; print_r($newsas); echo "</pre>"; ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+	<div class="event-right">
+		<div class="event">
+				<ul>
+					<?php foreach($news as $newsas): ?>
+						<?php if($newsas['filename']): ?>
+							<li><img src="<?php echo Mage::getBaseUrl('media').$newsas['filename'] ?>" /></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ul>
+		</div>
+	</div>
+	<?php */ ?>
+</div>
+<?php if($theme['evolved_events_style_popup']): ?>
+	<script>
+		jQuery(document).ready(function(){
+			jQuery(".eventsimgpop").colorbox();
+		});
+	</script>
+<?php endif; ?>

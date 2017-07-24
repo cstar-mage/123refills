@@ -1,0 +1,767 @@
+/******************************
+*
+*  RoyalSlider Default Skin
+*
+*    1. Arrows
+*    2. Bullets
+*    3. Thumbnails
+*    4. Tabs
+*    5. Fullscreen button
+*    6. Play/close video button
+*    7. Preloader
+*    8. Caption
+*
+*  Sprite: 'rs-default.png'
+*  Feel free to edit anything
+*  If you don't some part - just delete it
+*
+******************************/
+
+
+
+// .home__slider-wrap {
+//   @media all and (max-width: 320px ) {
+//     height: 125px;
+//     overflow: hidden;
+//   }
+// }
+
+
+
+
+
+
+
+.royalSlider {
+  width: 100%;
+}
+
+/* Background */
+.rsDefault,
+.rsDefault .rsOverflow,
+.rsDefault .rsSlide,
+.rsDefault .rsVideoFrameHolder,
+.rsDefault .rsThumbs {
+  // background: #FFF;
+  color: #333;
+}
+
+
+/***************
+*
+*  1. Arrows
+*
+****************/
+
+.rsDefault .rsArrow {
+  height: 100%;
+  width: 44px;
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 1;
+}
+.rsDefault.rsVer .rsArrow {
+  width: 100%;
+  height: 44px;
+
+}
+.rsDefault.rsVer .rsArrowLeft { top: 0; left: 0; }
+.rsDefault.rsVer .rsArrowRight { bottom: 0;  left: 0; }
+
+.rsDefault.rsHor .rsArrowLeft {
+
+  left: 0;
+  top: 0;
+  @media all and (device-width: $tab) and (device-height: 1024px) and (orientation:portrait) {
+    margin-left: .5em;
+  }// iPad portrait
+  z-index: 2;
+}
+
+.rsDefault.rsHor .rsArrowRight {
+
+  right: 0;
+  top:0;
+  @media all and (device-width: $tab) and (device-height: 1024px) and (orientation:portrait) {
+    margin-right: .25em;
+  }// iPad portrait
+  z-index: 2;
+}
+
+
+
+
+
+
+.rsDefault .rsArrowIcn {
+  width: 28px;
+  height: 38px;
+  top: 50%;
+  left: 50%; // over ridden later
+  margin-top:-16px;
+  margin-left: -16px;
+  position: absolute;
+  cursor: pointer;
+  background-color: #000;
+  background-color: rgba(0,0,0,0.75);
+  background-color: $blueBtn;
+
+
+}
+
+.rsDefault .rsArrowIcn:hover {
+  background-color: $blueDark;
+}
+
+
+
+.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+  &:before {
+    @include sprites-sprite("slider-arrows-left");
+    position:relative;
+    display: inline-block;
+    top: 10px;
+    left: 6px;
+    width: 16px;
+    height: 18px;
+    content:"";
+  }
+}
+
+
+//.slider--home-main = wrapper class for main home slider
+.slider--home-main.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+  left: 25%;
+  @media screen and (min-width: $desk) {
+    left: 0;
+  }
+}
+
+.slider--home-sub.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+  left: 25%;
+  @media screen and (min-width: $desk) {
+    left: -14px;
+  }
+}
+
+
+
+.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+  &:before {
+    @include sprites-sprite("slider-arrows-right");
+    position:relative;
+    display: inline-block;
+    top: 10px;
+    left: 6px;
+    width: 16px;
+    height: 18px;
+    content:"";
+  }
+}
+
+.slider--home-main.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+  left: 75%;
+  @media screen and (min-width: $desk) {
+    left: 100%;
+  }
+}
+
+
+.slider--home-sub.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+  left: 75%;
+
+  @media screen and (min-width: $desk) {
+    left: 64px;
+  }
+}
+
+
+
+
+
+
+
+
+// .rsDefault.rsHor .rsArrowLeft .rsArrowIcn { background-position: -64px -32px; }
+// .rsDefault.rsHor .rsArrowRight .rsArrowIcn { background-position: -64px -64px; }
+
+// .rsDefault.rsVer .rsArrowLeft .rsArrowIcn { background-position: -96px -32px; }
+// .rsDefault.rsVer .rsArrowRight .rsArrowIcn { background-position: -96px -64px; }
+
+.rsDefault .rsArrowDisabled .rsArrowIcn { opacity: .2; filter: alpha(opacity=20);  *display: none; }
+
+
+/***************
+*
+*  2. Bullets
+*
+****************/
+
+.rsDefault .rsBullets {
+  position: absolute;
+  z-index: 35;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+
+  background: #000;
+  background: rgba(0,0,0,0.75);
+
+  text-align: center;
+  line-height: 8px;
+  overflow: hidden;
+}
+.rsDefault .rsBullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  *display:inline;
+  *zoom:1;
+  padding: 6px 5px 6px;
+}
+.rsDefault .rsBullet span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #777;
+  background: rgba(255,255,255,0.5);
+}
+.rsDefault .rsBullet.rsNavSelected span {
+  background-color: #FFF;
+}
+
+
+
+
+
+/***************
+*
+*  3. Thumbnails
+*
+****************/
+
+.rsDefault .rsThumbsHor {
+  width: 100%;
+  height: 72px;
+}
+.rsDefault .rsThumbsVer {
+  width: 96px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+.rsDefault.rsWithThumbsHor .rsThumbsContainer {
+  position: relative;
+  height: 100%;
+}
+.rsDefault.rsWithThumbsVer .rsThumbsContainer {
+  position: relative;
+  width: 100%;
+}
+.rsDefault .rsThumb {
+  float: left;
+  overflow: hidden;
+  width: 96px;
+  height: 72px;
+}
+.rsDefault .rsThumb img {
+  width: 100%;
+  height: 100%;
+}
+.rsDefault .rsThumb.rsNavSelected {
+  background: #02874a;
+}
+.rsDefault .rsThumb.rsNavSelected img {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+.rsDefault .rsTmb {
+  display: block;
+}
+
+/* Thumbnails with text */
+.rsDefault .rsTmb h5 {
+  @include adjust-font-size-to(16px);
+  margin: 0;
+  padding: 0;
+  color: #FFF;
+}
+.rsDefault .rsTmb span {
+  color: $gray6;
+  margin: 0;
+  padding: 0;
+  @include adjust-font-size-to(13px);
+}
+
+
+
+/* Thumbnails arrow icons */
+.rsDefault .rsThumbsArrow {
+  height: 100%;
+  width: 20px;
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 1;
+  background: #000;
+  background: rgba(0,0,0,0.75);
+}
+.rsDefault .rsThumbsArrow:hover {
+  background: rgba(0,0,0,0.9);
+}
+.rsDefault.rsWithThumbsVer .rsThumbsArrow {
+  width: 100%;
+  height: 20px;
+}
+.rsDefault.rsWithThumbsVer .rsThumbsArrowLeft { top: 0; left: 0; }
+.rsDefault.rsWithThumbsVer .rsThumbsArrowRight { bottom: 0;  left: 0; }
+
+.rsDefault.rsWithThumbsHor .rsThumbsArrowLeft { left: 0; top: 0; }
+.rsDefault.rsWithThumbsHor .rsThumbsArrowRight { right: 0; top:0; }
+
+.rsDefault .rsThumbsArrowIcn {
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-top:-8px;
+  margin-left: -8px;
+  position: absolute;
+  cursor: pointer;
+  background: url('rs-default.png');
+}
+
+.rsDefault.rsWithThumbsHor .rsThumbsArrowLeft .rsThumbsArrowIcn { background-position: -128px -32px; }
+.rsDefault.rsWithThumbsHor .rsThumbsArrowRight .rsThumbsArrowIcn { background-position: -128px -48px; }
+
+.rsDefault.rsWithThumbsVer .rsThumbsArrowLeft .rsThumbsArrowIcn { background-position: -144px -32px; }
+.rsDefault.rsWithThumbsVer .rsThumbsArrowRight .rsThumbsArrowIcn { background-position: -144px -48px; }
+
+.rsDefault .rsThumbsArrowDisabled { display: none !important; }
+
+/* Thumbnails resizing on smaller screens */
+@media screen and (min-width: 0px) and (max-width: 800px) {
+  .rsDefault .rsThumb {
+    width: 59px;
+    height: 44px;
+  }
+  .rsDefault .rsThumbsHor {
+    height: 44px;
+  }
+  .rsDefault .rsThumbsVer {
+    width: 59px;
+  }
+}
+
+
+
+
+/***************
+*
+*  4. Tabs
+*
+****************/
+
+.rsDefault .rsTabs {
+  position: absolute;
+  bottom: 1em;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  text-align:center;
+  overflow: hidden;
+}
+
+.rsDefault .rsTab {
+
+  position: relative;
+  display: inline-block;
+  height: auto;
+  // width: auto;
+  min-width: 24%;
+  .lt-ie9 & {
+    min-width: 20% !important;
+  }
+
+  padding: .5em 1em;
+  cursor: pointer;
+  text-align: center;
+  color: #333;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #FFF;
+  font-family: arial, sans-serif !important;
+  background-color: $menuGray;
+  background: rgba(50, 50, 50, 0.7);
+  *display:inline;
+  *zoom:1;
+
+  &:after {
+    position: absolute;
+    right: 0;
+    top: 0;
+    display: inline-block;
+    content:"";
+    width: 2px;
+    height: 44px;
+    @include sprites-sprite("slider-division");
+  }
+}
+
+
+// .rsDefault .rsTab:first-child {
+//   // -webkit-border-top-left-radius: 4px;
+//   // border-top-left-radius: 4px;
+//   // -webkit-border-bottom-left-radius: 4px;
+//   // border-bottom-left-radius: 4px;
+// }
+
+
+.rsDefault .rsTab:last-child {
+  &:after {
+    display: none;
+  }
+  // -webkit-border-top-right-radius: 4px;
+  // border-top-right-radius: 4px;
+  // -webkit-border-bottom-right-radius: 4px;
+  // border-bottom-right-radius: 4px;
+
+  // border-right:  1px solid #cfcfcf;
+}
+.rsDefault .rsTab:active {
+  // color: #333;
+  // background: rgba(102, 102, 102, 0.65);
+  // box-shadow:  0 1px 4px rgba(0, 0, 0, 0.2) inset;
+}
+.rsDefault .rsTab.rsNavSelected {
+  background-color: #FFF;
+  color: #333;
+}
+
+
+
+
+
+/***************
+*
+*  5. Fullscreen button
+*
+****************/
+
+.rsDefault .rsFullscreenBtn {
+  right: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  z-index: 22;
+  display: block;
+  position: absolute;
+  cursor: pointer;
+
+}
+.rsDefault .rsFullscreenIcn {
+  display: block;
+  margin: 6px;
+  width: 32px;
+  height: 32px;
+
+  background: url('rs-default.png') 0 0;
+  background-color: #000;
+  background-color: rgba(0,0,0,0.75);
+  *background-color: #000;
+  border-radius: 2px;
+
+}
+.rsDefault .rsFullscreenIcn:hover {
+  background-color: rgba(0,0,0,0.9);
+}
+.rsDefault.rsFullscreen .rsFullscreenIcn {
+  background-position: -32px 0;
+}
+
+
+
+
+
+/***************
+*
+*  6. Play/close video button
+*
+****************/
+
+.rsDefault .rsPlayBtn {
+  -webkit-tap-highlight-color:rgba(0,0,0,0.3);
+  width:64px;
+  height:64px;
+  margin-left:-32px;
+  margin-top:-32px;
+  cursor: pointer;
+}
+.rsDefault .rsPlayBtnIcon {
+  width:64px;
+  display:block;
+  height:64px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  transition: .3s;
+
+  background:url(rs-default.png) no-repeat 0 -32px;
+  background-color: #000;
+  background-color: rgba(0,0,0,0.75);
+  *background-color: #000;
+}
+.rsDefault .rsPlayBtn:hover .rsPlayBtnIcon {
+  background-color: rgba(0,0,0,0.9);
+}
+.rsDefault .rsBtnCenterer {
+  position:absolute;
+  left:50%;
+  top:50%;
+}
+.rsDefault .rsCloseVideoBtn {
+  right: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  z-index: 500;
+  position: absolute;
+  cursor: pointer;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+
+}
+.rsDefault .rsCloseVideoBtn.rsiOSBtn {
+  top: -38px;
+  right: -6px;
+}
+
+.rsDefault .rsCloseVideoIcn {
+  margin: 6px;
+  width: 32px;
+  height: 32px;
+  background: url('rs-default.png') -64px 0;
+  background-color: #000;
+  background-color: rgba(0,0,0,0.75);
+  *background-color: #000;
+}
+.rsDefault .rsCloseVideoIcn:hover {
+  background-color: rgba(0,0,0,0.9);
+}
+
+
+
+
+// 7. Preloader -----
+
+
+.rsDefault .rsPreloader {
+  width:20px;
+  height:20px;
+  // background-image:url(../preloaders/preloader-white.gif);
+
+  left:50%;
+  top:50%;
+  margin-left:-10px;
+  margin-top:-10px;
+}
+
+
+// 8. Global caption -----
+
+.slider--home-main {
+  .rsTabs {
+    display: none;
+    @media screen and (min-width: $desk) {
+      z-index: 1;
+      display: block;
+    }
+  }
+  .rsGCaption {
+    position: absolute;
+    z-index: 1;
+    bottom: 0;
+    pointer-events:none;
+    .rsCaption {
+      // pointer-events:auto;
+    }
+    padding: .5em .5em;
+    color: #333;
+
+    .caption--header {
+      text-align: center;
+      padding: .2em .5em;
+      @include adjust-font-size-to(16px);
+    }
+    .caption--info {
+      @include adjust-font-size-to(16px, 1);
+    }
+    .countdown--timer {
+      display: none;
+    }
+    .countdown--limited-time{
+        display: none;
+    }
+
+    @media screen and (min-width: $desk) {
+      position: absolute;
+      display: inline-block;
+      width: 500px;
+      top: 1em;
+      left: 0;
+      // .rsCaption {
+      .rsCaptionInnerWrap {
+        background-color: white;
+        -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+        filter: alpha(opacity=85);
+        -moz-opacity: 0.85;
+        -khtml-opacity: 0.85;
+        opacity: 0.85;
+        padding: 1em;
+      }
+      .rsChristmasCountdown .rsCaptionInnerWrap {
+        display:none;
+      }
+      .caption--info {
+        text-align: left;
+      }
+      .countdown--timer {
+        text-align: center;
+        color:#000;
+        display: block;
+        @include adjust-font-size-to(54px, 1);
+        margin:260px 0 0 10px;
+        font-weight:bold;
+        font-family: $rockwell;
+      }
+    .countdown--limited-time{
+        display: block;
+    }
+      .countdown--suffix {
+        color:#000;
+        text-transform: uppercase;
+        font-size:24px;
+        font-family: $rockwell;
+      }
+      .caption--header {
+
+        text-align: left;
+        padding: 0;
+        display: block;
+        background: none;
+        @include adjust-font-size-to(22px, 1);
+
+        &.heading-small {
+            @include adjust-font-size-to(16px, 1);
+        }
+
+        &.heading-medium {
+            @include adjust-font-size-to(19px, 1.1);
+        }
+
+        &.heading-large {
+            @include adjust-font-size-to(22px, 1.2);
+        }
+
+        &.heading-extra-large {
+            @include adjust-font-size-to(24px, 1.3);
+        }
+
+        &.heading-extra-extra-large {
+            @include adjust-font-size-to(28px, 1.4);
+        }
+
+      }
+    }
+  }
+
+  .caption--info {
+    display: none;
+    @media screen and (min-width: $desk) {
+      display: block;
+    }
+  }
+  .caption--info.cta-link {
+    display: none;
+    @media screen and (min-width: $desk) {
+      display: block;
+    }
+  }
+
+} // End slider--home-main
+
+
+
+
+
+
+.slider--home-sub.rsDefault .rsGCaption {
+  position: relative;
+  background-color: #FFF;
+  padding: .5em 1em;
+}
+
+.slider__figcaption {
+  @include adjust-font-size-to(14px);
+  @include pie-clearfix();
+}
+
+
+.slider--home-sub {
+     height: 300px !important; // force 400px height
+
+     li {
+      padding: 1.5em;
+    }
+
+    .slider__figcaption {
+      display: none;
+    }
+
+    .rsActiveSlide {
+      .slider__figcaption {
+        display: block;
+
+      }
+    }
+    @media screen and (min-width: $desk) {
+     .slider__figcaption {
+      display: block;
+
+    }
+  }
+
+}
+
+
+.category-types-section {
+.box-horiz .box-mini {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+  .slider-category-list  {
+     height: 360px !important; // force 400px height
+
+  }
+}
+
+
+
+
+
+
+.tab-slide { // home slider 2 -> figure
+  cursor: pointer;
+  img {
+    min-width: 100%;
+  }
+}

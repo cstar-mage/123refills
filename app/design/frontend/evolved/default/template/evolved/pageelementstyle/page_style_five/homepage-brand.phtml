@@ -1,0 +1,141 @@
+<?php //$theme = $this->getConfig(); ?>
+<?php 
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style'])
+{
+	$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+	$theme = array_merge($evolved_homepage_element_five_content);	
+}
+else 
+{
+	$theme = $this->getConfig();	
+}
+?>
+<?php 
+if($theme['homepage_element_5_brand_manager_title'])
+{
+	$brandtitle = $theme['homepage_element_5_brand_manager_title'];
+}
+else
+{
+	$brandtitle = "Brands";
+}
+
+if($theme['homepage_element_5_brand_manager_visiblebrands'])
+{
+	$brandvisible = $theme['homepage_element_5_brand_manager_visiblebrands'];
+}
+else
+{
+	$brandvisible = 5;
+}
+
+if($theme['homepage_element_5_brand_manager_autoscroll_enabled'])
+{
+	$brandautoscroll = $theme['homepage_element_5_brand_manager_autoscroll_enabled'];
+}
+else
+{
+	$brandautoscroll = 0;
+}
+
+if($theme['homepage_element_5_brand_manager_enabled']==1): ?>
+
+<?php
+$bannerCollection = $this->getBrandCollection();
+$target = ($theme['homepage_element_5_brand_manager_target']) ? $theme['homepage_element_5_brand_manager_target'] : '_self';
+?>
+<?php if(count($bannerCollection)>0): ?>
+<div class="home-main">
+<div class="home-brands homepage_element_5_brand_manager" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="heading"><h2><span><?php echo $brandtitle; ?></span></h2></div>
+<div class="jcarousel-wrapper">
+       <div class="jcarousel">
+            <ul>
+            		<?php foreach ($bannerCollection as $banner): ?>
+						<li>
+							<a target="<?php echo $target; ?>" href="<?php echo $banner['weblink']; ?>">
+								<?php 
+									$data = getimagesize(Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']);
+									$width = $data[0];
+									$height = $data[1];
+								?>
+								<img width="<?php echo $width; ?>" height="<?php echo $height; ?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']?>" width="" height="" title="<?php echo $banner['title']?>" alt="<?php echo $banner['title']?>" align="middle"/>
+							</a>
+						</li>
+					<?php endforeach; ?>
+           </ul>
+       </div>
+	       <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+	       <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+	       <p class="jcarousel-pagination"></p>
+</div>
+</div>
+</div>
+<?php endif; ?>
+<script>
+(function($) {
+    $(function() {
+        var jcarousel = $('.homepage_element_5_brand_manager .jcarousel');
+        var brandautoscroll = <?php echo $brandautoscroll; ?>;
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var width = jcarousel.innerWidth();
+				var visiblebrand = <?php echo $brandvisible; ?>;
+                if ((width >= 900) && (visiblebrand >= 5)) {
+                    width = width / visiblebrand;
+                }else if ((width >= 800) && (visiblebrand >= 4)) {
+                    width = width / 4;
+                }
+                else if ((width >= 580) && (visiblebrand >= 3)) {
+                    width = width / 3;
+                }
+                 else if ((width >= 350) && (visiblebrand >= 2)) {
+                    width = width / 2;
+                }
+                jcarousel.jcarousel('items').css('width', width + 'px');
+            })            
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        if(brandautoscroll == 1)
+        {
+            $('.homepage_element_5_brand_manager .jcarousel').jcarouselAutoscroll({
+                autostart: true
+            }).on('mouseover',function(e){
+                $(this).jcarouselAutoscroll('stop');
+            }).on('mouseout',function(e){
+                $(this).jcarouselAutoscroll('start');
+            });
+        }
+        
+        $('.homepage_element_5_brand_manager .jcarousel-control-prev')
+            .jcarouselControl({
+                target: '-=1'
+            });
+
+        $('.homepage_element_5_brand_manager .jcarousel-control-next')
+            .jcarouselControl({
+                target: '+=1'
+            });
+
+        $('.homepage_element_5_brand_manager .jcarousel-pagination')
+            .on('.homepage_element_5_brand_manager jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('.homepage_element_5_brand_manager jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .on('click', function(e) {
+                e.preventDefault();
+            })
+            .jcarouselPagination({
+                perPage: 1,
+                item: function(page) {
+                    return '<a href="#' + page + '">' + page + '</a>';
+                }
+            });
+    });
+})(jQuery);
+</script>
+<?php endif; ?>

@@ -1,0 +1,102 @@
+<?php
+/*
+ * Copyright 2013-2015 Price Waiter, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+?>
+<?php $_product = Mage::registry('current_product'); ?>
+<?php if ($_product->isSaleable()): ?>
+    <?php
+    $customCss = Mage::getStoreConfig('pricewaiter/appearance/display_custom_css');
+    $helper = $this->_getHelper();
+
+    $magentoVersion = Mage::getVersion();
+    $extensionVersion = Mage::getConfig()->getNode()->modules->PriceWaiter_NYPWidget->version;
+
+
+    $brand = $_product->getData('brand');
+    $image = $_product->getImageUrl();
+    $currency = Mage::app()->getStore()->getCurrentCurrencyCode();
+    if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_GROUPED) {
+        $groupedInformation = $helper->getGroupedProductInfo();
+    } else {
+        $groupedInformation = '';
+    }
+    if ($helper->isEnabledForStore()):
+        ?>
+        <script type="text/javascript">
+            //<![CDATA[
+            <?php echo $groupedInformation; ?>
+            var PriceWaiterOptions = {
+                <?php if ($helper->isButtonEnabled()): ?>
+                enableButton: true,
+                <?php else: ?>
+                enableButton: false,
+                <?php endif; ?>
+                currency: '<?php echo $currency; ?>',
+                <?php if ($helper->isConversionToolsEnabled()): ?>
+                enableConversionTools: true,
+                <?php else: ?>
+                enableConversionTools: false,
+                <?php endif; ?>
+
+                product: {
+                <?php if ($brand): ?>
+                    brand: <?php echo json_encode($brand); ?>,
+                <?php endif; ?>
+                    sku: <?php echo json_encode($_product->getSku()); ?>,
+                    name: <?php echo json_encode($_product->getName()); ?>,
+                    price: <?php echo json_encode($helper->getProductPrice($_product)); ?>,
+                    <?php if ($image != ''): ?>
+                    image: <?php echo json_encode($image); ?>
+                    <?php endif; ?>
+                },
+                metadata: {
+                    _magento_version: "<?php echo $magentoVersion; ?>",
+                    _magento_extention_version: "<?php echo $extensionVersion; ?>"
+                }
+            };
+
+            var PriceWaiterCategories = <?php echo $helper->getCategoriesAsJSON($_product); ?>;
+
+            var PriceWaiterRegularPrice = '<?php echo (float) $_product->getPrice(); ?>';
+            var PriceWaiterProductType = '<?php echo $_product->getTypeId(); ?>';
+            //]]>
+        </script>
+        <div class="name-your-price-widget"
+             style='display: block; clear: both; padding-top: 10px; <?php echo $customCss; ?>'>
+            <span id="pricewaiter"></span>
+        </div>
+    <?php endif; ?>
+    <?php if ($_product->getTypeId() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE): ?>
+        <?php
+        $simples = Mage::getModel('catalog/product_type_configurable')->setProduct($_product)
+            ->getUsedProductCollection()
+            ->addAttributeToSelect('sku');
+
+        $idToSku = array();
+        foreach ($simples as $simple) {
+            $idToSku[$simple->getId()] = $simple->getSku();
+        } ?>
+        <?php if (count($idToSku) > 0): ?>
+        <script type="text/javascript">
+            var PriceWaiterIdToSkus = <?php echo json_encode($idToSku); ?>;
+        </script>
+        <?php endif; ?>
+    <?php endif; ?>
+
+    <script src="<?php echo $helper->getWidgetUrl(); ?>" async></script>
+
+<?php endif; ?>

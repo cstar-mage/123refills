@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Turnkeye_All>
+            <version>0.1.0</version>
+        </Turnkeye_All>
+    </modules>
+
+    <global>
+        <blocks>
+            <turnkeye_all>
+                <class>Turnkeye_All_Block</class>
+            </turnkeye_all>
+        </blocks>
+
+        <helpers>
+            <turnkeye_all>
+                <class>Turnkeye_All_Helper</class>
+            </turnkeye_all>
+        </helpers>
+    </global>
+
+    <adminhtml>
+        <translate>
+            <modules>
+                <Turnkeye_All>
+                    <files>
+                        <default>Turnkeye_All.csv</default>
+                    </files>
+                </Turnkeye_All>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <turnkeye_all>
+                    <file>turnkeye_all/layout.xml</file>
+                </turnkeye_all>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

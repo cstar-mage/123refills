@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <productqa_adminhtml_productqa_index>
+        <reference name="content">
+            <block type="productqa/adminhtml_productqa" name="productqa" />
+        </reference>
+    </productqa_adminhtml_productqa_index>
+</layout>

@@ -1,0 +1,15 @@
+<?php if (Mage::helper('iwd_ordermanager')->isEnterpriseMagentoEdition()) : ?>
+<style>
+    #iwd_ordermanager_archive, #iwd_ordermanager_archive-head {display:none !important;}
+</style>
+<script type="text/javascript">
+    document.addEventListener( 'DOMContentLoaded', function () {
+        var iwd_om_closest = function(el, clazz) {
+            while (el.className != clazz) { el = el.parentNode; if (!el) {return null;}}
+            return el;
+        };
+        var iwd_ordermanager_archive = document.getElementById('iwd_ordermanager_archive');
+        iwd_om_closest(iwd_ordermanager_archive, 'section-config').style.display = 'none';
+    }, false );
+</script>
+<?php endif; ?>

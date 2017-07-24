@@ -1,0 +1,58 @@
+<!--<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?=$this->__('Download Exported Files')?></h3></td>
+            <td class="a-right">
+                <button onclick="editForm.submit()" class="scalable save" type="button"><span>Download</span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<div class="entry-edit">
+    <form id="edit_form" name="edit_form" method="post" action="<?=$this->getUrl('*/*/download')?>">
+        <input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+        <h4 class="icon-head head-edit-form fieldset-legend"><?=$this->__('Select Files to Download')?></h4>
+        <span class="smalltext">Multiple selections will be zip archived</span>
+            <table cellspacing="0" class="grid" width="100%">
+            	<tr class="headings">
+            		<th>&nbsp;</th>
+            		<th>Filename</th>
+            		<th>Created</th>
+            		<th>File Size</th>
+            	</tr>
+<?php
+			ob_start();
+			$lines = array();
+			$z = exec("ls -lht ".dirname(__FILE__)."/../../../../../../../var/export", $lines);
+			array_shift($lines);
+			ob_end_clean();
+			$files = array();
+			foreach($lines as $line) {
+				$matches = array();
+				preg_match("/(.*) (.*) (.*) (.*) (.*) (.*) (.*)/", $line, $matches); 
+				$files[] = $matches[7];
+			}
+							
+			$odd_or_even = 0;
+			foreach($files as $file) {
+				$fullpath = dirname(__FILE__)."/../../../../../../../var/export/".$file;
+?>
+				<tr class="<?=($odd_or_even%2)?'odd':'even'?>">
+					<td style="width:50px" class="a-center"><input type="checkbox" id="downloadform[export_<?=$odd_or_even?>]" name="downloadform[export][<?=$odd_or_even?>]" value="<?=$file?>" /></td>
+					<td><label for="downloadform[export_<?=$odd_or_even?>]"><?=$file?></label></td>
+					<td><?=date('m-d-Y h:i:s', filectime($fullpath))?></td>
+					<td><?=round((filesize($fullpath)/1000),1)?> Kb</td>
+				</tr>
+<?php 		
+				$odd_or_even++;
+			}?>
+<!--            <tr>
+                    <td class="label"><?=$this->__('Field label')?> <span class="required">*</span></td>
+                    <td class="input-ele"><input class="input-text required-entry" name="myform[myfield]" /></td>
+                </tr> 
+            </table>
+    </form>
+</div>-->
+<script type="text/javascript">
+    var editForm = new varienForm('edit_form');
+</script>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <BlueAcorn_NewRelicReporting>
+            <active>true</active>
+            <codePool>community</codePool>
+        </BlueAcorn_NewRelicReporting>
+    </modules>
+</config>

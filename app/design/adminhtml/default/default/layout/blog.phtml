@@ -1,0 +1,48 @@
+<?php $posts = $this->getPosts(); ?>
+<div id="messages_product_view">
+    <?php Mage::app()->getLayout()->getMessagesBlock()->setMessages(Mage::getSingleton('customer/session')->getMessages(true)); ?>
+    <?php echo Mage::app()->getLayout()->getMessagesBlock()->getGroupedHtml(); ?>
+</div>
+
+<?php echo $this->getChildHtml('aw_blog_comments_toolbar'); ?>
+<?php foreach ($posts as $post): ?>
+<?php $postCats = $post->getCats(); ?>
+<?php //echo "<pre>";print_r($post);echo "</pre>";//exit;?>
+<?php $time = strtotime($post->getCreatedTime());?>
+    <div class="postWrapper">
+        <div class="postTitle">
+            <h2><a href="<?php echo $post->getAddress(); ?>" ><?php echo $post->getTitle(); ?></a></h2>
+            <div class="postBy"><?php echo $this->__("By"); ?> <?php echo $post->getUser(); ?>
+					<?php if (!empty($postCats)): ?>
+               	<?php echo Mage::helper('blog')->__('Posted in'); ?>
+               	<?php foreach ($postCats as $data): ?>
+                  	<a href="<?php echo $data['url']; ?>"><?php echo $data['title']; ?></a>
+                	<?php endforeach; ?>
+            	<?php endif; ?>          
+            </div>
+            <div class="head-list-date"><?php echo date('F d,Y', $time);?></div>
+        </div>
+			<?php if($post->getFeaturedImage()):?>
+				<div class="postFeature"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$post->getFeaturedImage();?>" alt=""></div>
+			<?php endif; ?>
+			<div class="postcontantpart">
+				<div class="post-right-bar">
+					<div class="post-date">
+						<div class="day"><?php echo date('d', $time);?></div>
+						<div class="month"><?php echo date('M', $time);?></div>
+					</div>
+					<div class="post-buttons">
+						<a class="button-continue-read" href="<?php echo $post->getAddress();?>">Continue reading</a>
+						<?php if ($this->getCommentsEnabled()): ?>
+							<a class="button-read-comments" href="<?php echo $post->getAddress();?>#commentBox"><?php echo $post->getComments();?> Comments</a>
+						<?php endif; ?>
+					</div>
+				</div>
+				<div class="postContent std"><?php echo $post->getShortContent(); ?></div>
+			</div>        
+        <?php echo $this->getBookmarkHtml($post) ?>
+        <div class="tags"><?php echo $this->getTagsHtml($post) ?></div>
+        <div class="clear bottom-border"></div>
+    </div>
+<?php endforeach; ?>
+<?php echo $this->getChildHtml('aw_blog_comments_toolbar'); ?>

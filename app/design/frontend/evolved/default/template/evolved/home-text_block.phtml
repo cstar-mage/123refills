@@ -1,0 +1,12 @@
+<?php $theme = $this->getConfig(); ?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php if($theme['homepage_textrow_enabled'] && $theme['homepage_textrow_content'] != ""): ?>
+	<div class="home-info">
+		<?php $html = $processor->filter($theme['homepage_textrow_content']); ?>
+		<?php echo nl2br($html); ?>
+	</div>
+<?php endif; ?>

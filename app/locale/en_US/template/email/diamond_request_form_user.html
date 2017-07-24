@@ -1,0 +1,129 @@
+<!--@subject Diamond Request User @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var logo_alt":"Email Logo Image Alt",
+"htmlescape var=$data.name":"Customer Name"}
+@-->
+<!--@styles
+body,td { color:#2f2f2f; font:11px/1.35em Verdana, Arial, Helvetica, sans-serif; }
+@-->
+
+<body style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<div style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+<table cellspacing="0" cellpadding="0" border="0" height="100%" width="100%">
+    <tr>
+        <td align="center" valign="top" style="padding:20px 0 20px 0">
+            <!-- [ header starts here] -->
+            <table bgcolor="FFFFFF" cellspacing="0" cellpadding="10" border="0" width="650" style="border:1px solid #E0E0E0;">
+                <tr>
+                    <td valign="top">
+                        <a href="{{store url=""}}" style="color:#1E7EC8;"><img src="{{var logo_url}}" alt="{{var logo_alt}}" border="0"/></a>
+                    </td>
+                </tr>
+                <!-- [ middle starts here] -->
+                <tr>
+                    <td valign="top">
+                        <h1 style="font-size:22px; font-weight:normal; line-height:22px; margin:0 0 11px 0;"">Dear {{htmlescape var=$data.firstname}},</h1>
+                        <p style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#F9F9F9;">
+                        	 Thank you for visiting {{var store.getFrontendName()}}. The information you requested on Diamond Stock {{htmlescape var=$data.stock_number}} is being processed and you will be contacted shortly.
+                        <p>
+                    </td>
+                </tr>
+                <tr>
+                	<td>
+                		<table>
+                			<tr>
+						        <th colspan="2" align="left">Diamond Information:</th>
+						      </tr>
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Lot Number: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.lotno}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Shape: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.shape}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Dimensions: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.dimensions}}</td>
+                			</tr>
+                			
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Carat: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.carat}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Color: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.color}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Clarity: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.clarity}}</td>
+                			</tr>
+                			
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Cut: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.cut}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Culet: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.culet}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Crown: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.crown}}</td>
+                			</tr>
+                			
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Pavilion: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.pavilion}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Depth: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.depth}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Total Price: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.totalprice}}</td>
+                				
+                			</tr>
+                			
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Table: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.tabl}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Polish: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.polish}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Symmetry: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.symmetry}}</td>
+                			</tr>
+
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Certificate: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.certificate}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Cert. Number: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.cert_number}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Fluorescence: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.fluorescence}}</td>
+                			</tr>
+                			<tr>
+                				<td style="padding: 3px;"><label><strong>Fancy Intensity: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.fancy_intensity}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                				<td style="padding: 3px;"><label><strong>Fancy Color: </strong></label></td>
+                				<td style="padding: 3px;">{{htmlescape var=$data.fancycolor}}</td>
+                				<td style="padding: 3px;">&nbsp;</td>
+                			</tr>
+                		</table>
+                	</td>
+                </tr>
+                <tr>
+                	<td>
+                    	<p style="border:1px solid #E0E0E0; font-size:12px; line-height:16px; margin:0; padding:13px 18px; background:#F9F9F9;">If you have any questions, please feel free to contact us at <a href="mailto:{{config path='trans_email/ident_support/email'}}" style="color:#1E7EC8;">{{config path='trans_email/ident_support/email'}}</a> or by phone at {{config path='general/store_information/phone'}}.</p>
+                    </td>
+                </tr>
+                <tr>
+                    <td bgcolor="#EAEAEA" align="center" style="background:#EAEAEA; text-align:center;"><center><p style="font-size:12px; margin:0;">Thank you again, <strong>{{var store.getFrontendName()}}</strong></p></center></td>
+                </tr>
+            </table>
+        </td>
+    </tr>
+</table>
+</div>
+</body>

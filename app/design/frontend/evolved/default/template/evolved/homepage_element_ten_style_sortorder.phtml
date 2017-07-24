@@ -1,0 +1,49 @@
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php 
+$html_img_one_up = $processor->filter($theme['homepage_element_ten_style_image_one_up']);
+$html_img_one_down = $processor->filter($theme['homepage_element_ten_style_image_one_down']);
+$html_img_two = $processor->filter($theme['homepage_element_ten_style_image_two']);
+$html_img_three_up = $processor->filter($theme['homepage_element_ten_style_image_three_up']);
+$html_img_three_down = $processor->filter($theme['homepage_element_ten_style_image_three_down']);
+?>
+
+<div class="home-main">
+<div class="page_element_ten">
+	<div class="center">
+		<div class="up">
+			<a href="<?php echo $theme['homepage_element_ten_style_link_one_up']; ?>" title="<?php echo $theme['homepage_element_ten_style_title_one_up']; ?>" >	
+				<?php echo nl2br($html_img_one_up); ?>
+			</a>
+		</div>
+		<div class="down">
+			<a href="<?php echo $theme['homepage_element_ten_style_link_one_down']; ?>" title="<?php echo $theme['homepage_element_ten_style_title_one_down']; ?>" >	
+				<?php echo nl2br($html_img_one_down); ?>
+			</a>
+		</div>
+	</div>
+	<div class="center">
+			<a href="<?php echo $theme['homepage_element_ten_style_link_two']; ?>" title="<?php echo $theme['homepage_element_ten_style_title_two']; ?>" >	
+				<?php echo nl2br($html_img_two); ?>
+			</a>
+	</div>
+	<div class="center">
+		<div class="up">
+			<a href="<?php echo $theme['homepage_element_ten_style_link_three_up']; ?>" title="<?php echo $theme['homepage_element_ten_style_title_three_up']; ?>" >	
+				<?php echo nl2br($html_img_three_up); ?>
+			</a>
+		</div>
+		<div class="down">
+			<a href="<?php echo $theme['homepage_element_ten_style_link_three_down']; ?>" title="<?php echo $theme['homepage_element_ten_style_title_three_down']; ?>" >	
+				<?php echo nl2br($html_img_three_down); ?>
+			</a>
+		</div>
+	</div>
+</div>
+</div>
+<?php //echo "<br />homepage_element_two_style_sortorder"; ?>
+<?php //echo "<br />homepage_element_three_style_sortorder"; ?>
+<?php //echo "<br />homepage_element_four_style_sortorder"; ?>

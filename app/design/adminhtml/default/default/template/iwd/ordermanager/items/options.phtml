@@ -1,0 +1,11 @@
+<?php $newItem = $this->getData('new_order_item'); ?>
+<?php foreach ($this->getOrderOptions($newItem) as $option): ?>
+    <dt><?php echo $option['label'] ?></dt>
+    <dd>
+        <?php if (isset($option['custom_view']) && $option['custom_view']): ?>
+            <?php echo $this->getCustomizedOptionValue($option); ?>
+        <?php else: ?>
+            <?php echo $option['value']; ?>
+        <?php endif; ?>
+    </dd>
+<?php endforeach; ?>

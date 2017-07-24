@@ -1,0 +1,200 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Diamondrequest>
+            <version>0.1.0</version>
+        </Ideal_Diamondrequest>
+    </modules>
+    <frontend>
+        <routers>
+            <diamondrequest>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Diamondrequest</module>
+                    <frontName>diamondrequest</frontName>
+                </args>
+            </diamondrequest>
+        </routers>
+        <layout>
+            <updates>
+                <diamondrequest>
+                    <file>diamondrequest.xml</file>
+                </diamondrequest>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<diamondrequest>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Diamondrequest</module>
+					<frontName>diamondrequest</frontName>
+				</args>
+			</diamondrequest>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <diamondrequest after="Mage_Adminhtml">Ideal_Diamondrequest_Adminhtml</diamondrequest>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    <adminhtml>
+		<menu>
+			<message translate="title" module="diamondrequest">
+				<title>Messages</title>
+				<sort_order>71</sort_order>               
+			    <children>
+                   <diamondrequest module="diamondrequest">
+					<title>Diamond Requests</title> 
+					<sort_order>71</sort_order>     
+					<action>adminhtml/diamondrequest</action>         
+					<!-- <children>
+						<items module="diamondrequest">
+							<title>Manage Requests</title>
+							<sort_order>0</sort_order>
+							<action>diamondrequest/adminhtml_diamondrequest</action>
+						</items>
+						<settings module="diamondrequest">
+                    		<title>Settings</title>
+			                <sort_order>1000</sort_order>
+		                    <action>adminhtml/system_config/edit/section/diamondrequest</action>
+		                </settings>
+					</children> -->
+					
+				</diamondrequest>
+                </children>
+			</message>
+		</menu>
+		
+		<!--<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Diamondrequest>
+							<title>Custom Reqests</title>
+							<sort_order>10</sort_order>
+						</Diamondrequest>
+					</children>
+				</admin>
+			</resources>
+		</acl>-->
+		<acl>
+		 <resources>
+		       <admin>
+		           <children>
+					   <message translate="title" module="contactform">
+							<title>Messages</title>
+							<sort_order>71</sort_order>               
+							   <children>
+				                   <diamondrequest module="diamondrequest">
+									<title>Diamond Requests</title> 
+									<sort_order>71</sort_order>               
+									<!--<children>
+										<items module="diamondrequest">
+											<title>Manage Requests</title>
+											<sort_order>0</sort_order>											
+										</items>
+										<settings module="diamondrequest">
+				                    		<title>Settings</title>
+							                <sort_order>1000</sort_order>						                    
+						                </settings>
+									</children>  -->
+								</diamondrequest>
+				                </children>
+						</message>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<diamondrequest>
+					<file>diamondrequest.xml</file>
+				</diamondrequest>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <diamondrequest>
+                <class>Ideal_Diamondrequest_Model</class>
+                <resourceModel>diamondrequest_mysql4</resourceModel>
+            </diamondrequest>
+            <diamondrequest_mysql4>
+                <class>Ideal_Diamondrequest_Model_Mysql4</class>
+                <entities>
+                    <diamondrequest>
+                        <table>diamondrequest</table>
+                    </diamondrequest>
+                </entities>
+            </diamondrequest_mysql4>
+        </models>
+        <resources>
+            <diamondrequest_setup>
+                <setup>
+                    <module>Ideal_Diamondrequest</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </diamondrequest_setup>
+            <diamondrequest_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </diamondrequest_write>
+            <diamondrequest_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </diamondrequest_read>
+        </resources>
+        <template>
+            <email>
+                <diamondrequest_email_email_template translate="label" module="diamondrequest">
+                    <label>Diamond Request New Form</label>
+                    <file>diamond_request_form.html</file>
+                    <type>html</type>
+                </diamondrequest_email_email_template>
+                <diamondrequest_email_autoemail_template translate="label" module="diamondrequest">
+                    <label>Auto Diamond Request Form</label>
+                    <file>auto_diamond_request_form.html</file>
+                    <type>html</type>
+                </diamondrequest_email_autoemail_template>
+            </email>
+        </template>
+        <blocks>
+            <diamondrequest>
+                <class>Ideal_Diamondrequest_Block</class>
+            </diamondrequest>
+        </blocks>
+        <helpers>
+            <diamondrequest>
+                <class>Ideal_Diamondrequest_Helper</class>
+            </diamondrequest>
+        </helpers>
+    </global>
+    <default>
+        <diamondrequest>
+            <contacts>
+                <enabled>1</enabled>
+            </contacts>
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>custom2</sender_email_identity>
+                <email_template>diamondrequest_email_email_template</email_template>
+                <autoemail_template>diamondrequest_email_autoemail_template</autoemail_template>
+            </email>
+        </diamondrequest>
+    </default>
+</config>

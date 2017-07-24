@@ -1,0 +1,335 @@
+
+  <!-- FlexSlider -->
+	<link rel="stylesheet" href="<?php echo $this->getSkinUrl(); ?>fslider/demo.css" type="text/css" media="screen" />
+	<link rel="stylesheet" href="<?php echo $this->getSkinUrl(); ?>fslider/flexslider.css" type="text/css" media="screen" />
+  	<script defer src="<?php echo $this->getSkinUrl(); ?>fslider/jquery.flexslider.js"></script>
+  	<script defer src="<?php echo $this->getSkinUrl(); ?>fslider/demo.js"></script>  	
+  <!-- FlexSlider -->
+  
+  <!-- Start tab slider and brand slider  -->
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>tab_slider/css/jcarousel.responsive.css">
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js/jquery.jcarousel.min.js"></script>
+  <!-- end tab slider and brand slider  -->
+  
+  	<?php //echo Mage::app()->getLayout()->createBlock('slideshow/slideshow')->setTemplate('evolved/abc.phtml')->toHtml(); ?>
+  
+<?php
+
+$SQL="SELECT * FROM `evolved` WHERE `value` IS NOT NULL AND `type` IN ('evolved_homepage_element_one','evolved_homepage_element_two','evolved_homepage_element_three','evolved_homepage_element_four','evolved_homepage_element_five',
+'evolved_homepage_element_six','evolved_homepage_element_seven','evolved_homepage_element_eight','evolved_homepage_element_nine','evolved_homepage_element_ten',
+'evolved_homepage_element_eleven')";
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+$results = $write->fetchAll($SQL);
+$theme = array();
+
+foreach($results as $row){
+	$theme[$row['field']] = $row['value'];
+}
+
+//$theme = Ideal_Evolved_Block_Evolved::getConfig();
+/* $evolved_homepage_element_one = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_one');
+$evolved_homepage_element_two = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_two');
+$evolved_homepage_element_three = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_three');
+$evolved_homepage_element_four = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_four');
+$evolved_homepage_element_five = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five');
+$evolved_homepage_element_six = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_six');
+$evolved_homepage_element_seven = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_seven');
+$evolved_homepage_element_eight = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_eight');
+$evolved_homepage_element_nine = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_nine');
+$evolved_homepage_element_ten = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_ten');
+$evolved_homepage_element_eleven = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_eleven');
+$theme = array_merge(
+			$evolved_homepage_element_one,
+			$evolved_homepage_element_two,
+			$evolved_homepage_element_three,
+			$evolved_homepage_element_four,
+			$evolved_homepage_element_five,
+			$evolved_homepage_element_six,
+			$evolved_homepage_element_seven,
+			$evolved_homepage_element_eight,
+			$evolved_homepage_element_nine,
+			$evolved_homepage_element_ten,
+			$evolved_homepage_element_eleven
+		); */
+if(count($theme) == 0) {
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+}
+//echo "<pre>"; print_r($theme); echo "</pre>"
+?>
+
+<?php 
+$sortincreement = 1;
+if($theme['homepage_element_one_style_enable'] == 1)
+{
+	if($theme['homepage_element_1_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_1_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_1_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_one.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_1_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_one.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_one_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_one.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_two_style_enable'] == 1)
+{
+	if($theme['homepage_element_2_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_2_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_2_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_two.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_2_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_two.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_two_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_two.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_three_style_enable'] == 1)
+{
+	if($theme['homepage_element_3_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_3_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_3_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_three.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_3_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_three.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_three_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_three.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_four_style_enable'] == 1)
+{
+	if($theme['homepage_element_4_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_4_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_4_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_four.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_4_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_four.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_four_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_four.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_five_style_enable'] == 1)
+{
+	if($theme['homepage_element_5_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_5_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_5_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_five.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_5_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_five.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_five_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_five.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_six_style_enable'] == 1)
+{
+	if($theme['homepage_element_6_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_6_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_6_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_six.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_6_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_six.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_six_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_six.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_seven_style_enable'] == 1)
+{
+	if($theme['homepage_element_7_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_7_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_7_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_seven.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_7_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_seven.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_seven_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_seven.phtml')->toHtml();
+		}
+	}
+}
+
+
+if($theme['homepage_element_eight_style_enable'] == 1)
+{
+	if($theme['homepage_element_8_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_8_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_8_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_eight.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_8_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_eight.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_eight_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_eight.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_nine_style_enable'] == 1)
+{
+	if($theme['homepage_element_9_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_9_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_9_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_nine.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_9_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_nine.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_nine_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_nine.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_ten_style_enable'] == 1)
+{
+	if($theme['homepage_element_10_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_10_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_10_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_ten.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_10_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_ten.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_ten_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_ten.phtml')->toHtml();
+		}
+	}
+}
+
+if($theme['homepage_element_eleven_style_enable'] == 1)
+{
+	if($theme['homepage_element_11_sort_order'])
+	{
+			if($html_arr[$theme['homepage_element_11_sort_order']])
+			{
+				$html_arr[$theme['homepage_element_11_sort_order'].".".$sortincreement] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_eleven.phtml')->toHtml();
+				$sortincreement++;
+			}
+			else
+			{
+				$html_arr[$theme['homepage_element_11_sort_order']] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_eleven.phtml')->toHtml();
+			}
+	}
+	else
+	{
+		if($theme['homepage_element_eleven_style_enable'] == 1)
+		{
+			$empty_arr[] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_eleven.phtml')->toHtml();
+		}
+	}
+}
+ksort($html_arr);
+//echo sizeof($empty_arr);
+if((sizeof($html_arr) != 0) && (sizeof($empty_arr) == 0))
+{
+	$homesort = $html_arr;
+}
+else if((sizeof($html_arr) != 0) && (sizeof($empty_arr) != 0))
+{
+	$homesort = array_merge($html_arr,$empty_arr);
+}
+else
+{
+	$homesort = $empty_arr;
+}
+//echo "<pre>"; print_r($homesort); exit;
+?>
+<?php $footercounter = 1;?>
+	<?php foreach($homesort as $homesort_key=>$homesort_value):	?>
+			<?php echo $homesort_value; //echo "<pre>"; print_r($homesort_value); echo "</pre>"; ?>		
+		<?php $footercounter++; ?>
+	<?php endforeach; ?>

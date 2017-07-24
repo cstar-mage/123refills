@@ -1,0 +1,841 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+
+
+.loose_diamonds_main{
+	width:100%;
+	margin:auto;
+}
+.loose_diamonds_main .top {
+  margin-bottom: 50px;
+}
+.loose_diamonds_main .content {
+  float: left;
+  width: 100%;
+}
+
+.loose_diamonds_main #contactForm {
+  width: 100%;
+  margin: 0 auto;
+}
+
+.loose_diamonds_main .checkboxes {
+  width: 890px;
+  margin: 0 auto;
+}
+.loose_diamonds_main .checkboxes .ckcs {
+  float: left;
+  text-align: center;
+  margin: 0px 19px 0px 0px;
+  position: relative;
+}
+.loose_diamonds_main .checkboxes .imgbxs {
+  font-size: 12px;
+  width: 70px;
+}
+.checkboxes span {
+  color: #555555;
+  float: left;
+  font-family: 'Lato',sans-serif;
+  font-weight: normal;
+  font-size: 12px;
+  text-align: center;
+  width: 100%;
+    margin: 10px 0 5px;
+}
+.loose_diamonds_main .checkboxes img {
+  border: 0;
+  vertical-align: top;
+}
+.loose_diamonds_main .checkboxes .imgbxs label {
+  	width:100% !important;
+    margin-left: 0 !important;
+}
+.loose_diamonds_main .checkboxes .ckcs span input[type="checkbox"] {
+  margin: 6px 0 0 -10px;
+}
+.loose_diamonds_main .dia input[type=checkbox] {
+  display: none;
+}
+.loose_diamonds_main .checkboxes .dia label {
+  background: none repeat scroll 0 0 #FFFFFF !important;
+  border: 1px solid #c4c5c7 !important;
+  border-radius: 2px !important;
+  clear: left !important;
+  cursor: pointer !important;
+  float: left !important;
+  height: 16px !important;
+  margin-left: -8px !important;
+  position: absolute !important;
+  width: 16px !important;
+  font-family: 'Lato',sans-serif !important;
+  font-size: 24px !important;
+  font-weight: 300 !important;
+  text-align: center !important;
+  text-transform: uppercase !important;
+  display: inline-block !important;
+}
+.loose_diamonds_main .middle {
+    margin: 0px auto 0;
+    max-width: 928px;
+  float: none;
+}
+.loose_diamonds_main .content.middle ul li {
+  width: 214px;
+  float: left;
+  border-right: 1px solid #cccccc;
+  margin: 0px 0px 0px 18px !important;
+}
+.loose_diamonds_main .content.middle ul li.last {   
+  border: none;
+}
+.loose_diamonds_main .content.middle ul li span {
+  width: 90%;
+  float: left;
+  font-family: 'Lato',sans-serif;
+  font-size: 14px;
+  text-align: center;
+  color: #000;
+  font-weight: bold;
+  margin: 6px 0px 15px;
+}
+.loose_diamonds_main .select {
+  width: 90px;
+  float: left;
+  margin: 0px 10px 0px 0px;
+}
+.loose_diamonds_main .select label {
+  position: relative;
+  width: 90px;
+  float: left;
+}
+.loose_diamonds_main select {
+  padding: 3px;
+  float: left;
+  margin: 0px 0px 20px;
+  border: 1px solid #999999;
+  outline: none;
+  display: inline-block;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  cursor: pointer;
+  width: 90px;
+    color: #213B55 !important;
+  font-family: 'Lato',sans-serif;
+  font-size: 12px;
+  font-weight: 400;
+  vertical-align: middle;
+}
+.loose_diamonds_main .top
+{
+	margin-bottom: 50px;
+}
+.loose_diamonds_main .input-field {
+    width: 90px;
+  height: 28px;;
+  float: left;
+  font-family: 'Lato',sans-serif;
+  font-size: 12px;
+  color: #000;
+  border: 1px solid #999999;
+  margin: 0px 0px 17px;
+  padding: 0px 0px 0px 10px;
+}
+.loose_diamonds_main .margin_left {
+  margin-left: 9px;
+}
+.loose_diamonds_main .bottom {
+  margin: 60px 0px 0px 0px;
+}
+.loose_diamonds_main .bottom .inner {
+  margin: 0 auto;
+  width: 820px;
+  text-align: center;
+}
+.loose_diamonds_main .input-field-area {
+  width: 272px;
+  float: left;
+  margin: 0px 0px 49px 0px;
+}
+.loose_diamonds_main .input-field-large {
+  width: 240px;
+  height: 35px;
+  float: left;
+  font-family: 'Lato',sans-serif;
+  font-size: 12px;
+  color: #000;
+  padding-left: 10px;
+  border: 1px solid #999;
+  margin: 0px;
+}
+.loose_diamonds_main .submit_btn {
+  width: 280px;
+  height: 55px;
+  color: #fff !important;
+  font-family: 'Lato',sans-serif;
+  font-size: 18px;
+  line-height: 44px;
+  text-align: center;
+  font-weight: bold;
+  border: none;
+  background: url(images/submit.png) no-repeat;
+  margin: 0 auto;
+  cursor: pointer;
+  display:inline-block;
+  float:none;
+  margin-bottom:10px;
+}
+.dia label:before {
+  content: "";
+  display: inline-block;
+  width: 12px;
+  height: 12px;
+  float: left;
+  margin-left: 10px;
+  position: absolute;
+  left: 0;
+  top: 5px;
+  bottom: 1px;
+}
+
+.dia input[type=checkbox]:checked + label:before {
+  content: "\2713" !important;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, .2) !important;
+  font-size: 15px !important;
+  color: #7cad13 !important;
+  text-align: center !important;
+  line-height: 7px !important;
+  margin: -2px 0px 0px 1px !important;
+}
+.dia input[type="checkbox"] + label:after {
+  -moz-border-bottom-colors: none;
+  -moz-border-left-colors: none;
+  -moz-border-right-colors: none;
+  -moz-border-top-colors: none;
+  background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+  border-color: -moz-use-text-color -moz-use-text-color #333333 #333333;
+  border-image: none;
+  border-style: none none solid solid;
+  border-width: medium medium 3px 3px;
+  content: "";
+  float: right;
+  height: 4px;
+  left: 3px;
+  opacity: 0;
+  position: absolute;
+  top: 3px;
+  transform: rotate(-45deg);
+  width: 8px;
+}
+.loose_diamonds_main .checkboxes .ckcs span input[type="checkbox"]
+{
+	background: none !important;
+  border: none !important;
+  box-shadow: none !important;
+  height: auto !important;
+}
+
+.loose_diamonds_main h1{
+	width:100%;
+	float:left;
+	font-family:Garamond;
+	font-size:24px;
+	color:#383737;
+	text-align:center;
+	font-weight:normal;
+	background:url(images/loose_diamonds.jpg) no-repeat top center;
+	margin:0px;
+	padding:24px 0px 0px;
+}
+.loose_diamonds_main p{
+	width:980px;
+	float:left;
+	font-family:aril;
+	font-size:14px;
+	color:#383737;
+	text-align:center;
+	margin:0px;
+	padding:4px 0px 0px;
+}
+
+
+.loose_diamonds_main .top  h3{
+ text-align:center;
+}
+
+
+
+
+
+.diamondrequestmain .loose_diamonds_main p{width: auto;}
+.custmain .customfrm .form-list .big {
+    float: none;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+.diamondrequestmain .customfrm .form-list .field {
+    width: 320px;
+}
+
+.form-list label {
+    float: none;
+    font-family: 'Lato',sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+}
+.custmain .customfrm .form-list .ckeckboxes {
+    margin: 0 auto;
+    padding: 10px 0 0;
+    width: 787px;
+}
+.custmain .customfrm .form-list .ckeckboxes .ckcs {
+    float: left;
+    padding: 22px 20px;
+    width: 120px;
+}
+
+.custmain .customfrm .form-list .ckeckboxes .imgbxs {
+    float: left;
+    height: 61px;
+    width: 120px;
+}
+.custmain, .customfrm, .form-list .ckeckboxes span {
+    color: #555555;
+    float: left;
+    font-family: 'Lato',sans-serif;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+.ckcs span:before {
+    border-radius: 3px;
+}
+.custmain, .customfrm, .form-list, .ckeckboxes span {
+    color: #555555;
+    float: left;
+    font-family: 'Lato',sans-serif;
+    font-weight: normal;
+	font-size:12px;
+    text-align: center;
+    width: 100%;
+	margin:0px 0px 0px;
+}
+.diamondrequestmain, .customfrm, .form-list, .ckeckboxes span {
+    margin: 10px 0 5px;
+}
+
+.diamondrequestmain .customfrm .form-list .ckeckboxes .ckcs span input[type="checkbox"] {
+    margin: 6px 0 0 -10px;
+}
+input, select, textarea, button {
+    color: #213B55 !important;
+    font-family: 'Lato',sans-serif;
+    font-size: 12px;
+    font-weight: 400;
+    vertical-align: middle;
+}
+
+.dia input[type="checkbox"]:checked + label:after {
+     opacity: 1;
+	transform: none;  
+    background: none;
+    border:3px solid transparent ;
+    content: "";
+    float: right;
+    height: 6px;
+    left: 2px;   
+    position: absolute;
+    top: 2px;
+    width: 6px;
+}
+.dia input[type="checkbox"] + label:after {
+    -moz-border-bottom-colors: none;
+    -moz-border-left-colors: none;
+    -moz-border-right-colors: none;
+    -moz-border-top-colors: none;
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    border-color: -moz-use-text-color -moz-use-text-color #333333 #333333;
+    border-image: none;
+    border-style: none none solid solid;
+    border-width: medium medium 3px 3px;
+    content: "";
+    float: right;
+    height: 4px;
+    left: 3px;
+    opacity: 0;
+    position: absolute;
+    top: 3px;
+    transform: rotate(-45deg);
+    width: 8px; 
+}
+
+.drowdown  select { -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    padding:3px;
+    margin: 0;    
+    background: #e9e9e9;
+    color:#383737;
+    border:none;
+    outline:none;
+    display: inline-block;
+    -webkit-appearance:none;
+    -moz-appearance:none;
+    appearance:none;
+    cursor:pointer;
+}
+
+.drowdown  label {position:relative; display: inline-block; float: left;}
+ .drowdown  label:after { background-color:#e9e9e9;
+    content:'▼';
+    font:11px "Consolas", monospace;
+    color:#383737;
+    -webkit-transform:rotate(0deg);
+    -moz-transform:rotate(0deg);
+    -ms-transform:rotate(0deg);
+    transform:rotate(0deg);
+      right: 3px;
+    top: 3px;
+height: 19px;
+  width: 20px;
+    /* border-bottom:1px solid #ddd; */
+    position:absolute;
+    pointer-events:none;
+}
+
+
+
+
+
+
+@media screen and (-webkit-min-device-pixel-ratio:0) {
+	.drowdown  label:after { 	top: 5px;
+	}
+}
+.drowdown  label:before {
+    content:'';
+    right:6px; top:2px;
+    width:20px; height:17px;
+     background:#e9e9e9; 
+    position:absolute;
+    pointer-events:none;
+    display:block;
+}
+.drp2 label:before{top:2px;}
+.drp2 label:after{top:3px;}
+.diamondrequestmain .customfrm .form-list .ckeckboxes .ckcs span label[for="stonetype"] {
+    margin: 6px 0 0 -10px;
+}
+.form-list label {
+    float: none;
+    font-family: 'Lato',sans-serif;
+    font-size: 24px;
+    font-weight: 300;
+    text-align: center;
+    text-transform: uppercase;
+}
+.dia label {
+    background: none repeat scroll 0 0 #FFFFFF;
+    border: 1px solid #c4c5c7;
+    border-radius: 2px;
+    clear: left;
+    cursor: pointer;
+    float: left;
+    height: 16px;
+    margin-left: -18px;
+    position: absolute;
+    top: 82;
+    width: 16px;
+}
+.ckcs {
+    float: left;
+    text-align: center;
+	margin:0px 18px 0px;
+	position:relative;
+}
+.custmain, .customfrm, .form-list, .ckeckboxe-s span {
+    color: #555555;
+    float: left;
+    font-family: 'Lato',sans-serif; text-transform :none;
+    font-size: 12px;
+    font-weight: normal;
+    text-align: center;
+    width: 100%;
+}
+
+	
+.field {
+    float: left;
+    margin: 38px 0 0;
+    width: 100%;
+
+}
+.first{
+	margin-left:0px !important;}
+
+.last{
+	margin-right:0px !important;}
+.drowdown{
+	width:100%;
+	float:left;
+	margin:60px 0px 0px;
+}
+.drowdown .validation-advice{display:none;}
+.carats{
+	width:203px;
+	float:left;
+	border-right:1px solid #87e5cd;
+	margin:0px;
+}
+.carats span{
+	width:203px;
+	float:left;
+	font-family:Garamond;
+	font-size:13px;
+	text-align:left;
+	color:#383737;
+	margin:6px 0px 0px;
+}
+.drp2 .carats span.cnt{text-align:center;}
+.carats1 span{
+	width:203px;
+	float:left;
+	font-family:Garamond;
+	font-size:13px;
+	text-align:left;
+	color:#383737;
+	margin:6px 0px 0px;
+}
+.carats em{
+	float:left;
+	font-family:Garamond;
+	font-size:13px;
+	text-align:left;
+	color:#383737;
+	margin:0px 0px 0px;
+	padding:0px 10px;
+}
+.carats1 em{
+	float:left;
+	font-family:Garamond;
+	font-size:13px;
+	text-align:left;
+	color:#383737;
+	margin:0px 0px 0px;
+	padding:0px 10px;
+}
+.caratsizefrom{
+	width:81px;
+	float:left;
+	margin:0px 0px 17px;
+	padding:0px;
+}
+.carats1{
+	width:203px;
+	float:left;
+	border-right:1px solid #87e5cd;
+	margin:0px 0px 0px 14px;
+}
+.carats2{
+	width:100px;
+	float:left;
+	margin:0px 0px 0px 14px;
+}
+.carats2 span{ width : 100%;
+	float:left;
+	font-family:Garamond;
+	font-size:13px;
+	text-align:left;
+	color:#383737;
+	margin:6px 0px 0px;
+}
+.carats2 em{
+	float:left;
+	font-family:Garamond;
+	font-size:13px;
+	text-align:left;
+	color:#383737;
+	margin:0px 0px 0px;
+	padding:0px 10px;
+}
+.personal_div{
+	width:748px;
+	float:left;
+	margin:60px 0px 0px 114px;
+}
+.personal_div h1{
+	background:none;
+	padding:0px 0px 52px;
+}
+.name_required{
+	width:167px;
+	float:left;
+	margin:0px 26px 32px 0px;
+}
+.name_required span{
+	width:167px;
+	float:left;
+	font-family:Garamond;
+	font-size:14px;
+	color:#383737;
+	margin:0px 0px 3px;
+}
+.name_required_input{
+	width:167px;
+	height:25px;
+	float:left;
+	background:#e9e9e9;
+	border:none;
+	margin:0px;
+}
+.drp2 .name_required_input{margin:0px 18px;}
+.right_mar{
+	margin-right:0px;
+}
+.submit_btn{
+	width:168px; cursor : pointer;
+	float:left;
+	height:44px;
+	color:#fff !important;
+	font-family:Garamond;
+	font-size:18px;
+	line-height:44px;
+	text-align:center;
+	border:none;
+	background:#87e5cd;
+	margin:0px 0px 0px 287px;
+}
+
+
+
+
+.buttons-sets{text-align: center;}
+
+.buttons-sets .custsub{width: 220px;height: 44px;background: #abb6c2;color: #FFF;font-family: 'Lato', sans-serif;
+	font-size: 12px;text-transform: uppercase;border: none;font-weight: bold;}
+.custmain .customfrm .form-list li.splline{padding: 55px 0 20px;}
+
+#cboxOverlay {background: #000 !important;opacity:0.5 !important;}
+#cboxClose:hover {
+    background-position:0 !important;
+}
+#colorbox {
+     width:490px !important;
+}
+#cboxWrapper {
+    width:490px !important;
+}
+
+
+@media screen and (max-width: 912px) {
+	.checkboxes .ckcs {
+		float: left;
+		text-align: center;
+		margin: 0px 18.5px 0px 0px !important;
+		position: relative;
+	}
+	.checkboxes .ckcs.last{margin: 0 !important;}
+	/*.content.middle ul li{margin: 0px 0px 0px 14px !important;}*/
+}
+@media screen and (max-width: 900px) {
+	.checkboxes .ckcs {
+		float: left;
+		text-align: center;
+		margin: 0px 17.5px 0px 0px !important;
+		position: relative;
+	}
+	.checkboxes .ckcs.last{margin: 0 !important;}
+	/*.content.middle ul li{margin: 0px 0px 0px 11px !important;}*/
+}
+
+
+
+@media screen and (max-width: 895px) {
+	.checkboxes .ckcs {
+		float: left;
+		text-align: center;
+		margin: 0px 16.5px 0px 0px !important;
+		position: relative;
+	}
+	.checkboxes .ckcs.last{margin: 0 !important;}
+	/*.content.middle ul li{margin: 0px 0px 0px 10px !important;}*/
+}
+@media screen and (max-width: 890px) {
+		.checkboxes {
+		width: 79% !important;
+		margin: 0 auto;
+		}
+		.checkboxes .ckcs{margin: 0px 10.5% 23px 0px !important;}
+		/*.content.middle ul li{padding: 0px 35px 0px 35px !important;}
+		.content.middle ul li.last{padding: 0 35.2% !important;}*/
+}
+@media screen and (max-width: 830px){
+.request_form .bottom .inner{width: 280px;}
+.request_form .bottom .input-field-area{margin: 0px 0px 24px 0px;width:100%;}
+.request_form .bottom .input-field-area .input-field-large{width: 268px;}
+}
+@media screen and (max-width: 890px) {
+	.content.top .checkboxes{width:100% !important;}
+	.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last{  margin: 0px 5.3% 23px !important;}
+}
+@media screen and (max-width: 780px) {
+	.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {  margin: 0px 4.8% 23px !important;}
+}
+@media screen and (max-width: 700px) {
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {  margin: 0px 4.2% 23px !important;}
+}
+@media screen and (max-width: 637px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px 3.8% 23px !important;}
+}
+@media screen and (max-width: 585px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {  margin: 0px 3.3% 23px !important;}
+}
+@media screen and (max-width: 540px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {  margin: 0px 2.7% 23px !important;}
+}
+@media screen and (max-width: 500px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {    margin: 0px 2.2% 23px !important;}
+}
+@media screen and (max-width: 470px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px 1.7% 23px !important;}
+}
+@media screen and (max-width: 440px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px 1.25% 23px !important;}
+}
+@media screen and (max-width: 418px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {  margin: 0px 0.7% 23px !important;}
+}
+@media screen and (max-width: 390px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px .5% 23px !important;}
+}
+@media screen and (max-width: 370px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px 15% 23px !important;}
+}
+@media screen and (max-width: 350px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px 14% 23px !important;}
+}
+@media screen and (max-width: 320px){
+.content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {margin: 0px 13% 23px !important;}	
+}
+@media screen and (max-width: 945px){
+	.content.middle ul
+	{
+		width: 728px;
+  margin: 0 auto;
+  float: none;
+	}
+	.loose_diamonds_main .content.middle ul li.last {
+  border: none;
+  width: 227px;
+  margin: 0 auto !important;
+  float: none;
+}
+.loose_diamonds_main .content.middle ul li:nth-child(3){ border:none;}
+	}
+	
+	@media screen and (max-width: 821px)
+	{
+	 	.loose_diamonds_main .input-field-area {
+		  
+		  width: 272px !important;
+		  margin: 0px auto 0 !important;
+		  float: none !important;
+		  display: block !important;
+		  padding: 25px 0 !important;
+			}
+		.loose_diamonds_main .submit_btn
+			{
+				margin: 29px auto 10px;
+			}
+			.loose_diamonds_main .input-field-large {
+  width: 100%;
+			}
+			.loose_diamonds_main .bottom {
+  margin: 0px 0px 0px 0px;
+}
+	}
+	
+	
+	@media screen and (max-width: 820px)
+	{
+	.loose_diamonds_main .bottom .inner {
+  margin: 0 auto !important;
+  width: 100% !important;
+  text-align: center !important;
+}}
+@media screen and (max-width: 702px)
+{
+	.loose_diamonds_main .content.middle ul li
+	{
+		border: none;
+  width: 214px !important;
+  margin: 0 auto !important;
+  float: none;
+	}
+}
+@media screen and (max-width: 567px)
+
+{.content.middle ul {
+  width: 100%;
+  margin: 0 auto;
+  float: none;
+}}
+@media only screen and (max-width: 770px)
+{
+.loose_diamonds_main .checkboxes .imgbxs label
+{
+	     font-family: "Open Sans", "Helvetica Neue", Verdana, Arial, sans-serif !important;
+  text-align: center;
+  margin: 0 auto;
+  display: block;
+  width: 100% !important;
+}
+.loose_diamonds_main .select label
+{
+	   margin-left: 0px !important; 
+}
+}
+@media only screen and (max-width: 694px)
+{
+	.content.middle ul
+	{
+		width:100% !important;
+	}
+}
+
+@media only screen and (max-width: 470px)
+{
+	.content.top .checkboxes {
+  width: 206px !important;}
+  .content.top .checkboxes .ckcs, .content.top .checkboxes .ckcs.last {
+  margin: 0px 0.7% 23px !important;
+  width: 100px;
+}
+.loose_diamonds_main .checkboxes .dia label
+{
+	  margin-left: -8px !important;
+} 
+	.loose_diamonds_main .checkboxes .imgbxs
+	{
+		  margin: 0 16px;
+	}
+}
+
+.diamondrequest-index-index .required, .validation-advice {
+    margin: 20px 0 0 !important;
+}
+.loose_diamonds_main .checkboxes .ckcs {
+  float: left;
+  margin: 0 19px 0 0;
+  position: relative;
+  text-align: center;
+  width: 8%;
+}
+.content.bottom .input-field-area .validation-advice {
+    display: inline-block;
+    margin: 5px 0 0 !important;
+}

@@ -1,0 +1,446 @@
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php if($theme['homepage_element_one_style_enable'] == 1): ?>	
+	<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_one.phtml')->toHtml(); ?>
+<?php endif; ?>
+<?php if($theme['homepage_element_two_style_enable'] == 1): ?>	
+	<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_two.phtml')->toHtml(); ?>
+<?php endif; ?>
+<?php if($theme['homepage_element_three_style_enable'] == 1): ?>	
+	<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_three.phtml')->toHtml(); ?>
+<?php endif; ?>
+<?php if($theme['homepage_element_four_style_enable'] == 1): ?>	
+	<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_four.phtml')->toHtml(); ?>
+<?php endif; ?>
+<?php if($theme['homepage_element_five_style_enable'] == 1): ?>	
+	<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_element_style_five.phtml')->toHtml(); ?>
+<?php endif; ?>
+
+<?php
+$sortincreement = 1;
+if((!$theme['homepage_sortorder_banner']) || ($theme['homepage_sortorder_banner'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_banner';
+}
+else
+{
+	$homesort[$theme['homepage_sortorder_banner']] = 'homepage_sortorder_banner';
+}
+if((!$theme['homepage_sortorder_featured']) || ($theme['homepage_sortorder_featured'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_featured';
+}
+else
+{
+	if($homesort[$theme['homepage_sortorder_featured']])
+	{
+		$homesort[$theme['homepage_sortorder_featured'].".".$sortincreement] = 'homepage_sortorder_featured';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_sortorder_featured']] = 'homepage_sortorder_featured';
+	}
+}
+if((!$theme['homepage_sortorder_featured_tabs']) || ($theme['homepage_sortorder_featured_tabs'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_featured_tabs';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_featured_tabs']] = 'homepage_sortorder_featured_tabs';
+	if($homesort[$theme['homepage_sortorder_featured_tabs']])
+	{
+		$homesort[$theme['homepage_sortorder_featured_tabs'].".".$sortincreement] = 'homepage_sortorder_featured_tabs';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_sortorder_featured_tabs']] = 'homepage_sortorder_featured_tabs';
+	}
+}
+if((!$theme['homepage_sortorder_textrow']) || ($theme['homepage_sortorder_textrow'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_textrow';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_textrow']] = 'homepage_sortorder_textrow';
+	if($homesort[$theme['homepage_sortorder_textrow']])
+	{
+		$homesort[$theme['homepage_sortorder_textrow'].".".$sortincreement] = 'homepage_sortorder_textrow';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_sortorder_textrow']] = 'homepage_sortorder_textrow';
+	}
+}
+if((!$theme['homepage_diamondrequest_sortorder_textrow']) || ($theme['homepage_diamondrequest_sortorder_textrow'] == ""))
+{
+	$homesort_empty[] = 'homepage_diamondrequest_sortorder_textrow';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_textrow']] = 'homepage_sortorder_textrow';
+	if($homesort[$theme['homepage_diamondrequest_sortorder_textrow']])
+	{
+		$homesort[$theme['homepage_diamondrequest_sortorder_textrow'].".".$sortincreement] = 'homepage_diamondrequest_sortorder_textrow';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_diamondrequest_sortorder_textrow']] = 'homepage_diamondrequest_sortorder_textrow';
+	}
+}
+if((!$theme['homepage_sortorder_boxes_row1']) || ($theme['homepage_sortorder_boxes_row1'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_boxes_row1';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row1']] = 'homepage_sortorder_boxes_row1';
+	if($homesort[$theme['homepage_sortorder_boxes_row1']])
+	{
+		$homesort[$theme['homepage_sortorder_boxes_row1'].".".$sortincreement] = 'homepage_sortorder_boxes_row1';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_sortorder_boxes_row1']] = 'homepage_sortorder_boxes_row1';
+	}
+}
+if((!$theme['homepage_sortorder_boxes_row2']) || ($theme['homepage_sortorder_boxes_row2'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_boxes_row2';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row2']] = 'homepage_sortorder_boxes_row2';
+	if($homesort[$theme['homepage_sortorder_boxes_row2']])
+	{
+		$homesort[$theme['homepage_sortorder_boxes_row2'].".".$sortincreement] = 'homepage_sortorder_boxes_row2';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_sortorder_boxes_row2']] = 'homepage_sortorder_boxes_row2';
+	}
+}
+if((!$theme['homepage_sortorder_boxes_row3']) || ($theme['homepage_sortorder_boxes_row3'] == ""))
+{
+	$homesort_empty[] = 'homepage_sortorder_boxes_row3';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_sortorder_boxes_row3']])
+	{
+		$homesort[$theme['homepage_sortorder_boxes_row3'].".".$sortincreement] = 'homepage_sortorder_boxes_row3';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	}
+}
+if((!$theme['homepage_element_one_style_sortorder']) || ($theme['homepage_element_one_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_one_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_one_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_one_style_sortorder'].".".$sortincreement] = 'homepage_element_one_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_one_style_sortorder']] = 'homepage_element_one_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_two_style_sortorder']) || ($theme['homepage_element_two_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_two_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_two_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_two_style_sortorder'].".".$sortincreement] = 'homepage_element_two_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_two_style_sortorder']] = 'homepage_element_two_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_three_style_sortorder']) || ($theme['homepage_element_three_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_three_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_three_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_three_style_sortorder'].".".$sortincreement] = 'homepage_element_three_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_three_style_sortorder']] = 'homepage_element_three_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_four_style_sortorder']) || ($theme['homepage_element_four_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_four_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_four_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_four_style_sortorder'].".".$sortincreement] = 'homepage_element_four_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_four_style_sortorder']] = 'homepage_element_four_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_five_style_sortorder']) || ($theme['homepage_element_five_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_five_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_five_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_five_style_sortorder'].".".$sortincreement] = 'homepage_element_five_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_five_style_sortorder']] = 'homepage_element_five_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_six_style_sortorder']) || ($theme['homepage_element_six_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_six_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_six_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_six_style_sortorder'].".".$sortincreement] = 'homepage_element_six_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_six_style_sortorder']] = 'homepage_element_six_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_seven_style_sortorder']) || ($theme['homepage_element_seven_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_seven_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_seven_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_seven_style_sortorder'].".".$sortincreement] = 'homepage_element_seven_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_seven_style_sortorder']] = 'homepage_element_seven_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_eight_style_sortorder']) || ($theme['homepage_element_eight_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_eight_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_eight_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_eight_style_sortorder'].".".$sortincreement] = 'homepage_element_eight_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_eight_style_sortorder']] = 'homepage_element_eight_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_nine_style_sortorder']) || ($theme['homepage_element_nine_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_nine_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_nine_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_nine_style_sortorder'].".".$sortincreement] = 'homepage_element_nine_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_nine_style_sortorder']] = 'homepage_element_nine_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_ten_style_sortorder']) || ($theme['homepage_element_ten_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_ten_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_ten_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_ten_style_sortorder'].".".$sortincreement] = 'homepage_element_ten_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_ten_style_sortorder']] = 'homepage_element_ten_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_eleven_style_sortorder']) || ($theme['homepage_element_eleven_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_eleven_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_eleven_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_eleven_style_sortorder'].".".$sortincreement] = 'homepage_element_eleven_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_eleven_style_sortorder']] = 'homepage_element_eleven_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_twelve_style_sortorder']) || ($theme['homepage_element_twelve_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_twelve_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_twelve_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_twelve_style_sortorder'].".".$sortincreement] = 'homepage_element_twelve_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_twelve_style_sortorder']] = 'homepage_element_twelve_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_thirteen_style_sortorder']) || ($theme['homepage_element_thirteen_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_thirteen_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_thirteen_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_thirteen_style_sortorder'].".".$sortincreement] = 'homepage_element_thirteen_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_thirteen_style_sortorder']] = 'homepage_element_thirteen_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_fourteen_style_sortorder']) || ($theme['homepage_element_fourteen_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_fourteen_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_fourteen_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_fourteen_style_sortorder'].".".$sortincreement] = 'homepage_element_fourteen_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_fourteen_style_sortorder']] = 'homepage_element_fourteen_style_sortorder';
+	}
+}
+if((!$theme['homepage_element_fifthteen_style_sortorder']) || ($theme['homepage_element_fifthteen_style_sortorder'] == ""))
+{
+	$homesort_empty[] = 'homepage_element_fifthteen_style_sortorder';
+}
+else
+{
+	//$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+	if($homesort[$theme['homepage_element_fifthteen_style_sortorder']])
+	{
+		$homesort[$theme['homepage_element_fifthteen_style_sortorder'].".".$sortincreement] = 'homepage_element_fifthteen_style_sortorder';
+		$sortincreement++;
+	}
+	else
+	{
+		$homesort[$theme['homepage_element_fifthteen_style_sortorder']] = 'homepage_element_fifthteen_style_sortorder';
+	}
+}
+
+//echo "<pre>";
+//print_r($homesort);
+ksort($homesort);
+//	print_r($homesort_empty);
+if(sizeof($homesort) != 0)
+{
+	$homesort = array_merge($homesort,$homesort_empty);
+}
+else
+{
+	$homesort = array_merge($homesort_empty);
+}
+//print_r($homesort);
+//exit;
+//ksort($homesort);
+
+$homecontent['homepage_sortorder_banner'] = Mage::app()->getLayout()->createBlock('slideshow/slideshow')->setTemplate('slideshow/slideshow.phtml')->toHtml();
+$homecontent['homepage_sortorder_featured'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/featureproduct.phtml')->toHtml();
+//$homecontent['homepage_sortorder_featured_tabs'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/featuredTabs.phtml')->toHtml();
+$homecontent['homepage_sortorder_textrow'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home-text_block.phtml')->toHtml();
+$homecontent['homepage_diamondrequest_sortorder_textrow'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_diamondrequest.phtml')->toHtml();
+$homecontent['homepage_boxcontent_sortorder_textrow'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_box_content.phtml')->toHtml();
+$homecontent['homepage_sortorder_boxes_row1'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home_block1.phtml')->toHtml();
+$homecontent['homepage_sortorder_boxes_row2'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home_block2.phtml')->toHtml();
+$homecontent['homepage_sortorder_boxes_row3'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home_block3.phtml')->toHtml();
+$homecontent['homepage_element_one_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_one_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_two_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_two_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_three_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_three_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_four_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_four_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_five_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_five_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_six_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_six_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_seven_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_seven_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_eight_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_eight_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_nine_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_nine_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_ten_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_ten_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_eleven_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_eleven_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_twelve_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_twelve_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_thirteen_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_thirteen_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_fourteen_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_fourteen_style_sortorder.phtml')->toHtml();
+$homecontent['homepage_element_fifthteen_style_sortorder'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/homepage_element_fifthteen_style_sortorder.phtml')->toHtml();
+foreach($homesort as $homesort_key => $homesort_value)
+{
+	echo $homecontent[$homesort_value];
+}
+?>

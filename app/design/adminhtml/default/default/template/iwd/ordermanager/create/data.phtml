@@ -1,0 +1,49 @@
+<div class="page-create-order">
+    <div>
+        <div id="order-additional_area" style="display:none" class="order-additional-area"><?php echo $this->getChildHtml('additional_area') ?></div>
+        <div id="order-search" class="order-search-items"><?php echo $this->getChildHtml('search') ?></div>
+        <div id="order-items"><?php echo $this->getChildHtml('items') ?></div>
+        <div id="order-errors"><?php echo $this->getChildHtml('errors') ?></div>
+        <div id="order-form_account"><?php echo $this->getChildHtml('form_account') ?></div>
+        <div id="order-addresses">
+            <div id="order-billing_address" class="box-left"><?php echo $this->getChildHtml('billing_address') ?></div>
+            <div id="order-shipping_address" class="box-right"><?php echo $this->getChildHtml('shipping_address') ?></div>
+        </div>
+        <div class="clear"></div>
+        <div id="order-methods">
+            <div id="order-billing_method" class="box-left payments"><?php echo $this->getChildHtml('billing_method') ?></div>
+            <div id="order-shipping_method" class="box-right"><?php echo $this->getChildHtml('shipping_method') ?></div>
+        </div>
+
+        <?php if($this->getChild('card_validation')): ?>
+        <div class="clear"></div>
+        <div id="order-methods">
+            <div id="order-card_validation" class="box-left payments"><?php echo $this->getChildHtml('card_validation') ?></div>
+        </div>
+        <?php endif; ?>
+
+        <div class="clear"></div>
+        <?php if($this->getCustomerId()): ?>
+            <div id="order-gift_options" class="box-left"><?php echo $this->getChildHtml('gift_options') ?></div>
+            <div id="order-user_activities" class="box-right">
+                <div id="order-sidebar"><?php echo $this->getChildHtml('sidebar') ?></div>
+            </div>
+        <?php else: ?>
+            <div id="order-gift_options"><?php echo $this->getChildHtml('gift_options') ?></div>
+        <?php endif; ?>
+
+        <div class="clear"></div>
+        <div class="box-left entry-edit">
+            <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Order History') ?></h4></div>
+            <fieldset id="order-comment"><?php echo $this->getChildHtml('comment') ?></fieldset>
+        </div>
+
+        <?php echo $this->getChildHtml('iwd_om_custom_fee') ?>
+
+        <div class="box-right entry-edit">
+            <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Order Totals') ?></h4></div>
+            <div id="order-totals" class="order-totals"><?php echo $this->getChildHtml('totals') ?></div>
+        </div>
+        <div class="clear"></div>
+    </div>
+</div>

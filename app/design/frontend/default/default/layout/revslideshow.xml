@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<layout>
+	<revslideshow_default>
+		<reference name="head">
+			<action method="addItem"><type>skin_js</type><name>js/jquery-1.7.1.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>rs-plugin/js/jquery.themepunch.plugins.min.js</name></action>
+			<action method="addItem"><type>skin_js</type><name>rs-plugin/js/jquery.themepunch.revolution.min.js</name></action>
+			<action method="addCss"><stylesheet>css/revslideshow.css</stylesheet></action>
+			<action method="addCss"><stylesheet>rs-plugin/css/settings.css</stylesheet></action>
+		</reference>
+	</revslideshow_default>
+	<cms_index_index>
+		<update handle="revslideshow_default" />
+		<reference name="header">
+			<block type="revslideshow/view" name="revslideshow.homepage" template="revslideshow/default.phtml"></block>
+		</reference>
+	</cms_index_index>
+</layout>

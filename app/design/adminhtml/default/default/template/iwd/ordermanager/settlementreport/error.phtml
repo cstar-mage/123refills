@@ -1,0 +1,11 @@
+<?php
+    $helper = Mage::helper('iwd_ordermanager');
+    $href = Mage::helper("adminhtml")->getUrl("adminhtml/system_config/edit", array("section" => "iwd_ordermanager"));
+?>
+
+<h1><?php echo $helper->__("Error Connecting to Authorize.net"); ?></h1>
+<p><?php echo $helper->__("Unable to connect to Authorize.net. Please check configuration."); ?></p>
+<?php echo $this->getMessage(); ?>
+<br/><br/>
+
+<?php echo $helper->__("<a href='%s'>Click here</a> to check your settings", $href); ?>

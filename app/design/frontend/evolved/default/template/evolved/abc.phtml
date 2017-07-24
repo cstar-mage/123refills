@@ -1,0 +1,137 @@
+<?php if(Mage::getStoreConfig("slideshow/general/enable")): ?>
+<?php endif; ?>
+<!-- <meta name="viewport" content="initial-scale=1.0, width=device-width" /> -->
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>royalslider/royalslider-final-new.css" media="all" />
+<!-- <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/jquery-1.8.3.min.js"></script>  -->
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/royalslider.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/rs.active-class.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/rs.autoplay.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/rs.global-caption.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/visible-nearby.js"></script>
+<style>
+body,ol, ul {
+    list-style: outside none none;
+    margin: 0;
+    padding: 0;
+}
+.home-slider-full-width-wrap .royalSlider .rsSlide.rsActiveSlide > li {
+    margin-left: 0;
+}
+</style>
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        //alert(jQuery( window ).width());
+        //Horizontal Tab
+  
+        
+        jQuery("#mainHomeSlider").royalSlider({
+  		  addActiveClass: true,
+  		  transitionSpeed: 500,
+  		  arrowsNav: true,
+  		  loop: true,
+  		  // imgWidth: true,
+  		  loopRewind: true,
+  		  fadeinLoadedSlide: false,
+  		  globalCaption: true,
+  		  arrowsNavAutoHide: false,
+  		  navigateByClick: false,
+  		  slidesSpacing: 5,
+  		  imageScalePadding: 0,
+  		  imageScaleMode: 'fill',
+  		  autoScaleSliderWidth: 1200,
+  		  autoScaleSliderHeight: 400,
+  		  /*controlNavigation: 'tabs',*/
+  		  navigateByCenterClick: false,
+  		  autoScaleSlider: true,
+  		  autoPlay: {
+  			enabled: true,
+  			pauseOnHover: true,
+  			delay: 250
+  		  },
+  		  visibleNearby: {
+  	            enabled: true,
+  	            centerArea: 1,
+  	            center: true,
+  	            navigateByCenterClick: true,
+  	            hiddenOverflow: false
+  	        }
+  		  /*thumbs: {
+  			spacing: 10,
+  			arrowsAutoHide: false
+  		  },*/
+  		}); 
+		
+    	  	  /*if(jQuery( window ).width() <= 959)
+    	      {
+    	    		 jQuery(".royalSlider").royalSlider({
+    	     	    	 addActiveClass: true,
+    	     	    	 slidesSpacing:5,
+    	     			loop: true,
+    	     			arrowsNav:true,
+    	     	    	visibleNearby: {
+    	     	            enabled: true,
+    	     	            centerArea: 1,
+    	     	            center: true,
+    	     	            navigateByCenterClick: true
+    	     	        }
+    	     			
+    	     	    });  
+    	      }
+    	      else
+    	      {
+
+    	    		 jQuery(".royalSlider").royalSlider({
+    	     	    	 addActiveClass: true,
+    	     	    	 slidesSpacing:5,
+    	     			loop: true,
+    	     			arrowsNav:true,
+    	     	    	visibleNearby: {
+    	     	            enabled: true,
+    	     	            centerArea: 0.65,
+    	     	            center: true,
+    	     	            navigateByCenterClick: true
+    	     	        }
+    	     			
+    	     	    });  
+    	      }*/
+   
+    });
+</script>
+<?php
+	$bannerCollections = Mage::getModel('slideshow/slideshow')
+	->getCollection()
+	->addFieldToFilter(
+		array('stores', 'stores'),
+		array(
+			array('finset'=>Mage::app()->getStore()->getId()), 
+			array('eq'=>'0'))
+	)
+	//->addFieldToFilter('filename', array('neq' => ''))
+	->addFieldToFilter('status', array('eq' => '1'))->setOrder("sort_order","ASC");	
+	
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<?php if(count($bannerCollections) > 0): ?>
+		<div class="template template--home">
+			<div class="banner-shadow"></div>
+				  <div class="full-width home-slider-full-width-wrap">
+				  		<main class="max-width-min home__slider-wrap">
+				  			 <ul class="slider--home-main royalSlider rsDefault " id="mainHomeSlider">
+				  			 	<?php foreach ($bannerCollections as $item): ?>
+				  			 	        <li data-rsdelay="5000">
+				  			 	        	  <a href="<?php echo $item->getData('slide_url');?>" class="rsLink hidetext">Shop now!</a>
+									          <figure>
+									          		<a href="<?php echo $item->getData('slide_url');?>"> 
+									          			<?php $html = $processor->filter($item->getImageSlide()); ?>
+														<?php echo nl2br($html); ?>
+									          		</a> 
+									          </figure>
+								        </li>
+					        	<?php endforeach;?>
+				  			 </ul>
+				  		</main>
+				  </div>
+			</div>
+		</div>
+<?php endif; ?>

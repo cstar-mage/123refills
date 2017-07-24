@@ -1,0 +1,14 @@
+<?php $theme = $this->getConfig(); ?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php if($theme['homepage_element_1_diamondrow_enabled'] == 1): ?>
+	<div class="home-info">
+    	<div class="homepage_loosediamonds">
+		<?php $html = $processor->filter($theme['homepage_element_1_diamondrow_style_image']); ?>
+		<?php echo nl2br($html); ?>
+        </div>
+	</div>
+<?php endif; ?>

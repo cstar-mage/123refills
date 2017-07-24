@@ -1,0 +1,1179 @@
+  <?php 
+  $collectionclarity = Mage::getModel("stud/clarity")->getCollection();
+  $collectionclarity->setOrder('sortorder','ASC');
+  $collectioncarat = Mage::getModel("stud/carat")->getCollection();
+
+  $i=0;
+  foreach ($collectionclarity as $claritysub){  
+		$clarity1 = $claritysub->getDbfield();
+  		$colorclarity = (explode("-",$clarity1));
+		$color[$i] = $colorclarity[0];
+		$color = array_unique($color);
+		$clarity[$i] = $colorclarity[1];
+		$clarity = array_unique($clarity);
+		$i++;
+	}
+$colorcount = count($color);
+$color = array_values($color);
+$claritycount = count($clarity);
+$clarity = array_values($clarity);
+$colorjs = json_encode($color);
+
+
+  foreach ($collectioncarat as $caratsub){  
+		$carat1 = $caratsub->getCaratweight();
+  		$carat[] = $carat1;
+	}
+
+	$caratcount = count($carat);
+
+
+			                                  	 
+?>
+ 
+  <script type="text/javascript">
+ jQuery(window).load(function () {
+ 	 var dshape = jQuery('#shapevalue').val();
+	  var dcarat = jQuery('#caratvalue').val();
+	  var dcolor = jQuery('#colorvalue').val();
+	  var dclarity = jQuery('#clarityvalue').val();
+	  var dmetal = jQuery('#metalstyle').val();
+	  var dcut = jQuery('#cutvalue').val();	 
+	 
+ 	jQuery.post("<?php echo $this->getUrl('diamond-stud-builder/index/priceupdate'); ?>",{ 
+		  	shape:dshape,
+			carat:dcarat, 
+			color:dcolor, 
+			clarity:dclarity,
+			metal_type:dmetal,
+			cut:dcut
+		},
+		function(data){ 
+			var dataarr = data.split("|");
+			var datacount = dataarr.length;
+			
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);			
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");	
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+			
+		}
+	 );	 
+	preload(
+			"<?php echo $this->getskinUrl();?>stud/shape/Asscher.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Cushion.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Emerald.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Heart.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Marquise.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Oval.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Pear.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Princess.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Radiant_Long.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Round.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Square_Radiant.jpg",
+			"<?php echo $this->getskinUrl();?>stud/shape/Trillion.jpg"			
+			)	
+			
+			var imetal;
+	 		var icolor;
+			switch(dmetal) {
+			    case '14k_white_gold':
+			    	imetal = 'White Gold';
+			        break;
+			    case '14k_yellow_gold':
+			    	imetal = 'Yellow Gold';
+			        break;
+			    case '14k_rose_gold':
+			    	imetal = 'Rose Gold';
+			        break;
+			    case '18k_white_gold':
+			    	imetal = 'White Gold';
+			        break;
+			    case '18k_yellow_gold':
+			    	imetal = 'Yellow Gold';
+			        break;
+			    case '18k_rose_gold':
+			    	imetal = 'White Gold';
+			        break;			    
+			    case 'platinum':
+			    	imetal = 'Platinum';
+			        break;
+			    default:
+			    	imetal = 'White Gold';		       
+			} 
+
+			icolor = jQuery("#colorvalue").val(); 
+
+			jQuery("#metalinfo").html(imetal + " Diamond studs");
+			jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity");
+		
+ });
+
+ function priceupdate(shape)
+ {
+	 preload(	"<?php echo $this->getskinUrl();?>stud/shape/Asscher.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Cushion.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Emerald.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Heart.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Marquise.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Oval.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Pear.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Princess.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/RadiantLong.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Round.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/SquareRadiant.jpg",
+				"<?php echo $this->getskinUrl();?>stud/shape/Trillion.jpg"			
+				)
+	 var shape_image = "<?php echo $this->getskinUrl();?>stud/shape/"+shape+".jpg";
+	 jQuery('#shapevalue').val(shape);
+	 jQuery('#stud_shape_image').attr('src',shape_image);
+	 jQuery(document).ready(function(){
+		  var jQueryitems = jQuery('.shapes>.shape');
+		  jQueryitems.click(function() {
+		   jQueryitems.removeClass('selected');
+		   jQuery(this).addClass('selected');
+		  });
+	  });	 
+	  	 	  
+	  var dshape = jQuery('#shapevalue').val();
+	  var dcarat = jQuery('#caratvalue').val();
+	  var dcolor = jQuery('#colorvalue').val();
+	  var dclarity = jQuery('#clarityvalue').val();
+	  var dmetal = jQuery('#metalstyle').val();
+	  var dcut = jQuery('#cutvalue').val();
+	  
+	 
+	  	
+	   jQuery.post("<?php echo $this->getUrl('diamond-stud-builder/index/priceupdate'); ?>",{ 
+	  		shape:dshape,
+			carat:dcarat, 
+			color:dcolor, 
+			clarity:dclarity,
+			metal_type:dmetal,
+			cut:dcut
+		},
+		function(data){ 		
+
+			var dataarr = data.split("|");
+			var datacount = dataarr.length;
+			
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);				
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+			
+		}
+	  ); 
+
+	  	var imetal;
+	  	var icolor;
+		switch(dmetal) {
+		    case '14k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '14k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '14k_rose_gold':
+		    	imetal = 'Rose Gold';
+		        break;
+		    case '18k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '18k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '18k_rose_gold':
+		    	imetal = 'White Gold';
+		        break;			    
+		    case 'platinum':
+		    	imetal = 'Platinum';
+		        break;
+		    default:
+		    	imetal = 'White Gold';		       
+		} 
+
+		icolor = jQuery("#colorvalue").val(); 
+
+		jQuery("#metalinfo").html(imetal + " Diamond studs");
+		jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity");
+	 
+ }
+ 
+  jQuery(document).ready(function(){
+	   jQuery('.carats>div>.carat').click(function() {
+	   jQuery('.carats>div>.carat').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+	  
+	  jQuery('#divQualities>.qualities>.color').click(function() {
+	   jQuery('#divQualities>.qualities>.color').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+
+	  jQuery('#divQualities>.qualities>.clarity').click(function() {
+		   jQuery('#divQualities>.qualities>.clarity').removeClass('selected');
+		   jQuery(this).addClass('selected');
+	  });
+
+	  jQuery('#divQualities>.qualities>.cut').click(function() {
+		   jQuery('#divQualities>.qualities>.cut').removeClass('selected');
+		   jQuery(this).addClass('selected');
+	  });
+	  
+	  jQuery('#divMetalTypes>.metaltypes>.metaltype').click(function() {
+	   jQuery('#divMetalTypes>.metaltypes>.metaltype').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+	  
+	  jQuery('#divStyles>.styles>.style').click(function() {
+	   jQuery('#divStyles>.styles>.style').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+
+	  
+  });
+  function setcarat(carat)
+  {
+
+	  jQuery('#caratvalue').val(carat);
+	  var dshape = jQuery('#shapevalue').val();
+	  var dcarat = jQuery('#caratvalue').val();
+	  var dcolor = jQuery('#colorvalue').val();
+	  var dclarity = jQuery('#clarityvalue').val();
+	  var dmetal = jQuery('#metalstyle').val();	 
+	  var dcut = jQuery('#cutvalue').val();
+	  	
+	  jQuery.post("<?php echo $this->getUrl('diamond-stud-builder/index/priceupdate'); ?>",{ 
+		  	shape:dshape,
+			carat:dcarat, 
+			color:dcolor, 
+			clarity:dclarity,
+			metal_type:dmetal,
+			cut:dcut
+		},
+		function(data){ 
+			var dataarr = data.split("|");
+			var datacount = dataarr.length;
+
+			
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);		
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");		
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+
+		}
+	 );	
+
+	  	var imetal;
+		var icolor;
+		switch(dmetal) {
+		    case '14k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '14k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '14k_rose_gold':
+		    	imetal = 'Rose Gold';
+		        break;
+		    case '18k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '18k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '18k_rose_gold':
+		    	imetal = 'White Gold';
+		        break;			    
+		    case 'platinum':
+		    	imetal = 'Platinum';
+		        break;
+		    default:
+		    	imetal = 'White Gold';		       
+		} 
+
+		icolor = jQuery("#colorvalue").val();
+
+		jQuery("#metalinfo").html(imetal + " Diamond studs");
+		jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity"); 
+  }
+
+  function setcolor(color)
+  {
+	  jQuery('#colorvalue').val(color);
+	  var dshape = jQuery('#shapevalue').val();
+	  var dcarat = jQuery('#caratvalue').val();
+	  var dcolor = jQuery('#colorvalue').val();
+	  var dclarity = jQuery('#clarityvalue').val();
+	  var dmetal = jQuery('#metalstyle').val();	 
+	  var dcut = jQuery('#cutvalue').val();
+	  	
+	  jQuery.post("<?php echo $this->getUrl('diamond-stud-builder/index/priceupdate'); ?>",{ 
+		    shape:dshape,
+			carat:dcarat, 
+			color:dcolor, 
+			clarity:dclarity,
+			metal_type:dmetal,
+			cut:dcut 
+		},
+		function(data){ 
+
+			var dataarr = data.split("|");
+			var datacount = dataarr.length;
+			
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);		
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");		
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+				
+		}
+	 );	 
+
+	  	var imetal;
+		var icolor;
+		switch(dmetal) {
+		    case '14k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '14k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '14k_rose_gold':
+		    	imetal = 'Rose Gold';
+		        break;
+		    case '18k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '18k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '18k_rose_gold':
+		    	imetal = 'White Gold';
+		        break;			    
+		    case 'platinum':
+		    	imetal = 'Platinum';
+		        break;
+		    default:
+		    	imetal = 'White Gold';		       
+		} 
+
+		icolor = jQuery("#colorvalue").val();
+
+		jQuery("#metalinfo").html(imetal + " Diamond studs");
+		jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity");
+  }
+
+  function setclarity(clarity)
+  {
+	  jQuery('#clarityvalue').val(clarity);
+	  var dshape = jQuery('#shapevalue').val();
+	  var dcarat = jQuery('#caratvalue').val();
+	  var dcolor = jQuery('#colorvalue').val();
+	  var dclarity = jQuery('#clarityvalue').val();
+	  var dmetal = jQuery('#metalstyle').val();	 
+	  var dcut = jQuery('#cutvalue').val();
+	  	
+	  jQuery.post("<?php echo $this->getUrl('diamond-stud-builder/index/priceupdate'); ?>",{ 
+		    shape:dshape,
+			carat:dcarat, 
+			color:dcolor, 
+			clarity:dclarity,			
+			metal_type:dmetal,
+			cut:dcut 
+		},
+		function(data){ 
+
+			var dataarr = data.split("|");
+			var datacount = dataarr.length;
+
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);		
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");		
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+		}
+	 );	 
+		var imetal;
+		var icolor;
+		switch(dmetal) {
+		    case '14k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '14k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '14k_rose_gold':
+		    	imetal = 'Rose Gold';
+		        break;
+		    case '18k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '18k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '18k_rose_gold':
+		    	imetal = 'White Gold';
+		        break;			    
+		    case 'platinum':
+		    	imetal = 'Platinum';
+		        break;
+		    default:
+		    	imetal = 'White Gold';		       
+		} 
+
+		icolor = jQuery("#colorvalue").val();
+
+		jQuery("#metalinfo").html(imetal + " Diamond studs");
+		jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity");
+  }
+
+  function setcut(cut){
+	  jQuery('#cutvalue').val(cut);
+
+	  var dshape = jQuery('#shapevalue').val();
+	  var dcarat = jQuery('#caratvalue').val();
+	  var dcolor = jQuery('#colorvalue').val();
+	  var dclarity = jQuery('#clarityvalue').val();
+	  var dmetal = jQuery('#metalstyle').val();	
+	  var dcut = jQuery('#cutvalue').val(); 
+	  	
+	  jQuery.post("<?php echo $this->getUrl('diamond-stud-builder/index/priceupdate'); ?>",{ 
+		    shape:dshape,
+			carat:dcarat, 
+			color:dcolor, 
+			clarity:dclarity,				  
+			metal_type:dmetal,
+			cut:dcut 
+		},
+		function(data){ 
+			
+			var dataarr = data.split("|");
+			var datacount = dataarr.length;
+
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);			
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");		
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+
+		}
+	 );	 	
+
+	  	var imetal;
+		var icolor;
+		switch(dmetal) {
+		    case '14k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '14k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '14k_rose_gold':
+		    	imetal = 'Rose Gold';
+		        break;
+		    case '18k_white_gold':
+		    	imetal = 'White Gold';
+		        break;
+		    case '18k_yellow_gold':
+		    	imetal = 'Yellow Gold';
+		        break;
+		    case '18k_rose_gold':
+		    	imetal = 'White Gold';
+		        break;			    
+		    case 'platinum':
+		    	imetal = 'Platinum';
+		        break;
+		    default:
+		    	imetal = 'White Gold';		       
+		} 
+	icolor = jQuery("#colorvalue").val(); 
+
+		jQuery("#metalinfo").html(imetal + " Diamond studs");
+		jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity");
+  }
+  function setBackType(Back)
+  {
+	  var backtype = jQuery('#size-s').val();	
+      if(backtype == "Push-Back"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/push_back_stud.png'?>';			  
+			  jQuery( "li#backchanging img" ).attr('src',imgtag);
+			  jQuery( "li#backchanging p" ).replaceWith("<p>PUSH BACK</p>");
+	  }else if(backtype == "Screw Back"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/screw_back_stud.png'?>';			  
+			  jQuery( "li#backchanging img" ).attr('src',imgtag);
+			  jQuery( "li#backchanging p" ).replaceWith("<p>SCREW BACK</p>");
+	  }  
+  }
+   function setSizeType(Style)
+  {
+	  var backtype = jQuery('#sizestyle').val();	
+      if(backtype == "4-Prong Basket"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/4prong-stud.png'?>';			  
+			  jQuery( "li#sizechanging img" ).attr('src',imgtag);
+			  jQuery( "li#sizechanging p" ).replaceWith("<p>4-Prong Basket</p>");
+	  }else if(backtype == "3-Prong Martini"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/3prong-stud.png'?>';			  
+			  jQuery( "li#sizechanging img" ).attr('src',imgtag);
+			  jQuery( "li#sizechanging p" ).replaceWith("<p>3-Prong Martini</p>");		  
+	  }else if(backtype == "4-Prong Crown"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/4_crown.png'?>';			  
+			  jQuery( "li#sizechanging img" ).attr('src',imgtag);
+			  jQuery( "li#sizechanging p" ).replaceWith("<p>4-Prong Crown</p>");
+	  }  else if(backtype == "Bezel"){
+		  	 var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/bezel-stud.png'?>';			  
+			  jQuery( "li#sizechanging img" ).attr('src',imgtag);
+			  jQuery( "li#sizechanging p" ).replaceWith("<p>Bezel</p>");
+	  }  else if(backtype == "Lever Back"){
+		  		  	 var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/lever-back-stud.png'?>';			  
+			  jQuery( "li#sizechanging img" ).attr('src',imgtag);
+			  jQuery( "li#sizechanging p" ).replaceWith("<p>Lever Back</p>");
+	  }   else if(backtype == "Halo"){
+		  		  		  	 var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/halo-stud.png'?>';			  
+			  jQuery( "li#sizechanging img" ).attr('src',imgtag);
+			  jQuery( "li#sizechanging p" ).replaceWith("<p>Halo</p>");
+	  }   
+	  
+	  
+  }
+  function setMetalType(Metal)
+  {
+		  //jQuery('#metalvalue').val(Metal);
+		  var dshape = jQuery('#shapevalue').val();
+		  var dcarat = jQuery('#caratvalue').val();
+		  var dcolor = jQuery('#colorvalue').val();
+		  var dclarity = jQuery('#clarityvalue').val();
+		  var dmetal = jQuery('#metalstyle').val();			  
+		  var dcut = jQuery('#cutvalue').val(); 
+		  
+		  if(dmetal == "14k_white_gold"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/white_gold_stud.png'?>';			  
+			  jQuery( "li#metalchangeimg img" ).attr('src',imgtag);
+			  jQuery( "li#metalchangeimg p" ).replaceWith("<p>14k white gold</p>");
+		  }else if(dmetal == "14k_yellow_gold"){
+			 var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/yellow_stud.png'?>';			 
+			  jQuery( "li#metalchangeimg img" ).attr('src',imgtag);
+			  jQuery( "li#metalchangeimg p" ).replaceWith("<p>14k yellow gold</p>");
+		  }else if(dmetal == "14k_rose_gold"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/rose_stud.png'?>';			  
+			  jQuery( "li#metalchangeimg img" ).attr('src',imgtag);			 
+			  jQuery( "li#metalchangeimg p" ).replaceWith("<p>14k rose gold</p>");
+		  }else if(dmetal == "18k_white_gold"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/white_gold_stud.png'?>';			  
+			  jQuery( "li#metalchangeimg img" ).attr('src',imgtag);
+			  jQuery( "li#metalchangeimg p" ).replaceWith("<p>18k white gold</p>");
+		  }else if(dmetal == "18k_yellow_gold"){
+			  var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/yellow_stud.png'?>';			 
+			  jQuery( "li#metalchangeimg img" ).attr('src',imgtag);
+			  jQuery( "li#metalchangeimg p" ).replaceWith("<p>18k yellow gold</p>");
+		  }else if(dmetal == "18k_rose_gold"){
+			   var imgtag = '<?php echo Mage::getBaseUrl().'media/wysiwyg/rose_stud.png'?>';			  
+			   jQuery( "li#metalchangeimg img" ).attr('src',imgtag);		
+			   jQuery( "li#metalchangeimg p" ).replaceWith("<p>18k rose gold</p>");
+		  }else if(dmetal == "platinum"){
+			  
+		  }
+		  	
+		  jQuery.post("<?php echo $this->getUrl('stud/index/priceupdate'); ?>",{ 
+			    shape:dshape,
+				carat:dcarat, 
+				color:dcolor, 
+				clarity:dclarity,				  
+				metal_type:dmetal,
+				cut:dcut 
+			},
+			function(data){ 
+				
+				var dataarr = data.split("|");
+			var datacount = dataarr.length;
+
+			if(datacount == 0){
+				jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+		    	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+			}
+			if(dataarr[2] != 0){
+				
+				jQuery(".selector.padtop").show();
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);		
+				jQuery(".add_to_cart121 a").removeClass("studbuttondiseble");			
+			}else{				
+			    var price1 = 0;
+			  	jQuery("#divPrice").html("<b>Price Not Avalaible</b>");
+			  	jQuery(".add_to_cart121 a").addClass("studbuttondiseble")
+				jQuery('#eternity_price').val(price1);	
+			
+			}
+
+			}
+		 );	 
+
+		  	var imetal;
+	 		var icolor;
+			switch(dmetal) {
+			    case '14k_white_gold':
+			    	imetal = 'White Gold';
+			        break;
+			    case '14k_yellow_gold':
+			    	imetal = 'Yellow Gold';
+			        break;
+			    case '14k_rose_gold':
+			    	imetal = 'Rose Gold';
+			        break;
+			    case '18k_white_gold':
+			    	imetal = 'White Gold';
+			        break;
+			    case '18k_yellow_gold':
+			    	imetal = 'Yellow Gold';
+			        break;
+			    case '18k_rose_gold':
+			    	imetal = 'White Gold';
+			        break;			    
+			    case 'platinum':
+			    	imetal = 'Platinum';
+			        break;
+			    default:
+			    	imetal = 'White Gold';		       
+			} 
+
+			icolor = jQuery("#colorvalue").val(); 
+			
+			jQuery("#metalinfo").html(imetal + " Diamond studs");
+			jQuery("#color_clarity_info").html(dcut + " - " + icolor + " - " + dclarity + "Clarity");		 
+  }
+  </script>
+
+  
+   
+            <div class="stud-page">
+             <div class="stud-main-title">
+             	<h1>Diamond Stud Builder</h1>
+             	<p>Create your own pair of custom diamond studs.</p>
+             </div>
+              <form name="eternity_builder" action="<?php echo $this->getUrl();?>diamond-stud-builder/index/addtocart" method="post">
+                <div class="stud-wrapper">
+                  <div id="dnn_ContentPane" class="clear"><a name="3358"></a>
+                    <div id="dnn_ctr3358_ContentPane"> 
+                      <!-- Start_Module_3358 -->
+                      <div id="dnn_ctr3358_ModuleContent" class="OWSContent">
+                        <div id="lxT3358"></div>
+                      </div>
+                      <!-- End_Module_3358 --> 
+                    </div>
+                    <a name="1536"></a>
+                    <div id="dnn_LeftPane" class="float half"><a name="3311"></a>
+                      <div id="dnn_ctr3311_ContentPane"> 
+                        <!-- Start_Module_3311 -->
+                        <div id="dnn_ctr3311_ModuleContent" class="DNN_HTMLContent"> 
+                          <div id="dnn_ctr3311_HtmlModule_lblContent" class="Normal">
+                            <div id="eternity_flash" style="position: relative;"> <!--<a id="eflashb" onclick="setRealHD();" class="dvProductFlash cboxElement" href="http://s3.amazonaws.com/Eternity-Rings/5rbc_si084/SI084/S1910_HD.html"><img src="diamond-eternity-rings.aspx_files/view-realhd-button.gif" border="0"></a> <a id="eflashh" onclick="setRealHD();" class="dvProductFlash cboxElement" href="http://s3.amazonaws.com/Eternity-Rings/5rbc_si084/SI084_Hand/S1910_HD.html"><img src="diamond-eternity-rings.aspx_files/hand-button.gif" border="0"></a> --></div>
+                            <div id="eternity_top" class="stud-imagebox"><img src="<?php echo $this->getskinUrl();?>stud/round_top_0.05ct_open.png.jpg" alt="" id="stud_shape_image" /></div>                         
+							<ul class="changes-apply-selection desktop"><li id="metalchangeimg"><img src="<?php echo Mage::getBaseUrl().'media/wysiwyg/white_gold_stud.png'?>" style="width:80px;" /><p>14k WHITE GOLD</p></li>
+							<li id="backchanging"><img src="<?php echo Mage::getBaseUrl().'media/wysiwyg/push_back_stud.png'?>" style="width:130px;" /><p>PUSH BACK</p></li>
+							<li id="sizechanging"><img src="<?php echo Mage::getBaseUrl().'media/wysiwyg/3prong-stud.png'?>" style="width:80px;" /><p>3-Prong Martini</p></li>
+							</ul>
+							 
+                  <div class="selector padtop desktop" style="display:block;">
+                  	<div id="metalinfo">
+                  		
+                  	</div>  
+                  	<div id="color_clarity_info">
+                  		
+                  	</div>                
+                    <div class="sbox">
+                      <div class="total_price">                      
+                        <div id="divPrice"></div>
+                      </div>
+                      <div class="add_to_cart121">
+							<a href="javascript:;" class="" onclick="document.eternity_builder.submit();">Add to cart</a>
+							<a href="javascript:;" class="" onclick="addtowhishlist();">Add to wishlist</a>
+							<a href="javascript:;" class="" onclick="ringcreator();">Inquire</a></div>
+                     </div>
+                   </div> 
+							</div>
+                          </div>
+                        </div>
+                        <!-- End_Module_3311 --> 
+                      </div>
+                    </div>
+                    <div id="dnn_RightPane" class="float half"><a name="3310"></a>
+                      <div id="dnn_ctr3310_ContentPane"> 
+                        <!-- Start_Module_3310 -->
+                        <div id="dnn_ctr3310_ModuleContent" class="OWSContent">                         
+                          <div id="lxT3310">
+                            <div class="selector">
+                              <div class="sbox" id="placeholders">
+                                <input type="hidden" value="Round" id="shapevalue" name="shapevalue" />
+                                <div id="divShapes" class="stud-row">
+												<div class="stud-title">SELECT YOUR DIAMOND SHAPE</div>
+                                  <div class="shapes">
+                                    <div style="width: 16.6%;" class="shape selected" id="shape0">
+                                      <div class="ern">
+                                        <div class="sh shape1" onclick="priceupdate('Round');"> 
+                                          <!--<div class="txt">Round</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 16.6%;" class="shape" id="shape1">
+                                      <div class="ern bar">
+                                        <div class="sh shape3" onclick="priceupdate('Princess');"> 
+                                          <!-- <div class="txt">Emerald</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 16.6%;" class="shape" id="shape2">
+                                      <div class="ern bar">
+                                        <div class="sh shape6" onclick="priceupdate('Emerald');"> 
+                                          <!-- <div class="txt">Radiant</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 16.6%;" class="shape" id="shape3">
+                                      <div class="ern bar">
+                                        <div class="sh shape7" onclick="priceupdate('Asscher');"> 
+                                          <!--<div class="txt">Princess</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width:16.6%;" class="shape" id="shape4">
+                                      <div class="ern bar">
+                                        <div class="sh shape10" onclick="priceupdate('Cushion');"> 
+                                          <!-- <div class="txt">Asscher</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 17%;" class="shape" id="shape5">
+                                      <div class="ern bar">
+                                        <div class="sh shape11" onclick="priceupdate('RadiantLong');"> 
+                                          <!-- <div class="txt">Asscher</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                  <div class="shapes shapes1">
+                                    <div style="width: 16.6%;" class="shape" id="shape0">
+                                      <div class="ern">
+                                        <div class="sh shape12" onclick="priceupdate('Marquise');"> 
+                                          <!--<div class="txt">Round</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 16.6%;" class="shape" id="shape1">
+                                      <div class="ern bar">
+                                        <div class="sh shape13" onclick="priceupdate('Pear');"> 
+                                          <!--<div class="txt">Emerald</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 16.6%;" class="shape" id="shape2">
+                                      <div class="ern bar">
+                                        <div class="sh shape14" onclick="priceupdate('Heart');"> 
+                                          <!--<div class="txt">Radiant</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 16.6%;" class="shape" id="shape3">
+                                      <div class="ern bar">
+                                        <div class="sh shape15" onclick="priceupdate('Oval');"> 
+                                          <!--<div class="txt">Princess</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width:16.6%;" class="shape" id="shape4">
+                                      <div class="ern bar">
+                                        <div class="sh shape16" onclick="priceupdate('Trillion');"> 
+                                          <!--<div class="txt">Asscher</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                    <div style="width: 17%;" class="shape" id="shape5">
+                                      <div class="ern bar">
+                                        <div class="sh shape21" onclick="priceupdate('SquareRadiant');"> 
+                                          <!--<div class="txt">Asscher</div>--> 
+                                        </div>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                                <input type="hidden" value="0.50" id="caratvalue" name="caratvalue" />
+                                <div id="divCarats" class="stud-row">
+												<div class="stud-title">CHOOSE CARAT WEIGHT</div>
+                                  <div class="carats">
+                                    <div class="Round">
+
+                                    	
+                                    	<?php $caratwidth = 100/$caratcount; ?>
+                                    	<?php  for($i=0;$i<$caratcount;$i++){  ?>
+                                    
+                                    		<?php if($i == 0){ ?>
+
+			                                      <div style="width:<?php echo $caratwidth ?>%;" class="carat selected" data-carat="<?php echo $carat[$i]; ?>" id="rcarat<?php echo $i; ?>">
+			                                        <div class="ern">
+			                                          <div class="ct ct1c5" onclick="setcarat('<?php echo $carat[$i]; ?>');"> 
+			                                            <div class="txt12"><?php echo $carat[$i]; ?></div>
+			                                          </div>
+			                                        </div>
+			                                      </div>
+
+                                      	   <?php } else { ?>
+					                               
+					                        <div style="width:<?php echo $caratwidth ?>%;" class="carat"  id="rcarat<?php echo $i; ?>">
+				                                <div class="ern qt">
+				                                <div class="ct ct1c5" onclick="setcarat('<?php echo $carat[$i]; ?>');"> 
+				                                    <div class="txt12"><?php echo $carat[$i]; ?></div>
+				                                </div>
+				                                </div>
+				                            </div>
+
+					                               
+					                    <?php } ?>
+
+
+                                      <?php } ?>
+
+                                      
+                                    </div>
+                                  </div>
+                                </div>
+                                <input type="hidden" value="fg" id="colorvalue" name="colorvalue" />
+                                 <div id="divQualities" class="stud-row">
+												<div class="stud-title">Choose Diamond Color</div>
+                                 
+
+			                                  <div class="qualities" >
+
+			                                  		<?php $colorwidth = 100/$colorcount; ?>
+			                                  		<?php  for($i=0;$i<$colorcount;$i++){  
+			                                  		 $colorlabel = wordwrap($color[$i] , 1 , '-' , true );                                  			
+			                                  		?>
+
+			                                  		<?php if($i == 0){ ?>
+
+
+			                                		<div style="width:<?php echo $colorwidth ?>%;" class="quality color selected" data-color="<?php echo $color[$i]; ?>" id="style<?php echo $i; ?>">
+						                                      <div class="ern">
+						                                        <div class="qt" onclick="setcolor('<?php echo $color[$i]; ?>');">
+						                                     <div class="txt">Colorless<br><span class="capitalizedfont"><?php echo $colorlabel; ?></span></div>
+						                                        </div>
+						                                      </div>
+					                                     </div> 
+
+					                               <?php } else { ?>
+					                               
+					                               <div style="width:<?php echo $colorwidth ?>%;" class="quality color"  id="style<?php echo $i; ?>">
+						                                      <div class="ern bar">
+						                                        <div class="qt" onclick="setcolor('<?php echo $color[$i]; ?>');">
+						                                          <div class="txt">Colorless<br><span class="capitalizedfont"><?php echo $colorlabel; ?></span></div>
+						                                        </div>
+						                                      </div>
+					                                     </div> 
+					                               
+					                               <?php } ?>
+					                               <?php  }  ?>
+
+
+			                         
+
+			                                  </div>
+                                </div>
+                                <input type="hidden" value="vs" id="clarityvalue" name="clarityvalue" />
+                                 <div id="divQualities" class="stud-row">
+												<div class="stud-title">Choose Diamond Clarity</div>
+                                
+
+
+                                  <div class="qualities">
+	                                  	
+												<?php $claritywidth = 100/$claritycount; ?>
+			                                  	<?php  for($i=0;$i<$claritycount;$i++){  	?>
+
+			                                  		<?php if($i == 0){ ?>
+ 
+
+			                                		<div style="width:<?php echo $claritywidth ?>%;" data-clarity="<?php echo $clarity[$i]; ?>" class="quality clarity selected"  id="style<?php echo $i; ?>">
+						                                      <div class="ern">
+						                                        <div class="qt" onclick="setclarity('<?php echo $clarity[$i]; ?>');">
+						                                           <div class="txt"><span class="capitalizedfont"><?php echo $clarity[$i]; ?></span> Clarity</div>
+						                                        </div>
+						                                      </div>
+					                                     </div> 
+
+					                               <?php } else { ?>
+					                               
+					                               <div style="width:<?php echo $claritywidth ?>%;" class="quality clarity"  id="style<?php echo $i; ?>">
+						                                      <div class="ern bar">
+						                                        <div class="qt" onclick="setclarity('<?php echo $clarity[$i]; ?>');">
+						                                           <div class="txt"><span class="capitalizedfont"><?php echo $clarity[$i]; ?></span> Clarity</div>
+						                                        </div>
+						                                      </div>
+					                                     </div> 
+					                               
+					                               <?php } ?>
+					                               <?php  }  ?>
+
+	                                 
+
+                                  </div>
+                                </div>                                
+                                <input type="hidden" value="Very Good Cut" id="cutvalue" name="cutvalue" />
+                                <div class="clear"></div>   
+                                <div id="divQualities" class="stud-row">
+												<div class="stud-title">Choose Diamond Cut</div>
+                                  <div class="qualities">
+                                  	 <div style="width: 50%;" class="quality cut" id="clarity0">
+	                                      <div class="ern">
+	                                        <div class="qt" onclick="setcut('Ideal-Excellent Cut');">
+	                                          <div class="txt">Ideal/Excellent Cut</div>
+	                                        </div>
+	                                      </div>
+                                     </div>
+                                     <div style="width: 50%;" class="quality cut selected" id="clarity1">
+	                                      <div class="ern bar">
+	                                        <div class="qt" onclick="setcut('Very Good Cut');">
+	                                          <div class="txt">Very Good Cut</div>
+	                                        </div>
+	                                      </div>
+                                     </div>                                      
+                                  </div>
+                                </div>                                                      
+                                <input type="hidden" value="Open Gallery" id="stylevalue" name="stylevalue" />
+                                <div id="divSizes" class="stud-row">
+                                  <select class="sizes" id="metalstyle" name="metalstyle" onchange="setMetalType(this.value)">
+                                    <option value="">Select Metal Type</option>
+                                    <option value="14k_white_gold" selected="selected">14k White Gold</option>
+                                    <option value="14k_yellow_gold">14k Yellow Gold</option>
+                                    <option value="14k_rose_gold">14k Rose Gold</option>
+                                    <option value="18k_white_gold">18k White Gold</option>
+                                    <option value="18k_yellow_gold">18k Yellow Gold</option>
+                                <!--    <option value="18k_rose_gold">18k Rose Gold</option>>
+                                    <option value="platinum">Platinum</option>> -->
+                                  </select>
+                                  <select class="sizes" id="sizestyle" name="sizestyle" onchange="setSizeType(this.value)">
+                                    <option value="Select Setting style">Select Setting style</option>
+                                    <option value="4-Prong Basket">4-Prong Basket</option>
+                                    <option value="3-Prong Martini" selected="selected">3-Prong Martini</option>
+                                    <option value="4-Prong Crown">4-Prong Crown</option>
+                                    <option value="Bezel">Bezel</option>
+                                    <option value="Lever Back">Lever Back</option>
+                                    <option value="Halo">Halo</option>
+                                  </select>
+                                   <select class="sizes" id="size-s" name="size-s" onchange="setBackType(this.value)">
+                                    <option value="Select backing type">Select backing type</option>
+                                    <option value="Push-Back" selected="selected">Push-Back</option>
+                                    <option value="Screw Back">Screw Back</option>
+                                  </select>                                  
+                                </div>
+                                <input type="hidden" name="eternity_price" id="eternity_price" value="" />
+                                <input type="hidden" name="process" id="process" value="" />
+                                <div class="clear"></div>
+                              </div>
+                            </div>  
+
+                            <div class="rightaddpart responsive" style="display:none;">
+		                            	<ul class="changes-apply-selection"><li id="metalchangeimg"><img src="<?php echo Mage::getBaseUrl().'media/wysiwyg/white_gold_stud.png'?>" style="width:80px;" /><p>14k WHITE GOLD</p></li>
+									<li id="backchanging"><img src="<?php echo Mage::getBaseUrl().'media/wysiwyg/push_back_stud.png'?>" style="width:130px;" /><p>PUSH BACK</p></li>
+									<li id="sizechanging"><img src="<?php echo Mage::getBaseUrl().'media/wysiwyg/3prong-stud.png'?>" style="width:80px;" /><p>3-Prong Martini</p></li>
+									</ul>
+
+
+									<div class="selector padtop">
+									   <div id="metalinfo">
+									   </div>
+									   <div id="color_clarity_info">
+									   </div>
+									   <div class="sbox">
+									      <div class="total_price">
+									         <div id="divPrice"></div>
+									      </div>
+									      <div class="add_to_cart121">
+									         <a href="javascript:;" onclick="document.eternity_builder.submit();">Add to cart</a>
+									         <a href="javascript:;" onclick="addtowhishlist();">Add to wishlist</a>
+									         <a href="javascript:;" onclick="ringcreator();">Inquire</a>
+									      </div>
+									   </div>
+									</div>
+
+                            </div>               
+                            <div id="ajTarget" style="display:none;"></div>
+                          </div>
+                        </div>
+                        <!-- End_Module_3310 -->                     
+                      </div>
+                    </div>
+                    <div id="dnn_LeftPane2" class="float half DNNEmptyPane"></div>
+                    <div id="dnn_RightPane2" class="float half DNNEmptyPane"></div>
+                    <div class="clear"></div>
+                  </div>
+                </div>
+                <?php /*<div class="stud-main-title"><h1></h1></div>
+                  <div class="selector padtop">
+                  	<div id="metalinfo">
+                  		
+                  	</div>  
+                  	<div id="color_clarity_info">
+                  		
+                  	</div>                
+                    <div class="sbox">
+                      <div class="total_price">                      
+                        <div id="divPrice"></div>
+                      </div>
+                      <div class="add_to_cart121">
+							<a href="javascript:;" onclick="document.eternity_builder.submit();">Add to cart</a>
+							<a href="javascript:;" onclick="addtowhishlist();">Add to wishlist</a>
+							<a href="javascript:;" onclick="ringcreator();">Inquire</a></div>
+                     </div>
+                   </div> */ ?>
+              </form>
+            </div>
+         
+         
+           <script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+			var images = new Array()
+			function preload() {
+				for (i = 0; i < preload.arguments.length; i++) {
+					images[i] = new Image()
+					images[i].src = preload.arguments[i]
+				}
+			}	
+			function ringcreator()
+			{
+				document.getElementById("process").value = "emailring";				
+				document.eternity_builder.submit();
+			}
+
+			function addtowhishlist(){
+				document.getElementById("process").value = "whishlist";	
+				document.eternity_builder.submit();
+			}
+		//--><!]]>
+	</script>
+
+<style type="text/css">
+	.stud-row{margin-bottom: 20px;}
+	.stud-title {background:<?php echo Mage::getStoreConfig("stud/general_settings/studcolor");?>;}
+.sbox .add_to_cart121 a, .shapes .selected, .carats .selected, .qualities .selected, .qualities .selected, .qualities .selected, .sizes{background: <?php echo Mage::getStoreConfig("stud/general_settings/studcolor");?>;}	
+
+</style>
+
+
+<style type="text/css">
+	.stud-title {color:<?php echo Mage::getStoreConfig("stud/general_settings/studactivefontcolor");?>;}
+.shape.selected .sh, .qualities .selected .txt, .carat.selected .ct, .qualities .color.selected .txt, .sizes, .main-container .main .sbox .add_to_cart121 a{color: <?php echo Mage::getStoreConfig("stud/general_settings/studactivefontcolor");?>;}	
+
+</style>
+
+<style type="text/css">
+.shape .sh, .carat .ct, .quality .txt{color: <?php echo Mage::getStoreConfig("stud/general_settings/studfontcolor"); ?>;}	
+
+.stud-index-index .stud-main-title h1{padding-bottom:15px;    border-bottom: 1px solid #ccc;}
+.changes-apply-selection{width:100%;float:left;padding-top: 15px;border-bottom: 1px solid #ccc;    padding-bottom: 15px;
+    margin-bottom: 10px;}
+.changes-apply-selection li{display:inline-block;        padding: 0 20px;text-align:center;    width: 32.5%;}
+.changes-apply-selection li p{font-family:lato;font-size:14px;color:#000;text-transform:uppercase;}
+.changes-apply-selection li img{margin:0 auto;}
+a.studbuttondiseble {    pointer-events: none;    background: #cccccc none repeat scroll 0 0 !important;}
+</style>
+ 
+
+  
+<script type="text/javascript">
+jQuery(document).ready(function(){
+
+var datacolor = jQuery(".quality.color.selected").attr("data-color"); 
+
+jQuery("#colorvalue").val(datacolor);
+
+var datacolor1 = jQuery(".quality.clarity.selected").attr("data-clarity"); 
+
+jQuery("#clarityvalue").val(datacolor1);
+
+
+var datacolor1 = jQuery(".quality.clarity.selected").attr("data-clarity"); 
+
+jQuery("#clarityvalue").val(datacolor1);
+
+
+var datacarat1 = jQuery(".carat.selected").attr("data-carat"); 
+
+jQuery("#caratvalue").val(datacarat1);
+	
+
+});
+</script>

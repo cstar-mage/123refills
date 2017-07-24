@@ -1,0 +1,67 @@
+.event_main .show_main_div {
+    margin: 0 auto;
+    max-width: 608px;
+    width: 100%;
+}
+.event_main .show_main_div ul {
+    float: left;
+    list-style: outside none none;
+    margin: 45px 0;
+    padding: 0;
+    max-width: 608px;
+    width: 100%;
+}
+.event_main .show_main_div li {
+    border-bottom: 1px solid #d0d0d0;
+    float: left;
+    margin: 0;
+    width: 100%;
+}
+.event_main .show_main_div li h1 {
+    background: none repeat scroll 0 0 #e3e3e3;
+    color: #000;
+    float: left;
+    font-family: "Open Sans",sans-serif;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: 64px;
+    margin: 0;
+    text-align: center;
+    max-width: 217px;
+    width: 100%;
+}
+.event_main .show_main_div li p {
+	background: none repeat scroll 0 0 #e3e3e3;
+    color: #000;
+    display: inline-block;
+    float: none;
+    font-family: "Open Sans",sans-serif;
+    font-size: 12px;
+    font-weight: normal;
+    margin: 0;
+    max-width: 217px;
+    padding: 40px 0;
+    text-align: center;
+    vertical-align: middle;
+    width: 100%;
+}
+.event_main .detail-description {
+    display: block;
+    text-align: center;
+    width: 100%;
+}
+.event_main .show_main_div li div {
+	display: inline-block;
+    float: none;
+    margin: 0 auto;
+    padding-left: 8%;
+    vertical-align: middle;
+    max-width: 223px;
+}
+@media screen and (max-width: 519px)
+{
+	.event_main .show_main_div li h1 { max-width: 100%; }
+	.event_main .show_main_div li p { max-width: 100%; }
+	.event_main .show_main_div li div { max-width: 100%; width: 100%; padding-left:0; }
+	.event_main .show_main_div li div img { margin: 5% auto; }
+}

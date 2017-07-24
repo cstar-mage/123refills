@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<layout version="1.0.1">
+	<default>
+	    <reference name="head">
+			<action method="addJs" ifconfig="design/scrollup/enabled">
+	            <script>dolphin/scrollup/DLSU.js</script>
+	        </action>
+	        <action method="addCss" ifconfig="design/scrollup/enabled">
+	            <script>dolphin/scrollup/css/scrollup.css</script>
+	        </action>
+	    </reference>
+	    <reference name="before_body_end">
+	        <block type="core/template" name="dolphin.scrollup">
+	            <action method="setTemplate" ifconfig="design/scrollup/enabled">
+	                <template>dl_scrollup/init.phtml</template>
+	            </action>
+			</block>
+	    </reference>
+	</default>    
+</layout>

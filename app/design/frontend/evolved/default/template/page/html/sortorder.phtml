@@ -1,0 +1,22 @@
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php
+$homesort[$theme['homepage_sortorder_banner']] = 'homepage_sortorder_banner';
+$homesort[$theme['homepage_sortorder_featured']] = 'homepage_sortorder_featured';
+$homesort[$theme['homepage_sortorder_textrow']] = 'homepage_sortorder_textrow';
+$homesort[$theme['homepage_sortorder_boxes_row1']] = 'homepage_sortorder_boxes_row1';
+$homesort[$theme['homepage_sortorder_boxes_row2']] = 'homepage_sortorder_boxes_row2';
+$homesort[$theme['homepage_sortorder_boxes_row3']] = 'homepage_sortorder_boxes_row3';
+ksort($homesort);
+
+$homecontent['homepage_sortorder_banner'] = Mage::app()->getLayout()->createBlock('slideshow/slideshow')->setTemplate('slideshow/slideshow.phtml')->toHtml();
+$homecontent['homepage_sortorder_featured'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('catalog/product/featureproduct.phtml')->toHtml();
+$homecontent['homepage_sortorder_textrow'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home-text_block.phtml')->toHtml();
+$homecontent['homepage_sortorder_boxes_row1'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home_block1.phtml')->toHtml();
+$homecontent['homepage_sortorder_boxes_row2'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home_block2.phtml')->toHtml();
+$homecontent['homepage_sortorder_boxes_row3'] = Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/home_block3.phtml')->toHtml();
+foreach($homesort as $homesort_key => $homesort_value)
+{
+	echo $homecontent[$homesort_value];
+}
+
+?>

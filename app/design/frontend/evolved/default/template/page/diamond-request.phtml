@@ -1,0 +1,68 @@
+<?php 
+$username = Mage::helper('uploadtool')->diamondSettings('jewelerslink_username');
+$password = Mage::helper('uploadtool')->diamondSettings('jewelerslink_password');
+
+$ch = curl_init();
+$timeout = 5;
+curl_setopt($ch,CURLOPT_URL,"http://www.jewelerslink.com/jewelry/index/getjwId");
+curl_setopt($ch,CURLOPT_RETURNTRANSFER,1);
+curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,$timeout);
+curl_setopt($ch, CURLOPT_POSTFIELDS, array("username"=>$username,"password"=>$password));
+$data = curl_exec($ch);
+curl_close($ch);
+//echo $data;
+
+$customerId = "";
+if($data == "Invalid Login") {
+	echo "Unauthenticate Login, Go to ( Jewelerslink > Settings ) and enter Jewelerslink Login Detail";
+	exit;
+} else {
+	$customerId = $data; 
+}
+
+?>
+<iframe src="http://www.jewelerslink.com/fetch/diamond/request/user/<?php echo $customerId; ?>/" 
+		frameborder=0 width="100%" style="overflow:hidden;">
+</iframe>
+
+
+<script type="text/javascript">
+jQuery(window).resize(function() {
+	he = jQuery(window).width();
+	if(he >= 890){
+		iheight = '670px';
+	}
+	if(he < 890 && he >= 830){
+		iheight = '820px';
+	}
+	if(he < 830 && he >= 590){
+		iheight = '920px';
+	}
+	if(he < 590 && he >= 370){
+		iheight = '1100px';
+	}
+	if(he < 370 && he >= 200){
+		iheight = '1500px';
+	}
+	jQuery("iframe").attr("height", iheight);
+});
+jQuery(window).load(function() {
+	he = jQuery(window).width();
+	if(he >= 890){
+		iheight = '670px';
+	}
+	if(he < 890 && he >= 830){
+		iheight = '820px';
+	}
+	if(he < 830 && he >= 590){
+		iheight = '920px';
+	}
+	if(he < 590 && he >= 370){
+		iheight = '1100px';
+	}
+	if(he < 370 && he >= 200){
+		iheight = '1500px';
+	}
+	jQuery("iframe").attr("height", iheight);
+});
+</script>

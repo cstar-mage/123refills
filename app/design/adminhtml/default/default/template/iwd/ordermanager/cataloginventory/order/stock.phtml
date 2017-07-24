@@ -1,0 +1,226 @@
+<?php
+$helper = Mage::helper('core');
+$orderedItems = $this->getOrderedItems();
+$stockItems = $this->getStockItems();
+$stocks = $this->getStocks();
+$stocksCount = $stocks->getSize();
+?>
+
+<?php if($stocksCount > 0): ?>
+<div class="assign-stock-table" data-warehouses="<?php echo max($stocksCount,3) ?>" >
+    <?php if ($stocksCount != 0): ?>
+    <div class="header-werehouse" style="max-width:<?php echo $stocksCount * 89?>px" >
+        <a class="inherit" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/cataloginventory_stock/index') ?>" target="_blank">
+            <?php echo $helper->__('Source') ?>
+        </a>
+    </div>
+    <?php endif; ?>
+
+    <div class="products-table">
+        <table class="data" cellspacing="0">
+            <col width="148"/>
+            <col width="50"/>
+            <thead>
+                <tr class="headings">
+                    <th><a class="inherit" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/index') ?>" target="_blank"><?php echo $helper->__('Product') ?></a></th>
+                    <th class="a-center"><?php echo $helper->__('QTY') ?></th>
+                </tr>
+            </thead>
+            <?php $i = 0; ?>
+            <?php foreach ($orderedItems as $item): ?>
+                <?php if ($item->getParentItem() || $item->getIsVirtual()) continue; ?>
+                <tbody class="<?php echo ($i++) % 2 ? 'even' : 'odd' ?>">
+                <?php if ($item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE): ?>
+                    <!-- bundle product -->
+                    <tr class="border item_<?php echo $item->getItemId() ?> row_<?php echo $i ?> parent">
+                        <td colspan="2" class="product-name product-name-<?php echo $item->getItemId() ?> iwd_om_stock_tooltip" title="<?php echo $item->getName() . ' [' . $item->getSku() . ']' ?>">
+                            <span class="overflow">
+                                <a class="inherit" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id'=>$item->getProductId(), 'tab'=>'product_info_tabs_inventory')) ?>" target="_blank">
+                                    <?php echo $item->getName(); ?>
+                                </a>
+                            </span>
+                        </td>
+                    </tr>
+                    <!-- children products -->
+                    <?php foreach ($item->getChildrenItems() as $childItem): ?>
+                        <?php if ($childItem->getIsVirtual()) continue; ?>
+                        <?php $qtyItem = $childItem->getQtyOrdered() - $childItem->getQtyRefunded() - $childItem->getQtyCanceled(); ?>
+                        <?php if ($item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE): ?>
+                            <?php $qtyItem = $item->getQtyOrdered() - $item->getQtyRefunded() - $item->getQtyCanceled(); ?>
+                        <?php endif; ?>
+
+                        <tr class="border item_<?php echo $childItem->getItemId() ?> row_<?php echo $i ?>">
+                            <td class="product-name product-name-<?php echo $childItem->getItemId() ?> iwd_om_stock_tooltip" title="<?php echo $childItem->getName() . ' [' . $childItem->getSku() . ']' ?>">
+                                <span class="overflow">
+                                    <i class="fa marker fa-check" aria-hidden="true"></i>
+                                    <a class="inherit" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id'=>$childItem->getProductId(), 'tab'=>'product_info_tabs_inventory')) ?>" target="_blank">
+                                        <?php echo $childItem->getName(); ?>
+                                    </a>
+                                </span>
+                            </td>
+                            <td>
+                                <?php echo $qtyItem * 1 ?>
+                                <input type="hidden" name="item[<?php echo $childItem->getItemId() ?>]" data-ordered="<?php echo $qtyItem * 1 ?>"">
+                            </td>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php elseif (!$item->getParentItem()): ?>
+                    <?php $qtyItem = $item->getQtyOrdered() - $item->getQtyRefunded() - $item->getQtyCanceled(); ?>
+                    <!-- simple product -->
+                    <tr class="border item_<?php echo $item->getItemId() ?> row_<?php echo $i ?>">
+                        <td class="product-name product-name-<?php echo $item->getItemId() ?> iwd_om_stock_tooltip" title="<?php echo $item->getName() . ' [' . $item->getSku() . ']' ?>">
+                            <span class="overflow">
+                                <i class="fa marker fa-check" aria-hidden="true"></i>
+                                <a class="inherit" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/catalog_product/edit', array('id'=>$item->getProductId(), 'tab'=>'product_info_tabs_inventory')) ?>" target="_blank">
+                                    <?php echo $item->getName(); ?>
+                                </a>
+                            </span>
+                        </td>
+                        <td>
+                            <?php echo $qtyItem * 1 ?>
+                            <input type="hidden" name="item[<?php echo $item->getItemId() ?>]" data-ordered="<?php echo $qtyItem * 1 ?>"">
+                        </td>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            <?php endforeach; ?>
+        </table>
+    </div>
+    <div class="stocks-table">
+        <form id="stock_ordered_items_form" method="post">
+        <table class="data" cellspacing="0">
+            <?php foreach ($stocks as $item): ?>
+                <col width="44"/>
+                <col width="44"/>
+            <?php endforeach; ?>
+            <thead>
+                <tr class="headings" >
+                    <?php $j = 0; ?>
+                    <?php foreach ($stocks as $stock): ?>
+                        <?php $isLast = $stocksCount == ++$j; ?>
+                        <th colspan="2" <?php echo $isLast ? 'class="last"' : ''?>>
+                            <a class="inherit" href="<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/cataloginventory_stock/edit', array('stock_id'=>$stock->getStockId())) ?>" target="_blank">
+                                <?php echo $stock->getStockName() ?>
+                            </a>
+                        </th>
+                    <?php endforeach; ?>
+                </tr>
+            </thead>
+            <?php $j = 0; ?>
+            <?php $i = 0; ?>
+            <?php foreach ($orderedItems as $item): ?>
+                <?php if ($item->getParentItem() || $item->getIsVirtual()) continue; ?>
+
+                <tbody class="<?php echo ($i++) % 2 ? 'even' : 'odd' ?>">
+                <?php if ($item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_BUNDLE || $item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE): ?>
+                    <!-- bundle and configurable products -->
+                    <tr class="row_<?php echo $i ?> parent">
+                        <td colspan="<?php echo $stocksCount * 2 ?>" class="last">&nbsp;</td>
+                    </tr>
+                    <?php foreach ($item->getChildrenItems() as $childItem): ?>
+                        <?php if ($childItem->getIsVirtual()) continue; ?>
+                        <?php if($item->getProductType() == Mage_Catalog_Model_Product_Type::TYPE_CONFIGURABLE): ?>
+                            <?php $qtyItem = $item->getQtyOrdered() - $item->getQtyRefunded() - $item->getQtyCanceled(); ?>
+                        <?php else: ?>
+                            <?php $qtyItem = $childItem->getQtyOrdered() - $childItem->getQtyRefunded() - $childItem->getQtyCanceled(); ?>
+                        <?php endif; ?>
+
+                        <tr class="border item_<?php echo $childItem->getItemId() ?> row_<?php echo $i ?>">
+                            <?php $j = 0; ?>
+                            <?php foreach ($stocks as $stock): ?>
+                                <?php $isLast = $stocksCount == ++$j; ?>
+                                <?php $qtyStock = $this->getStocksForOrderItemValue($childItem, $stock, 'qty'); ?>
+                                <?php $isInStock = $this->getStocksForOrderItemValue($childItem, $stock, 'is_in_stock');?>
+                                <td>
+                                    <?php $legendClass = ($isInStock) ? 'legend-in-stock' : 'legend-out-stock'; ?>
+                                    <input type="text" title="Qty IN Stock" readonly="readonly"
+                                           class="<?php echo $legendClass ?> qty_in_stock"
+                                           value="<?php echo $qtyStock * 1 ?>"
+                                           name="stock_item[<?php echo $childItem->getProductId() ?>][<?php echo $stock->getStockId() ?>]">
+                                </td>
+                                <td class="input <?php echo $isLast ? 'last' : ''?>">
+                                    <?php
+                                    $qtyAssigned = $this->getAssignedStocksForOrderItemValue($childItem, $stock, 'qty_stock_assigned');
+                                    $qtyAssigned = empty($qtyAssigned) ? '' : $qtyAssigned * 1;
+                                    ?>
+                                    <input type="text" title="Assigned Qty"
+                                           class="input-text"
+                                           value="<?php echo $qtyAssigned ?>"
+                                           data-stock-id="<?php echo $stock->getStockId() ?>"
+                                           data-row="<?php echo $i ?>"
+                                           data-item-id="<?php echo $childItem->getItemId() ?>"
+                                           data-product-id="<?php echo $childItem->getProductId() ?>"
+                                           data-max="<?php echo $isInStock ? min($qtyItem, $qtyStock) * 1 : 0 ?>"
+                                           name="item[<?php echo $childItem->getItemId() ?>][<?php echo $stock->getStockId() ?>]">
+                                </td>
+                            <?php endforeach; ?>
+                        </tr>
+                    <?php endforeach; ?>
+                <?php elseif (!$item->getParentItem()) : ?>
+                    <!-- simple product -->
+                    <tr class="border item_<?php echo $item->getItemId() ?> row_<?php echo $i ?>">
+                        <?php $j = 0; ?>
+                        <?php $qtyItem = $item->getQtyOrdered() - $item->getQtyRefunded() - $item->getQtyCanceled(); ?>
+                        <?php foreach ($stocks as $stock): ?>
+                            <?php $isLast = $stocksCount == ++$j; ?>
+                            <?php $qtyStock = $this->getStocksForOrderItemValue($item, $stock, 'qty'); ?>
+                            <?php $isInStock = $this->getStocksForOrderItemValue($item, $stock, 'is_in_stock'); ?>
+                            <td>
+                                <?php $legendClass = ($isInStock) ? 'legend-in-stock' : 'legend-out-stock'; ?>
+                                <input type="text" title="Qty IN Stock" readonly="readonly"
+                                       class="<?php echo $legendClass ?> qty_in_stock"
+                                       value="<?php echo $qtyStock * 1 ?>"
+                                       name="stock_item[<?php echo $item->getProductId() ?>][<?php echo $stock->getStockId() ?>]">
+                            </td>
+                            <td class="input <?php echo $isLast ? 'last' : ''?>">
+                                <?php
+                                    $qtyAssigned = $this->getAssignedStocksForOrderItemValue($item, $stock, 'qty_stock_assigned');
+                                    $qtyAssigned = empty($qtyAssigned) ? '' : $qtyAssigned * 1;
+                                ?>
+                                <input type="text" title="Assigned Qty"
+                                       class="input-text"
+                                       value="<?php echo $qtyAssigned ?>"
+                                       data-row="<?php echo $i ?>"
+                                       data-stock-id="<?php echo $stock->getStockId() ?>"
+                                       data-item-id="<?php echo $item->getItemId() ?>"
+                                       data-product-id="<?php echo $item->getProductId() ?>"
+                                       data-max="<?php echo $isInStock ? min($qtyItem, $qtyStock) * 1 : 0 ?>"
+                                       name="item[<?php echo $item->getItemId() ?>][<?php echo $stock->getStockId() ?>]">
+                            </td>
+                        <?php endforeach; ?>
+                    </tr>
+                <?php endif; ?>
+                </tbody>
+            <?php endforeach; ?>
+        </table>
+
+        <div style="display:none">
+            <input type="hidden" value="<?php echo $this->getReloadPage() ?>" name="reload"/>
+        </div>
+        </form>
+    </div>
+    <div class="footer-actions">
+        <div class="legend">
+            <ul>
+                <li class="legend-assigned"><i class="fa fa-check marker" aria-hidden="true"></i><?php echo $helper->__("Assigned") ?></li>
+                <li class="legend-not-assigned"><i class="fa fa-times marker" aria-hidden="true"></i><?php echo $helper->__("Not Assigned") ?></li>
+            </ul>
+            <ul>
+                <li class="legend-in-stock"><i class="fa fa-square marker" aria-hidden="true"></i><?php echo $helper->__("In stock") ?></li>
+                <li class="legend-out-stock"><i class="fa fa-square marker" aria-hidden="true"></i><?php echo $helper->__("Out of stock") ?></li>
+                <li class="legend-not-applicable"><i class="fa fa-square marker" aria-hidden="true"></i><?php echo $helper->__("Not applicable") ?></li>
+            </ul>
+        </div>
+        <div class="actions">
+            <?php if($this->getIsOrderView()): ?>
+                <button disabled="disabled" class="disabled" onclick="IWD.OrderManager.Stock.Order.assignStock(<?php echo $this->getOrderId() ?>)"><?php echo $helper->__('Update') ?></button>
+            <?php else: ?>
+                <button disabled="disabled" class="disabled" onclick="IWD.OrderManager.Stock.assignStock(<?php echo $this->getOrderId() ?>)"><?php echo $helper->__('Update') ?></button>
+            <?php endif; ?>
+        </div>
+    </div>
+    <div class="clear"></div>
+</div>
+<?php else: ?>
+    <a href="<?php echo Mage::helper('adminhtml')->getUrl('*/cataloginventory_stock/index') ?>"><?php echo $helper->__("Please, start by creating sources") ?></a>
+<?php endif; ?>

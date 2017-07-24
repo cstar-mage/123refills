@@ -1,0 +1,162 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Selldiamond>
+            <version>0.1.0</version>
+        </Ideal_Selldiamond>
+    </modules>
+    <frontend>
+        <routers>
+            <selldiamond>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Selldiamond</module>
+                    <frontName>selldiamond</frontName>
+                </args>
+            </selldiamond>
+        </routers>
+        <layout>
+            <updates>
+                <selldiamond>
+                    <file>selldiamond.xml</file>
+                </selldiamond>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<selldiamond>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Selldiamond</module>
+					<frontName>selldiamond</frontName>
+				</args>
+			</selldiamond>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <selldiamond after="Mage_Adminhtml">Ideal_Selldiamond_Adminhtml</selldiamond>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    <adminhtml>
+		<menu>
+		<!-- 
+			<selldiamond module="selldiamond">
+				<title>Sell Diamond</title>
+				<sort_order>71</sort_order>               
+				<children>
+					<items module="selldiamond">
+						<title>Manage Requests</title>
+						<sort_order>0</sort_order>
+						<action>selldiamond/adminhtml_selldiamond</action>
+					</items>
+				</children>
+			</selldiamond>
+			 -->
+			<message translate="title" module="selldiamond">
+				<title>Messages</title>
+				<sort_order>73</sort_order>               
+				<children>
+					<selldiamonditems module="selldiamond">
+						<title>Sell My Diamond</title>
+						<sort_order>103</sort_order>
+						<action>adminhtml/selldiamond</action>
+					</selldiamonditems>
+				</children>
+			</message>
+		</menu>
+		<!-- <acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Ideal_Selldiamond>
+							<title>Selldiamond Module</title>
+							<sort_order>10</sort_order>
+						</Ideal_Selldiamond>
+					</children>
+				</admin>
+			</resources>
+		</acl> -->
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                       	<message translate="title" module="selldiamond">
+							<title>Messages</title>
+							<sort_order>71</sort_order>               
+							<children>
+								<selldiamonditems module="selldiamond">
+									<title>Sell My Diamond</title>
+									<sort_order>103</sort_order>									
+								</selldiamonditems>
+							</children>
+						</message>		
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+		<layout>
+			<updates>
+				<selldiamond>
+					<file>selldiamond.xml</file>
+				</selldiamond>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <selldiamond>
+                <class>Ideal_Selldiamond_Model</class>
+                <resourceModel>selldiamond_mysql4</resourceModel>
+            </selldiamond>
+            <selldiamond_mysql4>
+                <class>Ideal_Selldiamond_Model_Mysql4</class>
+                <entities>
+                    <selldiamond>
+                        <table>selldiamond</table>
+                    </selldiamond>
+                </entities>
+            </selldiamond_mysql4>
+        </models>
+        <resources>
+            <selldiamond_setup>
+                <setup>
+                    <module>Ideal_Selldiamond</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </selldiamond_setup>
+            <selldiamond_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </selldiamond_write>
+            <selldiamond_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </selldiamond_read>
+        </resources>
+        <blocks>
+            <selldiamond>
+                <class>Ideal_Selldiamond_Block</class>
+            </selldiamond>
+        </blocks>
+        <helpers>
+            <selldiamond>
+                <class>Ideal_Selldiamond_Helper</class>
+            </selldiamond>
+        </helpers>
+    </global>
+</config>

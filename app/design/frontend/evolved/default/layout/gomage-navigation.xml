@@ -1,0 +1,71 @@
+<?xml version="1.0"?>
+<!--
+ /**
+ * GoMage Advanced Navigation Extension
+ *
+ * @category     Extension
+ * @copyright    Copyright (c) 2010-2011 GoMage (http://www.gomage.com)
+ * @author       GoMage
+ * @license      http://www.gomage.com/license-agreement/  Single domain license
+ * @terms of use http://www.gomage.com/terms-of-use
+ * @version      Release: 2.1
+ * @since        Available since Release 1.0
+ */
+ -->
+<layout version="0.1.0">
+	<catalog_category_layered>				
+		<reference name="left">			
+			<block type="gomage_navigation/navigation_left"></block>
+		</reference>
+		<reference name="head">
+			<action method="addJs">
+				<script>gomage/category-navigation.js</script>
+			</action>
+			<action method="addJs">
+				<script>gomage/validation.js</script>
+			</action>
+			<action method="addJs">
+				<script>gomage/slider.js</script>
+			</action>			
+		</reference>
+		<reference name="content">
+			<reference name="product_list">
+				<!--<block type="catalog/layer_view" name="catalog.leftnav" template="catalog/layer/view.phtml"/>-->
+			</reference>
+		</reference>
+	</catalog_category_layered>
+	
+	<catalog_category_default>
+		<reference name="left">			
+			<remove name="catalog.leftnav" />
+		</reference>
+	</catalog_category_default>
+	<catalogsearch_result_index>	
+	 <reference name="head">
+			<action method="addJs">
+				<script>gomage/category-navigation.js</script>
+			</action>
+			<action method="addJs">
+				<script>gomage/validation.js</script>
+			</action>
+			<action method="addJs">
+				<script>gomage/slider.js</script>
+			</action>			
+		</reference>
+		<reference name="content">
+			<reference name="product_list">
+				<!--<block type="catalog/layer_view" name="catalog.leftnav" template="catalog/layer/view.phtml"/>-->
+			</reference>
+		</reference>	
+		<reference name="left">			
+			<block type="gomage_navigation/navigation_left"></block>
+		</reference>			
+				
+	</catalogsearch_result_index>
+	<default>
+		<!--<reference name="catalog.topnav">
+			<action method="setTemplate"><template>gomage/navigation/catalog/navigation/top.phtml</template></action>			
+		</reference>-->							
+			
+	</default>	
+</layout>

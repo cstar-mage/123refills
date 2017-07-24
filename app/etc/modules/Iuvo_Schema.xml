@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Iuvo_Schema>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Iuvo_Schema>
+    </modules>
+</config>

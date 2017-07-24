@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Dcevent>
+            <version>0.1.0</version>
+        </Ideal_Dcevent>
+    </modules>
+    <frontend>
+        <routers>
+            <dcevent>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Dcevent</module>
+                    <frontName>dcevent</frontName>
+                </args>
+            </dcevent>
+        </routers>
+        <layout>
+            <updates>
+                <dcevent>
+                    <file>dcevent.xml</file>
+                </dcevent>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<dcevent>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Dcevent</module>
+					<frontName>dcevent</frontName>
+				</args>
+			</dcevent>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <dcevent after="Mage_Adminhtml">Ideal_Dcevent_Adminhtml</dcevent>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    
+    <adminhtml>
+		<menu>
+			
+			
+		<cms translate="title" module="cms">
+            <children>
+				<dcevent module="dcevent">
+					<title>Events</title>
+					<sort_order>22</sort_order>   
+					<action>adminhtml/dcevent</action>            
+					<!-- <children>
+						<items module="dcevent">
+							<title>Manage Event</title>
+							<sort_order>0</sort_order>
+							<action>dcevent/adminhtml_dcevent</action>
+						</items>
+					</children> -->
+				</dcevent>
+            </children>
+         </cms>
+         
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<cms translate="title" module="cms">
+				            <children>
+								<dcevent module="dcevent">
+									<title>Events</title>
+									<sort_order>22</sort_order>               
+									<!-- <children>
+										<items module="dcevent">
+											<title>Manage Event</title>
+											<sort_order>0</sort_order>
+											<action>dcevent/adminhtml_dcevent</action>
+										</items>
+									</children>  -->
+								</dcevent>
+				            </children>
+				         </cms>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<dcevent>
+					<file>dcevent.xml</file>
+				</dcevent>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <dcevent>
+                <class>Ideal_Dcevent_Model</class>
+                <resourceModel>dcevent_mysql4</resourceModel>
+            </dcevent>
+            <dcevent_mysql4>
+                <class>Ideal_Dcevent_Model_Mysql4</class>
+                <entities>
+                    <dcevent>
+                        <table>dcevent</table>
+                    </dcevent>
+                </entities>
+            </dcevent_mysql4>
+        </models>
+        <resources>
+            <dcevent_setup>
+                <setup>
+                    <module>Ideal_Dcevent</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </dcevent_setup>
+            <dcevent_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </dcevent_write>
+            <dcevent_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </dcevent_read>
+        </resources>
+        <blocks>
+            <dcevent>
+                <class>Ideal_Dcevent_Block</class>
+            </dcevent>
+        </blocks>
+        <helpers>
+            <dcevent>
+                <class>Ideal_Dcevent_Helper</class>
+            </dcevent>
+        </helpers>
+    </global>
+</config>

@@ -1,0 +1,75 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>
+            <iwd_ordermanager_order_info_api>
+                <model>iwd_ordermanager/api_orderinfo</model>
+                <title>IWD Order manager order info api</title>
+                <acl>iwd_ordermanager_api</acl>
+                <methods>
+                    <changeStatus translate="title" module="iwd_ordermanager">
+                        <title>Change order status</title>
+                        <method>changeOrderStatus</method>
+                    </changeStatus>
+                </methods>
+            </iwd_ordermanager_order_info_api>
+            <iwd_ordermanager_order_shipping_api>
+                <model>iwd_ordermanager/api_shipping</model>
+                <title>IWD Order manager shipping api</title>
+                <acl>iwd_ordermanager_api</acl>
+                <methods>
+                    <changeShippingMethod translate="title" module="iwd_ordermanager">
+                        <title>Change order shipping method</title>
+                        <method>changeShippingMethod</method>
+                    </changeShippingMethod>
+                </methods>
+            </iwd_ordermanager_order_shipping_api>
+            <iwd_ordermanager_order_items_api>
+                <model>iwd_ordermanager/api_items</model>
+                <title>IWD Order manager order items api</title>
+                <acl>iwd_ordermanager_api</acl>
+                <methods>
+                    <updateItemPrice translate="title" module="iwd_ordermanager">
+                        <title>Update order item price</title>
+                        <method>updateItemPrice</method>
+                    </updateItemPrice>
+                    <updateItemQty translate="title" module="iwd_ordermanager">
+                        <title>Update order item qty</title>
+                        <method>updateItemQty</method>
+                    </updateItemQty>
+                    <!--<updateItem translate="title" module="iwd_ordermanager">-->
+                        <!--<title>Update order items</title>-->
+                        <!--<method>updateItem</method>-->
+                    <!--</updateItem>-->
+                    <deleteItem translate="title" module="iwd_ordermanager">
+                        <title>Delete order items</title>
+                        <method>deleteItem</method>
+                    </deleteItem>
+                    <addItem translate="title" module="iwd_ordermanager">
+                        <title>Add order items</title>
+                        <method>addItem</method>
+                    </addItem>
+                </methods>
+            </iwd_ordermanager_order_items_api>
+        </resources>
+        <v2>
+            <resources_function_prefix>
+                <iwd_ordermanager_order_info_api>iwd_ordermanager_orderInfo</iwd_ordermanager_order_info_api>
+            </resources_function_prefix>
+            <resources_function_prefix>
+                <iwd_ordermanager_order_shipping_api>iwd_ordermanager_shipping</iwd_ordermanager_order_shipping_api>
+            </resources_function_prefix>
+            <resources_function_prefix>
+                <iwd_ordermanager_order_items_api>iwd_ordermanager_items</iwd_ordermanager_order_items_api>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <iwd_ordermanager_api translate="title" module="iwd_ordermanager">
+                    <title>IWD Order manager</title>
+                    <sort_order>3</sort_order>
+                </iwd_ordermanager_api>
+            </resources>
+        </acl>
+    </api>
+</config>

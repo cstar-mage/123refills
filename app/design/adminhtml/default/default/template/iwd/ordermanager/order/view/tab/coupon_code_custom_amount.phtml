@@ -1,0 +1,56 @@
+<?php
+/**
+ * @var $this IWD_OrderManager_Block_Adminhtml_Sales_Order_View_Tab_AdditionalAmount
+ */
+    $helper = Mage::helper('sales');
+    $code = $this->getCouponCode();
+    $amount = $this->getAdditionalAmount();
+    $description = $this->getAdditionalAmountDescription();
+?>
+
+<?php if($this->isCouponCodeEnabled()): ?>
+<?php $class = ($this->isAdditionalDiscountEnabled()) ? "box-left" : "box-right" ?>
+<div class="<?php echo $class ?>">
+    <!--Coupon Code-->
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-coupon-code"><?php echo $helper->__('Coupon Code') ?></h4>
+        </div>
+        <div class="hor-scroll">
+            <fieldset id="order_coupon_code">
+                <table>
+                    <tr>
+                        <td width="1"><label><?php echo $helper->__('Add Coupon Code') ?></label></td>
+                        <td><input type="text" id="iwd_om_coupon_code" name="iwd_om_coupon_code" class="input-text" placeholder="Coupon Code" value="<?php echo $code; ?>"/></td>
+                        <td width="1">
+                            <div>
+                                <button title="<?php echo $helper->__('Apply') ?>" type="button"
+                                        class="scalable disabled" disabled="disabled"
+                                        id="iwd_om_coupon_code_apply">
+                                    <span><span><span><?php echo $helper->__('Apply') ?></span></span></span>
+                                </button>
+                                <button title="<?php echo $helper->__('Remove') ?>"
+                                        id="iwd_om_coupon_code_remove"
+                                        <?php if(empty($code)): ?>style="display:none;"<?php endif; ?>
+                                        type="button" class="scalable">
+                                    <span><span><span><?php echo $helper->__('Remove') ?></span></span></span>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </table>
+            </fieldset>
+        </div>
+    </div>
+</div>
+<script>
+    IWD.OrderManager.CouponCode.applyUrl = "<?php echo Mage::helper('adminhtml')->getUrl('*/sales_coupon/applyCoupon');?>?isAjax=true";
+    IWD.OrderManager.CouponCode.init();
+</script>
+<?php endif; ?>
+
+<?php echo $this->getChildHtml('iwd_om_custom_fee') ?>
+
+<?php if($this->isCouponCodeEnabled() && $this->isAdditionalDiscountEnabled()): ?>
+<div class="clear"></div>
+<?php endif; ?>

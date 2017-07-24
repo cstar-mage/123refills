@@ -1,0 +1,28 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Jewelers Link</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="rapnet" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+		        		<td class="label">
+			        		<button onclick="setLocation('<?php echo $this->getUrl("uploadtool/adminhtml_uploadtool/getList"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Get JewelersLink List") ?>"><span><span><span><?php echo $this->__("Get JewelersLink List") ?></span></span></span></button>
+		        		</td>
+		        		<td class="label">
+			        		<button onclick="setLocation('<?php echo $this->getUrl("uploadtool/adminhtml_uploadtool/updateDiamonds"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Update JewelersLink Diamonds") ?>"><span><span><span><?php echo $this->__("Update JewelersLink Diamonds") ?></span></span></span></button>
+		        		</td>
+		        		<td class="label">
+			        		<button onclick="setLocation('<?php echo $this->getUrl("uploadtool/adminhtml_uploadtool/deleteDiamonds",array('source'=>'jewelerslink')); ?>')" class="scalable delete" type="button" title="<?php echo $this->__("Delete JewelersLink Diamonds") ?>"><span><span><span><?php echo $this->__("Delete JewelersLink Diamonds") ?></span></span></span></button>
+		        		</td>
+		        		<td class="label">
+			        		<button onclick="setLocation('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'var/import/diamonds.csv'; ?>')" class="scalable go" type="button" title="<?php echo $this->__("Download RapNet CSV") ?>"><span><span><span><?php echo $this->__("Download JewelersLink CSV") ?></span></span></span></button>
+		        		</td>
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div>

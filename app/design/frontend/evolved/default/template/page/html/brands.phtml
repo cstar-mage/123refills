@@ -1,0 +1,25 @@
+<?php  //$categories = Mage::getModel('catalog/category')->getCollection()->addAttributeToSelect('*')->addIsActiveFilter()->addOrderField('name')->addAttributeToFilter('level', 2); ?>
+<?php $categories=$this->getcategorylist();  ?> 
+
+<div class="designer rectangle">
+	<ul>
+		<?php foreach ($categories as $key => $value): ?>
+			<?php //if($_category->getId()==15 or $_category->getId()==16 ){ continue; } ?>
+ 			<?php $category = Mage::getModel('catalog/category')->load($key); ?>
+				<?php // echo "<pre>"; print_r($_category->getData());  ?>
+				<?php if($category->getData('thumbnail')):  ?>	
+					 <?php $_img_path = Mage::getBaseUrl('media').'catalog/category/'   ?>
+					<li class="<?php echo $category->getName(); ?>"><a href="<?php echo $category->getUrl() ?>"><img src="<?php echo $_img_path . $category->getData('thumbnail') ?>" /></a></li> 
+				<?php else : ?>
+					<?php if($category->getName()): ?>
+						<li><a href="<?php echo $category->getUrl() ?>"><?php echo $category->getName() ?></a></li> 	
+					<?php endif; ?>
+				<?php ?> 
+				<?php endif; ?>
+  		<?php endforeach; ?>
+		
+		 
+	</ul>
+</div>
+
+

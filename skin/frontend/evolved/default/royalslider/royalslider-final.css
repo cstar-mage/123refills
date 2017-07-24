@@ -1,0 +1,1158 @@
+.royalSlider {
+  width: 600px;
+  height: 400px;
+  position: relative;
+  direction: ltr;
+}
+
+/* line 9, ../sass/partials/royalslider/_royalslider.scss */
+.royalSlider > * {
+  float: left;
+}
+
+/* line 13, ../sass/partials/royalslider/_royalslider.scss */
+.rsWebkit3d .rsSlide {
+  -webkit-transform: translateZ(0);
+}
+
+/* line 18, ../sass/partials/royalslider/_royalslider.scss */
+.rsWebkit3d .rsSlide,
+.rsWebkit3d .rsContainer,
+.rsWebkit3d .rsThumbs,
+.rsWebkit3d .rsPreloader,
+.rsWebkit3d img,
+.rsWebkit3d .rsOverflow,
+.rsWebkit3d .rsBtnCenterer,
+.rsWebkit3d .rsAbsoluteEl,
+.rsWebkit3d .rsABlock,
+.rsWebkit3d .rsLink {
+  -webkit-backface-visibility: hidden;
+}
+
+/* line 30, ../sass/partials/royalslider/_royalslider.scss */
+.rsFade.rsWebkit3d .rsSlide,
+.rsFade.rsWebkit3d img,
+.rsFade.rsWebkit3d .rsContainer {
+  -webkit-transform: none;
+}
+
+/* line 35, ../sass/partials/royalslider/_royalslider.scss */
+.rsOverflow {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  -webkit-tap-highlight-color: transparent;
+}
+@media screen and (min-width: 959px) {
+  /* line 44, ../sass/partials/royalslider/_royalslider.scss */
+  .slider--home-main .rsOverflow {
+    overflow: visible;
+  }
+}
+
+/* line 54, ../sass/partials/royalslider/_royalslider.scss */
+.rsVisibleNearbyWrap {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  overflow: hidden;
+  left: 0;
+  top: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 63, ../sass/partials/royalslider/_royalslider.scss */
+.rsVisibleNearbyWrap .rsOverflow {
+  position: absolute;
+  left: 0;
+  top: 0;
+}
+
+/* line 69, ../sass/partials/royalslider/_royalslider.scss */
+.rsContainer {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 76, ../sass/partials/royalslider/_royalslider.scss */
+.rsArrow,
+.rsThumbsArrow {
+  cursor: pointer;
+}
+
+/* line 81, ../sass/partials/royalslider/_royalslider.scss */
+.rsThumb {
+  float: left;
+  position: relative;
+}
+
+/* line 87, ../sass/partials/royalslider/_royalslider.scss */
+.rsArrow,
+.rsNav,
+.rsThumbsArrow {
+  opacity: 1;
+  -webkit-transition: opacity 0.3s linear;
+  -moz-transition: opacity 0.3s linear;
+  -o-transition: opacity 0.3s linear;
+  transition: opacity 0.3s linear;
+}
+
+/* line 96, ../sass/partials/royalslider/_royalslider.scss */
+.rsHidden {
+  opacity: 0;
+  visibility: hidden;
+  -webkit-transition: visibility 0s linear 0.3s,opacity 0.3s linear;
+  -moz-transition: visibility 0s linear 0.3s,opacity 0.3s linear;
+  -o-transition: visibility 0s linear 0.3s,opacity 0.3s linear;
+  transition: visibility 0s linear 0.3s,opacity 0.3s linear;
+}
+
+/* line 106, ../sass/partials/royalslider/_royalslider.scss */
+.rsGCaption {
+  width: 100%;
+  float: left;
+  text-align: center;
+}
+
+/* Fullscreen options, very important ^^ */
+/* line 113, ../sass/partials/royalslider/_royalslider.scss */
+.royalSlider.rsFullscreen {
+  position: fixed !important;
+  height: auto !important;
+  width: auto !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  z-index: 2147483647 !important;
+  top: 0 !important;
+  left: 0 !important;
+  bottom: 0 !important;
+  right: 0 !important;
+}
+
+/* line 126, ../sass/partials/royalslider/_royalslider.scss */
+.royalSlider .rsSlide.rsFakePreloader {
+  opacity: 1 !important;
+  -webkit-transition: 0s;
+  -moz-transition: 0s;
+  -o-transition: 0s;
+  transition: 0s;
+  display: none;
+}
+
+/* line 135, ../sass/partials/royalslider/_royalslider.scss */
+.rsSlide {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  overflow: hidden;
+  height: 100%;
+  width: 100%;
+}
+
+/* line 145, ../sass/partials/royalslider/_royalslider.scss */
+.royalSlider.rsAutoHeight,
+.rsAutoHeight .rsSlide {
+  height: auto;
+}
+
+/* line 150, ../sass/partials/royalslider/_royalslider.scss */
+.rsContent {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+/* line 156, ../sass/partials/royalslider/_royalslider.scss */
+.rsPreloader {
+  position: absolute;
+  z-index: 0;
+}
+
+/* line 161, ../sass/partials/royalslider/_royalslider.scss */
+.rsNav {
+  -moz-user-select: -moz-none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+/* line 166, ../sass/partials/royalslider/_royalslider.scss */
+.rsNavItem {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.25);
+}
+
+/* line 170, ../sass/partials/royalslider/_royalslider.scss */
+.rsThumbs {
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+  float: left;
+  z-index: 22;
+}
+
+/* line 177, ../sass/partials/royalslider/_royalslider.scss */
+.rsTabs {
+  float: left;
+  background: none !important;
+}
+
+/* line 181, ../sass/partials/royalslider/_royalslider.scss */
+.rsTabs,
+.rsThumbs {
+  -webkit-tap-highlight-color: transparent;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* line 187, ../sass/partials/royalslider/_royalslider.scss */
+.rsVideoContainer {
+  /*left: 0;
+  top: 0;
+  position: absolute;*/
+  /*width: 100%;
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  float: left;*/
+  width: auto;
+  height: auto;
+  line-height: 0;
+  position: relative;
+}
+
+/* line 202, ../sass/partials/royalslider/_royalslider.scss */
+.rsVideoFrameHolder {
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: #141414;
+  opacity: 0;
+  -webkit-transition: .3s;
+}
+
+/* line 210, ../sass/partials/royalslider/_royalslider.scss */
+.rsVideoFrameHolder.rsVideoActive {
+  opacity: 1;
+}
+
+/* line 213, ../sass/partials/royalslider/_royalslider.scss */
+.rsVideoContainer iframe,
+.rsVideoContainer video,
+.rsVideoContainer embed,
+.rsVideoContainer .rsVideoObj {
+  position: absolute;
+  z-index: 50;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* ios controls over video bug, shifting video */
+/* line 225, ../sass/partials/royalslider/_royalslider.scss */
+.rsVideoContainer.rsIOSVideo iframe,
+.rsVideoContainer.rsIOSVideo video,
+.rsVideoContainer.rsIOSVideo embed {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  padding-right: 44px;
+}
+
+/* line 234, ../sass/partials/royalslider/_royalslider.scss */
+.rsABlock {
+  left: 0;
+  top: 0;
+  position: absolute;
+  z-index: 15;
+}
+
+/* line 242, ../sass/partials/royalslider/_royalslider.scss */
+img.rsImg {
+  max-width: none;
+}
+
+/* line 255, ../sass/partials/royalslider/_royalslider.scss */
+.rsNoDrag {
+  cursor: auto;
+}
+
+/* line 259, ../sass/partials/royalslider/_royalslider.scss */
+.rsLink {
+  left: 0;
+  top: 0;
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  display: block;
+  z-index: 0;
+  background: url(data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7);
+  cursor: pointer;
+  -webkit-backface-visibility: hidden;
+}
+
+/* line 275, ../sass/partials/royalslider/_royalslider.scss */
+.home-slider-full-width-wrap {
+  background-color: #000;
+}
+@media screen and (min-width: 959px) {
+  /* line 275, ../sass/partials/royalslider/_royalslider.scss */
+  .home-slider-full-width-wrap {
+    height: 400px;
+    overflow: hidden;
+  }
+}
+
+/* line 284, ../sass/partials/royalslider/_royalslider.scss */
+.slider--home-main .rsSlide {
+  opacity: 0.6;
+}
+/* line 287, ../sass/partials/royalslider/_royalslider.scss */
+.slider--home-main .rsSlide.rsActiveSlide {
+  opacity: 1;
+}
+
+/******************************
+*
+*  RoyalSlider Default Skin
+*
+*    1. Arrows
+*    2. Bullets
+*    3. Thumbnails
+*    4. Tabs
+*    5. Fullscreen button
+*    6. Play/close video button
+*    7. Preloader
+*    8. Caption
+*
+*  Sprite: 'rs-default.png'
+*  Feel free to edit anything
+*  If you don't some part - just delete it
+*
+******************************/
+/* line 35, ../sass/partials/royalslider/_rs-default.scss */
+.royalSlider {
+  width: 100%;
+}
+
+/* Background */
+/* line 40, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault,
+.rsDefault .rsOverflow,
+.rsDefault .rsSlide,
+.rsDefault .rsVideoFrameHolder,
+.rsDefault .rsThumbs {
+  color: #333;
+}
+
+/***************
+*
+*  1. Arrows
+*
+****************/
+/* line 56, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsArrow {
+  height: 100%;
+  width: 44px;
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 1;
+}
+
+/* line 64, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsVer .rsArrow {
+  width: 100%;
+  height: 44px;
+}
+
+/* line 69, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsVer .rsArrowLeft {
+  top: 0;
+  left: 0;
+}
+
+/* line 70, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsVer .rsArrowRight {
+  bottom: 0;
+  left: 0;
+}
+
+/* line 72, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsHor .rsArrowLeft {
+  left: 0;
+  top: 0;
+  z-index: 2;
+}
+@media all and (device-width: 959px) and (device-height: 1024px) and (orientation: portrait) {
+  /* line 72, ../sass/partials/royalslider/_rs-default.scss */
+  .rsDefault.rsHor .rsArrowLeft {
+    margin-left: .5em;
+  }
+}
+
+/* line 82, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsHor .rsArrowRight {
+  right: 0;
+  top: 0;
+  z-index: 2;
+}
+@media all and (device-width: 959px) and (device-height: 1024px) and (orientation: portrait) {
+  /* line 82, ../sass/partials/royalslider/_rs-default.scss */
+  .rsDefault.rsHor .rsArrowRight {
+    margin-right: .25em;
+  }
+}
+
+/* line 97, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsArrowIcn {
+  width: 28px;
+  height: 38px;
+  top: 50%;
+  left: 50%;
+  margin-top: -16px;
+  margin-left: -16px;
+  position: absolute;
+  cursor: pointer;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+  background-color: #6c9aba;
+}
+
+/* line 113, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsArrowIcn:hover {
+  background-color: #006892;
+}
+
+/* line 120, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsHor .rsArrowLeft .rsArrowIcn:before {
+  background-position: 0 -7782px;
+  position: relative;
+  display: inline-block;
+  top: 10px;
+  left: 6px;
+  width: 16px;
+  height: 18px;
+  content: "";
+}
+
+/* line 134, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+  left: 25%;
+}
+@media screen and (min-width: 959px) {
+  /* line 134, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+    left: 0;
+  }
+}
+
+/* line 141, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+  left: 25%;
+}
+@media screen and (min-width: 959px) {
+  /* line 141, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-sub.rsDefault.rsHor .rsArrowLeft .rsArrowIcn {
+    left: -14px;
+  }
+}
+
+/* line 151, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsHor .rsArrowRight .rsArrowIcn:before {
+  background-position: 0 -7850px;
+  position: relative;
+  display: inline-block;
+  top: 10px;
+  left: 6px;
+  width: 16px;
+  height: 18px;
+  content: "";
+}
+
+/* line 163, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+  left: 75%;
+}
+@media screen and (min-width: 959px) {
+  /* line 163, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+    left: 100%;
+  }
+}
+
+/* line 171, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+  left: 75%;
+}
+@media screen and (min-width: 959px) {
+  /* line 171, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-sub.rsDefault.rsHor .rsArrowRight .rsArrowIcn {
+    left: 64px;
+  }
+}
+
+/* line 192, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsArrowDisabled .rsArrowIcn {
+  opacity: .2;
+  filter: alpha(opacity=20);
+  *display: none;
+}
+
+/***************
+*
+*  2. Bullets
+*
+****************/
+/* line 201, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsBullets {
+  position: absolute;
+  z-index: 35;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  background: #000;
+  background: rgba(0, 0, 0, 0.75);
+  text-align: center;
+  line-height: 8px;
+  overflow: hidden;
+}
+
+/* line 217, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsBullet {
+  width: 8px;
+  height: 8px;
+  display: inline-block;
+  *display: inline;
+  *zoom: 1;
+  padding: 6px 5px 6px;
+}
+
+/* line 225, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsBullet span {
+  display: block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #777;
+  background: rgba(255, 255, 255, 0.5);
+}
+
+/* line 233, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsBullet.rsNavSelected span {
+  background-color: #FFF;
+}
+
+/***************
+*
+*  3. Thumbnails
+*
+****************/
+/* line 247, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumbsHor {
+  width: 100%;
+  height: 72px;
+}
+
+/* line 251, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumbsVer {
+  width: 96px;
+  height: 100%;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
+/* line 258, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsHor .rsThumbsContainer {
+  position: relative;
+  height: 100%;
+}
+
+/* line 262, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsVer .rsThumbsContainer {
+  position: relative;
+  width: 100%;
+}
+
+/* line 266, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumb {
+  float: left;
+  overflow: hidden;
+  width: 96px;
+  height: 72px;
+}
+
+/* line 272, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumb img {
+  width: 100%;
+  height: 100%;
+}
+
+/* line 276, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumb.rsNavSelected {
+  background: #02874a;
+}
+
+/* line 279, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumb.rsNavSelected img {
+  opacity: 0.3;
+  filter: alpha(opacity=30);
+}
+
+/* line 283, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTmb {
+  display: block;
+}
+
+/* Thumbnails with text */
+/* line 288, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTmb h5 {
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 22px;
+  line-height: 1.375rem;
+  margin: 0;
+  padding: 0;
+  color: #FFF;
+}
+
+/* line 294, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTmb span {
+  color: #666;
+  margin: 0;
+  padding: 0;
+  font-size: 13px;
+  font-size: 0.8125rem;
+  line-height: 22px;
+  line-height: 1.375rem;
+}
+
+/* Thumbnails arrow icons */
+/* line 304, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumbsArrow {
+  height: 100%;
+  width: 20px;
+  position: absolute;
+  display: block;
+  cursor: pointer;
+  z-index: 1;
+  background: #000;
+  background: rgba(0, 0, 0, 0.75);
+}
+
+/* line 314, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumbsArrow:hover {
+  background: rgba(0, 0, 0, 0.9);
+}
+
+/* line 317, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsVer .rsThumbsArrow {
+  width: 100%;
+  height: 20px;
+}
+
+/* line 321, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsVer .rsThumbsArrowLeft {
+  top: 0;
+  left: 0;
+}
+
+/* line 322, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsVer .rsThumbsArrowRight {
+  bottom: 0;
+  left: 0;
+}
+
+/* line 324, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsHor .rsThumbsArrowLeft {
+  left: 0;
+  top: 0;
+}
+
+/* line 325, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsHor .rsThumbsArrowRight {
+  right: 0;
+  top: 0;
+}
+
+/* line 327, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumbsArrowIcn {
+  width: 16px;
+  height: 16px;
+  top: 50%;
+  left: 50%;
+  margin-top: -8px;
+  margin-left: -8px;
+  position: absolute;
+  cursor: pointer;
+  background: url("rs-default.png");
+}
+
+/* line 339, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsHor .rsThumbsArrowLeft .rsThumbsArrowIcn {
+  background-position: -128px -32px;
+}
+
+/* line 340, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsHor .rsThumbsArrowRight .rsThumbsArrowIcn {
+  background-position: -128px -48px;
+}
+
+/* line 342, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsVer .rsThumbsArrowLeft .rsThumbsArrowIcn {
+  background-position: -144px -32px;
+}
+
+/* line 343, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsWithThumbsVer .rsThumbsArrowRight .rsThumbsArrowIcn {
+  background-position: -144px -48px;
+}
+
+/* line 345, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsThumbsArrowDisabled {
+  display: none !important;
+}
+
+/* Thumbnails resizing on smaller screens */
+@media screen and (min-width: 0px) and (max-width: 800px) {
+  /* line 349, ../sass/partials/royalslider/_rs-default.scss */
+  .rsDefault .rsThumb {
+    width: 59px;
+    height: 44px;
+  }
+
+  /* line 353, ../sass/partials/royalslider/_rs-default.scss */
+  .rsDefault .rsThumbsHor {
+    height: 44px;
+  }
+
+  /* line 356, ../sass/partials/royalslider/_rs-default.scss */
+  .rsDefault .rsThumbsVer {
+    width: 59px;
+  }
+}
+/***************
+*
+*  4. Tabs
+*
+****************/
+/* line 370, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTabs {
+  position: absolute;
+  bottom: 1em;
+  width: 100%;
+  height: auto;
+  margin: 0 auto;
+  text-align: center;
+  overflow: hidden;
+}
+
+/* line 380, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTab {
+  position: relative;
+  display: inline-block;
+  height: auto;
+  min-width: 24%;
+  padding: .5em 1em;
+  cursor: pointer;
+  text-align: center;
+  color: #333;
+  white-space: nowrap;
+  text-decoration: none;
+  color: #FFF;
+  font-family: arial, sans-serif !important;
+  background-color: #2d2d2d;
+  background: rgba(50, 50, 50, 0.7);
+  *display: inline;
+  *zoom: 1;
+}
+/* line 387, ../sass/partials/royalslider/_rs-default.scss */
+.lt-ie9 .rsDefault .rsTab {
+  min-width: 20% !important;
+}
+/* line 404, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTab:after {
+  position: absolute;
+  right: 0;
+  top: 0;
+  display: inline-block;
+  content: "";
+  width: 2px;
+  height: 44px;
+  background-position: 0 -7918px;
+}
+
+/* line 426, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTab:last-child:after {
+  display: none;
+}
+
+/* line 441, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsTab.rsNavSelected {
+  background-color: #FFF;
+  color: #333;
+}
+
+/***************
+*
+*  5. Fullscreen button
+*
+****************/
+/* line 456, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsFullscreenBtn {
+  right: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  z-index: 22;
+  display: block;
+  position: absolute;
+  cursor: pointer;
+}
+
+/* line 467, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsFullscreenIcn {
+  display: block;
+  margin: 6px;
+  width: 32px;
+  height: 32px;
+  background: url("rs-default.png") 0 0;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+  *background-color: #000;
+  border-radius: 2px;
+}
+
+/* line 480, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsFullscreenIcn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* line 483, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault.rsFullscreen .rsFullscreenIcn {
+  background-position: -32px 0;
+}
+
+/***************
+*
+*  6. Play/close video button
+*
+****************/
+/* line 497, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsPlayBtn {
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0.3);
+  width: 64px;
+  height: 64px;
+  margin-left: -32px;
+  margin-top: -32px;
+  cursor: pointer;
+}
+
+/* line 505, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsPlayBtnIcon {
+  width: 64px;
+  display: block;
+  height: 64px;
+  -webkit-border-radius: 4px;
+  border-radius: 4px;
+  -webkit-transition: .3s;
+  -moz-transition: .3s;
+  transition: .3s;
+  background: url(rs-default.png) no-repeat 0 -32px;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+  *background-color: #000;
+}
+
+/* line 521, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsPlayBtn:hover .rsPlayBtnIcon {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* line 524, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsBtnCenterer {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+}
+
+/* line 529, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsCloseVideoBtn {
+  right: 0;
+  top: 0;
+  width: 44px;
+  height: 44px;
+  z-index: 500;
+  position: absolute;
+  cursor: pointer;
+  -webkit-backface-visibility: hidden;
+  -webkit-transform: translateZ(0);
+}
+
+/* line 541, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsCloseVideoBtn.rsiOSBtn {
+  top: -38px;
+  right: -6px;
+}
+
+/* line 546, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsCloseVideoIcn {
+  margin: 6px;
+  width: 32px;
+  height: 32px;
+  background: url("rs-default.png") -64px 0;
+  background-color: #000;
+  background-color: rgba(0, 0, 0, 0.75);
+  *background-color: #000;
+}
+
+/* line 555, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsCloseVideoIcn:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* line 565, ../sass/partials/royalslider/_rs-default.scss */
+.rsDefault .rsPreloader {
+  width: 20px;
+  height: 20px;
+  left: 50%;
+  top: 50%;
+  margin-left: -10px;
+  margin-top: -10px;
+}
+
+/* line 580, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .rsTabs {
+  display: none;
+}
+@media screen and (min-width: 959px) {
+  /* line 580, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsTabs {
+    z-index: 1;
+    display: block;
+  }
+}
+/* line 587, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .rsGCaption {
+  position: absolute;
+  z-index: 1;
+  bottom: 0;
+  pointer-events: none;
+  padding: .5em .5em;
+  color: #333;
+}
+/* line 598, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .rsGCaption .caption--header {
+  text-align: center;
+  padding: .2em .5em;
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 22px;
+  line-height: 1.375rem;
+}
+/* line 603, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .rsGCaption .caption--info {
+  font-size: 16px;
+  font-size: 1rem;
+  line-height: 22px;
+  line-height: 1.375rem;
+}
+/* line 606, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .rsGCaption .countdown--timer {
+  display: none;
+}
+/* line 609, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .rsGCaption .countdown--limited-time {
+  display: none;
+}
+@media screen and (min-width: 959px) {
+  /* line 587, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption {
+    position: absolute;
+    display: inline-block;
+    width: 500px;
+    top: 1em;
+    left: 0;
+  }
+  /* line 620, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .rsCaptionInnerWrap {
+    background-color: white;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=85)";
+    filter: alpha(opacity=85);
+    -moz-opacity: 0.85;
+    -khtml-opacity: 0.85;
+    opacity: 0.85;
+    padding: 1em;
+  }
+  /* line 629, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .rsChristmasCountdown .rsCaptionInnerWrap {
+    display: none;
+  }
+  /* line 632, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--info {
+    text-align: left;
+  }
+  /* line 635, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .countdown--timer {
+    text-align: center;
+    color: #000;
+    display: block;
+    font-size: 54px;
+    font-size: 3.375rem;
+    line-height: 22px;
+    line-height: 1.375rem;
+    margin: 260px 0 0 10px;
+    font-weight: bold;
+    font-family: Rockwell_Regular, Georgia, Serif;
+  }
+  /* line 644, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .countdown--limited-time {
+    display: block;
+  }
+  /* line 647, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .countdown--suffix {
+    color: #000;
+    text-transform: uppercase;
+    font-size: 24px;
+    font-family: Rockwell_Regular, Georgia, Serif;
+  }
+  /* line 653, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--header {
+    text-align: left;
+    padding: 0;
+    display: block;
+    background: none;
+    font-size: 22px;
+    font-size: 1.375rem;
+    line-height: 22px;
+    line-height: 1.375rem;
+  }
+  /* line 661, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--header.heading-small {
+    font-size: 16px;
+    font-size: 1rem;
+    line-height: 22px;
+    line-height: 1.375rem;
+  }
+  /* line 665, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--header.heading-medium {
+    font-size: 19px;
+    font-size: 1.1875rem;
+    line-height: 24px;
+    line-height: 1.5125rem;
+  }
+  /* line 669, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--header.heading-large {
+    font-size: 22px;
+    font-size: 1.375rem;
+    line-height: 26px;
+    line-height: 1.65rem;
+  }
+  /* line 673, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--header.heading-extra-large {
+    font-size: 24px;
+    font-size: 1.5rem;
+    line-height: 29px;
+    line-height: 1.7875rem;
+  }
+  /* line 677, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .rsGCaption .caption--header.heading-extra-extra-large {
+    font-size: 28px;
+    font-size: 1.75rem;
+    line-height: 31px;
+    line-height: 1.925rem;
+  }
+}
+/* line 685, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .caption--info {
+  display: none;
+}
+@media screen and (min-width: 959px) {
+  /* line 685, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .caption--info {
+    display: block;
+  }
+}
+/* line 691, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-main .caption--info.cta-link {
+  display: none;
+}
+@media screen and (min-width: 959px) {
+  /* line 691, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-main .caption--info.cta-link {
+    display: block;
+  }
+}
+
+/* line 705, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub.rsDefault .rsGCaption {
+  position: relative;
+  background-color: #FFF;
+  padding: .5em 1em;
+}
+
+/* line 711, ../sass/partials/royalslider/_rs-default.scss */
+.slider__figcaption {
+  font-size: 14px;
+  font-size: 0.875rem;
+  line-height: 22px;
+  line-height: 1.375rem;
+  *zoom: 1;
+}
+/* line 38, ../../../../../../../../../../usr/local/rvm/gems/ruby-2.0.0-p247/gems/compass-core-1.1.0.alpha.3/stylesheets/compass/utilities/general/_clearfix.scss */
+.slider__figcaption:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* line 717, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub {
+  height: 300px !important;
+}
+/* line 720, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub li {
+  padding: 1.5em;
+}
+/* line 724, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub .slider__figcaption {
+  display: none;
+}
+/* line 729, ../sass/partials/royalslider/_rs-default.scss */
+.slider--home-sub .rsActiveSlide .slider__figcaption {
+  display: block;
+}
+@media screen and (min-width: 959px) {
+  /* line 735, ../sass/partials/royalslider/_rs-default.scss */
+  .slider--home-sub .slider__figcaption {
+    display: block;
+  }
+}
+
+/* line 745, ../sass/partials/royalslider/_rs-default.scss */
+.category-types-section .box-horiz .box-mini {
+  margin-top: 0;
+  margin-bottom: 0;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+/* line 751, ../sass/partials/royalslider/_rs-default.scss */
+.category-types-section .slider-category-list {
+  height: 360px !important;
+}
+
+/* line 762, ../sass/partials/royalslider/_rs-default.scss */
+.tab-slide {
+  cursor: pointer;
+}
+/* line 764, ../sass/partials/royalslider/_rs-default.scss */
+.tab-slide img {
+  min-width: 100%;
+}

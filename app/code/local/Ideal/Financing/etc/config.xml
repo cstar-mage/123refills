@@ -1,0 +1,195 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Financing>
+            <version>0.1.0</version>
+        </Ideal_Financing>
+    </modules>
+    <frontend>
+        <routers>
+            <financing>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Financing</module>
+                    <frontName>financing</frontName>
+                </args>
+            </financing>
+        </routers>
+        <layout>
+            <updates>
+                <financing>
+                    <file>financing.xml</file>
+                </financing>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<financing>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Financing</module>
+					<frontName>financing</frontName>
+				</args>
+			</financing>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <financing after="Mage_Adminhtml">Ideal_Financing_Adminhtml</financing>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    <adminhtml>
+		<menu>
+			<message translate="title" module="financing">
+					<title>Messages</title>
+					<sort_order>71</sort_order>               
+				    <children>
+						<financing module="financing">
+							<title>Financing</title>
+							<sort_order>81</sort_order>  
+							<action>adminhtml/financing</action>             
+							<!--<children>
+								<items module="financing">
+									<title>Manage Financing</title>
+									<sort_order>0</sort_order>
+									<action>financing/adminhtml_financing</action>
+								</items>
+								<settings module="financing">
+			                    		<title>Settings</title>
+						                <sort_order>1000</sort_order>
+					                    <action>adminhtml/system_config/edit/section/financing</action>
+					           </settings>
+							</children>  -->
+						</financing>				 
+					</children>
+			</message>
+		</menu>		
+		<acl>
+		 <resources>
+		       <admin>
+		           <children>
+					  <message translate="title" module="financing">
+							<title>Messages</title>
+							<sort_order>71</sort_order>               
+						    <children>
+								<financing module="financing">
+									<title>Financing</title>
+									<sort_order>81</sort_order>               
+									<!--<children>
+										<items module="financing">
+											<title>Manage Financing</title>
+											<sort_order>0</sort_order>											
+										</items>
+										<settings module="financing">
+					                    	<title>Settings</title>
+								            <sort_order>1000</sort_order>							                    
+							           </settings>
+									</children>  -->
+								</financing>				 
+							</children>
+						</message>
+					</children>
+				</admin>
+			</resources>
+		</acl>		
+		<!-- <acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Ideal_Financing>
+							<title>Financing Module</title>
+							<sort_order>10</sort_order>
+						</Ideal_Financing>
+					</children>
+				</admin>
+			</resources>
+		</acl> -->
+		<layout>
+			<updates>
+				<financing>
+					<file>financing.xml</file>
+				</financing>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <financing>
+                <class>Ideal_Financing_Model</class>
+                <resourceModel>financing_mysql4</resourceModel>
+            </financing>
+            <financing_mysql4>
+                <class>Ideal_Financing_Model_Mysql4</class>
+                <entities>
+                    <financing>
+                        <table>financing</table>
+                    </financing>
+                </entities>
+            </financing_mysql4>
+        </models>
+        <resources>
+            <financing_setup>
+                <setup>
+                    <module>Ideal_Financing</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </financing_setup>
+            <financing_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </financing_write>
+            <financing_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </financing_read>
+        </resources>
+        <template>
+            <email>
+                <financing_email_email_template translate="label" module="financing">
+                    <label>Financing Template</label>
+                    <file>financing_request_form.html</file>
+                    <type>html</type>
+                </financing_email_email_template>
+                <financing_email_autoemail_template translate="label" module="financing">
+                    <label>Auto Financing Template</label>
+                    <file>auto_financing_request_form.html</file>
+                    <type>html</type>
+                </financing_email_autoemail_template>
+            </email>
+        </template>        
+        <blocks>
+            <financing>
+                <class>Ideal_Financing_Block</class>
+            </financing>
+        </blocks>
+        <helpers>
+            <financing>
+                <class>Ideal_Financing_Helper</class>
+            </financing>
+        </helpers>
+    </global>
+    <default>
+        <financing>            
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>custom2</sender_email_identity>
+                <email_template>financing_email_email_template</email_template>
+                <autoemail_template>financing_email_autoemail_template</autoemail_template>
+            </email>
+        </financing>
+    </default>
+</config>

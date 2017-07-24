@@ -1,0 +1,30 @@
+<?php
+	$helper = Mage::helper('cms');
+	$processor = $helper->getPageTemplateProcessor();
+	
+	$aboutuselementmodeldata = Mage::getModel('evolved/evolved');
+	$aboutuselementcollectiondata = $aboutuselementmodeldata->getCollection();
+	$aboutuselementcollectiondata->addFieldToFilter('field', array('like' => "aboutus_element_style_two_%"));
+	foreach ($aboutuselementcollectiondata as $aboutuselementcollectiondata1)
+	{
+		//    		echo $collection_arr['field']."   value: ".$collection_arr['value']."<br />";
+		$collectiondata[$aboutuselementcollectiondata1['field']] = $aboutuselementcollectiondata1['value'];
+	}
+//	echo "<pre>"; print_r($collectiondata); echo "</pre>";
+?>
+<div class="main_about aboutus_element_style_two">
+<?php if($collectiondata['aboutus_element_style_two_upload_banner']): ?>
+	<div class="aboutstorytitle" style="background: url('/media/<?php echo $collectiondata['aboutus_element_style_two_upload_banner']; ?>') no-repeat scroll center top / cover  rgba(0, 0, 0, 0); ">
+<?php else: ?>
+	<div class="aboutstorytitleonly" >
+<?php endif; ?>
+   <h1><?php echo $collectiondata['aboutus_element_style_two_page_title']; ?></h1>
+   <h6><span><?php echo $collectiondata['aboutus_element_style_two_page_sub_title']; ?></span></h6>
+</div>
+<div class="about_us_content">
+	<div class="brand_content">
+		<div class="left"><?php echo $processor->filter($collectiondata['aboutus_element_style_two_left_insert_editor']); ?></div>
+		<div class="right"><?php echo $processor->filter($collectiondata['aboutus_element_style_two_right_insert_editor']); ?></div>
+	</div>
+</div>
+</div>

@@ -1,0 +1,93 @@
+<?php
+/*$Attribute = array( //AttributeCode => AttributeLabel
+	"lotno"			=>	'STOCK NUMBER',
+	"carat"			=>	"CARAT WEIGHT",
+	"polish"		=>	"POLISH",
+	"symmetry"		=>	"SYMMETRY",
+	"fluorescence"	=>	"FLUORESCENCE",
+	"dimensions"	=>	"MEASUREMENTS",
+	"depth"			=>	"DEPTH",
+	"tabl"			=>	"TABLE",
+	"culet"			=>	"CULET",
+	"cert_number"	=>	"CERTIFICATE #",
+	"certificate"	=>	"CERTIFICATE",
+	"length_width_ratio"=>	"L:W RATIO",
+	"Shape"			=>	"Shape",
+);
+
+$AttributeJS = array( //AttributeCode => AttributeForJS in detailpage
+	"lotno"			=>	'stock_number',
+	"carat"			=>	"Carat",
+	"polish"		=>	"Polish",
+	"symmetry"		=>	"Symmetry",
+	"fluorescence"	=>	"Fluorescence",
+	"dimensions"	=>	"Measurements",
+	"depth"			=>	"Depth",
+	"tabl"			=>	"Table",
+	"culet"			=>	"Culet",
+	"cert_number"	=>	"CERTIFICATE #",
+	"certificate"	=>	"CERTIFICATE",
+	"length_width_ratio"	=>	"length_width_ratio",
+	"Shape"			=>	"Shape",
+);*/
+$Attribute = array(
+	array("Label"=>"STOCK NUMBER", "JsCode"=>"stock_number", "DetailsCode"=>"lotno","sortorder"=>"1"),		
+	array("Label"=>"CARAT WEIGHT", "JsCode"=>"Carat", "DetailsCode"=>"carat","sortorder"=>"2"),		
+	array("Label"=>"POLISH", "JsCode"=>"Polish", "DetailsCode"=>"polish","sortorder"=>"3"),		
+	array("Label"=>"SYMMETRY", "JsCode"=>"Symmetry", "DetailsCode"=>"symmetry","sortorder"=>"4"),		
+	array("Label"=>"FLUORESCENCE", "JsCode"=>"Fluorescence", "DetailsCode"=>"fluorescence","sortorder"=>"5"),		
+	array("Label"=>"MEASUREMENTS", "JsCode"=>"Measurements", "DetailsCode"=>"dimensions","sortorder"=>"6"),		
+	array("Label"=>"DEPTH", "JsCode"=>"Depth", "DetailsCode"=>"depth","sortorder"=>"7"),		
+	array("Label"=>"TABLE", "JsCode"=>"Table", "DetailsCode"=>"tabl","sortorder"=>"8"),		
+	array("Label"=>"CULET", "JsCode"=>"Culet", "DetailsCode"=>"culet","sortorder"=>"9"),  		
+	array("Label"=>"CERTIFICATE #", "JsCode"=>"CertNumber", "DetailsCode"=>"cert_number","sortorder"=>"10"),		
+	array("Label"=>"CERTIFICATE", "JsCode"=>"Report", "DetailsCode"=>"certificate","sortorder"=>"11"),		
+	array("Label"=>"L:W RATIO", "JsCode"=>"ratio", "DetailsCode"=>"ratio","sortorder"=>"12"),		
+	array("Label"=>"Shape", "JsCode"=>"Shape", "DetailsCode"=>"Shape","sortorder"=>"13"), 
+	array("Label"=>"Cut", "JsCode"=>"Cut", "DetailsCode"=>"cut","sortorder"=>"14"),
+	array("Label"=>"Color", "JsCode"=>"Color", "DetailsCode"=>"color","sortorder"=>"15"),
+	array("Label"=>"Avail", "JsCode"=>"Availability", "DetailsCode"=>"availability","sortorder"=>"16"),
+	array("Label"=>"Clarity", "JsCode"=>"Clarity", "DetailsCode"=>"clarity","sortorder"=>"18"),
+	array("Label"=>"Crown", "JsCode"=>"Crown", "DetailsCode"=>"crown","sortorder"=>"19"),
+	array("Label"=>"Pavilion", "JsCode"=>"Pavilion", "DetailsCode"=>"pavilion","sortorder"=>"20"),
+	array("Label"=>"Girdle", "JsCode"=>"Girdle", "DetailsCode"=>"girdle","sortorder"=>"21"),
+	array("Label"=>"Make", "JsCode"=>"Make", "DetailsCode"=>"make","sortorder"=>"22"),
+	array("Label"=>"Country", "JsCode"=>"country", "DetailsCode"=>"country","sortorder"=>"23"),
+	array("Label"=>"Gem Advisor", "JsCode"=>"gem_advisor", "DetailsCode"=>"gem_advisor","sortorder"=>"24"),
+	array("Label"=>"Helium Report", "JsCode"=>"helium_report", "DetailsCode"=>"helium_report","sortorder"=>"25"),
+		
+);   
+//echo "<pre>";print_r($Attribute);echo "</pre>";
+  
+$collection = unserialize(Mage::getStoreConfig("diamondsearch/attribute_position"));
+$_counter = 0;
+?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid <?php echo $slidername ?>slider">
+    	<table id="attribute-options-table-<?php echo $slidername ?>" class="dynamic-grid diamondsearch-slider" cellspacing="0" cellpadding="0">
+		<tbody>
+        	<tr class="headings">
+            	<th><?php echo $this->__('Attribute Code') ?></th><th><?php echo $this->__('Attribute Label') ?></th><th><?php echo $this->__('Sortorder') ?></th>
+            </tr>
+<?php  foreach($Attribute as $attr): ?>
+		<tr class="option-row diamondsearch-attribute-position" id="attribute-position-row-<?php echo $_counter?>">
+           	<td>
+<input type="hidden" name="attribute_position[option_<?php echo $_counter ?>][DetailsCode]" value="<?php echo $attr['DetailsCode'];?>">
+<input type="hidden" name="attribute_position[option_<?php echo $_counter ?>][JsCode]" value="<?php echo $attr['JsCode'];?>"><?php echo $attr['DetailsCode']?>
+			</td>
+			<td><?php if($collection['option_'.$_counter]['Label']){
+					$Label = $collection['option_'.$_counter]['Label'];
+				}else{	$Label = $attr['Label'];	} ?>
+<input name="attribute_position[option_<?php echo $_counter ?>][Label]" value="<?php echo $Label;?>" class="input-text" type="text"></td>
+			<?php if($collection['option_'.$_counter]['sortorder']){
+					$sort = $collection['option_'.$_counter]['sortorder'];
+				}else{	$sort = $attr['sortorder'];	} ?>	
+            <td><input name="attribute_position[option_<?php echo $_counter ?>][sortorder]" value="<?php echo $sort ?>" class="input-text" type="text"></td>
+		</tr>
+<?php $_counter++;?>
+<?php endforeach;?>
+		</tbody>
+        </table>
+	</td>
+</tr>

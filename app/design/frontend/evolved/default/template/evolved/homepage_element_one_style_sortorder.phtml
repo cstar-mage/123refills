@@ -1,0 +1,16 @@
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php
+$html_img_one = $processor->filter($theme['homepage_element_one_style_image']);
+?>
+<div class="home-main-full-banner">
+<div class="page_element_one">
+<a href="<?php echo $theme['homepage_element_one_style_link']; ?>" title="<?php echo $theme['homepage_element_one_style_title']; ?>" >
+	<?php echo nl2br($html_img_one); ?>
+</a>
+</div>
+</div>
+<?php //echo "<br />homepage_element_one_style_sortorder"; ?>

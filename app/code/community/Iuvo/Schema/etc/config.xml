@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Iuvo_Schema>
+            <version>1.0.0</version>
+        </Iuvo_Schema>
+    </modules>
+    <global>
+        <blocks>
+            <iuvo_schema>
+                <class>Iuvo_Schema_Block</class>
+            </iuvo_schema>
+        </blocks>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <iuvo_schema>
+                    <file>schema.xml</file>
+                </iuvo_schema>
+            </updates>
+        </layout>
+    </frontend>
+<!--
+    <adminhtml>
+        <layout>
+            <updates>
+                <iuvo_schema>
+                    <file>schema.xml</file>
+                </iuvo_schema>
+            </updates>
+        </layout>
+    </adminhtml>
+-->
+</config>

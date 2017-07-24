@@ -1,0 +1,184 @@
+
+/******************* Getting Started *************************/
+
+#knowledgebase_form .hor-scroll .gettingstarted li {
+	display: inline-block;
+     margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_form .hor-scroll .gettingstarted a {
+    text-decoration: none;
+}
+#knowledgebase_form .hor-scroll .gettingstarted span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_form .hor-scroll .gettingstarted span.ex_name {
+    display: block;
+}
+
+/******************* Getting Started *************************/
+
+/******************* Marketing and Promotions *******************/
+
+#knowledgebase_tabs_knowledgebase_marketingandpromotions_content .hor-scroll .marketingandpromotions li {
+	display: inline-block;
+     margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_tabs_knowledgebase_marketingandpromotions_content .hor-scroll .marketingandpromotions a {
+    text-decoration: none;
+}
+#knowledgebase_tabs_knowledgebase_marketingandpromotions_content .hor-scroll .marketingandpromotions span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_tabs_knowledgebase_marketingandpromotions_content .hor-scroll .marketingandpromotions span.ex_name {
+    display: block;
+}
+.knowledgebase_content
+{
+	display: none;
+}
+
+/******************* Marketing and Promotions *******************/
+
+/******************* Customization *******************/
+
+#knowledgebase_tabs_knowledgebase_customization_content .hor-scroll .customization li {
+	display: inline-block;
+     margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_tabs_knowledgebase_customization_content .hor-scroll .customization a {
+    text-decoration: none;
+}
+#knowledgebase_tabs_knowledgebase_customization_content .hor-scroll .customization span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_tabs_knowledgebase_customization_content .hor-scroll .customization span.ex_name {
+    display: block;
+}
+.knowledgebase_content
+{
+	display: none;
+}
+
+/******************* Customization *******************/
+
+/******************* Managing Products *******************/
+
+#knowledgebase_form_managingproducts .hor-scroll .managingproducts li {
+	display: inline-block;
+     margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_form_managingproducts .hor-scroll .managingproducts a {
+    text-decoration: none;
+}
+#knowledgebase_form_managingproducts .hor-scroll .managingproducts span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_form_managingproducts .hor-scroll .managingproducts span.ex_name {
+    display: block;
+}
+
+/******************* Managing Products *******************/
+
+/******************* Managing Categories *******************/
+
+#knowledgebase_form .hor-scroll .managingcategories li {
+	display: inline-block;
+     margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_form .hor-scroll .managingcategories a {
+    text-decoration: none;
+}
+#knowledgebase_form .hor-scroll .managingcategories span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_form .hor-scroll .managingcategories span.ex_name {
+    display: block;
+}
+
+/******************* Managing Categories *******************/
+
+/******************* Organization *******************/
+
+#knowledgebase_form .hor-scroll .organization li {
+	display: inline-block;
+     margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_form .hor-scroll .organization a {
+    text-decoration: none;
+}
+#knowledgebase_form .hor-scroll .organization span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_form .hor-scroll .organization span.ex_name {
+    display: block;
+}
+
+/******************* Organization *******************/
+
+/******************* Troubleshooting *******************/
+
+#knowledgebase_form .hor-scroll .troubleshooting li {
+	display: inline-block;
+    margin: 21px;
+    text-align: center;
+    vertical-align: top;
+    width: 15.6%;
+}
+#knowledgebase_form .hor-scroll .troubleshooting a {
+    text-decoration: none;
+}
+#knowledgebase_form .hor-scroll .troubleshooting span {
+	color: #878c8f;
+    font-size: 12px;
+    font-weight: bold;
+    float: left;
+    width: 100%;
+}
+#knowledgebase_form .hor-scroll .troubleshooting span.ex_name {
+    display: block;
+}
+
+/******************* Troubleshooting *******************/
+

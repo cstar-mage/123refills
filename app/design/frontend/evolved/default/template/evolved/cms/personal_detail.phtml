@@ -1,0 +1,41 @@
+<?php /*
+Company Name: {{block type="core/template" name="cms_address_website_name" template="evolved/cms/personal_detail.phtml"}}
+Website Url: {{block type="core/template" name="cms_address_website_url" template="evolved/cms/personal_detail.phtml"}}
+Address Line 1: {{block type="core/template" name="cms_address_address_line_one" template="evolved/cms/personal_detail.phtml"}}
+Address Line 2: {{block type="core/template" name="cms_address_address_line_two" template="evolved/cms/personal_detail.phtml"}}
+City: {{block type="core/template" name="cms_address_city" template="evolved/cms/personal_detail.phtml"}}
+Region/State: {{block type="core/template" name="cms_address_state" template="evolved/cms/personal_detail.phtml"}}
+Zip Code: {{block type="core/template" name="cms_address_zipcode" template="evolved/cms/personal_detail.phtml"}}
+Phone number: {{block type="core/template" name="cms_address_phone_no" template="evolved/cms/personal_detail.phtml"}}
+Email Address: {{block type="core/template" name="cms_address_email" template="evolved/cms/personal_detail.phtml"}}
+*/
+?>
+<?php 
+$detail = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_form_general_store')[$this->getName()];
+?>
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php //echo "<pre>"; print_r($theme); exit;?>
+		<?php if($name == "general_store_state"): ?>
+				<?php 
+					   $stateCollection = Mage::getModel('directory/region')->getResourceCollection()->addCountryFilter('US')->load();
+						  $state = "";
+						  foreach ($stateCollection as $_state) {
+							$state[]= array('value'=>$_state->getId(),'label'=>$_state->getDefaultName());
+							if($_state->getId() == $detail)
+							{
+								echo $_state->getDefaultName();
+								break;
+							}
+						  }
+				?>
+		<?php elseif($name == "general_store_information_name"): ?>
+			<?php echo Mage::getStoreConfig('general/store_information/name'); ?>
+		<?php elseif($name == "general_store_information_phone"): ?>
+			<?php echo Mage::getStoreConfig('general/store_information/phone'); ?>
+		<?php elseif($name == "trans_email_ident_general_email"): ?>
+			<?php 
+			$email = Mage::getStoreConfig('trans_email/ident_general/email');
+			echo "<a href='mailto:".$email."'>".$email."</a>"; ?>			
+		<?php else: ?>
+				<?php echo $detail; ?>
+		<?php endif; ?>

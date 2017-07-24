@@ -1,0 +1,259 @@
+<style>
+li:has( > a.copyrights )
+{
+	color:red;
+}
+</style>
+<link rel="stylesheet" href="<?php echo $this->getSkinUrl() ?>css/termsandcondition/base.css" />
+<script src="<?php echo $this->getSkinUrl() ?>css/termsandcondition/jquery-1.9.1.min.js"></script>
+<script>
+/*!
+ * jquery.scrollto.js 0.0.1 - https://github.com/yckart/jquery.scrollto.js
+ * Scroll smooth to any element in your DOM.
+ *
+ * Copyright (c) 2012 Yannick Albert (http://yckart.com)
+ * Licensed under the MIT license (http://www.opensource.org/licenses/mit-license.php).
+ * 2013/02/17
+ **/
+$.scrollTo = $.fn.scrollTo = function(x, y, options){
+    if (!(this instanceof $)) return $.fn.scrollTo.apply($('html, body'), arguments);
+
+    options = $.extend({}, {
+        gap: {
+            x: 0,
+            y: -70
+        },
+        animation: {
+            easing: 'swing',
+            duration: 600,
+            complete: $.noop,
+            step: $.noop
+        }
+    }, options);
+
+    return this.each(function(){
+        var elem = $(this);
+        elem.stop().animate({
+            scrollLeft: !isNaN(Number(x)) ? x : $(y).offset().left + options.gap.x,
+            scrollTop: !isNaN(Number(y)) ? y : $(y).offset().top + options.gap.y
+        }, options.animation);
+    });
+};
+</script>
+    <script>
+    
+
+    $(document).ready(function(){
+
+        /** 
+         * This part does the "fixed navigation after scroll" functionality
+         * We use the jQuery function scroll() to recalculate our variables as the 
+         * page is scrolled/
+         */
+        $(window).scroll(function(){
+			 
+
+            var window_top = $(window).scrollTop() + 12; // the "12" should equal the margin-top value for nav.stick
+            var div_top = $('.termsandconditionleft #nav-anchor').offset().top;
+					//alert("div top : " + div_top + "window top : " + window_top);	
+				
+					//console.log("window top " + window_top + " div_top " + div_top + "  footer-container " + $('.footer-container').offset().top);
+					//console.log(parseInt($('.footer-container').offset().top) - (parseInt($('.footer-container').offset().top) - parseInt(window_top)));
+				//alert(parseInt($('.footer-container').offset().top) - (parseInt($('.footer-container').offset().top) - parseInt(window_top)));
+				//var footersticky = parseInt($('.footer-container').offset().top) - (parseInt($('.footer-container').offset().top) - parseInt(window_top));
+				var window_toptop = $(window).scrollTop();
+				var footersticky = parseInt($('.footer-container').offset().top) - 581;
+                if ((window_top > div_top) && (window_top < footersticky)) {
+                    $('.termsandconditionleft nav').addClass('stick');
+                } else {
+                    $('.termsandconditionleft nav').removeClass('stick');
+                }
+				if(window_top > footersticky)
+				{
+					jQuery(".termsandcondition").css("position","relative");
+					jQuery(".main-container .home-info .termsandconditionleft").css("position","absolute").css("bottom","0");
+				}
+				else{
+					jQuery(".termsandcondition").css("position","relative");
+					jQuery(".main-container .home-info .termsandconditionleft").css("position","unset").css("bottom","unset");					
+				}
+//				jQuery(".termsandcondition").css("position","relative");
+	//			jQuery(".main-container .home-info .termsandconditionleft").css("position","absolute").css("bottom","0");
+		});
+        
+        
+        /**
+         * This part causes smooth scrolling using scrollto.js
+         * We target all a tags inside the nav, and apply the scrollto.js to it.
+         */
+        $(".termsandconditionleft nav a").click(function(evn){
+       	 var offset = $( this ).offset();
+            evn.preventDefault();
+            $('html,body').scrollTo(this.hash, this.hash); 
+        });
+        
+        
+        
+        /**
+         * This part handles the highlighting functionality.
+         * We use the scroll functionality again, some array creation and 
+         * manipulation, class adding and class removing, and conditional testing
+         */
+        var aChildren = $(".termsandconditionleft nav li").children(); // find the a children of the list items
+        var aArray = []; // create the empty aArray
+        for (var i=0; i < aChildren.length; i++) {    
+            var aChild = aChildren[i];
+            var ahref = $(aChild).attr('href');
+            aArray.push(ahref);
+        } // this for loop fills the aArray with attribute href values
+        
+        $(window).scroll(function(){
+            var windowPos = $(window).scrollTop(); // get the offset of the window from the top of page
+            var windowHeight = $(window).height(); // get the height of the window
+            var docHeight = $(document).height();
+            
+            for (var i=0; i < aArray.length; i++) {
+                var theID = aArray[i];
+                var divPos = $(theID).offset().top; // get the offset of the div from the top of page
+                var divHeight = $(theID).height(); // get the height of the div in question
+                if (windowPos >= divPos && windowPos < (divPos + divHeight)) {
+                    $("a[href='" + theID + "']").addClass("nav-active");
+                } else {
+                    $("a[href='" + theID + "']").removeClass("nav-active");
+                }
+            }
+            
+            if(windowPos + windowHeight == docHeight) {
+                if (!$(".termsandconditionleft nav li:last-child a").hasClass("nav-active")) {
+                    var navActiveCurrent = $(".nav-active").attr("href");
+                    $("a[href='" + navActiveCurrent + "']").removeClass("nav-active");
+                    $(".termsandconditionleft nav li:last-child a").addClass("nav-active");
+                }
+            }
+        });
+    });
+
+</script>
+<?php 
+		$termscollectionmodel = Mage::getModel('evolved/evolved');
+		$termscollection = $termscollectionmodel->getCollection();
+		$termscollection->addFieldToFilter('field', array('like' => 'termsandcondition_form_%'));
+		//echo "<pre>";	print_r($termscollection->getData()); exit;
+		$decimalindex = 1;
+		foreach($termscollection as $termscollection1)
+		{
+
+			//print_r($termscollection1->getData());
+			//echo "id : ".$termscollection1->getData('evolved_id')."<br />";
+			//echo "field : ".$termscollection1->getData('field')."<br />";
+			//echo "value : ".$termscollection1->getData('value')."<br />";
+			$termsexplode = explode("_",$termscollection1->getData('field'));
+			//echo "<pre>"; print_r($termsexplode);
+
+			if($termsexplode[3]."_".$termsexplode[4] == "sort_order")
+			{
+				//echo $termsexplode[3],"_".$termsexplode[4]."<br />";
+				//print_r($termscollection1->getData());
+				//$terms[$termscollection1->getData('field')] = $termscollection1->getData('value');
+				//$terms[$termscollection1->getData('field')] = $termscollection1->getData('value');
+				if($termscollection1->getData('value') != "")
+				{
+					//echo "<pre>"; print_r($termscollection1->getData()); echo "</pre>";
+					if(array_key_exists($termscollection1->getData('value'), $terms))
+					{
+						$index = $termscollection1->getData('value').".".$decimalindex;
+						$terms[$index] = $termscollection1->getData('field');
+						$decimalindex++;
+					}
+					else
+					{
+						$decimalindex = 1;
+						$terms[$termscollection1->getData('value')] = $termscollection1->getData('field');
+					}
+				}
+				else
+				{
+					$termsempty[] = $termscollection1->getData('field');
+				}
+			}
+		}
+		//exit;
+
+		//print_r($terms);
+		//print_r($termsempty);
+		//exit;
+		//echo count($terms);
+		ksort($terms);
+		if((count($terms) != 0) && (count($termsempty) != 0))
+		{
+			$terms = array_merge($terms,$termsempty);	
+		}
+		else if((count($terms) != 0) && (count($termsempty) == 0))
+		{
+			$terms = array_merge($terms);				
+		}
+		else
+		{
+			$terms = array_merge($termsempty);	
+		}
+		//echo "<pre>"; print_r($terms);
+		foreach($terms as $terms_key => $terms_value)
+		{
+			$termsindex = explode("_",$terms_value);
+			//echo $termsindex[2]."<br />";
+			 ?>
+
+			<?php 
+			$helper = Mage::helper('cms');
+			$processor = $helper->getPageTemplateProcessor();
+			?>
+			<?php $theme = $this->getConfig(); ?>
+					<?php $htmltitle[] = $processor->filter($theme['termsandcondition_form_'.$termsindex[2].'_title']); ?>
+					<?php $htmldescription[] = $processor->filter($theme['termsandcondition_form_'.$termsindex[2].'_description']); ?>
+					<?php $titleid[] = str_replace("&","percentage",strtolower(str_replace(" ","_",$processor->filter($theme['termsandcondition_form_'.$termsindex[2].'_title']))));?>
+				
+		<?php } //exit;
+?>
+<?php //echo "<pre>"; print_r($titleid); echo "</pre>"; ?>
+<?php //echo "<pre>"; print_r($htmltitle); echo "</pre>"; ?>
+<div class="home-info termsandcondition">
+	<div class="termsandconditionleft">
+		 <div id="sidebar">
+            <div id="nav-anchor"></div>
+            <nav>
+                <ul>
+
+                    		<?php $countterms = 0; ?>
+								<?php foreach($htmltitle as $htmltitle_key => $htmltitle_value): ?>
+									 <li id="<?php echo str_replace("'","_",$titleid[$countterms])."_title"; ?>"><a href="<?php echo "#".str_replace("'","_",$titleid[$countterms]); ?>" class="<?php echo str_replace("'","_",$titleid[$countterms]); ?>" ><?php echo $htmltitle_value; ?></a>
+									<?php $countterms++; ?>
+								<?php endforeach; ?>
+                </ul>
+            </nav>
+        </div><!-- /sidebar -->  
+
+	</div>
+		<div class="termsandconditionright">
+		<?php $countterms = 0; ?>
+		<?php foreach($htmldescription as $htmldescription_key => $htmldescription_value): ?>
+			<div class="termsdescription" id="<?php echo str_replace("'","_",$titleid[$countterms]); ?>">
+					<?php echo $htmldescription_value; ?>
+			</div>
+			<?php $countterms++; ?>
+		<?php endforeach; ?>
+	</div>
+</div>
+<script>
+jQuery(document).ready(function(){
+	jQuery(".termsandconditionleft a").click(function(){
+		jQuery('#viewing_orders').animate({
+	        scrollBottom:  scrolled
+	    });
+	});
+});
+</script>
+<div id="main">
+    <div class="container clearfix">
+       
+   </div>
+</div>

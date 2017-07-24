@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout>
+    <downloadexports_adminhtml_exportview_index>
+        <update handle="downloadexports_exportview_index"/>
+        <reference name="content">
+            <block type="adminhtml/template" name="exportview" template="downloadexports/exportview.phtml"/>
+			<block type="downloadexports/grid" name="exports_widget"/>            
+        </reference>
+    </downloadexports_adminhtml_exportview_index>
+</layout>

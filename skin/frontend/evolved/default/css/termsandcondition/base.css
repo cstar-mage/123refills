@@ -1,0 +1,209 @@
+.home-info.termsandcondition {
+  padding: 0;
+  width: 96%;
+  float: none;
+  margin: 0 auto;
+}
+/* ============================================================
+  FUSION ADS
+============================================================ */
+.termsandcondition #fusionads {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 20;
+  padding: 20px;
+  background: rgba(255, 255, 255, 0.95);
+  font-size: 12px;
+  line-height: 1.2;
+  -webkit-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+  -moz-box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: -2px 2px 4px rgba(0, 0, 0, 0.1);
+}
+.termsandcondition #fusionads .fusion-wrap {
+  display: block;
+  margin: 0 auto 10px auto;
+  width: 130px;
+}
+.termsandcondition #fusionads a.fusion-text {
+  display: block;
+  color: #646464;
+}
+.termsandcondition #fusionads a.fusion-img {
+  display: block;
+  margin-bottom: 10px;
+  width: 130px;
+  height: 100px;
+  background-color: #fff;
+}
+.termsandcondition #fusionads a.fusion-img img {
+  display: block;
+  margin: 0 0 10px 0;
+}
+.termsandcondition #fusionads a.fusion-poweredby {
+  color: #ff3c50;
+}
+
+.termsandcondition #close-fusionad {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  z-index: 30;
+  width: 20px;
+  height: 20px;
+  background-color: #505050;
+  text-align: center;
+  line-height: 20px;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+
+
+
+/* =Extras
+-------------------------------------------------------------- */
+.termsandcondition .clearfix:after {
+	visibility: hidden;
+	display: block;
+	content: "";
+	clear: both;
+	height: 0;
+}
+
+
+
+/*******************************************Start Terms And Condition style********************************************/
+/* =The style for the lab
+-------------------------------------------------------------- */
+.termsandcondition #sidebar {
+    /*width:300px;*/
+    float:left;
+}
+
+.termsandcondition #content {
+    width:700px;
+    float:right;
+    padding-left:24px;
+}
+
+
+/* navigation */
+.termsandcondition #sidebar nav {
+/*    width:100%;*/
+  /*  background-color:rgb(240,240,240);
+    border:solid 1px rgb(220,220,220);*/
+    padding:0 12px;
+}
+
+.termsandcondition #sidebar nav.stick {
+    position: fixed;
+    top: 0;
+    z-index: 10000;
+    margin-top:70px;
+	width: 23%;
+}
+
+
+.termsandcondition #sidebar nav ul {
+    list-style-type:none;
+    margin:0;
+    padding:0;
+}
+/*
+.termsandcondition #sidebar nav li:not(#copyrights_title ) {
+	list-style-type: initial;
+}
+*/
+.termsandcondition #sidebar nav li {
+	list-style-type: initial;
+}
+.termsandcondition #sidebar nav li a {
+    color:rgb(50,50,50);
+    font-weight:700;
+	font-size: 13px;
+	padding:0px;
+   /* font-family: Raleway;*/
+}
+
+.termsandcondition #sidebar a.nav-active {
+    color:#ccc;
+}
+.termsandcondition #sidebar li.nav-active,
+.termsandcondition #sidebar li.nav-active a
+ {
+    color:#ccc;
+}
+
+.termsandcondition .termsandconditionright .termsdescription span.title {
+	display: block;
+/*    font-family: Raleway;*/
+    font-size: 20px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+.termsandcondition .termsandconditionright .termsdescription {
+    margin-bottom: 30px;
+   /* font-family: Raleway;*/
+}
+.main-container .home-info.termsandcondition .termsandconditionleft {
+width: 25%;
+float: left;
+text-align: left;
+}
+.main-container .home-info.termsandcondition .termsandconditionleft a, .main-container .home-info.termsandcondition .termsandconditionleft a:hover {
+display: block;
+/*margin-left: 15px;*/
+color:#000;
+}
+.main-container .home-info.termsandcondition .termsandconditionright {
+width: 75%;
+float: right; 
+text-align: left;
+}
+.termsandcondition 
+{
+	 background-color: #ffffff;
+}
+/*******************************************End Terms And Condition style********************************************/
+
+ /* terms start for responsive*/
+
+.cms-terms .newp { font-weight: normal;}
+.cms-terms .termsandcondition #sidebar nav.stick{width: 238px !important;padding:0 !important}
+@media only screen and (min-width: 800px) and (max-width: 950px){
+.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 70% !important;}
+}
+/*@media only screen and (min-width: 700px) and (max-width: 799px){
+.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 65% !important;}
+}*/
+@media only screen and (min-width: 771px) and (max-width: 799px){
+.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 65% !important;}
+}
+@media only screen and (max-width: 770px)
+{
+	.main-container .home-info.termsandcondition .termsandconditionleft { display: none; }
+		.main-container .home-info.termsandcondition .termsandconditionright { float:none; margin:0 auto; width:95%; }	
+}
+/*@media only screen and (min-width: 600px) and (max-width: 699px){
+.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 60% !important;}
+}
+@media only screen and (min-width: 525px) and (max-width: 599px){
+.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 54% !important;}
+}
+@media only screen and (min-width: 480px) and (max-width: 524px){
+.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 50% !important;}
+
+}*/
+@media only screen and (min-width: 400px) and (max-width: 479px){
+/*.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 50% !important;}*/
+.cms-terms .termsandcondition #sidebar nav.stick{width: 200px !important;padding:0 !important}
+.cms-terms .termsandcondition #sidebar nav li a{font-size:10px !important} 
+}
+@media only screen and (min-width: 320px) and (max-width: 399px){
+/*.cms-terms .main-container .home-info.termsandcondition .termsandconditionright{  width: 38% !important;}*/
+.cms-terms .termsandcondition #sidebar nav.stick{width: 200px !important;padding:0 !important}
+.cms-terms .termsandcondition #sidebar nav li a{font-size:10px !important} 
+}
+/* terms ends for responsive */

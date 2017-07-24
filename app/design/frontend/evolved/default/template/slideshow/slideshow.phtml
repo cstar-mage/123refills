@@ -1,0 +1,168 @@
+<style>
+	.desktop_img { display: block }
+	.landscape_ipad_img { display: none }
+	.portrait_ipad_img { display: none; }
+	.mobile_img { display: none; }
+	
+@media only screen and (max-width: 1024px) {
+	.desktop_img { display: none; }
+	.landscape_ipad_img { display: block }
+	.portrait_ipad_img { display: none; }
+	.mobile_img { display: none; }
+}
+
+@media only screen and (max-width: 770px) {
+	.desktop_img { display: none; }
+	.landscape_ipad_img { display: none }
+	.portrait_ipad_img { display: block; }
+	.mobile_img { display: none; }   
+}
+
+@media only screen and (max-width: 520px) {
+	 .desktop_img { display: none; }
+	 .landscape_ipad_img { display: none }
+	 .portrait_ipad_img { display: none; }
+	 .mobile_img { display: block; }   
+}
+</style>
+<script>
+jQuery(window).load(function(){
+	jQuery(".nextarr").click(function(){
+		jQuery(".cycle-pager-active").next().click();
+		if(jQuery( ".slideshow-pager span" ).last().hasClass("cycle-pager-active"))
+		{
+			//alert("hi");
+			jQuery(".slideshow-pager span").first().click();
+		}
+	});
+	jQuery(".prevarr").click(function(){
+		jQuery(".cycle-pager-active").prev().click();
+		if(jQuery( ".slideshow-pager span" ).first().hasClass("cycle-pager-active"))
+		{
+			//alert("hi");
+			jQuery(".slideshow-pager span").last().click();
+		}
+	});
+});
+
+</script>
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php if(Mage::getStoreConfig("slideshow/general/enable")): ?>
+<?php
+	$bannerCollections = Mage::getModel('slideshow/slideshow')
+	->getCollection()
+	->addFieldToFilter(
+		array('stores', 'stores'),
+		array(
+			array('finset'=>Mage::app()->getStore()->getId()), 
+			array('eq'=>'0'))
+	)
+	//->addFieldToFilter('filename', array('neq' => ''))
+	->addFieldToFilter('status', array('eq' => '1'))->setOrder("sort_order","ASC");	
+	
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+//echo "<pre>"; print_r($bannerCollections->getData()); echo "</pre>";
+foreach ($bannerCollections as $item)
+{
+		$desktop_img = ($item->getDesktopImg()) ? $item->getDesktopImg() : "" ;
+		$landscape_ipad_img = ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+		//$portrait_ipad_img = ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+		$portrait_ipad_img = ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : (($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg()) ;
+		//$mobile_img = ($item->getMobileImg()) ? $item->getMobileImg() : ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+		$mobile_img = ($item->getMobileImg()) ? $item->getMobileImg() : (($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : (($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg()));
+}
+?>
+<?php if(count($bannerCollections) > 0): ?>
+
+<?php  ?>
+<div class="slideshow-container">
+ 	<ul class="slideshow">						
+	<?php foreach ($bannerCollections as $item): ?>
+	<?php 
+		$desktop_img = ($item->getDesktopImg()) ? $item->getDesktopImg() : "" ;
+		$landscape_ipad_img = ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+		//$portrait_ipad_img = ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+		$portrait_ipad_img = ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : (($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg()) ;
+		//$mobile_img = ($item->getMobileImg()) ? $item->getMobileImg() : ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+		$mobile_img = ($item->getMobileImg()) ? $item->getMobileImg() : (($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : (($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg()));
+	?>
+		<li>
+			<a href="<?php echo $item->getData('slide_url');?>">
+				<?php /* ?>
+				<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$item->getFilename() ?>">
+				<?php */ ?>
+				<?php if($desktop_img): ?>
+					<img class="desktop_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$desktop_img; ?>">	
+				<?php endif; ?>
+				<?php if($landscape_ipad_img): ?>
+					<img class="landscape_ipad_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$landscape_ipad_img; ?>">
+				<?php endif; ?>
+				<?php if($portrait_ipad_img): ?>
+					<img class="portrait_ipad_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$portrait_ipad_img; ?>">
+				<?php endif; ?>
+				<?php if($mobile_img): ?>
+					<img class="mobile_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$mobile_img; ?>">
+				<?php endif; ?>
+				
+				<?php if(!$desktop_img): ?>
+						<?php $html = $processor->filter($item->getImageSlide()); ?>
+						<?php echo nl2br($html); ?>
+				<?php endif ?>
+				
+				<?php $htmlcontent = $processor->filter($item->getContent()); ?>
+				<?php if($htmlcontent): ?>
+					<div class="contenthtml">
+						<?php echo nl2br($htmlcontent); ?>
+					</div>
+				<?php endif; ?>
+			</a>
+		</li>							
+<?php endforeach;?>
+	</ul>
+	<?php
+	if((Mage::getStoreConfig('slideshow/general/pager') == 1 && count($bannerCollections) > 1) || (is_null(Mage::getStoreConfig('slideshow/general/pager'))) && count($bannerCollections) > 1)
+	{
+		$csspager = "block";
+	}
+	else 
+	{
+		$csspager = "none";		
+	}
+	?>
+<span class="slideshow-pager" style="display: <?php echo $csspager; ?>"></span>
+<span class="prevarr" style="display: <?php echo $csspager; ?>"></span>	
+<span class="nextarr" style="display: <?php echo $csspager; ?>"></span>
+</div>
+<?php  ?>
+
+<?php endif; ?>
+<?php endif; ?>
+<?php 
+	$timeout = (Mage::getStoreConfig('slideshow/general/timeout')) ? (Mage::getStoreConfig('slideshow/general/timeout') * 1000) : 7000;
+	$fx = (Mage::getStoreConfig('slideshow/general/fx')) ? (Mage::getStoreConfig('slideshow/general/fx')) : "scrollHorz";
+
+?>
+<script>
+
+jQuery(document).ready(function () {
+
+    // ==============================================
+    // UI Pattern - Slideshow
+    // ==============================================
+
+    jQuery('.slideshow-container .slideshow')
+        .cycle({
+            slides: '> li',
+            pager: '.slideshow-pager',
+            pagerTemplate: '<span class="pager-box"></span>',
+            speed: 600,
+            pauseOnHover: false,
+            swipe: true,
+            prev: '.slideshow-prev',
+            next: '.slideshow-next',
+            fx: '<?php echo $fx; ?>',
+            timeout: <?php echo $timeout; ?>,
+        });
+});
+</script>

@@ -1,0 +1,106 @@
+<?php
+/**
+ *
+ * Package :- Robots
+ * Edition :- community
+ * Developed By :- CueBlocks.com
+ * 
+ */
+$store_id = $this->getRequest()->getParam('store');
+$store_path = '';
+$post_url = $this->getUrl('*/*/save');
+if($store_id) {
+	$store_path = Mage::getStoreConfig('robotstxt/general/path_map', $store_id);
+    $post_url = $this->getUrl('*/*/save', array('store' => $store_id));
+}
+$io = new Varien_Io_File();
+if($store_path) {
+	$path = $io->getCleanPath(Mage::getBaseDir() . DS . $store_path . DS);
+} else {
+	$path = $io->getCleanPath(Mage::getBaseDir() . DS);
+}
+$filepath= $path.'robots.txt';
+if (file_exists($filepath)) 
+{
+	$fh =fopen($filepath, "r");
+	$theData=file_get_contents($filepath);
+	fclose($fh);
+}
+else {
+	$theData='';
+}
+?>
+<div class="content-header">
+    <table cellspacing="0" class="grid-header">
+        <tr>
+            <td><h3><?php echo $this->__('Robots Content')?></h3></td>
+            <td class="a-right">
+                <button onclick="editForm.submit()" class="scalable save" type="button"><span>Save Content</span></button>
+            </td>
+        </tr>
+    </table>
+</div>
+<?php if (!$this->isSingleStoreMode() && $websites = $this->getWebsites()): ?>
+<p class="switcher">
+	<label for="store_switcher"><?php echo $this->__('Choose Store View:') ?></label>
+	<select name="store_switcher" id="store_switcher" onchange="return switchStore(this);">
+		<?php foreach ($websites as $website): ?>
+			<?php $showWebsite = false; ?>
+			<?php foreach ($website->getGroups() as $group): ?>
+				<?php $showGroup = false; ?>
+				<?php foreach ($this->getStores($group) as $store): ?>
+					<?php if ($showWebsite == false): ?>
+						<?php $showWebsite = true; ?>
+						<optgroup label="<?php echo $this->escapeHtml($website->getName()) ?>"></optgroup>
+					<?php endif; ?>
+					<?php if ($showGroup == false): ?>
+						<?php $showGroup = true; ?>
+						<optgroup label="&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($group->getName()) ?>">
+					<?php endif; ?>
+					<option value="<?php echo $this->escapeHtml($store->getId()) ?>"<?php if($this->getStoreId() == $store->getId()): ?> selected="selected"<?php endif; ?>>&nbsp;&nbsp;&nbsp;&nbsp;<?php echo $this->escapeHtml($store->getName()) ?></option>
+				<?php endforeach; ?>
+				<?php if ($showGroup): ?>
+					</optgroup>
+				<?php endif; ?>
+			<?php endforeach; ?>
+		<?php endforeach; ?>
+	</select>
+	<a class="link-store-scope" title="<?php echo $this->__('What is this?'); ?>" onclick="this.target='_blank'" href="<?php echo Mage::helper('core/hint')->getHintByCode('store_switcher'); ?>">
+		<?php echo $this->__('What is this?'); ?>
+	</a>
+</p>
+<?php endif; ?>
+<div class="entry-edit">
+    	<div class="entry-edit-head">
+        	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Save Content')?></h4>
+	</div>
+        <fieldset id="my-fieldset">
+		<?php /***Add Form Starts***/ ?>
+		<form id="edit_form" name="edit_form" method="post" action="<?php echo $post_url ?>">
+		<input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" />
+		<table cellspacing="0" class="form-list">
+		<tr>
+			<td class="label"><?php echo $this->__('Content')?></td>
+			<td class="input-ele"><textarea rows="20" cols="80" name="content" id="content"><?php echo $theData;?></textarea></td>
+		</tr>
+		</table>
+		</form>
+		<?php /***Search Form Ends***/?>
+
+        </fieldset>
+
+</div>
+<script type="text/javascript">
+    var editForm = new varienForm('edit_form');
+</script>
+<?php if (!$this->isSingleStoreMode() && $websites = $this->getWebsites()): ?>
+<script type="text/javascript">
+    function switchStore(obj) {
+        var storeParam = obj.value ? 'store/' + obj.value + '/' : '';
+        if (obj.switchParams) {
+            storeParam += obj.switchParams;
+        }
+        setLocation('<?php echo $this->getSwitchUrl() ?>' + storeParam);
+    }
+</script>
+<?php endif; ?>

@@ -1,0 +1,214 @@
+<?php //$theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php
+/* $evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$evolved_form_newsletter = $evolvedmethod->getBlockConfig('evolved_form_newsletter');
+	$theme = array_merge($evolved_form_newsletter);
+}
+if(count($theme) == 0){ $theme = Mage::helper('evolved')->getThemeConfig(); } */
+$SQL="SELECT * FROM `evolved` WHERE `value` IS NOT NULL AND `type` IN ('evolved_form_newsletter')";
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+$results = $write->fetchAll($SQL);
+$theme = array();
+
+foreach($results as $row){
+	$theme[$row['field']] = $row['value'];
+}
+
+if(count($theme) == 0) {
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+}
+?>
+<?php if($theme['newsletter_popup_theme'] == "newsletterdarktheme"): ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/newssubscribers/newsletterdarktheme.css" />
+<?php else: ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/newssubscribers/newsletterlighttheme.css" />
+<?php endif; ?>
+<script>
+(function($){
+	$(document).ready(function(){
+
+		var substrcatdefault;
+		var substrcatlabel;
+		substrcatdefault = '<div class="left_block">';
+		substrcatdefault += '<div id="esns_box_title">';
+		substrcatdefault += '<?php if ($this->getSecondTitle()): ?>';
+		substrcatdefault += '<div id="esns_box_block_2">';
+		substrcatdefault += '<?php echo $this->getSecondTitle() ?>';
+		substrcatdefault += '</div>';
+		substrcatdefault += '<?php endif; ?>';
+		substrcatdefault += '</div>';
+		substrcatdefault += '<?php if ($this->getText()): ?>';
+		substrcatdefault += '<div class="esns_box_lines"></div>';
+		substrcatdefault += '<div id="esns_box_block_3">';
+		substrcatdefault += '<?php echo $this->getText() ?>';
+		substrcatdefault += '</div>';
+		substrcatdefault += '<?php endif; ?>';
+		substrcatdefault += '<div class="esns_box_lines"></div>';
+		substrcatdefault += '<div id="esns_box_subscribe">';
+		substrcatdefault += '<div id="esns_box_subscribe_response_error"></div>';
+		substrcatdefault += '<div id="esns_box_subscribe_response_success"></div>';
+		substrcatdefault += '<div id="esns_box_subscribe_form">';
+		substrcatdefault += '<div id="esns_box_subscribe_input"><input onclick="if(this.value==\'<?php echo $this->__('Enter your email'); ?>\') this.value=\'\'"  onblur="if(this.value==\'\') this.value=\'<?php echo $this->__('Enter your email'); ?>\'" id="esns_email" name="subscribe_email" value="<?php echo $this->__('Enter your email'); ?>" type="text"></div>';
+		substrcatdefault += '<div id="esns_box_subscribe_submit"><a href="javascript:void(0)" id="esns_submit" ><?php echo $this->__('Subscribe'); ?></a></div>';
+		substrcatdefault += '</div></div></div>';
+
+		substrcatlabel = '<div class="left_block">';
+		substrcatlabel += '<div id="esns_box_block_2">';
+		substrcatlabel += '<?php echo $this->getSecondTitle() ?>';
+		substrcatlabel += '</div>';
+		substrcatlabel += '<div id="esns_box_block_3">';
+		substrcatlabel += '<?php echo $this->getText() ?>';
+		substrcatlabel += '</div>';
+		substrcatlabel += '<div id="esns_box_subscribe">';
+		substrcatlabel += '<div id="esns_box_subscribe_response_error"></div>';
+		substrcatlabel += '<div id="esns_box_subscribe_response_success"></div>';
+		substrcatlabel += '<div id="esns_box_subscribe_form">';
+		substrcatlabel += '<div id="esns_box_subscribe_input"><input onclick="if(this.value==\'<?php echo $this->__('Enter your email'); ?>\') this.value=\'\'" onblur="if(this.value==\'\') this.value=\'<?php echo $this->__('Enter your email'); ?>\'" id="esns_email" name="subscribe_email" value="<?php echo $this->__('Enter your email'); ?>" type="text"></div>';
+		substrcatlabel += '<div id="esns_box_subscribe_submit"><a href="javascript:void(0)" id="esns_submit" ><?php echo $this->__('Subscribe'); ?></a></div>';
+		substrcatlabel += '</div></div></div>';
+
+		var themeval = '<?php echo $this->getTheme(); ?>';
+
+		$(window).resize(function(){
+				$("#esns_box_layer").css("top", ($(window).height()/2 - $("#esns_box_layer").height()/2) + "px");
+				if('<?php echo $theme['newsletter_subscribe_theme_enable'] ?>' == 'desktop')
+				{
+					if($(window).width() > 975)
+					{
+						if(themeval=='default')
+						{
+							$("#esns_box_layer .main_popup").html(substrcatdefault);
+						}
+						else
+						{
+							$("#esns_box_layer .main_popup_label").html(substrcatlabel);
+						}
+
+					}
+					else
+					{
+						if(themeval=='default')
+						{
+							$("#esns_box_layer .main_popup .left_block").remove();
+						}
+						else
+						{
+							$("#esns_box_layer .main_popup_label .left_block").remove();
+						}
+						
+					}
+				}
+				else if('<?php echo $theme['newsletter_subscribe_theme_enable'] ?>' == 'mobile')
+				{
+					if($(window).width() <= 976)
+					{
+						if(themeval=='default')
+						{
+							$("#esns_box_layer .main_popup").html(substrcatdefault);
+						}
+						else
+						{
+							$("#esns_box_layer .main_popup_label").html(substrcatlabel);
+						}
+					}
+					else
+					{
+						if(themeval=='default')
+						{
+							$("#esns_box_layer .main_popup .left_block").remove();
+						}
+						else
+						{
+							$("#esns_box_layer .main_popup_label .left_block").remove();
+						}
+					}
+				}
+				else
+				{
+					if(themeval=='default')
+					{
+						$("#esns_box_layer .main_popup").html(substrcatdefault);
+					}
+					else
+					{
+						$("#esns_box_layer .main_popup_label").html(substrcatlabel);
+					}				
+				}
+				//$("#esns_box_layer").css("left", ($(window).width()/2 - $("#esns_box_layer").width()/2) + "px");
+		});
+			$("#esns_box_layer").css("top", ($(window).height()/2 - $("#esns_box_layer").height()/2) + "px");
+		//$("#esns_box_layer").css("left", ($(window).width()/2 - $("#esns_box_layer").width()/2) + "px");
+			$(window).resize();
+		
+	});
+}(jQuery));
+
+</script>
+<?php 
+
+$currentdate = time();
+$coupon_from = date('m/d/Y', strtotime($theme['newsletter_coupon_date_from']));
+$coupon_to = date('m/d/Y', strtotime($theme['newsletter_coupon_date_to']));
+?>
+<?php if($theme['newsletter_popup_enable'] == "on"): ?>
+<style>
+#esns_box_layer{	
+	background-image: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$theme['newsletter_background_image_desktop']; ?>');
+}
+@media screen and (max-width: 1024px) {	
+	#esns_box_layer	{		
+		background-image: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$theme['newsletter_background_image_mobile']; ?>');
+	}
+}
+</style>
+<?php if(($currentdate >= strtotime( $coupon_from) && $currentdate <= strtotime($coupon_to))): ?>
+<?php
+if ($this->isActivePopUp()):
+?>
+<script type="text/javascript">
+    <?php if (is_numeric($this->getCookieLifeTime())): ?>
+    EsNewsSubscribers.setCookieLiveTime(<?php echo $this->getCookieLifeTime(); ?>);
+    <?php endif; ?>
+    <?php if ($this->getCookieName()): ?>
+    EsNewsSubscribers.setCookieName('<?php echo $this->getCookieName(); ?>');
+    <?php endif; ?>
+    EsNewsSubscribers.setBaseUrl('<?php echo $this->getBaseUrl(); ?>');
+</script>
+<div id="esns_background_layer">
+    <?php if ($this->getTheme() == 'default'): ?>
+    <div id="esns_box_layer">
+        <div id="esns_box_close"></div> 
+			<div class="main_popup">
+				
+			</div>
+			<label class="popup-bottom-notice"><input type="checkbox" id="newslettercheckbox" name="newslettercheckbox" /><span class="notice-text">Don’t show this popup again</span></label>
+    </div>
+    <?php elseif($this->getTheme() == 'label'): ?>
+    <div id="esns_box_layer" class="tl">
+        <div id="esns_box_close"></div>
+          <div class="main_popup_label">
+	          	<div class="left_block">
+			       <div id="esns_box_block_2">
+			            <?php echo $this->getSecondTitle() ?>
+			       </div>
+			        <div id="esns_box_block_3">
+			            <?php echo $this->getText() ?>
+			        </div>
+			        <div id="esns_box_subscribe">
+			            <div id="esns_box_subscribe_response_error"></div>
+			            <div id="esns_box_subscribe_response_success"></div>
+			            <div id="esns_box_subscribe_form">
+			                <div id="esns_box_subscribe_input"><input onclick="if(this.value=='<?php echo $this->__('Enter your email'); ?>') this.value=''" onblur="if(this.value=='') this.value='<?php echo $this->__('Enter your email'); ?>'" id="esns_email" name="subscribe_email" value="<?php echo $this->__('Enter your email'); ?>" type="text"></div>
+			                <div id="esns_box_subscribe_submit"><a href="javascript:void(0)" id="esns_submit" ><?php echo $this->__('Subscribe'); ?></a></div>
+			            </div>
+			        </div>
+			    </div>
+          </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+<?php endif; ?>
+<?php endif; ?>

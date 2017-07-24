@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_financing_index>
+        <reference name="content">
+            <block type="financing/adminhtml_financing" name="financing" />
+        </reference>
+    </adminhtml_financing_index>
+</layout>

@@ -1,0 +1,72 @@
+<style>
+#content {
+    background-color: #FFFFFF;
+    background-image: none;
+    margin: 0;
+    overflow: scroll !important;
+    padding: 5px 0 0;
+}
+#content .feed_item {
+    border-bottom: 1px dashed #CCCCCC;
+    clear: both;
+    display: block !important;
+    margin: 0 0 7px;
+    padding: 0 0 7px;
+}
+</style>
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('account_menu_static_block')->toHtml(); ?>
+<div class="event_main">
+<div class="mainx">
+<div class="event-left">
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('event_left_block')->toHtml();  ?>
+<!--<h2 class="event-title">Latest News</h2>
+<h4 class="event-subtitle">Worldwide Diamond Jewelry Sales Hit $79 Billion, as Rough Shortage Looms</h4>
+<p>Global diamond jewelry sales hit a record $79 billion in 2013, as the market faces a coming rough shortage, according to De Beers’ inaugural Diamond Insight Report. </p>
+<p>The report said that U.S. sales rose 7 percent last year, while sales in India and China grew 12 percent. According to the report, one in six U.S. diamond jewelry sales were made online in 2013—about 17 percent. In China, about a quarter of diamond jewelry purchases are made on the Internet.
+</p>
+<p>The report highlights the looming rough diamond shortfall. While rough production hit 145 million carats in 2013—an increase over the prior year—that remains well below the 2005 peak of 175 million carats, it said.</p>
+<span class="read_more"><a href="#">view more</a></span>-->
+</div>
+    
+    <div class="right">
+		 <div class="headings" style="width: 100%;">
+		 	<div class="diamondname">
+            	UPCOMING EVENTS
+            </div>
+            <div class="forum-back-btn">
+            	<button type="button" onclick="setLocation('<?php echo $this->getUrl('dcevent'); ?>')"><span><span>BACK</span></span></button>
+            </div>
+         </div>
+         <div class="forum-view">
+         	<?php 
+         	$dcevent_id = $this->getRequest()->getParam('id');
+         	if($dcevent_id != null && $dcevent_id != '')	{
+         		$dcevent = Mage::getModel('dcevent/dcevent')->load($dcevent_id);
+				//echo "<pre>"; print_r($dcevent->getdata()); exit;
+         	} else {
+         		echo "Nothing Found!";
+         		return;
+         	}
+         	
+         	echo $eventTitle = $dcevent->getTitle()."<br><br><br>";
+         	
+         	$startdate = strtotime($dcevent->getStart_date());
+         	$startdate = date('m/d/y',$startdate);
+			
+			$enddate = strtotime($dcevent->getEnd_date());
+         	$enddate = date('m/d/y',$enddate);
+			
+			$starttime = $dcevent->getStart_time();
+			
+			$endtime = $dcevent->getEnd_time();
+         	
+         	echo "Date: ".$startdate." - ".$enddate."<br>";
+			echo "Time: ".$starttime." - ".$endtime."<br><br><br>";
+         	
+         	echo $dcevent->getContent();
+         	?>
+         </div>
+         
+	</div>
+</div>
+</div>

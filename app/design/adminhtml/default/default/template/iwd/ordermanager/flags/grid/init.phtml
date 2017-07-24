@@ -1,0 +1,54 @@
+<?php
+$helper = Mage::helper('adminhtml');
+?>
+
+<div id="iwd-om-popup-box">
+    <div class="om-iwd-modal fade" id="iwd_om_flags_popup" tabindex="-1" role="dialog" aria-labelledby="iwd_om" aria-hidden="true">
+        <div class="om-iwd-modal-dialog">
+            <div class="om-iwd-modal-content">
+                <div class="om-iwd-modal-header">
+                    <a class="close" data-dismiss="modal" aria-label="<?php echo $helper->__("Close"); ?>"><span aria-hidden="true">&times;</span></a>
+                    <h4 class="om-iwd-modal-title"><?php echo $helper->__('Order') ?> #<span class="order_number">000000000</span></h4>
+                </div>
+                <div class="om-iwd-modal-body">
+                    <div class="flag-table-head">
+                        <div class="flag-column-head"><?php echo $helper->__('Label') ?></div>
+                        <div class="flag-comment-head"><?php echo $helper->__('Comment') ?></div>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="flag-table">
+                        <table cellspacing="0">
+                            <?php $flags = Mage::getModel('iwd_ordermanager/flags_flags')->getCollection()->setOrder('name', 'ASC'); ?>
+                            <?php foreach($flags as $flag) : ?>
+                                <tr class="iwd-om-flag-popup" data-id="<?php echo $flag->getId(); ?>">
+                                    <td class="flag-column"><?php echo $flag->getIconHtml(); ?></td>
+                                    <td class="flag-comment"><span><?php echo   $flag->getName() . '. ' . $flag->getComment(); ?></span></td>
+                                    <td class="flag-assign">
+                                        <button type="button" class="button assign" onclick="IWD.OrderManager.FlagsOrderGrid.assignFlagToOrder(<?php echo $flag->getId(); ?>)">
+                                            <span><span><?php echo $helper->__('Assign') ?></span></span>
+                                        </button>
+                                        <button style="display:none" type="button" class="button unassign" onclick="IWD.OrderManager.FlagsOrderGrid.assignFlagToOrder(-1)">
+                                            <span><span><?php echo $helper->__('Unassign') ?></span></span>
+                                        </button>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                        </table>
+                    </div>
+                </div>
+                <div class="iwd-om-preloader-wrapper">
+                    <div class="iwd-om-preloader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
+    $ji(document).ready(function () {
+        IWD.OrderManager.FlagsOrderGrid.flagsTypesRelation = <?php echo $this->getFlagsForTypes() ?>;
+        IWD.OrderManager.FlagsOrderGrid.applyUrl = '<?php echo Mage::helper('adminhtml')->getUrl('*/flags_order/applyFlag'); ?>?isAjax=true';
+        IWD.OrderManager.FlagsOrderGrid.init();
+    });
+</script>

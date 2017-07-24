@@ -1,0 +1,86 @@
+<?php 
+$theme = Ideal_Evolved_Block_Evolved::getConfig();
+if($theme['homepage_brand_manager_enabled']==1): ?>
+ 		
+ 		<!-- <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>tab_slider/css/jcarousel.responsive.css">
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js/jquery.js"></script>
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js//jquery.jcarousel.min.js"></script>
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js/jcarousel.responsive.js"></script>  -->
+
+<?php
+$bannerCollection = $this->getBrandCollection();
+?>
+<?php if(count($bannerCollection)>0): ?>
+<div class="home-main">
+<div class="home-brands">
+	<div class="heading"><h2><span>Brands</span></h2></div>
+<div class="jcarousel-wrapper">
+       <div class="jcarousel">
+            <ul>
+            		<?php foreach ($bannerCollection as $banner): ?>
+						<li>
+							<a target="_blank" href="<?php echo $banner['weblink']; ?>">
+								<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']?>" width="" height="" title="<?php echo $banner['title']?>" alt="<?php echo $banner['title']?>" align="middle"/>
+							</a>
+						</li>
+					<?php endforeach; ?>
+           </ul>
+       </div>
+	       <a href="#" class="jcarousel-control-prev">&lsaquo;</a>
+	       <a href="#" class="jcarousel-control-next">&rsaquo;</a>
+	       <p class="jcarousel-pagination"></p>
+</div>
+</div>
+</div>
+<?php endif; ?>
+<script>
+(function($) {
+    $(function() {
+        var jcarousel = $('.home-brands .jcarousel');
+
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var width = jcarousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / 5;
+                } else if (width >= 350) {
+                    width = width / 2;
+                }
+
+                jcarousel.jcarousel('items').css('width', width + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        $('.jcarousel-control-prev')
+            .jcarouselControl({
+                target: '-=1'
+            });
+
+        $('.jcarousel-control-next')
+            .jcarouselControl({
+                target: '+=1'
+            });
+
+        $('.jcarousel-pagination')
+            .on('jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .on('click', function(e) {
+                e.preventDefault();
+            })
+            .jcarouselPagination({
+                perPage: 1,
+                item: function(page) {
+                    return '<a href="#' + page + '">' + page + '</a>';
+                }
+            });
+    });
+})(jQuery);
+</script>
+<?php endif; ?>

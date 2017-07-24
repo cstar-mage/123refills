@@ -1,0 +1,490 @@
+A.MenuLink
+{
+	font-weight: bold;
+	font-size: 8pt;	
+	color: white;
+	text-decoration: none;
+}
+A.TopLine
+{
+	font-weight: bold;
+	font-size: 8pt;	
+	color: black;
+	text-decoration: none;
+}
+A.SubmenuLink
+{	
+	font-weight: bold;
+	font-size: 8pt;	
+	color: black;
+	text-decoration: none;
+}
+
+A.SubsubmenuLink
+{	
+	font-size: 8pt;	
+	color: black;
+	text-decoration: none;
+}
+A.MLink
+{
+	font-weight: bold;
+	font-size: 8pt;
+	color: #e7e7e7;
+	text-decoration: none;
+}
+
+A.MLink:hover		{ color: #ffffff; text-decoration: underline; }
+
+A.LLink
+{
+	font-weight: normal;
+	font-size: 8pt;
+	color: #233F7D;
+	text-decoration: underline;
+}
+
+A.BLink
+{
+	font-weight: bold;
+	font-size: 10pt;
+	color: #233f7d;
+	text-decoration: underline;
+}
+
+A.TabLink
+{
+	font-weight: bold;
+	font-size: 8pt;
+	/* color: #2A4784; */
+	color: #233F7D;
+	text-decoration: none;
+}
+
+
+.FormBgr 
+{
+	background-color: #C9D7EA;
+	border-top: #5777AD 1px solid;		
+	border-left: #5777AD 1px solid;		
+	border-bottom: #5777AD 1px solid;		
+	border-right: #5777AD 1px solid;		
+	font-size: 8pt;
+	font-family: Tahoma, Arial;
+	margin:auto;
+	padding:10px;
+	text-align:center;
+
+}
+#Table1 div {    
+    padding: 0 6px;
+}
+
+#Table1 td {
+    text-align: center;
+	vertical-align: middle;
+	padding:0 5px;
+}
+#Table1 input {
+    height: 20px;
+}
+.SearchResultBgr 
+{
+	background-color: #ffffff;
+	border-top: #91ABD0 1px solid;		
+	border-left: #91ABD0 1px solid;		
+	border-bottom: #91ABD0 1px solid;		
+	border-right: #91ABD0 1px solid;		
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #233F7D;	
+}
+
+.Dialogs
+{
+	background-color: #ffffff;
+	border-top: #91ABD0 1px solid;		
+	border-left: #91ABD0 1px solid;		
+	border-bottom: #91ABD0 1px solid;		
+	border-right: #91ABD0 1px solid;		
+	font-family: Tahoma;
+	font-size: 11px;
+	color: Black;	
+}
+
+.Dialogs2
+{
+	background-color: #EBF0F6;
+	border-top: #91ABD0 1px solid;		
+	border-left: #91ABD0 1px solid;		
+	border-bottom: #91ABD0 1px solid;		
+	border-right: #91ABD0 1px solid;		
+	font-family: Tahoma;
+	font-size: 11px;
+	color: Black;	
+}
+
+.PrintSearchResultBgr 
+{
+	background-color: #ffffff;
+	border-top: black 1px solid;		
+	border-left: black 1px solid;		
+	border-bottom: black 1px solid;		
+	border-right: black 1px solid;		
+	font-family: Tahoma;
+	font-size: 11px;
+	color: black;	
+}
+
+.DiamondTable 
+{
+	background-color: #ffffff;
+	border-top: #EAF1F9 1px solid;		
+	border-left: #EAF1F9 1px solid;		
+	border-bottom: #EAF1F9 1px solid;		
+	border-right: #EAF1F9 1px solid;		
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #47597F;	
+}
+
+.TableBgr 
+{
+	background-color: #ffffff;
+	font-family: Tahoma;
+	font-size: 11px;
+	color: #47597F;	
+}
+
+A.SRLink
+{	
+	font-family: Tahoma;
+	font-size: 10px;
+	color: #233F7D;	
+	text-decoration: none;
+	font-weight: bold;
+}
+
+A.SRLink:hover		{ text-decoration: underline; }
+
+.EvenItems 
+{
+	/* background-color: #e7e7ff;	*/
+	 background-color: #EAF1F9;
+}
+.PrintEvenItems 
+{
+	 background-color: #e7e7e7;
+}
+
+.SearchResultHeader
+{
+	background-color: #C9D7EA;
+	color: #233F7D;	
+	font-weight:bold;		
+}
+.PrintSearchResultHeader
+{
+	background-color: black;
+	color: white;	
+	font-weight:bold;		
+}
+
+.SearchTab
+{
+	background-color: white;
+	color: #233F7D;	
+	font-weight:bold;		
+	border-top: #5878AD 1px solid;		
+	border-right: #5878AD 1px solid;			
+}
+
+.SearchTabSelected
+{
+	background-color: #C9D7EA;
+	color: #233F7D;	
+	font-weight:bold;	
+	border-top: #5878AD 1px solid;		
+	border-right: #5878AD 1px solid;			
+}
+
+.SearchTabForm
+{
+	background-color: #C9D7EA;
+	color: #233F7D;	
+	font-weight: normal;	
+	border-bottom: #5878AD 1px solid;		
+	border-right: #5878AD 1px solid;			
+	border-left: #5878AD 1px solid;				
+}
+
+.FormTitle
+{
+	font-size: 13px;
+	font-family: 'Arial Black' , Arial;
+	color: #FF8000;
+}
+
+.HL
+{
+	color: #FF8000;
+	font-size: 11px;
+	font-family: Tahoma;	
+}
+
+
+.RangeBgr 
+{
+	background-color: #C8D6E9;
+	border-bottom: #91ABD0 1px solid;		
+	border-right: #91ABD0 1px solid;		
+	border-top: #91ABD0 1px solid;		
+	border-left: #91ABD0 1px solid;		
+	font-size: 8pt;
+	font-family: Tahoma, Arial;	
+}
+.RangeBgr td {
+    text-align: center;
+}
+select{-webkit-appearance:none; -moz-appearance:none; -o-appearance:none; appearance:none;}
+#Table11 td.RangeTitle {
+    padding: 3px;
+    vertical-align: middle;
+}
+#Table11 td{padding:3px 5px;}
+.hear_site{padding:5px 3px!important;}
+.hear_site > select {
+    width: 204px;
+}
+#Table15 #Table1 td{padding:2px 5px;}
+#Table15 #Table1 td select{margin-bottom: 2px;}
+#Table15 #Table1 td.RangeTitle{padding: 0px 5px;}
+
+#Table15 #Table5 td{padding:2px 5px;}
+#Table15 #Table5 td select{margin-bottom: 2px;}
+#Table15 #Table5 td.RangeTitle{padding: 0 5px 2px;}
+
+#Table15 #Table9 td{padding:2px 5px;}
+#Table15 #Table9 td select{margin-bottom: 2px;}
+#Table15 #Table9 td.RangeTitle{padding: 0 5px 2px;}
+
+#Table15 #Table3 td{padding:2px 5px;}
+#Table15 #Table3 td input{margin-bottom: 2px; height:20px; width:60px;}
+#Table15 #Table3 td.RangeTitle{padding: 0 5px 0px;}
+
+
+#Table11 textarea {
+    width: 303px;
+}
+
+.hear_site > input {
+    width: 204px;
+}
+#Table11 input {
+    margin-bottom: 2px;
+}
+.HeaderCart 
+{
+	background-color: White;
+	border-bottom: #c0c0c0 1px solid;		
+	border-right: #c0c0c0 1px solid;		
+	border-top: #c0c0c0 1px solid;		
+	border-left: #c0c0c0 1px solid;		
+	color: #000000;	
+}
+.RangeTitle
+{
+	background-color: #8EA9CE;	
+	color: #233F7D;	
+	font-weight:bold;	
+	text-align:center;
+}
+.RangeTitleBg
+{
+	background-color: #C8D6E9;	
+	color: #000000;	
+	font-weight:bold;	
+}
+
+
+.FormSubTitle
+{	
+	color: #233F7D;	
+	font-weight:bold;	
+	margin-top: 0px;
+	margin-bottom: 5px;
+}
+.ElementText
+{
+	color: #233F7D;	
+	font-weight:bold;	
+}
+
+.FormText
+{
+	color: #233F7D;	
+	/* font-weight:bold;	*/
+}
+
+.Button
+{
+	border-right: #2A4784 1px solid;
+	border-top: #bdceda 1px solid;
+	margin-top: 0px;
+	font-weight: bold;
+	font-size: 8pt;
+	border-left: #bdceda 1px solid;
+/*	width: 70px; */
+	color: white !important;
+	border-bottom: #2A4784 1px solid;
+	font-family: Tahoma;
+	height: 22px;
+	background-color: #6884B4;
+	text-align: center;
+}
+
+.UButton
+{
+	border-right: #2A4784 1px solid;
+	border-top: #bdceda 1px solid;
+	margin-top: 0px;
+	font-weight: bold;
+	font-size: 7pt;
+	border-left: #bdceda 1px solid;
+	color: white;
+	border-bottom: #2A4784 1px solid;
+	font-family: Tahoma;
+	height: 18px;
+	background-color: #6884B4;
+	text-align: center;
+}
+
+.SButton
+{
+	border-right: #2A4784 1px solid;
+	border-top: #bdceda 1px solid;
+	margin-top: 3px;
+	font-weight: bold;
+	font-size: 8pt;
+	border-left: #bdceda 1px solid;
+	/*width: 60px;*/
+	color: white;
+	border-bottom: #2A4784 1px solid;
+	font-family: Tahoma;
+	height: 20px;
+	background-color: #6884B4;
+	text-align: center;
+}
+.Required 
+{
+	color: #FF8000;	
+	font-weight:bold;
+}
+.Title 
+{
+	font-size: 13pt;
+	font-family: Tahoma, Arial;
+	color: black;	
+	font-weight: bold;
+}
+.HLine
+{	
+ border-top-style:Dotted;
+ border-top-width: 1px;
+ border-top-color: #91ABD0;
+}
+.VLine
+{	
+ border-right-style:Dotted;
+ border-right-width: 1px;
+ border-right-color: #91ABD0;
+}
+
+.HeaderBgr 
+{
+	background-color: #000000;
+
+}
+.HeaderBgrAdmin
+{
+	background-color: #AA1111;
+
+}
+
+.HeaderTitle
+{
+	font-size: 18pt;
+	font-family: Tahoma, Arial;
+	color: #6884B4;	
+	font-weight: normal;
+}
+.HeaderTitleAdmin
+{
+	font-size: 18pt;
+	font-family: Tahoma, Arial;
+	color: #ffffff;	
+	font-weight: normal;
+}
+
+
+
+.FooterText
+{
+	/*color: #233F7D;	*/
+	color: Black;
+	
+}
+.DialogHeader
+{
+	background-color: #C9D7EA;
+	color: #233F7D;	
+	font-weight:bold;		
+}
+.Error 
+{
+	font-family: Verdana, Arial;	
+	font-size: 12px;
+	color: #aa1111;
+}
+A.ELink
+{
+	font-weight: normal;
+	font-size: 12px;
+	color: #aa1111;
+	text-decoration: underline;
+}
+.DivLine
+{
+	background-color: #91ABD0;
+}
+.Msg 
+{
+	font-family: Verdana, Arial;	
+	font-size: 12px;
+	color: Black;
+}
+.Text
+{
+	font-family: Verdana, Arial;	
+	font-size: 12px;
+	color: Black;
+}
+.LogonTitle
+{
+	font-size: 13px;
+	font-family: 'Arial Black' , Arial;
+	color: #AEC2DD;
+}
+
+.DInput
+{
+	border-right: #91abd0 1px solid;
+	padding-right: 2px;
+	border-top: #91abd0 1px solid;
+	padding-left: 2px;
+	padding-bottom: 2px;
+	border-left: #91abd0 1px solid;
+	padding-top: 3px;
+	border-bottom: #91abd0 1px solid;
+	height: 24px;
+}

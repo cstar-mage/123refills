@@ -1,0 +1,53 @@
+
+
+
+<?php //echo "test";?>
+<?php $catelist=$this->getcategorylist();  ?>	
+<form method="post">
+	<div class="amfinder-vertical test" id="">
+		<h1>lnk &amp; Toner Search</h1>
+		<span class="ss-pin">Find your printer supplies quick and easy</span>
+		<div class="formmaxban"> 
+			<div class="dropdown-title">Brand</div>
+			<div class="dropdown-element"> 			
+				<select placeholder="Printer Brand " name="finder[1]" id="finder11" style="width:150px" class="validate-select">
+					<option value="0">Select Printer Brand</option> 
+					<?php foreach($catelist as $key => $value): ?>
+						<option value="<?php echo $key ?>"><?php echo $value ?></option> 
+					<?php endforeach; ?>
+				</select> 
+			</div>
+			
+			<div class="dropdown-title">Series</div>
+			<div class="dropdown-element"> 
+				<select placeholder="Printer Series " name="finder[2]" id="finder22" style="width:150px" class="validate-select"> 
+					 	<option value="0">Select Printer Series</option> 
+				</select> 
+			</div>
+			
+			<div class="dropdown-title">Model</div>
+			<div class="dropdown-element"> 
+				<select placeholder="Printer Model" name="finder[3]" id="finder33" style="width:150px"  class="validate-select"> 
+					 <option value="0">Select Printer Model</option> 
+				</select> 
+			</div>
+			
+			<div class='finalProductData' style='display: table;'>
+			</div>	
+ 		<!--	<button disabled id="Get1" class="selectprinter before1" onclick="">Select Your Printer</button>  -->
+		</div>	
+	</div>	
+</form>	 
+
+<script>
+jQuery(document).ready(function(){
+	
+	if(!jQuery(".finalProductData").has("selectprinter")){
+		jQuery(".selectprinter.before1").css({"display": "none"});
+	}		
+	else{
+		jQuery(".selectprinter.before1").css({"display": "block"});
+	}
+});
+</script>
+

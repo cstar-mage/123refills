@@ -1,0 +1,133 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Knowledgebase>
+            <version>0.1.0</version>
+        </Ideal_Knowledgebase>
+    </modules>
+    <frontend>
+        <routers>
+            <knowledgebase>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Knowledgebase</module>
+                    <frontName>knowledgebase</frontName>
+                </args>
+            </knowledgebase>
+        </routers>
+        <layout>
+            <updates>
+                <knowledgebase>
+                    <file>knowledgebase.xml</file>
+                </knowledgebase>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<knowledgebase>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Knowledgebase</module>
+					<frontName>knowledgebase</frontName>
+				</args>
+			</knowledgebase>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <knowledgebase after="Mage_Adminhtml">Ideal_Knowledgebase_Adminhtml</knowledgebase>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    <adminhtml>
+		<menu>
+			<videogallery module="knowledgebase">
+                <children>
+                    <knowledgebaseitem module="knowledgebase">
+                        <title>Knowledge Base</title>
+                        <sort_order>2</sort_order>
+						<action>adminhtml/knowledgebase/knowledgebase</action>
+                    </knowledgebaseitem>
+                </children>
+            </videogallery>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<videogallery module="knowledgebase">
+			                <children>
+			                    <knowledgebaseitem module="knowledgebase">
+			                        <title>Knowledge Base</title>
+			                        <sort_order>2</sort_order>
+			                    </knowledgebaseitem>
+			                </children>
+			            </videogallery>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<knowledgebase>
+					<file>knowledgebase.xml</file>
+				</knowledgebase>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <!-- <models>
+            <knowledgebase>
+                <class>Ideal_Knowledgebase_Model</class>
+                <resourceModel>knowledgebase_mysql4</resourceModel>
+            </knowledgebase>
+            <knowledgebase_mysql4>
+                <class>Ideal_Knowledgebase_Model_Mysql4</class>
+                <entities>
+                    <knowledgebase>
+                        <table>knowledgebase</table>
+                    </knowledgebase>
+                </entities>
+            </knowledgebase_mysql4>
+        </models>  -->
+        <resources>
+           <!--  <knowledgebase_setup>
+                <setup>
+                    <module>Ideal_Knowledgebase</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </knowledgebase_setup>  -->
+            <knowledgebase_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </knowledgebase_write>
+            <knowledgebase_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </knowledgebase_read>
+        </resources>
+        <blocks>
+            <knowledgebase>
+                <class>Ideal_Knowledgebase_Block</class>
+            </knowledgebase>
+        </blocks>
+        <helpers>
+            <knowledgebase>
+                <class>Ideal_Knowledgebase_Helper</class>
+            </knowledgebase>
+        </helpers>
+    </global>
+</config>

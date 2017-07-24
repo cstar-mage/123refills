@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+ <modules>
+  <Bss_DeferJS>
+   <active>true</active>
+   <codePool>local</codePool> 
+  </Bss_DeferJS> 
+ </modules>
+</config>

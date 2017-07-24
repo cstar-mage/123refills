@@ -1,0 +1,201 @@
+<?php //$theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php 
+$theme = $this->getFeaturedProductDesc();
+if(count($theme) == 0) {
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+}
+?>
+<?php ($theme['homepage_element_5_show_featured_product_visible_product'] == "") ? $theme['homepage_element_5_show_featured_product_visible_product'] = 4 : ''; ?>
+<script>
+(function($) {
+    $(function() {
+        var jcarousel = $('.homepage_element_5_featuredtab .jcarousel');
+        
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var width = jcarousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / <?php echo $theme['homepage_element_5_show_featured_product_visible_product']; ?>;
+                } else if (width >= 350) {
+                    width = width / 2;
+                }
+                jcarousel.jcarousel('items').css('width', width + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        $(window).resize(function(){
+           if($(window).width() >= 600)
+           {
+               $('.homepage_element_5_featuredtab .jcarousel-control-prev')
+               .jcarouselControl({
+                   target: '-=<?php echo $theme['homepage_element_5_show_featured_product_visible_product']; ?>'
+               });
+
+               $('.homepage_element_5_featuredtab .jcarousel-control-next')
+               .jcarouselControl({
+                   target: '+=<?php echo $theme['homepage_element_5_show_featured_product_visible_product']; ?>'
+               });
+           }
+           else if ($(window).width() >= 350)
+           {
+        	   $('.homepage_element_5_featuredtab .jcarousel-control-prev').jcarouselControl({
+                   target: '-=2'
+               });
+
+               $('.homepage_element_5_featuredtab .jcarousel-control-next')
+               .jcarouselControl({
+            	   target: '+=2'
+               });
+           }
+           else
+           {
+        	   $('.homepage_element_5_featuredtab .jcarousel-control-prev').jcarouselControl({
+                   target: '-=1'
+               });
+
+        	   $('.homepage_element_5_featuredtab .jcarousel-control-next')
+               .jcarouselControl({
+            	   target: '+=1'
+               });
+           }
+        });
+        $(window).resize();
+
+        $('.homepage_element_5_featuredtab .jcarousel-pagination')
+            .on('.homepage_element_5_featuredtab jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .on('click', function(e) {
+                e.preventDefault();
+            })
+            .jcarouselPagination({
+                perPage: 1,
+                item: function(page) {
+                    return '<a href="#' + page + '">' + page + '</a>';
+                }
+            });
+    });
+})(jQuery);
+</script>    
+<?php
+$categoryId = $theme['homepage_element_5_featured_category_id']; // a category id that you can get from admin
+$category = Mage::getModel('catalog/category')->load($categoryId);
+$_productCollection = Mage::getModel('catalog/product')
+    ->getCollection()
+    ->addCategoryFilter($category)
+	->setPageSize(20)
+	->load();
+
+//echo count($_productCollection);
+
+?>
+<?php //if (($_productCollection = $this->getProductCollection()) && $_productCollection->getSize()): ?>
+<?php 
+$category = Mage::getModel('catalog/category');
+$catTree = $category->getTreeModel()->load();
+$catIds = $catTree->getCollection()->getAllIds();
+
+
+$cats = array();
+if ($catIds){
+	foreach ($catIds as $id){
+		$cats[] = $id;
+	}
+}
+
+if (in_array($categoryId, $cats)) {
+	
+?>
+<?php if(count($_productCollection) != 0): ?>
+<div class="homepage_element_5_featuredtab">
+<div class="jcarousel-wrapper">
+       <div class="jcarousel">
+            <ul>
+            	<?php foreach ($_productCollection as $_product): ?>
+    			<?php $_product = Mage::getModel('catalog/product')->load($_product->getId()); 
+				
+				foreach ($_product->getMediaGalleryImages() as $image) {
+                     $imgURL = $image->getUrl();
+					 //echo "<pre>";print_r($image); 
+                     $imagemain = $image->getFile();
+					 break;
+				} 
+				
+				?>
+	                <li>
+	                	<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+			                <?php if(($theme['homepage_element_5_show_featured_product_button_image_size_width'] == "") && ($theme['homepage_element_5_show_featured_product_button_image_size_height'] == "")): ?>
+              			                <?php $_imgwidth = 150; ?>
+              			                <?php $_imgheight = 150; ?>
+       			                <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>"
+       			                 width=<?php echo $_imgwidth; ?> height=<?php echo $_imgheight; ?>
+			                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(true)->resize($_imgwidth,$_imgheight); ?>"
+			                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /><?php */?>
+                                 
+                                 <img id="product-collection-image-<?php echo $_product->getId(); ?>" 
+                                 width=<?php echo $_imgwidth; ?> height=<?php echo $_imgheight; ?> 
+                                 src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $imagemain)->resize(150, 150); ?>" 
+                                 alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" /> 
+			                <?php elseif(($theme['homepage_element_5_show_featured_product_button_image_size_width'] == "") || ($theme['homepage_element_5_show_featured_product_button_image_size_height'] == "")): ?>
+              			                <?php if($theme['homepage_element_5_show_featured_product_button_image_size_width']): ?>
+              			                           <?php $_imgwidth = $theme['homepage_element_5_show_featured_product_button_image_size_width']; ?>
+              			                <?php else: ?>
+              			                           <?php $_imgwidth = $theme['homepage_element_5_show_featured_product_button_image_size_height']; ?>              			                
+              			                <?php endif; ?>
+       			                <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>"
+       			                width=<?php echo $_imgwidth; ?> height=<?php echo $_imgwidth; ?>
+			                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(true)->resize($_imgwidth); ?>"
+			                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /> <?php */?>
+                                 
+                                 <img id="product-collection-image-<?php echo $_product->getId(); ?>" 
+                                 width=<?php echo $_imgwidth; ?> height=<?php echo $_imgheight; ?> 
+                                 src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $imagemain)->resize($_imgwidth); ?>" 
+                                 alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" />          			                
+              			    <?php else: ?>
+              			                <?php $_imgwidth = $theme['homepage_element_5_show_featured_product_button_image_size_width']; ?>
+              			                <?php $_imgheight = $theme['homepage_element_5_show_featured_product_button_image_size_height']; ?>
+       			                <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>"
+       			                 width=<?php echo $_imgwidth; ?> height=<?php echo $_imgheight; ?>
+			                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(true)->resize($_imgwidth,$_imgheight); ?>"
+			                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" /> <?php */?>
+                                 
+                                 <img id="product-collection-image-<?php echo $_product->getId(); ?>" 
+                                 width=<?php echo $_imgwidth; ?> height=<?php echo $_imgheight; ?> 
+                                 src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $imagemain)->resize($_imgwidth,$_imgwidth); ?>" 
+                                 alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" />              			                
+			                <?php endif; ?>
+			            </a>
+			            <div class="featuredproductinfo" >
+	  			            <?php if($theme['homepage_element_5_show_featured_product_name_enabled'] == 1): ?>
+        			            <a href="<?php echo $_product->getProductUrl() ?>"><span class="product-name"><?php echo $_product->getName(); ?></span></a>
+	  			            <?php endif; ?>
+	  			            <?php if($theme['homepage_element_5_show_featured_product_price_enabled'] == 1): ?>
+		 	  			            <span class="product-price"><?php echo $this->getPriceHtml($_product,true) ?></span>	  			            
+	  			            <?php endif; ?>
+	  			            <?php if($theme['homepage_element_5_show_featured_product_button_text']): ?>
+				  			         <?php if($_product->isSaleable()): ?>
+			                            <button type="button" title="<?php echo $this->__($theme['homepage_element_5_show_featured_product_addtocart_text']) ?>" class="button btn-cart" onclick="setLocation('<?php echo ($theme['homepage_element_5_show_featured_product_button_url']=='cart') ? $this->getAddToCartUrl($_product) : $_product->getProductUrl(); ?>')"><span><span><?php echo $this->__($theme['homepage_element_5_show_featured_product_button_text']) ?></span></span></button>
+			                         <?php else: ?>
+			                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+			                        <?php endif; ?>
+	  			            <?php endif; ?>
+			            </div>
+			         </li>
+		        <?php endforeach; ?>
+           </ul>
+       </div>
+	       <a href="#" class="jcarousel-control-prev"><!-- &lsaquo;  --></a>
+	       <a href="#" class="jcarousel-control-next"><!-- &rsaquo;  --></a>
+	       <p class="jcarousel-pagination"></p>
+</div>
+</div>
+<?php endif; ?>
+<?php 
+}
+?>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+	<sections>
+	    <design translate="label" module="dlscrollup">
+	        <groups>
+	            <scrollup translate="label">
+	                <label>Page Scroll Up</label>
+	                <frontend_type>text</frontend_type>
+	                <sort_order>700</sort_order>
+	                <show_in_default>1</show_in_default>
+	                <show_in_website>1</show_in_website>
+	                <show_in_store>1</show_in_store>
+	                <fields>
+	                    <enabled translate="label">
+	                        <label>Enabled</label>
+	                        <frontend_type>select</frontend_type>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                        <sort_order>1</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <comment>page scroll will show on all pages.</comment>
+	                    </enabled>
+	                    <scrollduration>
+	                        <label>Page Scroll Duration</label>
+	                        <frontend_type>text</frontend_type>
+	                        <sort_order>10</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <comment>page scroll speed.(Integer Value)</comment>
+	                    </scrollduration>
+	                    <scrolloffset>
+	                        <label>Page Scroll Offset</label>
+	                        <frontend_type>text</frontend_type>
+	                        <sort_order>20</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                    </scrolloffset>
+	                    <scrollactiveoverlay>
+	                        <label>Page Scroll Point</label>
+	                        <frontend_type>text</frontend_type>
+	                        <sort_order>40</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <comment>from where scroll top button will show.(Integer Value)</comment>
+	                    </scrollactiveoverlay>
+	                    <elementtype>
+	                        <label>Page Scroll Anchore Type</label>
+	                        <frontend_type>select</frontend_type>
+	                        <source_model>dlscrollup/system_elementtype</source_model>
+	                        <sort_order>50</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <comment>Scroll Top Element Style</comment>
+	                    </elementtype>
+	                    <scrolltoptext>
+	                        <label>Scroll Anchore Text</label>
+	                        <frontend_type>text</frontend_type>
+	                        <sort_order>60</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <comment>Page Scroll Link Text for link type. Use as title for other elements(Image, Pill, Tab)</comment>
+	                    </scrolltoptext>
+	                    <scrolltopimage>
+							<label>Scroll Anchore Image</label>
+							<frontend_type>image</frontend_type>
+							<backend_model>adminhtml/system_config_backend_image</backend_model>
+							<upload_dir config="system/filesystem/media" scope_info="1">dlsu</upload_dir>
+							<base_url type="media" scope_info="1">dlsu</base_url>
+							<sort_order>70</sort_order>
+							<show_in_default>1</show_in_default>
+							<show_in_website>1</show_in_website>
+							<show_in_store>1</show_in_store>
+							<comment>Use for type image only. Allowed file types: jpeg, gif, png.</comment>
+						</scrolltopimage>
+	                </fields>
+	            </scrollup>
+	        </groups>
+	    </design>
+	</sections>
+</config>

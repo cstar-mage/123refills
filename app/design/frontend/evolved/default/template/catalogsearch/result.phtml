@@ -1,0 +1,308 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php echo $this->getMessagesBlock()->getGroupedHtml() ?>
+
+<div class="page-title">
+    <h1><?php echo ($this->getHeaderText() || $this->getHeaderText() === false) ? $this->getHeaderText() : $this->__("Search results for '%s'", $this->helper('catalogsearch')->getEscapedQueryText()) ?></h1>
+</div>
+
+<?php 
+$queryText = $this->helper('catalogsearch')->getEscapedQueryText();
+$words = Mage::helper('core/string')->splitWords($queryText, true, Mage::getStoreConfig('catalog/search/max_query_words'));
+
+$printer_model = Mage::getModel('eav/entity_attribute')->loadByCode(Mage_Catalog_Model_Product::ENTITY, 'printer_model');
+$printer_series = Mage::getModel('eav/entity_attribute')->loadByCode(Mage_Catalog_Model_Product::ENTITY, 'printer_series');
+$printer_brand = Mage::getModel('eav/entity_attribute')->loadByCode(Mage_Catalog_Model_Product::ENTITY, 'printer_brand');
+$groupCollection = array();
+
+if($printer_model->getId()) {
+	$resource = Mage::getSingleton('core/resource');
+	$readConnection = $resource->getConnection('core_read');
+	
+	$eav_attribute_option = $resource->getTableName('eav_attribute_option');
+	$eav_attribute_option_value = $resource->getTableName('eav_attribute_option_value');
+	
+	$query = "SELECT `" . $eav_attribute_option_value ."`.`option_id` FROM `" . $eav_attribute_option_value ."` INNER JOIN `" . $eav_attribute_option ."` ON " . $eav_attribute_option_value .".option_id = " . $eav_attribute_option .".option_id 
+		where (" . $eav_attribute_option .".`attribute_id` = '".$printer_model->getId()."' OR " . $eav_attribute_option .".`attribute_id` = '".$printer_series->getId()."') 
+		AND ( ";
+	$w = 1;
+	foreach ($words as $word) {
+		
+		if($w == count($words)) { // for last
+			//$query .= " `value` LIKE '%".$word."%' ";
+			//%like% removed because of this task http://production.idealbrandmarketing.com/task_detail.php?ti=14488
+			$query .= " `value` LIKE '".$word."' ";
+		} else {
+			//$query .= " `value` LIKE '%".$word."%' AND ";
+			//%like% removed because of this task http://production.idealbrandmarketing.com/task_detail.php?ti=14488
+			$query .= " `value` LIKE '".$word."' AND ";
+		}
+		$w++;
+	}
+	$query .= ")";
+	//echo $query; exit;
+	
+	$matched = $readConnection->fetchAll($query);
+	
+	if(count($matched) > 0) {
+		//for strict match AND conditions
+		$groupCollection = Mage::getModel('catalog/product')->getCollection()
+						->addAttributeToSelect('*')
+						->addAttributeToSelect('type_id')
+						->addAttributeToFilter('type_id','grouped')
+						->addAttributeToFilter('printer_series',array('in'=> $matched))
+						->addAttributeToFilter('printer_model',array('in'=> $matched));
+	}				
+	//echo count($matched); exit;
+	if(count($matched) == 0) {
+		//http://production.idealbrandmarketing.com/task_detail.php?ti=13922
+		//Search for http://www.123refills.com/catalogsearch/result/?q=laserjet+1100 the keywords are "laserjet 1100"
+		//Why are so many models coming up that do not have the word "laserjet" anywhere in their name?
+		//This case is to match only result exact without %query% but with OR condition
+		
+		$query = "SELECT `" . $eav_attribute_option_value ."`.`option_id` FROM `" . $eav_attribute_option_value ."` INNER JOIN `" . $eav_attribute_option ."` ON " . $eav_attribute_option_value .".option_id = " . $eav_attribute_option .".option_id
+		where (" . $eav_attribute_option .".`attribute_id` = '".$printer_model->getId()."' OR " . $eav_attribute_option .".`attribute_id` = '".$printer_series->getId()."')
+		AND ( ";
+		$w = 1;
+		foreach ($words as $word) {
+		
+			if($w == count($words)) { // for last
+				$query .= " `value` LIKE '".$word."' ";
+			} else {
+				$query .= " `value` LIKE '".$word."' OR ";
+			}
+			$w++;
+		}
+		$query .= ")";
+		
+		$matched = $readConnection->fetchAll($query);
+		//echo count($matched); exit;
+		
+		//for strict match AND conditions
+		$groupCollection = Mage::getModel('catalog/product')->getCollection()
+						->addAttributeToSelect('*')
+						->addAttributeToSelect('type_id')
+						->addAttributeToFilter('type_id','grouped')
+						->addAttributeToFilter('printer_series',array('in'=> $matched))
+						->addAttributeToFilter('printer_model',array('in'=> $matched));
+	}
+	
+	if(count($matched) == 0) {
+		//if no result found with exact model name then go for OR condition to grab few relavant results
+		//to match requirements here http://production.idealbrandmarketing.com/task_detail.php?ti=13922
+		//3. Relevant results need to be pulled for both "canon ip4500", "ip4500", "canon pixma ip4500" AND "pixm ip4500" including the feature at the top with the cartridges and "shop all supplies" button
+		$lastword = end($words);// guess last word as model
+		//echo "<pre>"; print_r($words); echo "</pre>";exit;
+		//echo $lastword; exit;
+		
+		$query = "SELECT `" . $eav_attribute_option_value ."`.`option_id` FROM `" . $eav_attribute_option_value ."` INNER JOIN `" . $eav_attribute_option ."` ON " . $eav_attribute_option_value .".option_id = " . $eav_attribute_option .".option_id 
+			where (" . $eav_attribute_option .".`attribute_id` = '".$printer_model->getId()."' OR " . $eav_attribute_option .".`attribute_id` = '".$printer_series->getId()."') 
+					AND ( `value` LIKE '".$lastword."') ";
+		
+		$matched = $readConnection->fetchAll($query);
+	}
+	//echo "<pre>"; print_r($matched); echo "</pre>";exit;
+	//echo count($matched); exit;
+	if(count($matched) == 0) {
+		//if no result found with exact model name then go for OR condition to grab few relavant results
+		//to match requirements here http://production.idealbrandmarketing.com/task_detail.php?ti=13922
+		//3. Relevant results need to be pulled for both "canon ip4500", "ip4500", "canon pixma ip4500" AND "pixm ip4500" including the feature at the top with the cartridges and "shop all supplies" button
+		
+		$query = "SELECT `" . $eav_attribute_option_value ."`.`option_id` FROM `" . $eav_attribute_option_value ."` INNER JOIN `" . $eav_attribute_option ."` ON " . $eav_attribute_option_value .".option_id = " . $eav_attribute_option .".option_id 
+			where (" . $eav_attribute_option .".`attribute_id` = '".$printer_model->getId()."' OR " . $eav_attribute_option .".`attribute_id` = '".$printer_series->getId()."') AND ( ";
+		$w = 1;
+		foreach ($words as $word) {
+			
+			if($w == count($words)) { // for last
+				$query .= " `value` LIKE '".$word."' ";
+			} else {
+				$query .= " `value` LIKE '".$word."' OR ";
+			}
+			$w++;
+		}
+		$query .= ")";
+		
+		$matched = $readConnection->fetchAll($query);
+	}
+}
+//echo $query; exit;
+//echo "<pre>"; print_r($matched); echo "</pre>";
+
+if(count($matched) > 0 && count($groupCollection) == 0) {
+	/* $groupCollection = Mage::getModel('catalog/product')->getCollection()
+						->addAttributeToSelect('*')
+						->addAttributeToSelect('type_id')
+						->addAttributeToFilter('type_id','grouped')
+						->addAttributeToFilter('printer_model',
+								array('in'=> $matched)
+						); */
+	
+	//Do not strict match OR condition
+	$groupCollection = Mage::getModel('catalog/product')->getCollection()
+					->addAttributeToSelect('*')
+					->addAttributeToSelect('type_id')
+					->addAttributeToFilter('type_id','grouped')
+					->addAttributeToFilter(array(
+							array('attribute' => 'printer_series','in'=> $matched),
+							array('attribute' => 'printer_model','in'=> $matched)
+					));
+	//echo $groupCollection->getSelect();
+}
+
+//echo '<pre>';print_r($groupCollection->getData()); echo '</pre>';
+//echo $groupCollection->getSelect(); exit;
+//echo $this->helper('catalogsearch')->getEscapedQueryText() . "--" . count($groupCollection);
+?>
+<?php $productImageUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."catalog/product"; ?>
+<?php if(count($groupCollection) > 0): ?>
+<?php //Client wants printer to show if user puts in exact model number like the image attached with the grouped product on top showing max 5 products with small images and everything linking to the printer model page http://production.idealbrandmarketing.com/task_detail.php?ti=13189  ?>
+<div class="grouped-search">
+	<ul>
+	<?php foreach ($groupCollection as $grouped): ?>
+		<?php 
+			$product = Mage::getModel('catalog/product')->load($grouped->getId());
+			$associatedProducts = $product->getTypeInstance(true)->getAssociatedProducts($product);
+			$groupImages = array();
+			$i = 0;
+			foreach ($associatedProducts as $associated) {
+				
+				$associated = Mage::getModel('catalog/product')->load($associated->getId());
+				
+				if( strpos(strtolower($associated->getName()), 'oem') !== false ) {
+					//TASK: http://production.idealbrandmarketing.com/task_detail.php?ti=14134
+					// 1. Images for group products that show in search this way should never be OEM product if there are other products especially remanufactured cartridges.
+					continue;
+				}
+				if($associated->getCartId() && $associated->getCartId() != '') {
+					$cartridgesImages[] = array(
+								//'image'=>$associated->getData('image_link'),
+								'image'=>$productImageUrl.$associated->getData('small_image'),
+								'url'=>$associated->getProductUrl(),
+								'name'=>$associated->getName()
+							);
+				} else {
+					$otherImages[] = array(
+							//'image'=>$associated->getData('image_link'),
+							'image'=>$productImageUrl.$associated->getData('small_image'),
+							'url'=>$associated->getProductUrl(),
+							'name'=>$associated->getName()
+					);
+				}
+				
+				
+				$i++;
+			}
+		?>
+        <li class="search_list_item item printer">
+                    <div class="product-image-box">
+                    	<?php 
+                    	$firstImage = "";
+                    	$categoryIds = $product->getCategoryIds();
+                    	if(count($categoryIds) ){
+                    		$categoryId = end($categoryIds);
+                    		$_category = Mage::getModel('catalog/category')->load($categoryId);
+                    		if($_category->getThumbnail() && $_category->getThumbnail() != "") {
+                    			$firstImage = Mage::getBaseUrl('media').'catalog/category/'.$_category->getThumbnail();
+                    		}
+                    	}
+                    	
+                    	if(!$firstImage) {
+                    		$firstImage = $cartridgesImages[0]['image'];
+                    	}
+                    	?>
+                        <a href="<?php echo $product->getProductUrl() ?>" title="" class="product-image">
+                            <img class="catlist_product_image" src="<?php echo $firstImage ?>" alt="" width="141" height="auto">
+                         </a>
+                        <p class="sku"></p>
+                    </div>
+                    <div class="product-content">
+                        <div class="info printer product-shop">
+                            <?php 
+                            /* $printerBrand = $product->getAttributeText('printer_brand');
+                            $groupTitle = $product->getName();
+                            if( strpos( $product->getName(), '/' ) !== false ) {
+                            	$explodeName = explode('/',$groupTitle);
+                            	$groupTitle = $explodeName[count($explodeName)-1]; // get name after last slash
+                            }
+                            $groupNameFinal = $printerBrand . " " . $groupTitle; */
+                            $groupNameFinal = $product->getName();
+                            ?>
+                            <h3 class="product-name">
+                               <a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $groupNameFinal ?>"><?php echo $groupNameFinal ?></a>
+                            </h3>
+                            
+                           
+                           
+                        </div>
+                        <div class="top-products">
+                        	<?php $j = 0; foreach ($cartridgesImages as $groupImage): ?>
+                        		<?php //if($j == 0) { $j++; continue; } // skip first one for repeat image ?>
+                        		<?php if($j == 5) break; // limited items ?>
+	                          	<a href="<?php echo $groupImage['url'] ?>" title="<?php echo $groupImage['name'] ?>" class="product-image">
+	                          		<img style="margin-right: 10px" src="<?php echo $groupImage['image'] ?>" alt="<?php echo $groupImage['name'] ?>" width="65" height="65">
+	                          	</a>
+                          	<?php $j++; endforeach; ?>
+                          	
+                          	<?php foreach ($otherImages as $groupImage): ?>
+                          		<?php if($j == 5) break; // limited items ?>
+	                          	<a href="<?php echo $groupImage['url'] ?>" title="<?php echo $groupImage['name'] ?>" class="product-image">
+	                          		<img style="margin-right: 10px" src="<?php echo $groupImage['image'] ?>" alt="<?php echo $groupImage['name'] ?>" width="65" height="65">
+	                          	</a>
+                          	<?php $j++; endforeach; ?>
+                          	
+                        </div>
+                        <a href="<?php echo $product->getProductUrl() ?>" class="button add_to_cart"><span>Shop All Supplies</span></a>
+                	</div>
+                	
+        </li>
+       <?php endforeach; ?>
+      </ul>
+</div>
+<?php endif; ?>
+
+<?php if($this->getResultCount()): ?>
+
+    <?php if ($messages = $this->getNoteMessages()):?>
+    <p class="note-msg">
+        <?php foreach ($messages as $message):?>
+            <?php echo $message?><br />
+        <?php endforeach;?>
+    </p>
+    <?php endif; ?>
+    <?php echo $this->getProductListHtml() ?>
+<?php else: ?>
+
+<p class="note-msg">
+    <?php echo ($this->getNoResultText()) ? $this->getNoResultText() : $this->__('Your search returns no results.') ?>
+    <?php echo $this->getAdditionalHtml() ?>
+    <?php if ($messages = $this->getNoteMessages()):?>
+        <?php foreach ($messages as $message):?>
+        <br /><?php echo $message?>
+        <?php endforeach;?>
+    <?php endif; ?>
+</p>
+<?php endif; ?>

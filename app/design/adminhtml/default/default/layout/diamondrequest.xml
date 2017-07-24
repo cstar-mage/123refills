@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_diamondrequest_index>
+        <reference name="content">
+            <block type="diamondrequest/adminhtml_diamondrequest" name="diamondrequest" />
+        </reference>
+    </adminhtml_diamondrequest_index>
+</layout>

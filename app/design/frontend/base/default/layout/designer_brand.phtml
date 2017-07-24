@@ -1,0 +1,34 @@
+
+<?php
+	$collection = Mage::getModel('brandmanager/brandmanager')->getCollection()->addFieldToFilter('status',1)->setOrder('title', 'asc');
+	$Totcnt = count($collection);
+	$Totcnt = $Totcnt-1;
+?>
+<div class="Main_Clnts">
+<table width="100%" border="0" cellpadding="0" cellspacing="0" class="clientlist">
+
+
+<?php $i = 0; $j=0;
+	foreach ($bannerCollection as $banner):	
+			$j++;   
+			if(($i==0) || ($i%3 == 0)){  ?>
+			<tr class="<?php if($i==0){ echo "first"; }?> <?php if($j==$Totcnt){ echo "LastRow";}?>">
+			<?php } ?>
+			<td valign="middle" width="33%" align="center" class="<?php if(($i==0) || ($i%3 == 0)){ echo "first"; } ?> <?php if($i%3==2){ echo "last"; }?> ">
+				<a href="<?php echo $banner['weblink'];?>">
+					<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']?>" title="<?php echo $banner['title']?>" alt="<?php echo $banner['title']?>" align="middle"/>				
+				</a>
+			</td>
+			<?php $i++;	?>
+			
+			<?php if(($i==0) || ($i%3 == 0)){ ?>
+			</tr>
+		<?php }	?>
+<?php endforeach; ?>
+</table>
+
+<div class="bottom-cnt">
+	&nbsp;
+</div>
+
+     </div>   

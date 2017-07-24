@@ -1,0 +1,147 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mage_Uploadproduct>
+            <version>0.1.0</version>
+        </Mage_Uploadproduct>
+    </modules>
+    <frontend>
+        <routers>
+            <uploadproduct>
+                <use>standard</use>
+                <args>
+                    <module>Mage_Uploadproduct</module>
+                    <frontName>uploadproduct</frontName>
+                </args>
+            </uploadproduct>
+        </routers>
+        <layout>
+            <updates>
+                <uploadproduct>
+                    <file>uploadproduct.xml</file>
+                </uploadproduct>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<uploadproduct>
+				<use>admin</use>
+				<args>
+					<module>Mage_Uploadproduct</module>
+					<frontName>uploadproduct</frontName>
+				</args>
+			</uploadproduct>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <uploadproduct after="Mage_Adminhtml">Mage_Uploadproduct_Adminhtml</uploadproduct>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    
+    <adminhtml>
+		<menu>
+			<catalog module="uploadproduct">
+        		<children>
+					<uploadproduct module="uploadproduct">
+						<title>Upload Product</title>
+						<sort_order>13</sort_order>
+						<action>adminhtml/uploadproduct/new/</action>
+					</uploadproduct>
+				</children>
+			</catalog>
+		</menu>
+		<!--<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Mage_Uploadproduct>
+							<title>Uploadproduct Module</title>
+							<sort_order>10</sort_order>
+						</Mage_Uploadproduct>
+					</children>
+				</admin>
+			</resources>
+		</acl>-->
+		
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <catalog>
+                            <children>
+								<uploadproduct>
+										<title>Upload Product</title>
+								</uploadproduct>
+							</children>
+                        </catalog>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+		
+		<layout>
+			<updates>
+				<uploadproduct>
+					<file>uploadproduct.xml</file>
+				</uploadproduct>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <uploadproduct>
+                <class>Mage_Uploadproduct_Model</class>
+                <resourceModel>uploadproduct_mysql4</resourceModel>
+            </uploadproduct>
+            <uploadproduct_mysql4>
+                <class>Mage_Uploadproduct_Model_Mysql4</class>
+                <entities>
+                    <uploadproduct>
+                        <table>uploadproduct</table>
+                    </uploadproduct>
+                </entities>
+            </uploadproduct_mysql4>
+        </models>
+        <resources>
+            <uploadproduct_setup>
+                <setup>
+                    <module>Mage_Uploadproduct</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </uploadproduct_setup>
+            <uploadproduct_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </uploadproduct_write>
+            <uploadproduct_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </uploadproduct_read>
+        </resources>
+        <blocks>
+            <uploadproduct>
+                <class>Mage_Uploadproduct_Block</class>
+            </uploadproduct>
+        </blocks>
+        <helpers>
+            <uploadproduct>
+                <class>Mage_Uploadproduct_Helper</class>
+            </uploadproduct>
+        </helpers>
+    </global>
+</config>

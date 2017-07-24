@@ -1,0 +1,72 @@
+<link rel="stylesheet" href="<?php echo $this->getSkinUrl('helpdeskemail/colorbox.css',array('_area'=>'adminhtml')); ?>" type="text/css" />
+<link rel="stylesheet" href="<?php echo $this->getSkinUrl('helpdeskemail/helpdeskemail.css',array('_area'=>'adminhtml')); ?>" type="text/css" />
+<script>
+if (typeof window.jQuery == 'undefined') {
+document.write('<script src="<?php echo $this->getSkinUrl('helpdeskemail/jquery-1.10.2.min.js',array('_area'=>'adminhtml')); ?>" type="text/javascript"><\/script><script type="text/javascript">jQuery.noConflict();<\/script>');
+}
+</script>
+<script src="<?php echo $this->getSkinUrl('helpdeskemail/jquery.colorbox.js',array('_area'=>'adminhtml')); ?>" type="text/javascript"></script>
+<?php  ?>
+<script> 
+jQuery(window).load(function(){	 
+	jQuery(".inline2").colorbox({inline:true, width:"510", height:"490",scrolling:false});
+}); 
+</script>
+<div style="display: none;">
+<div class="helpdeskemailmain" id="helpdeskemailmain">
+		<div class="tickmain">
+			<br>
+			<a name="ticket-create-form" class="ticket-create-form">
+			    <h3>Create new ticket</h3>
+			</a>
+			<form id="helpdesk-ticket-form" method="post" action="<?php echo preg_replace('#^https?:#', '', $this->getBaseUrl()."helpdeskemail/adminhtml_helpdeskemail/"); ?>" enctype="multipart/form-data">
+		        <div><input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" /></div>
+				<div>
+			        <label for="title_field">Department<span class="required">*</span></label><br>
+			        <select style="width: 360px;" id="department_id" name="department_id">
+			                        <option value="1">General</option>
+                                    <option value="2">Design</option>
+			                        <option value="3">Development</option>
+			                        <option value="4">Sales</option> 
+                                    
+			        </select>
+<!-- 
+general is success
+designer is design
+dev - dev
+and sales - bryan
+-->
+		    	</div>
+		    			    	
+		        <div>
+		        	<label for="title_field">Priority<span class="required">*</span></label><br>
+        			<select style="width: 360px;" name="priority">
+                        <option value="urgent">Urgent</option>
+                        <option value="asap">ASAP</option>
+                        <option selected="selected" value="todo">To do</option>
+                        <option value="iftime">If time</option>
+                        <option value="postponed">Postponed</option>
+                    </select>
+		   		</div>
+		        <div>
+		        	<label for="title_field">Subject<span class="required">*</span></label><br>
+		        	<input type="text" value="" style="width: 360px;" id="subject" name="subject" class="input-text required-entry">
+		    	</div>
+		        <div>
+		        	<label for="content_field">Message<span class="required">*</span></label><br>
+		       	 <textarea style="width: 450px;" rows="10" cols="53" id="content_field" name="content" class="required-entry"></textarea>
+		    	</div>
+		        <div>
+		                <input type="file" style="width: 450px;" id="filename" name="filename" class="input-file">
+			    </div>	    
+		        <div class="button-set">
+					<div class="req">* Required Fields</div>
+		        	<button type="button" class="button right form-button" onclick="helpdeskticketform.submit();"><span><span>Submit ticket</span></span></button>
+			    </div>
+		    </form>	
+		</div>
+</div>
+</div>
+<script type="text/javascript">
+    helpdeskticketform = new varienForm('helpdesk-ticket-form', '');
+</script>

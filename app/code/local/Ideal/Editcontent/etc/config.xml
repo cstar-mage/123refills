@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Editcontent>
+            <version>0.1.1</version>
+        </Ideal_Editcontent>
+    </modules>
+    <global>
+        <resources>
+            <editcontent_setup>
+                <setup>
+                    <module>Ideal_Editcontent</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </editcontent_setup>
+            <editcontent_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </editcontent_write>
+            <editcontent_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </editcontent_read>
+        </resources>
+    </global>
+</config>

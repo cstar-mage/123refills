@@ -1,0 +1,1361 @@
+<?php if(isset($_REQUEST['msg'])): ?>
+	<ul class="messages">
+        <li class="<?php if(isset($_REQUEST['msg'])) echo $_REQUEST['msg']; ?>-msg">
+          <?php if($_REQUEST['msg'] == 'success' ): ?>
+          Your inquiry was submitted and will be responded to as soon as possible. Thank you.
+          <?php elseif($_REQUEST['msg'] == 'error' ): ?>
+          Unable to submit your request. Please, try again later
+          <?php endif; ?>
+
+        </li>
+
+      </ul>
+<?php endif; ?>
+<link href='http://fonts.googleapis.com/css?family=Economica' rel='stylesheet' type='text/css'>
+<div class="container ds-container pb20">
+  <div class="diamonddetail col-md-12">
+    <div class="">&nbsp;</div>
+    <div class="col-md-6 col-sm-12 col-xs-12 offset-xs-0">
+<?php
+
+function sortByOrder($a, $b) 
+{
+
+    return $a['sortorder'] - $b['sortorder'];
+}
+function values($val)
+
+{
+	if (trim($val)=="") $ret="---";
+
+	else $ret=$val;
+
+	return $ret;
+}function writeover($img,$x,$y,$txt)
+
+{
+
+$im = imagecreatefromjpeg($img);
+$red = imagecolorallocate($im, 0xFF, 0x00, 0x00);
+$black = imagecolorallocate($im, 0xFF, 0xFF, 0xFF);
+
+// Path to ttf font file
+
+$font_file = './Arialnb.ttf';
+
+// Draw the text over
+
+imagefttext($im, 10, 0, $x, $y, $black,$font_file, $txt);
+
+//create the final wtermarked image - everytime overwritten 
+
+imagepng($im,"images/shapes/complete_outline.png");
+
+imagedestroy($im);
+
+}
+
+// Output image to the browser
+//header('Content-Type: image/png'); 
+//$text1="xxx \n yyy";
+//writeover('images/shapes/round_out.jpg','3','15',$text1);
+function tinycert($theimg)
+{
+
+	if ($theimg != ''){
+	$header_response = get_headers($theimg, 1);
+
+	if(strpos($header_response[0], "404" ) !== false) {
+		echo "<div align='center'>Report not available.</div>";
+	}
+	else { 
+		echo"<div align='center'>";
+		echo '<a rel="shadowbox" href="'.$theimg.'" ><img src="'.$theimg.'" width="100" heigh="120" /></a>';
+		echo"</div><div align='center' style='margin-top:20px;'>"."<a rel='shadowbox' href='".$theimg."' >"."Report"."</a></div>";
+	}
+
+} else {
+
+	echo "<div align='center'>"."Please E-mail us for Report"."</div>";
+
+	}
+}?>
+
+<?php 
+
+$id = $this->getRequest()->getParam('id');
+
+$diamond = Mage::getModel("diamondsearch/diamondsearch")->load($this->getRequest()->getParam('id'))->getData();
+
+if(empty($diamond)) echo "No diamond found.";
+else{
+
+//while($row=mysql_fetch_array($diamond)){
+	$imgdir="images/certs/";
+	$imgfile= trim($diamond['image']);
+	//$imgfile="02752-01.jpg";
+	$theimg = $imgfile;
+	$dim = $diamond['dimensions'];
+	$findme   = '-';
+
+	$dash_dim = strpos($dim, $findme);
+
+	if ($dash_dim == true)
+
+	{
+		$dim_h_w_d = explode("x", $dim);
+
+		$dim_h_w = trim($dim_h_w_d[0]);
+		$dim_depth = trim($dim_h_w_d[1]);
+
+		$remove_dash = explode("-", $dim_h_w);
+
+		$height = trim($remove_dash[0]);
+		$width = trim($remove_dash[1]);
+	}
+	else
+	{
+		$dim_h_w_d = explode("x", $dim);
+
+		$height=trim($dim_h_w_d[0]);
+		$width=trim($dim_h_w_d[1]);
+		$dim_depth = trim($dim_h_w_d[2]);
+	}
+
+	//echo $theimg;
+	$lotno=$diamond['lotno'];
+	$owner=$diamond['owner'];
+	$shape=strtoupper($diamond['shape']);
+	$carat=sprintf("%.2f",$diamond['carat']);
+	$color=$diamond['color'];
+	$clarity=$diamond['clarity'];
+	$cut=$diamond['cut'];
+	$depth=$diamond['depth'];
+	$tabl=$diamond['tabl'];
+	$polish=$diamond['polish'];
+	$symmetry=$diamond['symmetry'];
+	$fluorescence=$diamond['fluorescence'];
+	$dimensions=$diamond['dimensions'];
+	//$price="$".number_format($diamond['totalprice'], 2, '.', '');
+	$price="$".number_format($diamond['totalprice']);
+	$culet=$diamond['culet'];
+	$girdle=$diamond['girdle'];
+	$crown_ang=$diamond['crown'];
+	$make=$diamond['make'];
+	$crown_h=$diamond['crown_height'];
+	$pavilion_h=$diamond['pavilion'];
+	$depth_t=$dim_depth;
+	$cert_number=$diamond['cert_number'];
+	$certificate=$diamond['certificate'];
+	$diamond_image = $diamond['diamond_image'];	$diamond_video = $diamond['diamond_video'];
+	$certificate_image = $diamond['image'];	$description= $diamond['full_description'];
+	$diamond_polices= $diamond['diamond_polices'];
+	
+	$frontviewimage= $diamond['frontviewimage'];
+	$sideviewimage= $diamond['sideviewimage'];
+	$gasviewimage= $diamond['gasviewimage'];
+	$girdleviewimage= $diamond['girdleviewimage'];
+	$giacertimage= $diamond['giacertimage'];
+	$eglcertimage= $diamond['eglcertimage'];
+	$image_or_video_link = $diamond['image_or_video_link'];
+	$gem_advisor=$diamond['gem_advisor'];
+	$gia_facetware=$diamond['gia_facetware'];
+	$helium_report=$diamond['helium_report'];
+	$ags_certificate=$diamond['ags_certificate'];
+	
+	$photo2=$diamond['photo2'];
+	$photo3=$diamond['photo3'];
+	$photo4=$diamond['photo4'];
+	$photo5=$diamond['photo5'];
+	$photo6=$diamond['photo6'];
+	$photo7=$diamond['photo7'];
+	$productid=$this->getRequest()->getParam('id');
+	$cfp_data = Mage::helper("diamondsearch")->getCallForPriceData();
+	$cfpEanble = $cfp_data["is_cfp"];
+	$cfpMessage = $cfp_data["cfp_msg"];
+	$show_measurement_image = Mage::getStoreConfig("diamondsearch/general_settings/show_measurement_image");
+	
+	$isMobile = Mage::helper("diamondsearch")->isMobile();
+
+	$disable_lab = false;
+	if(Mage::getStoreConfig("diamondsearch/general_settings/disable_lab"))$disable_lab = true;
+	
+	$attribute_position = unserialize(Mage::getStoreConfig("diamondsearch/attribute_position"));
+
+	//echo "<pre>";print_r($attribute_position);echo "</pre>";
+	$position=array();
+	foreach($attribute_position as $attrPos):
+		//echo "AAA".$details[$attrPos[sortorder]][avilability];	
+		//if(trim($details[$attrPos[sortorder]][avilability])!= 1) continue;  
+		//echo "<pre>";
+		//print_r($attrPos);
+		//echo "AA" . $details[$attrPos[sortorder]][avilable];
+		//$details[$attrPos[sortorder]][avilability])
+		  
+		if(isset($attrPos['avilability']) && $attrPos['avilability'] != 1 ) continue;
+		$details[$attrPos['sortorder']]['DetailsCode'] = $attrPos['DetailsCode'];
+		$details[$attrPos['sortorder']]['Label'] = $attrPos['Label'];
+	endforeach;
+	ksort($details);
+	
+	function fullform($value){
+	$value = strtoupper($value);
+	$arrayFF = array(
+		"VG"  => "VERY GOOD",
+		"G"   => "GOOD",
+		"F"   => "FAIR",
+		"I"   => "IDEAL",
+	    "EX"  => "EXCELLENT",
+		"N"  => "NONE",
+	);
+	if($arrayFF[$value]){return $arrayFF[$value];}else{return $value;}
+}
+
+function getflourAbbr($value){
+	$value = strtoupper($value);
+	$arrayFF = array(
+			"VS" => "VERY STRONG",
+			"S" => "STRONG",
+			"F" => "FAINT",
+			"EX"=> "EXCELLENT",
+			"N"=> "NONE",
+			"M"=>"MEDIUM",
+	);
+	if($arrayFF[$value]){
+		return $arrayFF[$value];
+	}else{return $value;
+	}
+}function girdleform($value){
+	$value = strtoupper($value);
+	$arrayFF = array (
+		"M-VTK" =>  "Medium to Very Thick",
+		"STK-TK" =>  "Slightly Thick to Thick",
+		"M-M" =>  "Medium",
+		"STK-VTK" =>  "Slightly Thick to Very Thick",
+		"TN-TK" =>  "Thin to Thick",
+	    "TK-ETK" =>  "Thick to Extremely Thick",
+	    "VTN-STK" => "Very Thin to Slightly Thick",
+	    "TK" =>  "Thick",
+	    "M-STK" =>  "Medium to Slightly Thick",
+	    "TN" =>  "Thin",
+	    "M" =>  "Medium",
+	    "M-STK" => "Medium to Slightly Thick",
+	    "M-TK" => "Medium to Thick",
+	    "TN-STK" => "Thin to Slightly Thick",
+	    "M-TK" => "Medium to Thick",
+	    "TN-M" => "Thin to Medium",
+	    "TN-VTK" => "Thin to Very Thick",
+	    "TK-VTK" => "Thick to Very Thick",
+	    "VTN-TN" =>  "Very Thin to Thin",
+	    "VTN-TK" => "Very Thin to Thick",
+	    "TK-TK" => "Thick to Thick",
+	    "ETN-STK" => "Extremely Thin to Slightly Thick",
+	    "STK-ETK" => "Slightly Thick to Extremely Thick",
+	    "VTK-ETK" => "Very Thick to Extremely Thick",
+	    "SLIGHTLY THIN - SLIGHTLY THIN" => "Slightly Thin to Slightly Thin",
+	    "SLIGHTLY THIN - SLIGHTLY THICK"=> "Slightly Thin to Slightly Thick",
+	    "SLIGHTLY THIN - MEDIUM"=> "Slightly Thin to Medium",
+	    "SLIGHTLY THICK - VERY THICK"=> "Slightly Thick to Very Thick",
+	    "SLIGHTLY THICK - THIN"=> "Slightly Thick to Thin",
+	    "SLIGHTLY THICK - THICK"=> "Slightly Thick to Thick",
+	    "SLIGHTLY THICK - SLIGHTLY THICK"=> "Slightly Thick to Slightly Thick",
+	    "SLIGHTLY THICK - MEDIUM"=> "Slightly Thick to Medium",
+	    "SLIGHTLY THICK - EXTRA. THICK"=> "Slightly Thick to Extr. Thick",
+	    "MEDIUM - VERY THICK"=> "Medium to Very Thick",
+	    "MEDIUM - THIN"=>  "Medium - Thin",
+	    "MEDIUM - THICK"=> "Medium - Thick",
+	    "MEDIUM - SLIGHTLY THIN"=>  "Medium to Slightly Thin",
+	    "MEDIUM - SLIGHTLY THICK"=>  "Medium - Slightly Thick", 
+	    "MEDIUM - MEDIUM"=> "Medium",
+	    "MEDIUM - EXTR. THIN"=> "Medium to Extremely Thin",
+	    "MEDIUM - EXTR. THICK"=> "Medium to Extremely Thick",
+	    "EXTR. THIN - VERY THIN"=> "Extremely Thin to Very Thin",
+	    "EXTR. THIN - VERY THICK"=> "Extremely Thin to Very Thick",
+	    "EXTR. THIN - THIN"=> "Extr. Thin to Thin",	
+		   
+	);  
+	if($arrayFF[$value]){
+		return $arrayFF[$value];
+	}else{return $value;
+	}
+}
+
+function getCulet($value){
+	$value = strtoupper($value);
+	$arrayFF = array(
+			"L" => " LARGE",
+			"M" => " MEDIUM",
+			"N" => "NONE",
+			"S" => " SMALL",
+	    	"SL"=> "SLIGHTLY LARGE",
+			"VS"=> "VERY SMALL",
+	);
+	if($arrayFF[$value]){
+		return $arrayFF[$value];
+	}else{return $value;
+	}
+}
+
+function cutvalue($cut){
+	$value = strtoupper($value);
+	$cutslider = array(
+
+		"VG"  => "Very Good",
+
+		"G"   => "Good",
+
+		"F"   => "Fair",
+
+		"I"   => "Ideal",
+
+	    "EX"  => "Excellent",
+
+		"N"  => "None",
+
+	);
+
+	if($cutslider[$cut]){return $cutslider[$cut];}else{return $cut;}	
+
+}
+  
+function getSpecialAbbr($value)
+{ 
+	    
+	$arrayFF = array (
+		"ascendancy_heart_arrows" =>  "Ascendancy Hearts & Arrows Round Cut",
+		"platinum_select_round"=>"Platinum Select Round Brilliant",
+		"the_solasfera_diamond"=>"Solasfera Diamond",
+		"the_star_129"=>"Star129",
+		"the_octavia_asscher"=>"SIGNATURE ASSCHER",
+		"the_solasfera_princess"=>"The Solasfera Princess Cut",
+		"ideal2_hearts_arrows"=>"Ideal2 Hearts & Arrows Radiant",
+		"august_vintage_cushion"=>"August Vintage® Cushion",
+		"platinum_select_vintage"=>"Platinum Select Vintage Cushion",   
+		"platinum_select_princess"=>"Platinum select princess cut",
+		"august_vintage_european"=>"August Vintage® European Cuts",
+		"august_vintage_star"=>"August Vintage® Cushion",
+		"platinum_select_modern"=>"Platinum Select Modern Cushion",
+		"brellia_cushion_hearts"=>"CUSHION HEARTS & ARROWS",
+		"vintage_cushion"=>"VINTAGE CUSHION",
+		"rectangular_vintage_cushion"=>"RECTANGULAR VINTAGE CUSHION",
+		) ;
+	
+	if($arrayFF[$value]){
+		return $arrayFF[$value];
+	}else{return $value;
+	}	
+	
+}function getAvail($value)
+{
+	$value = strtoupper($value);
+	$arrayFF = array (
+		"G" =>  "Guaranteed",
+		"M" =>  "On Memo", 
+		);
+	
+	if($arrayFF[$value]){
+		return $arrayFF[$value];
+	}else{return $value;
+	}
+	 
+}
+
+?>
+      <!-- <div id="counttotal" align="justify"></div>-->
+      <div align="center" class="thumb_main" id="diam_img">
+      <?php $dia_img = ""; ?>
+        <?php if($diamond_image != ""): ?>
+        <?php $diamond_response = get_headers($diamond_image, 1); ?>
+        <?php if(strpos($diamond_response[0], "404" ) !== false): ?>
+        	<?php $dia_img = $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>
+        	<a href="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>" id='colorboximage'  style="display: none;"><img src="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>"></a>
+	        <a href="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>" target="_blank" class="<?php echo (!$isMobile) ? "MagicZoom" : "" ?>" rel="zoom-position:inner;zoom-fade: true"><img src="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic.jpg"); ?>" width="270" height="252"></a>
+	        <p>this is a sample image</p>
+        <?php else: ?>
+        	<?php $dia_img = $diamond_image; ?>
+        	<?php $actual=true; ?>
+        	<a href="<?php echo $diamond_image; ?>" id='colorboximage'  style="display: none;" ><img src="<?php echo $diamond_image; ?>"></a>
+        	<a href="<?php echo $diamond_image; ?>" class="<?php echo (!$isMobile) ? "MagicZoom" : "" ?>" target="_blank" rel="zoom-position:inner;zoom-fade: true" >
+				<img width='270' src="<?php echo $diamond_image ?>"></a>
+        	<p>actual diamond</p>
+        <?php endif; ?> 
+        <?php else: ?>
+        	<?php $dia_img = $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>
+        	 <a href="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>"  id='colorboximage'  style="display: none;"><img src="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>" ></a>
+	        <a href="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic_large.jpg"); ?>" target="_blank" class="<?php echo (!$isMobile) ? "MagicZoom" : "" ?>" rel="zoom-position:inner;zoom-fade: true"><img src="<?php echo $this->getSkinUrl("dsearch/shapes/".strtolower(trim($shape))."_pic.jpg"); ?>" width="270" height="252"></a>
+	        <p>this is a sample image</p>
+        <?php endif; ?>
+      </div>
+      <?php if($show_measurement_image==1 && $dimensions !=""): ?>
+      <div align="center" class="thumb_main hidden" id="meas_img">
+	  	<img src="<?php echo $this->getUrl("diamondsearch/image/index",array("shp" => strtolower($shape),"dim" => $dimensions)); ?>" alt="dim meas" width="270" height="auto" />
+      </div>
+      <?php endif; ?>
+	  <div align="center" class="additional_image_container hidden" id="meas_img">
+	  	<img src="" alt="Additional Image" width="270" height="auto" />
+      </div>	
+      <div align="center" class="thumb_main hidden" id="video_img">
+      <?php $vdo_img = ""; ?>
+        <?php if($diamond_video != ""): ?>
+	        <?php $vdo_response = get_headers($diamond_video, 1); ?>
+	        <?php if(strpos($vdo_response[0], "404" ) != true): ?>
+	        	<?php $vdo_img = $diamond_video; ?>
+	        	<iframe src="<?php echo $diamond_video ?>" height="400px" width="100%" frameborder="0"></iframe>
+	        <?php endif; ?>
+	    <?php endif; ?>
+      </div>
+      
+      <div class="col-md-12 col-sm-12 col-xs-12 mt10 mb10 pt10 offset-xs-0" style="display: table;">
+
+      	
+    	      <ul class="thumb_container pt5">
+			<?php if($dia_img): ?>
+	      		<li><a href="javascript:" thumb_main_id="diam_img" <?php if($actual){ echo "id='actualdiamond' "; }  ?> data-image="<?php echo $dia_img ?>"><img src="<?php echo $this->getImage($dia_img) ?>" height="60"></a></li>
+	      	<?php endif; ?>			<?php if($show_measurement_image==1 && $dimensions !=""): ?>
+	      		<li><a href="javascript:" thumb_main_id="meas_img"><img src="<?php echo $this->getUrl("diamondsearch/image/index",array("shp" => strtolower($shape),"dim" => $dimensions)); ?>" height="60"></a></li>
+			<?php endif; ?>
+
+	      	<?php if($vdo_img): ?>
+	      		<li><a href="javascript:" thumb_main_id="video_img"><img src="<?php echo $this->getSkinUrl("dsearch/image/play-vdo.png"); ?>" height="60"></a></li>
+	      	<?php endif; ?>
+				<?php if(!$disable_lab): ?>
+					<?php $cer_img = $certificate_image; ?>
+					<li><a href="<?php echo $this->getUrl("diamondsearch/index/cert", array("id"=>$diamond['id'])); ?>" thumb_main_id="cert_img" class="cert-pdf" target="_blank">
+					<?php if(strtoupper(trim($certificate))=='GIA') :?>
+						<img src="<?php echo $this->getSkinUrl("dsearch/image/gia-cert-icon.jpg"); ?>" height="60">
+					<?php else:?>		
+						<img src="<?php echo $this->getSkinUrl("dsearch/image/cert-pdf.png"); ?>" height="60">
+					<?php endif; ?>  
+					</a></li>
+                <?php endif; ?>
+
+			</ul>		<ul class='thumb_container pt5 img additionaimage'>
+			<?php if($photo2 && getimagesize($photo2) !== false ): ?>
+ 				<li><a href="javascript:" class="mz-thumb" data-image="<?php echo $photo2 ?>"><img src="<?php echo $photo2 ?>" height="60"></a></li>
+			<?php endif; ?>  	 
+			<?php if($photo3 && getimagesize($photo3) !== false): ?>
+				<li><a href="javascript:"  class="mz-thumb" data-image="<?php echo $photo3 ?>"><img src="<?php echo $photo3 ?>" height="60"></a></li>
+			<?php endif; ?>
+			<?php if($photo4 && getimagesize($photo4) !== false): ?>
+				<li><a href="javascript:"  class="mz-thumb" data-image="<?php echo $photo4 ?>"><img src="<?php echo $photo4 ?>" height="60"></a></li>
+			<?php endif; ?>
+			<?php if($photo5 && getimagesize($photo5) !== false): ?>
+				<li><a href="javascript:"  class="mz-thumb" data-image="<?php echo $photo5 ?>"><img src="<?php echo $photo5 ?>" height="60"></a></li>
+			<?php endif; ?>
+			<?php if($photo6 && getimagesize($photo6) !== false): ?>
+				<li><a href="javascript:"  class="mz-thumb" data-image="<?php echo $photo6 ?>"><img src="<?php echo $photo6 ?>" height="60"></a></li>
+			<?php endif; ?>
+			<?php if($photo7 && getimagesize($photo7) !== false): ?>
+				<li><a href="javascript:"  class="mz-thumb" data-image="<?php echo $photo7 ?>"><img src="<?php echo $photo7 ?>" height="60"></a></li>
+			<?php endif; ?>
+			
+			
+			<?php if($frontviewimage && getimagesize($frontviewimage) !== false ): ?>
+				<li><a href="javascript:"><img src="<?php echo $frontviewimage ?>" height="60"></a></li>
+			<?php endif; ?> 
+			<?php if($sideviewimage && getimagesize($sideviewimage) !== false): ?>
+				<li><a href="javascript:"><img src="<?php echo $sideviewimage ?>" height="60"></a></li>
+			<?php endif; ?> 
+			<?php if($gasviewimage && getimagesize($gasviewimage) !== false): ?>
+				<li><a href="javascript:"><img src="<?php echo $gasviewimage ?>" height="60"></a></li>
+			<?php endif; ?> 
+			<?php if($girdleviewimage && getimagesize($girdleviewimage) !== false): ?>
+				<li><a href="javascript:"><img src="<?php echo $girdleviewimage ?>" height="60"></a></li>
+			<?php endif; ?> 
+			<?php if($giacertimage && getimagesize($giacertimage) !== false): ?>
+				<li><a href="javascript:"><img src="<?php echo $giacertimage ?>" height="60"></a></li>
+			<?php endif; ?> 
+			<?php if($eglcertimage && getimagesize($eglcertimage) !== false): ?>
+				<li><a href="javascript:"><img src="<?php echo $eglcertimage ?>" height="60"></a></li>
+			<?php endif; ?> 	      
+							
+	      </ul>
+      </div>
+      <div class="diamond-details-type-lists">
+        <?php if ($cut) : 
+			//get Slider Configs
+			$cutSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/cut_slider"));
+			usort($cutSliderConfig, 'sortByOrder');
+			$cutsArray = array();
+			foreach ($cutSliderConfig as $_item):
+				$cutsArray[strtoupper($_item["label"])] = array("code" => explode(",",strtoupper($_item["code"])), "text" => $_item["text"]);
+			endforeach;
+		?>
+        <div class="col-md-12 mb50 offset-xs-0">
+          <ul class="list-unstyled">
+            <li class="active">CUT</li>
+          </ul>
+          <ul class="list-unstyled cut">
+            <?php
+				foreach($cutsArray as $k=>$v){
+					$class = "";
+					if(in_array($cut, $cutsArray[$k]["code"])) 
+					{	
+						$class = "active";
+						$cutText = $cutsArray[$k]["text"];
+					}
+					echo '<li class="'.$class.'">'.$k.'</li>';
+				}
+			?>
+          </ul>
+          <?php if($cutText):?><p><?php echo $cutText ?></p><?php endif;?>
+        </div>
+        <?php endif; ?>
+        <?php if ($clarity) :
+			//get Slider Configs
+			$claritySliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/clarity_slider"));
+			usort($claritySliderConfig, 'sortByOrder');
+			$claritiesArray = array();
+			foreach ($claritySliderConfig as $_item):
+				 $claritiesArray[] = array("label" => strtoupper($_item["label"]), "text"=> $_item["text"]);
+			endforeach;
+		 ?>
+        <div class="col-md-12 mb50 offset-xs-0">
+          <ul class="list-unstyled">
+            <li class="active">CLARITY</li>
+          </ul>
+          <ul class="list-unstyled clarity">
+            <?php
+			$clarityText = "";
+			for($i=0;$i<count($claritiesArray);$i++)
+			{
+				echo "<li ".((strtoupper($clarity)==$claritiesArray[$i]["label"]) ? "class='active'" : "").">".$claritiesArray[$i]["label"]."</li>";
+				$clarityText = strtoupper($clarity)==$claritiesArray[$i]["label"] ? $claritiesArray[$i]["text"] : $clarityText;
+			}
+			?>
+          </ul>
+          <?php if($clarityText):?><p><?php echo $clarityText ?></p><?php endif;?>
+        </div>
+        <?php endif; ?>
+        <?php if ($color) : 
+			//get Slider Configs
+			//color slider
+			$colorSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/color_slider"));
+			usort($colorSliderConfig, 'sortByOrder');
+			$colorsArray = array();
+			foreach ($colorSliderConfig as $_item):
+				 $colorsArray[] = array("label" => strtoupper($_item["label"]), "text"=> $_item["text"]);
+			endforeach;
+		?>
+        <div class="col-md-12 mb50 offset-xs-0">
+          <ul class="list-unstyled">
+            <li class="active">COLOR</li>
+          </ul>
+          <ul class="list-unstyled color">
+            <?php
+			$colorText = "";
+			for($i=0;$i<count($colorsArray);$i++)
+			{
+				if (strpos($colorsArray[$i]["label"],'-') !== false) { //check for range, eg. L-Z
+					$clrs = explode("-", $colorsArray[$i]["label"]);
+					$clrs = range($clrs[0], $clrs[1]);
+					echo "<li ".((in_array(strtoupper($color), $clrs)) ? "class='active'" : "").">".$colorsArray[$i]["label"]."</li>";
+					$colorText = in_array(strtoupper($color), $clrs) ? $colorsArray[$i]["text"] : $colorText;
+				}
+				else{
+					echo "<li ".((strtoupper($color)==$colorsArray[$i]["label"]) ? "class='active'" : "").">".$colorsArray[$i]["label"]."</li>";
+					$colorText = strtoupper($color)==$colorsArray[$i]["label"] ? $colorsArray[$i]["text"] : $colorText;
+				}
+			}
+			?>
+          </ul>
+          <?php if($colorText):?><p><?php echo $colorText ?></p><?php endif;?>
+        </div>
+        <?php endif; ?>
+      </div>
+    </div>
+    <div class="col-md-6 col-sm-12 col-xs-12 offset-xs-0">
+      <div class="main_form_detail">
+        <div class="left_crt">
+          <table>
+            <tr>
+            <td>
+              <div class="bigmenulist">
+                <div class="diamond_detail">
+                  <?=$carat;?>
+                  Carat </div>
+                <div class="diamond_name">
+                  <?=ucfirst(strtolower(getSpecialAbbr($diamond['shape'])))?>
+                     Diamond </div>
+                <div class="short_info">
+                  <?php if($cut) 
+						  {
+							echo cutvalue($cut). " CUT | ";
+						  }
+						  if($color)
+						  {
+							echo $color. " COLOR | ";
+						  }
+						  if($clarity)
+						  {
+							echo $clarity. " CLARITY";
+						  }
+					?>
+                </div>
+              </div>
+              <br />
+              <div>
+					<strong class="pageselected">
+						<div class="diamond_price_detail">
+						<?php
+						if($cfpEanble && $cfpEanble == 1) {
+						echo $cfpMessage;
+						} else {
+						echo $price;
+						}
+						?>
+						</div>
+					</strong> 
+				<?php if(!$cfpEanble && $cfpEanble != 1 && $diamond['cash_price']): ?>
+                           <div class="short_info cash_price"> <?php echo "<b>$" .number_format($diamond['cash_price']).'</b> when paying with bank wire';  ?> </div>
+                <?php endif; ?>
+                </div>
+			  <br /> 	
+              <?php 
+              if($diamDesc = Mage::getStoreConfig("diamondsearch/general_settings/diamond_description")){
+              	$diamDesc = str_replace("{{carat}}", $carat, $diamDesc);
+              	$diamDesc = str_replace("{{cut}}", cutvalue($cut), $diamDesc);
+              	$diamDesc = str_replace("{{color}}", $color, $diamDesc);
+              	$diamDesc = str_replace("{{clarity}}", $clarity, $diamDesc);
+              	$diamDesc = str_replace("{{shape}}", strtoupper(getSpecialAbbr($diamond['shape'])), $diamDesc);
+              	$diamDesc = str_replace("{{certificate}}", $certificate, $diamDesc);
+              	echo '<div class="diamond_short_desc">'.$diamDesc.'</div>';
+              }
+
+              ?>
+              
+				 <div id='tab2' class="diamond_short_desc">
+				    <?=$diamond_polices ?>
+				  </div>
+
+                </td>
+            </tr>
+          </table>
+        </div>
+      </div>
+      
+      <?php if($image_or_video_link): ?>
+      <img class='btn btn-default' id='diamond_vdo_toggle' data-type="iframe" src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>/dsearch/vedio_icon.png' style="padding: 0px;" title="click to show/hide video">
+      <div class="diamdetail_video hidden">
+		  <?php echo $image_or_video_link; ?>
+      </div>
+      <?php endif; ?>
+				 
+         <div class='diamond-details-type-lists all-details'>
+		      <div class="col-cart">
+          <div class="add_to_cart">
+            <?php 
+				$product = Mage::getModel('catalog/product'); 
+				$id = $product->getIdBySku($shape);
+				//echo 'ID: '.$id;
+			
+				//$option = 0;echo 'shape: '.strtolower(values($shape));
+				switch(strtolower(values($shape)))
+				{
+					case 'marquise':
+					case 'Marquise':
+						$option = 6;
+					break;
+					case 'round':
+					case 'Round':
+						$option = 1;
+					break;
+					case 'asscher':
+						$option = 2;
+					break;
+					case 'cushion':
+						$option = 3;
+					break;
+					case 'emerald':
+						$option = 4;
+					break;
+					case 'heart':
+						$option = 5;
+					break;
+					case 'oval':
+						$option = 7;
+					break;
+					case 'pear':
+						$option = 8;
+					break;
+					case 'princess':
+						$option = 9;
+					break;
+					case 'radiant':
+						$option = 10;
+					break;
+				}
+			
+				try
+				{ 
+					$Url = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'uploadtool/index/addtocart/id/'.values($productid); 
+					$Url1 = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'uploadtool/index/addtowishlist/id/'.values($productid); 
+				}
+			
+				catch (Exception $e) {
+					$Url = '';
+					$Url1 = '';
+				}
+			?>
+            <?php if($cfpEanble == 0): ?>
+            <a target="_parent" href="<?php echo $Url; ?>">ADD TO CART</a>
+            <?php endif; ?>
+          </div>
+          <div class="add_to_wishlist">
+            <a target="_parent" title="Add to Wishlist" href="<?php echo $Url1; ?>">ADD TO WISHLIST</a>
+          </div>
+          <div class="add_inquire">
+          	<a target="_parent" onClick="jQuery('.col-inquiry').slideToggle('fast');" title="INQUIRE" href="javascript:">INQUIRE</a>
+          </div>
+        </div>
+        <div class="col-inquiry" style="display:none;">
+          <ul class="list-unstyled">
+            <li class="active">INQUIRE</li>
+          </ul>
+          <ul class="list-unstyled cut">
+            <div class="diamond_request_form">
+            <?php if($customInquiry = Mage::getStoreConfig("diamondsearch/general_settings/diamondinquiry_customform")): echo $customInquiry; else : ?>
+              <form action="<?php echo Mage::getUrl('uploadtool/index/requestPost'); ?>" method="post" id="frmRequestForInfo">
+                <input type="hidden" value="<?php echo $lotno; ?>" name="stock_number" id="stock_number" />
+                <input type="hidden" value="<?php echo $owner; ?>" name="vendor" /> 
+                <?php if($cfpEanble && $cfpEanble == 1) {
+				  		$price = $cfpMessage;
+				  	}
+				 ?>
+                <input type="hidden" value="<?php echo $price; ?>" name="totalprice" id="totalprice" />
+                <input type="hidden" value="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" name="current_url" />
+                <div class="field">
+                <label class="required" for="firstname"><em>*</em>NAME</label>
+                  <div class="input-box">
+                    <input type="text" value="" name="firstname" id="firstname" class="required-entry" />
+                  </div>
+                </div>
+                <!-- 																<div class="field"> --> 
+                <!-- 																	<label class="required" for="lastname">Last Name<em>&nbsp;*</em></label> --> 
+                <!-- 																	<div class="input-box"> --> 
+                <!-- 																		<input type="text" value="" name="lastname" id="lastname" class="required-entry" /> --> 
+                <!-- 																	</div> --> 
+                <!-- 																</div> -->
+                <div class="field">
+                  <label class="required" for="email"><em>*</em>EMAIL</label>
+                  <div class="input-box">
+                    <input type="text" value="" name="email" id="email" class="required-entry" />
+                  </div>
+                </div>
+                <div class="field">
+                <label class="required" for="phone"><em>*</em>PHONE</label>
+                  <div class="input-box">
+                    <input type="text" value="" name="phone" id="phone" class="required-entry" />
+                  </div>
+                </div>
+                <div class="field">
+                	<label class="required" for="comments"><em>*</em>COMMENTS</label>
+                  <div class="input-box">
+                    <textarea rows="10" cols="20" name="comments" id="comments" class="required-entry"></textarea>
+                  </div>
+                </div>
+                <div class="buttons-set">
+                  <button type="submit" name="send_request" class="button"><span><span>Submit</span></span> </button>
+                </div>
+               <?php /* ?> <p class="required  requ_message" style='display: none'>*&nbsp;Required Information</p> <?php */ ?>
+              </form>
+				<script type="text/javascript">
+                //<![CDATA[
+                var frmRequestForInfo = new VarienForm('frmRequestForInfo', true);
+                //]]>;
+                </script> 
+                <?php endif; ?>
+            </div>
+          </ul>
+        </div>
+	 
+		 <div class="col-diamond-detail">
+          		 <ul class="list-unstyled">
+					<li class="active">DETAILS</li>
+				</ul>
+			   			 
+				   <?php foreach($details as $detail):?>
+            	<?php //  echo "<pre>";	print_r($detail)  ?> 
+            	<?php  if($diamond[$detail[DetailsCode]]=='' || strlen(trim($diamond[$detail[DetailsCode]]))==0  ) continue;   ?>
+            	<?php  if($diamond[$detail[DetailsCode]] <= 0 && $detail[DetailsCode]=='ratio') continue;   ?>
+            	<?php  if($diamond[$detail[DetailsCode]]=='N' && $detail[DetailsCode]=='cut') continue;   ?>
+            	<ul class="list-unstyled"> 	 
+					<li><?php echo $detail[Label]?></li>
+					<li DetailsCode="<?php echo $detail[DetailsCode];?>">
+					<?php // echo "<pre>"; print_r($diamond[]); 	 ?>
+					<?php if($detail[DetailsCode]=='carat'){ echo sprintf("%.2f",$diamond[$detail[DetailsCode]]);}
+						  
+						  elseif($detail[DetailsCode]=='dimensions'){
+							 // echo str_replace('x', " x ", $diamond[$detail[DetailsCode]])." mm";
+						  	$mesurment= str_replace('x', " x ", $diamond[$detail[DetailsCode]]);
+						  	$mesurment= str_replace('-', " x ", $diamond[$detail[DetailsCode]]);
+						  	$mesurment= str_replace('|', " x ", $mesurment)." mm";
+						  	echo $mesurment;
+						  }  
+						  elseif($detail[DetailsCode]=='owner'){
+								if($owner == $diamond[$detail[DetailsCode]])
+								{
+									if(Mage::getStoreConfig("diamondsearch/general_settings/inhousetextyes"))
+									{
+										echo Mage::getStoreConfig("diamondsearch/general_settings/inhousetextyes");
+									}
+									else
+									{
+										echo "Yes";
+									}
+									
+								}
+								elseif(Mage::getStoreConfig("diamondsearch/general_settings/inhousetext"))
+								{ echo Mage::getStoreConfig("diamondsearch/general_settings/inhousetext");}
+								else
+								{echo "Online Only";} 
+						  
+						  }
+						  elseif($detail[DetailsCode]=='ratio' && ($diamond[$detail[DetailsCode]] > 0)){
+						  	echo sprintf("%.2f",$diamond[$detail[DetailsCode]]);
+						  }
+						  elseif($detail[DetailsCode]=='depth'){
+						  		echo floatval($diamond[$detail[DetailsCode]])."%";
+						  }
+						  elseif($detail[DetailsCode]=='cash_price'){
+						  		echo "$".number_format($diamond[$detail[DetailsCode]]);
+						  }
+						  elseif($detail[DetailsCode]=='tabl'){
+						  		echo floatval($diamond[$detail[DetailsCode]])."%"; 
+						  }
+						  elseif($detail[DetailsCode]=='color'){
+						  	echo $diamond[$detail[DetailsCode]];
+						  } 
+						  elseif($detail[DetailsCode]=='girdle'){
+						  	echo strtoupper(girdleform($diamond[$detail[DetailsCode]]));
+						  }
+						  elseif($detail[DetailsCode]=='culet'){
+						  	echo strtoupper(getCulet($diamond[$detail[DetailsCode]]));
+						  }
+						  elseif($detail[DetailsCode]=='availability'){
+						  	echo strtoupper(getAvail($diamond[$detail[DetailsCode]]));
+						  }  
+						  elseif($detail[DetailsCode]=='fluorescence'){
+						  	echo strtoupper(getflourAbbr($diamond[$detail[DetailsCode]]));
+						  }
+						  elseif($detail[DetailsCode]=='crown'){
+						  	echo round($diamond[$detail[DetailsCode]],1);
+						  }
+						   elseif($detail[DetailsCode]=='shape'){
+						  	if($diamond[$detail[DetailsCode]]==''){continue;}
+						  	echo strtoupper(getSpecialAbbr($diamond[$detail[DetailsCode]]));
+						  }
+						  
+						  else if($detail[DetailsCode]=='cert_number' && strtoupper($diamond[certificate])=='GIA' )
+						  {
+					 
+						  	//$cert_number=$diamond[$detail[DetailsCode]];
+						  	$cert_number=str_replace("*","",$cert_number); 
+						  	echo "<a class='gia_details' href='http://www.gia.edu/cs/Satellite?reportno=" . $cert_number ."&c=Page&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&cid=1355954554547&encryptedString=15BAEAB9D18DC8B6FF49E44006911' target='_blank' style='font-weight: bold;text-decoration:underline'>".strtoupper(trim($cert_number))."</a>";
+						   
+						  }
+						  else if($detail[DetailsCode]=='cert_number' && strtoupper($diamond[certificate])=='IGI' )
+						  {
+					 
+						  	//$cert_number=$diamond[$detail[DetailsCode]];
+						  	$cert_number=str_replace("*","",$cert_number); 
+						  	echo "<a class='gia_details' href='http://www.igiworldwide.com/verify.php?r=" . $cert_number ."' target='_blank' style='font-weight: bold;text-decoration:underline'>".strtoupper(trim($cert_number))."</a>";
+						   
+						  }
+						  else if($detail[DetailsCode]=='cert_number' && (strtoupper($diamond[certificate])=='EGLUSA' or strtoupper($diamond[certificate])=='EGL USA') )
+						  {
+						  	$cert_number=str_replace("US","",$cert_number);
+							echo "<a class='gia_details' style='font-weight: bold;text-decoration:underline' target='_blank'  href='http://www.eglusa.com/verify-a-report-results/?st_num=" . $cert_number . "'>" . strtoupper(trim($cert_number)) ."</a>";
+						  						  						  	
+						  } 
+						  else if($detail[DetailsCode]=='cert_number' && strtoupper($diamond[certificate])=='AGS')
+						  {
+						  	$cert_number=$diamond[$detail[DetailsCode]];
+						   
+						 	echo "<a class='gia_details' style='font-weight: bold;text-decoration:underline' target='_blank' href='https://www.agslab.com/reportTypes/gdqrnc.php?StoneID=" .$cert_number."&Weight=". $carat ."&D=1'>". strtoupper(trim($cert_number)) ."</a>";
+						  						  
+						  						  						  						  	
+						  }
+						  
+						  else{ echo strtoupper(fullform($diamond[$detail[DetailsCode]]));}?>
+					</li>
+					
+                </ul>
+                <?php if($detail[DetailsCode]=='lotno' ){ ?>
+					<ul class="list-unstyled"><li>IN-HOUSE</li>
+					<li DetailsCode="inhouse">
+					<?php echo (Mage::getStoreConfig("diamondsearch/general_settings/inhouse_vendor") == $owner) ? "YES" : "NO"; ?>
+					</li>
+					</ul>
+				<?php } ?>
+            <?php endforeach;?>
+				 
+         
+          </div>      <div class="diamond-details-type-lists all-details">
+		
+		    <div class='certificate_avilability'>
+			<?php if(strtoupper($diamond['certificate'])=='GIA'):  ?>
+        	<div class='certificate'>
+        		<div class='cer_image'>
+        			<img src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>cert_images/GOG_DiamondDetails_34.jpg'/>
+        		</div>
+        		<div class='certificate_link'>
+        		  <a class='iframe' href='http://www.gia.edu/cs/Satellite?reportno=<?php echo $cert_number ?>&c=Page&childpagename=GIA%2FPage%2FReportCheck&pagename=GIA%2FDispatcher&cid=1355954554547&encryptedString=15BAEAB9D18DC8B6FF49E44006911'>VIEW GIA REPORT</a>
+        		</div>	
+        	</div>
+            <?php endif; ?> 
+           <?php if($ags_certificate): ?> 
+        	<div class='certificate'>
+        		<div class='cer_image'>
+        			<img src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>cert_images/GOG_DiamondDetails_38.jpg'/>
+        		</div>
+        		<div class='certificate_links'>
+        			<a href='<?php echo $ags_certificate ?>' class='iframe'>AGS PGS REPORT</a>
+        		</div>	
+        	</div>
+        	<?php endif ?>
+        	<?php if($gia_facetware): ?>
+        	<div class='certificate'>
+        		<div class='cer_image'>
+        			<img src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>cert_images/GOG_DiamondDetails_42.jpg'/>
+        		</div>
+        		<div class='certificate_links'>
+        			<a class='iframe' href='<?php echo $gia_facetware ?>'>VIEW GIA FACETWARE</a>
+        		</div>	
+        	</div>
+        	<?php endif; ?>
+        	<?php if($helium_report): ?>
+        	<div class='certificate fourth'>
+        		<div class='cer_image'>
+        			<img src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>cert_images/GOG_DiamondDetails_46.jpg'/>
+        		</div>
+        		<div class='certificate_link'>
+        			<a class='iframe' href='<?php echo $helium_report ?>'>VIEW HELIUM REPORT</a>
+        		</div>	
+        	</div>
+        	<?php endif; ?> 
+        	<?php if($gem_advisor): ?>
+        	<div class='certificate fifth'>  
+        		<div class='cer_image'>
+        			<img class='iframe' src='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>cert_images/GOG_DiamondDetails_50.jpg'/>
+        		</div>
+        		<div class='certificate_link'>    
+        			<a href='<?php echo $gem_advisor ?>' class='iframe'>VIEW GEM ADVISOR <br/>VIRTUAL MODEL</a>
+        		</div>	
+        	</div>
+        	<?php endif; ?> 
+        </div>
+
+      
+      </div>
+    </div>
+
+         </div>
+
+  </div>
+
+  
+	
+
+  <div class="diamond_right"></div>
+</div>
+</div>
+<script type="text/javascript">
+	jQuery(".thumb_container li a").click(function(){
+		if(jQuery(this).hasClass("cert-pdf")){
+			<?php if(!$isMobile): ?>
+			jQuery(".cert-pdf").colorbox({iframe:true, width:"80%", height:"95%"});
+			<?php endif; ?>
+			return; 
+		}
+		jQuery('.additional_image_container').addClass('hidden');
+		jQuery(".thumb_main").addClass("hidden");
+		jQuery("#"+jQuery(this).attr("thumb_main_id")).removeClass("hidden");
+	  //	jQuery('.diamond_request_form .required:after').attr('content','none');
+	});
+
+	jQuery(".additionaimage a").click(function()
+	{
+		jQuery(".thumb_main").removeClass("hidden");
+		//alert(jQuery(this).find('img').attr('src'));
+		//jQuery('.additional_image_container img').attr('src',jQuery(this).find('img').attr('src'));
+		//jQuery('.additional_image_container').removeClass('hidden');
+		jQuery('#meas_img,#diam_img p').addClass('hidden');
+		jQuery('#diam_img img').attr('src',jQuery(this).attr('data-image'));
+		jQuery('.MagicZoom > img').attr('src',jQuery(this).find('img').attr('src'));
+	});
+	jQuery("#actualdiamond").click(function()
+	{
+		jQuery(".thumb_main").removeClass("hidden");
+		//alert(jQuery(this).find('img').attr('src'));
+		//jQuery('.additional_image_container img').attr('src',jQuery(this).find('img').attr('src'));
+		//jQuery('.additional_image_container').removeClass('hidden');
+		jQuery('#meas_img').addClass('hidden');
+		jQuery('#diam_img img').attr('src',jQuery(this).find('img').attr('src'));
+		jQuery('#diam_img p').removeClass('hidden');
+		jQuery('#diam_img img').attr('src',jQuery(this).attr('data-image'));	 	
+	});
+</script>
+<style>
+.bigmenulist {text-transform: uppercase;}
+.diamond_detail {color: #000000;font-size: 20px;font-family: economica;}
+.diamond_name {color: #000000;font-size: 22px;font-weight: bold;font-family: economica;}
+.info_data li.active {background: none repeat scroll 0 0 #D2DAED;border: 1px solid;width: 100%;}
+.cut_info_data li {border: 1px solid;float: left;width: 25%;}
+.cut_info_data li.active {background: none repeat scroll 0 0 #D2DAED;}
+.nav .active > a {text-align: left;}
+.nav.info_result > li a {padding: 10px;text-align: center;}
+.diamond-details-type-lists {padding: 0;}
+.tabs-product-detail {color: #000000;}
+.container .diamonddetail .col-md-12.col-sm-12.col-xs-12.mt10.mb10.pt10.offset-xs-0 {text-align: center;}
+.diamond-details-type-lists .list-unstyled li {color: #000000;font-size: 17px;padding: 5px;}
+.diamonddetail.col-md-12 {padding: 0;}
+.col-cart a {display: block;padding: 5px 0;text-align: center;}
+.all-details .list-unstyled > li:nth-child(1) {width: 50%;}
+.all-details .list-unstyled > li:nth-child(2) {background-color: #FFFFFF !important;}
+.bigmenulist .short_info {color: #000000;font-family: economica;font-size: 20px;}
+.diamond_price_detail {
+    color: #000000;
+    font-size: 22px;
+    font-family: economica;
+}
+.diamond_short_desc {
+    color: #000000;
+    font-size: 15px;
+    font-family: economica;
+}
+.diamond-details-type-lists.all-details {
+    margin-top: 30px !important;
+    border: medium none !important;
+}
+.col-md-12 > p {
+    color: #000000;
+    font-family: economica;
+    font-size: 16px;
+}
+.diamond-details-type-lists .list-unstyled li.active,.tabs .active {
+    background-color: #D3DAED;
+}
+.diamond-details-type-lists .list-unstyled li {
+    border: 1px solid #BDBFCC;
+}
+.list-unstyled.cut > li {
+    width: 25%;
+}
+.list-unstyled.clarity > li {
+    width: 12.5%;
+}
+.list-unstyled.color > li {
+    width: 14.2857%;
+}
+.all-details .col-cart button {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    width: 100%;
+}
+.all-details .col-cart {
+    display: inline-block;
+    width: 100%;
+}
+.all-details .col-inquiry {
+    margin-bottom: 15px;
+}
+.all-details .col-cart div {
+	background: none repeat scroll 0 0 #D3DAED;
+	display: inline-block;
+	margin-bottom: 10px;
+	width: 32%;
+}
+.col-inquiry .diamond_request_form {
+    padding: 10px 20px;
+}
+.diamond_request_form .field .button {
+  background: none repeat scroll 0 0 #3B3B3B;
+   padding: 2px 20px;
+}
+.diamond_request_form .field .button span {
+    color: #FFFFFF;
+    text-transform: none;
+}
+.all-details .col-cart div:last-child {
+    margin: 0;
+}
+.col-diamond-detail {
+    clear: both;
+}
+.diamond_request_form .field input, .diamond_request_form .field textarea {
+    background: none repeat scroll 0 0 #E2E2E2;
+    border: medium none;
+    width: 100%;
+    font-size: 20px;
+}
+/* SETTING DYNAMIC */
+.list-unstyled.color > li{
+<?php echo (!empty($colorsArray)) ? "width: ".(100/count($colorsArray))."%;" : "";?>
+}
+.list-unstyled.clarity > li {
+<?php echo (!empty($claritiesArray)) ? "width: ".(100/count($claritiesArray))."%;" : "";?>
+}
+.list-unstyled.cut > li {
+<?php echo (!empty($cutsArray)) ? "width: ".(100/count($cutsArray))."%;" : "";?>
+}
+<?php if(Mage::getStoreConfig("diamondsearch/design_settings/viewpage_table_textcolor")): ?>
+.diamond-details-type-lists .list-unstyled li.active,.tabs .active { color: <?php echo Mage::getStoreConfig("diamondsearch/design_settings/viewpage_table_textcolor") ?> !important }
+<?php endif; ?>
+<?php if(Mage::getStoreConfig("diamondsearch/design_settings/viewpage_table_bgcolor")): ?>
+.diamond-details-type-lists .list-unstyled li.active,.tabs .active {background-color: <?php echo Mage::getStoreConfig("diamondsearch/design_settings/viewpage_table_bgcolor") ?>}
+<?php endif; ?>
+<?php if(Mage::getStoreConfig("diamondsearch/design_settings/viewpage_button_textcolor")): ?>
+.main-container .col-cart a {color: <?php echo Mage::getStoreConfig("diamondsearch/design_settings/viewpage_button_textcolor")." !important" ?>}
+<?php endif; ?>
+<?php if(Mage::getStoreConfig("diamondsearch/design_settings/viewpage_button_bgcolor")): ?>
+.all-details .col-cart div {background: <?php echo Mage::getStoreConfig("diamondsearch/design_settings/viewpage_button_bgcolor") ?>}
+<?php endif; ?>
+ul.thumb_container {border-top: 1px solid #ddd;/*text-align: center; */}
+ul.thumb_container li {display: inline-block;}
+ul.thumb_container li a{display: block; margin: 3px; border: 1px solid #aaaaaa;}
+@media(max-width:480px){
+.list-unstyled.cut > li,
+.list-unstyled.clarity > li,.list-unstyled.color > li {float: left;width: 33.33%;line-height: 24px;}
+.all-details .col-cart div{width:100%;}
+}
+#frmRequestForInfo .required:after {content: attr(data-before);}
+#frmRequestForInfo label em{margin-right:5px;}
+</style>
+<?php if(!$isMobile):?>
+<script>
+jQuery('#diam_img  #colorboximage').colorbox();
+jQuery(document).ready(function(){
+	jQuery("#diam_img a").click(function(){
+  		jQuery( "#colorboximage img" ).colorbox({inline:true,open:true, href:"#colorboximage img" });
+	});
+	jQuery('#frmRequestForInfo .required').attr('data-before','');
+
+	
+		jQuery(".iframe").colorbox({iframe:true, width:"80%", height:"80%"});
+	
+	
+});			 	 	
+</script>
+<?php endif;?>
+<?php } ?>
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	jQuery("#frmRequestForInfo .buttons-set button").click(function(){
+		var error = 0;
+		var firstname = jQuery("#frmRequestForInfo #firstname").val();
+		if(firstname==''){error = 1;jQuery("#frmRequestForInfo label[for='firstname'] em").show();}
+		
+		var email = jQuery("#frmRequestForInfo #email").val();
+		if(email==''){error = 1;jQuery("#frmRequestForInfo label[for='email'] em").show();}
+		
+		var phone = jQuery("#frmRequestForInfo #phone").val();
+		if(phone==''){error = 1;jQuery("#frmRequestForInfo label[for='phone'] em").show();}
+		
+		var comments = jQuery("#frmRequestForInfo #comments").val();
+		if(comments==''){error = 1;jQuery("#frmRequestForInfo label[for='comments'] em").show();}
+		
+		if(error == 1){
+			jQuery("#frmRequestForInfo .requ_message").show();
+			return false;	
+		}
+	});
+	jQuery("#diamond_vdo_toggle").click(function(){
+		jQuery(".diamdetail_video").toggleClass("hidden");
+	});
+});
+</script>
+
+<style>
+	/*
+	.diamondsearch-index-view .container {
+  		max-width: 948px;
+	} */
+	.certificate >div {
+	  width: 50%;
+	  float: left;
+	  text-align: center;
+	}
+	
+	.cer_image > img {
+ 	 margin: 0 auto;
+	}
+	
+	.certificate {
+	/*  border-bottom: 2px solid; */
+	  border-top: 2px solid;
+	  display: table;
+	  width: 100%;
+	  border-color: #eee;
+	  padding-bottom: 2%;
+	  padding-top: 2%;
+	  margin-bottom: 2%;
+	}
+	
+	 
+
+	.certificate a {
+	  border: 1px solid;
+	  color: #000 !important;
+	  margin-top: 5px !important;
+	  padding: 6px;
+	  display: block;
+	}
+	
+	.tabs > li a {
+	  /*color: #000 !important; */
+	  display: block;
+	  padding: 5px 9% 5px 8%;
+	  width: 100%;
+	}
+	
+	.tabs > li {
+	 
+	  display: inline;
+	  float: left;
+	}
+	
+	.diamond_details > div {
+ 		 clear: both;
+	}
+	
+	.list-dimond_Detail > li {
+  		padding-left: 3%;
+	}
+	
+	.tabs > li {
+	  color: #000 !important;
+	  display: inline;
+	}
+	
+	.diamond_details {
+	  display: table;
+	  margin-top: 3%;
+	}
+	
+	.diamond_details > div {
+	  border: 1px solid #eee;
+	  height: 185px;
+	  overflow-y: scroll;
+	}
+	
+	.list-dimond_Detail > li {
+	  width: 50%;
+	  float: left;
+	}
+	
+	/*
+	.tabs .active {
+	  background-color: #000;
+	  color: #fff !important;
+	}*/
+
+	@media only screen and (max-width: 463px) 
+	{
+		.diamond_details {
+  			width: 100%;
+		}
+		
+		.tabs > li {
+		  display: block;
+		  float: none !important;
+		  width: 100%;
+		  text-align: center;
+		}
+		
+		.diamond_details > div {
+			  border: 1px solid #eee;
+			  min-height: 0;
+			  overflow-y: auto;
+		}
+		
+		
+		
+		
+	}
+	
+	@media only screen and (max-width: 429px)
+	{
+		.certificate > div {
+			  float: left;
+			  text-align: center;
+			  width: 100%;
+		}
+	} 
+	
+	.certificate.fourth .certificate_link {
+  		margin-top: 16px;
+	}
+	
+	.certificate.fifth {
+  		border-bottom: 2px solid #ddd;
+	}
+	
+	.list-dimond_Detail {
+  		clear: both;
+	}
+	
+	.diamond-details-type-lists .col-cart {
+  		text-align: center;
+	}
+	
+	.thumb_container.pt5.img {
+  		border-top: none;
+	}
+	
+	.Diamond.vedio img 
+	{
+		width: 60px;
+		cursor: pointer;
+   }
+   
+   .col-md-12 .list-unstyled:nth-child(1) li {
+	  font-size: 25px;
+	  padding: 5px 20px;
+	  text-align: left;
+    }
+    
+    .short_info.cash_price {  font-family: economica;  font-size: 22px;}
+
+.all-details .col-cart div { float: left;margin-right: 2%;  width: 32%;  margin-bottom: 0 ;}
+
+#tab3 .list-unstyled > li:nth-child(1) {  font-weight: bold;  width: 40% !important;  margin-left: 2%;}
+	
+</style>
+
+<script>
+jQuery('ul.tabs').each(function(){
+    // For each set of tabs, we want to keep track of
+    // which tab is active and it's associated content
+    var jQueryactive, jQuerycontent, jQuerylinks = jQuery(this).find('a');
+
+    // If the location.hash matches one of the links, use that as the active tab.
+    // If no match is found, use the first link as the initial active tab.
+    jQueryactive = jQuery(jQuerylinks.filter('[href="'+location.hash+'"]')[0] || jQuerylinks[0]);
+    jQueryactive.addClass('active');
+
+    jQuerycontent = jQuery(jQueryactive[0].hash);
+
+    // Hide the remaining content
+    jQuerylinks.not(jQueryactive).each(function () {
+      jQuery(this.hash).hide();
+    });
+
+    // Bind the click event handler
+    jQuery(this).on('click', 'a', function(e){
+      // Make the old tab inactive.
+      jQueryactive.removeClass('active');
+      jQuerycontent.hide();
+
+      // Update the variables with the new link and content
+      jQueryactive = jQuery(this);
+      jQuerycontent = jQuery(this.hash);
+
+      // Make the tab active.
+      jQueryactive.addClass('active');
+      jQuerycontent.show();
+
+      // Prevent the anchor's default click action
+      e.preventDefault();
+    });
+  });
+</script>

@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Mswebdesign
+ * @package    Mswebdesign_Mswebdesign_CustomOrderNumber
+ * @copyright  Copyright (c) 2013 münster-webdesign.net (http://www.muenster-webdesign.net)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Christian Grugel <cgrugel@muenster-webdesign.net>
+ */
+-->
+<config>
+    <phpunit>
+        <suite>
+            <modules>
+                <Mswebdesign_CustomOrderNumber/>
+            </modules>
+        </suite>
+    </phpunit>
+    <modules>
+        <Mswebdesign_CustomOrderNumber>
+            <version>1.0.0</version>
+        </Mswebdesign_CustomOrderNumber>
+    </modules>
+    <global>
+        <models>
+            <mswebdesign_customordernumber>
+                <class>Mswebdesign_CustomOrderNumber_Model</class>
+            </mswebdesign_customordernumber>
+            <eav>
+                <rewrite>
+                    <entity_type>Mswebdesign_CustomOrderNumber_Model_Eav_Entity_Type</entity_type>
+                </rewrite>
+            </eav>
+            <sales_resource>
+                <rewrite>
+                    <quote>Mswebdesign_CustomOrderNumber_Model_Resource_Sales_Quote</quote>
+                </rewrite>
+            </sales_resource>
+        </models>
+        <helpers>
+            <mswebdesign_customordernumber>
+                <class>Mswebdesign_CustomOrderNumber_Helper</class>
+            </mswebdesign_customordernumber>
+        </helpers>
+    </global>
+    <adminhtml>
+        <translate>
+            <modules>
+                <mswebdesign_customordernumber>
+                    <files>
+                        <default>Mswebdesign_CustomOrderNumber.csv</default>
+                    </files>
+                </mswebdesign_customordernumber>
+            </modules>
+        </translate>
+        <layout>
+            <updates>
+                <mswebdesign_customordernumber>
+                    <file>mswebdesign_customordernumber.xml</file>
+                </mswebdesign_customordernumber>
+            </updates>
+        </layout>
+    </adminhtml>
+    <default>
+        <mswebdesign_customordernumber>
+            <order>
+                <increment_per_store>1</increment_per_store>
+                <prefix></prefix>
+                <date_prefix></date_prefix>
+                <date_prefix_reset_enabled>0</date_prefix_reset_enabled>
+                <padding_length>8</padding_length>
+                <number>1</number>
+            </order>
+            <invoice>
+                <increment_per_store>1</increment_per_store>
+                <prefix></prefix>
+                <date_prefix></date_prefix>
+                <date_prefix_reset_enabled>0</date_prefix_reset_enabled>
+                <padding_length>8</padding_length>
+                <number>1</number>
+            </invoice>
+            <shipment>
+                <increment_per_store>1</increment_per_store>
+                <prefix></prefix>
+                <date_prefix></date_prefix>
+                <date_prefix_reset_enabled>0</date_prefix_reset_enabled>
+                <padding_length>8</padding_length>
+                <number>1</number>
+            </shipment>
+            <creditmemo>
+                <increment_per_store>1</increment_per_store>
+                <prefix></prefix>
+                <date_prefix></date_prefix>
+                <date_prefix_reset_enabled>0</date_prefix_reset_enabled>
+                <padding_length>8</padding_length>
+                <number>1</number>
+            </creditmemo>
+        </mswebdesign_customordernumber>
+    </default>
+</config>

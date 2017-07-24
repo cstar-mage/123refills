@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <dolphincontact_adminhtml_dolphincontact_index>
+        <reference name="content">
+            <block type="dolphincontact/adminhtml_dolphincontact" name="dolphincontact" />
+        </reference>
+    </dolphincontact_adminhtml_dolphincontact_index>
+</layout>

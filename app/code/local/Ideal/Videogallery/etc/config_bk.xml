@@ -1,0 +1,80 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Videogallery>
+            <version>0.1.0</version>
+        </Ideal_Videogallery>
+    </modules>
+    
+    <admin>
+        <routers>
+            <videogallery>
+                <use>admin</use>
+                <args>
+                    <module>Ideal_Videogallery</module>
+                    <frontName>videogallery</frontName>
+                </args>
+            </videogallery>
+        </routers>
+    </admin>
+    
+    <adminhtml>
+    	<layout>
+            <updates>
+                <videogallery>
+                    <file>videogallery.xml</file>
+                </videogallery>
+            </updates>
+        </layout>
+        <menu>
+            <videogallery module="videogallery">
+                <title>Training</title>
+                <sort_order>71</sort_order>
+                <children>
+                    <videogallery module="videogallery">
+                        <title>Video Gallery</title>
+                        <sort_order>1</sort_order>
+                        <action>videogallery/adminhtml_videogallery#gallery/video1</action>
+                    </videogallery>
+                    <!-- <knowledgebase module="videogallery">
+                        <title>Knowledge Base</title>
+                        <sort_order>2</sort_order>
+                        <action>videogallery/adminhtml_videogallery/knowledgebase</action>
+                    </knowledgebase>  -->
+                </children>
+            </videogallery>
+        </menu>
+        <acl>
+            <resources>
+            	<all>
+					<title>Allow Everything</title>
+				</all>
+                <admin>
+                    <children>
+                        <videogallery module="videogallery">
+                            <title>Training</title>
+                            <sort_order>71</sort_order>
+                            <children>
+                                <videogallery>
+                                    <title>Video Gallery</title>
+                                    <sort_order>1</sort_order>
+                                </videogallery>
+                                <knowledgebase>
+                                    <title>Knowledge Base</title>
+                                    <sort_order>2</sort_order>
+                                </knowledgebase>
+                            </children>
+                       </videogallery>
+                   </children>
+               </admin>
+           </resources>
+        </acl>
+    </adminhtml>
+    <global>
+    	 <helpers>
+            <videogallery>
+                <class>Ideal_Videogallery_Helper</class>
+            </videogallery>
+        </helpers>
+    </global>
+</config>

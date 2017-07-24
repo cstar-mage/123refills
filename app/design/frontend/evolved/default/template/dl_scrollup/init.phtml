@@ -1,0 +1,50 @@
+<?php $configs = Mage::helper('dlscrollup')->getConfig();?>
+<script type="text/javascript">
+document.observe('dom:loaded', function(){
+	var dlsuOb = new DLSU('dlscrollup',{duration: <?php echo $configs['scrollduration']?>,offset:<?php echo $configs['scrolloffset']?>,activeOverlay:<?php echo $configs['scrollactiveoverlay']?>});
+});
+</script>
+<div id="dlscrollup" class="element-type-<?php echo $configs['elementtype'] ?>" style="display: none;">
+	<a id="testlink" href="#" title="<?php echo $configs['scrolltoptext']; ?>">
+	<?php
+	$SQL="SELECT * FROM `evolved` WHERE `field` = 'Jump_to_Top'";
+	$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+	$results = $write->fetchAll($SQL);
+	$theme = array();
+	
+	foreach($results as $row){
+		$theme[$row['field']] = $row['value'];
+	}
+	
+	if(count($theme) == 0) {
+		$theme = Ideal_Evolved_Block_Evolved::getConfig();
+	}
+	
+	//$theme = Mage::helper('evolved')->getThemeConfig();
+	
+	
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+	if  ($theme['Jump_to_Top'])
+	{
+		switch ($configs['elementtype']) { 
+			case 'link':
+				echo $configs['scrolltoptext'];
+				break;
+			case 'image':
+				echo '<img src="'.Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."dlsu/".$configs['scrolltopimage'].'" alt="'.$configs['scrolltoptext'].'"/>';
+				break;
+			case 'pill':
+				echo '<span class="scroll-up-pill">'.$configs['scrolltoptext'].'</span>';
+				break;
+			case 'tab':
+				echo '<span class="scroll-up-tab">'.$configs['scrolltoptext'].'</span>';
+				break;
+			default:
+				echo $configs['scrolltoptext'];
+		}
+		
+	}	
+	?>
+	</a>
+</div>

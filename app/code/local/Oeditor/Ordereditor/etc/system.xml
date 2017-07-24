@@ -1,0 +1,338 @@
+<?xml version="1.0"?>
+<config>
+
+	<tabs>
+        <aheadgroups_all translate="label" module="ordereditor">
+            <label>Ahead Groups</label>
+            <sort_order>100</sort_order>
+        </aheadgroups_all>
+    </tabs>
+
+
+
+    <sections>
+        <customer translate="label" module="customer">
+            <class>separator-top</class>
+            <label>Customer Configuration</label>
+            <tab>customer</tab>
+            <sort_order>130</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <address_templates translate="label">
+                    <label>Address Templates</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                      <editorder>
+                            <label>Edit Order</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                      </editorder>
+					   
+						
+						
+				  </fields>
+                </address_templates>
+				
+				
+            </groups>
+        </customer>
+		
+		<editorder module="ordereditor" label="label">
+            <class>separator-top</class>
+            <label>Order Editor</label>
+            <tab>aheadgroups_all</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>1</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+			
+			   <license translate="label">
+                    <label>License Manager</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <lserial translate="label">
+                            <label>License Key</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment><![CDATA[
+								<span class="notice">You can get it from the site you purchased under My Account section.</span>]]>
+							</comment>
+                        </lserial>
+					</fields>
+				</license>
+				
+                <general translate="label">
+                    <label>General Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enable Order Editor</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+
+						<reauth translate="label">
+                            <label>Re-Authorization Payment</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<comment>Your payment method must be able to re-authorize,enable this will call authorize on the orders current Payment Method.</comment>
+                        </reauth>
+						<ostatuses translate="label comment">
+                            <label>Order status allowed to be edited</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>3</sort_order>
+							<source_model>adminhtml/system_config_source_order_status</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Set order that needs to be edited, by default all the status will be allowed to be edited.]]></comment>
+                        </ostatuses> 
+						<more_status translate="label">
+                            <label>Allow More Status</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+							<comment>It will allow more order status (Suspected Fraud,Payment Review,Pending Payment,Pending PayPal).</comment>
+                        </more_status>
+						
+					<!--	<manage_inventory translate="label">
+                            <label>Manage Inv</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </manage_inventory>	-->				 
+									
+                    </fields>
+                </general>
+				
+				<orderlog translate="label">
+                    <label>Log Manager</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <detail_edit_log translate="label">
+                            <label>Enable Log Editing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Enable Log for Detail Edit(By click on Edit button)</comment>
+                        </detail_edit_log>
+						
+                        <quick_edit_log translate="label">
+                            <label>Enable Log Editing</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment>Enable Log for Quick Edit(On Order View Page)</comment>
+                        </quick_edit_log>
+						
+                    </fields>
+                </orderlog>
+				
+				<orderstockmg translate="label">
+                    <label>Inventory Manager</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>4</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <manage_inventory translate="label">
+                            <label>Allow Stock Update</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+							<comment>Update stock on add/update/delete of items</comment>
+                        </manage_inventory>
+                    </fields>
+                </orderstockmg>
+	
+				<opermission translate="label">
+                    <label>Add-Editing Permissions on Login Level</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>3</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                       
+					   <penable translate="label comment">
+                            <label>Enable Permission</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>1</sort_order>
+							<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment><![CDATA[Enable it to use the below process.]]></comment>
+                        </penable> 
+					   
+                        <oepermission translate="comment">
+                            <label></label>
+                            <frontend_model>Oeditor_Ordereditor_Block_Permission</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[Use this button to allow to editing on different sub admin permission.
+							<span><br>Sub admin means more admin user created in admin</span>
+							<span class="notice"><br>1)If want to allow update order status then put 'order_status' in 'Edit Functionality'.</span>
+							<span class="notice"><br>2)If want to allow update order name then put 'order_name' in 'Edit Functionality'.</span>
+							<span class="notice"><br>3)If want to allow update customer information then put 'cust_info' in 'Edit Functionality'.</span>
+							<span class="notice"><br>4)If want to allow update billing_shipping detail then put 'bill_ship_info' in 'Edit Functionality'.</span>
+							<span class="notice"><br>5)If want to allow add/update shipping method(carrier),item then put 'ship_item_info' in 'Edit Functionality'.</span>]]>
+							
+							</comment>
+                        </oepermission>
+					    
+						<edit_order_invoice_status translate="comment">
+                             <label>Add Invoice Custom Status</label>
+                            <frontend_model>Oeditor_Ordereditor_Block_Invoicestatus</frontend_model>
+                            <backend_model>adminhtml/system_config_backend_serialized_array</backend_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <comment><![CDATA[
+							<span class="notice"><br>Use this button to add N number of invoices.These status will show under invoice status.</span>]]>
+							
+							</comment>
+                        </edit_order_invoice_status>
+						
+                    </fields>
+                </opermission>
+            </groups>
+        </editorder>
+		
+		<carriers translate="label" module="shipping">
+            <groups>
+                <customshipprice translate="label">
+                    <label>Custom Shipping Price</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>2</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <active translate="label">
+                            <label>Enabled</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </active>
+                        <name translate="label">
+                            <label>Method Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </name>
+                        <sort_order translate="label">
+                            <label>Sort Order</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sort_order>
+                        <title translate="label">
+                            <label>Title</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </title>
+                        <sallowspecific translate="label">
+                            <label>Ship to Applicable Countries</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>90</sort_order>
+                            <frontend_class>shipping-applicable-country</frontend_class>
+                            <source_model>adminhtml/system_config_source_shipping_allspecificcountries</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </sallowspecific>
+                        <specificcountry translate="label">
+                            <label>Ship to Specific Countries</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <sort_order>91</sort_order>
+                            <source_model>adminhtml/system_config_source_country</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <can_be_empty>1</can_be_empty>
+                        </specificcountry>
+                        <showmethod translate="label">
+                            <label>Show Method if Not Applicable</label>
+                            <frontend_type>select</frontend_type>
+                            <sort_order>92</sort_order>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </showmethod>
+                        <specificerrmsg translate="label">
+                            <label>Displayed Error Message</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>80</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </specificerrmsg>
+                    </fields>
+                </customshipprice>
+            </groups>
+        </carriers>
+    </sections>
+</config>

@@ -1,0 +1,126 @@
+# fr-FR
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/Os2/Editor.php
+    "New shipping method","Nouvelle méthode de livraison"
+    "Remove","Supprimer"
+    "[meta] %s","[meta] %s"
+    "[data] %s","[data] %s"
+    # Tools
+        "Insert","Insérer"
+        "Tools","Outils"
+        "Shipping country","Pays de livraison"
+        "Cart weight","Poids du panier"
+        "Products quantity","Quantité d'articles"
+        "Price incl. tax","Prix TTC"
+        "Price excl. tax","Prix HT"
+        "Weight","Poids"
+        "Tracking number","Numéro de suivi"
+        "Human readable version","Version lisible"
+    # Fields
+        "ID","ID"
+        "Type","Type"
+            "Shipping Method (default)","Méthode de livraison (par défaut)"
+            "Data","Données"
+            "Meta","Méta"
+        "About","À propos"
+        "Enabled","Activé"
+            "Enabled (default)","Activé (par défaut)"
+            "Disabled","Désactivé"
+        "Label","Libellé"
+        "Description","Description"
+        "Shipping address","Adresse de livraison"
+        "Billing address","Adresse de facturation"
+        "Origin address","Adresse d'envoi"
+        "Conditions","Conditions"
+        "Fees","Coûts"
+        "Customer groups","Groupes utilisateur"
+        "Tracking url","URL de suivi"
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/Os2/Help.php
+    "Refresh","Rafraîchir"
+    "Previous page","Page précédente"
+    "Summary","Sommaire"
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/System/Config/Form/Field/Config.php
+    "Help","Aide"
+    "Apply","Appliquer"
+    "Cancel","Annuler"
+    "Source &amp; Correction","Source &amp; Correction"
+    "Download configuration templates","Télécharger des modèles de configuration"
+    # JS
+        "Dissociate","Dissocier"
+        "Remove","Supprimer"
+        "Edit","Modifier"
+        "Enter the new value:","Veuillez saisir la nouvelle valeur :"
+        "[No label]","[Pas de libellé]"
+        "Loading...","En cours de chargement..."
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/System/Config/Form/Field/Config.php
+    "Version: %s","Version : %s"
+
+# app/code/community/Owebia/Shipping2/Controller/Abstract.php
+    "Owebia Shipping 2 Editor","Éditeur Owebia Shipping 2"
+    "Source &amp; Correction","Source &amp; Correction"
+    "Help","Aide"
+    "Donate","Faire un don"
+    "Close","Fermer"
+
+# app/code/community/Owebia/Shipping2/controllers/Adminhtml/Os2/AjaxController.php
+    "Editor","Éditeur"
+    "Source","Source"
+    "Correction","Correction"
+    "Debug","Debug"
+    "Apply","Appliquer"
+    "Export","Exporter"
+    "Add a shipping method","Ajouter une méthode de livraison"
+    "New shipping method","Nouvelle méthode de livraison"
+
+# app/code/community/Owebia/Shipping2/etc/system.xml
+    "Configuration","Configuration"
+    "Tracking URL","URL de suivi"
+    "Debug","Debug"
+    "{debug_help}","Affichage du debug sur le panier lors d'une estimation de livraison"
+    "Auto-escaping","Auto-échappement"
+    "{auto_escaping_help}","Active l'auto-échappement systématique des variables"
+    "Auto-correction","Auto-correction"
+    "{auto_correction_help}","Cette option permet la compatibilité rétroactive mais elle consommme des ressources"
+    "Stop to first match","Arrêt à la première correspondance trouvée"
+    "General Configuration","Configuration générale"
+    "Weight unit","Unité de poids"
+    "Bundle Product Management","Gestion des produits packagés (Bundle Product)"
+    "Configurable Product Management","Gestion des produits configurables (Configurable Product)"
+    "If ""Self"" is selected, options bellow are ignored","Si ""Lui-même"" est sélectionné, les options ci-dessous sont ignorées"
+    "Item processing","Traitement d'un article"
+    "Item options on","Options de l'article sur"
+    "Item data on","Données de l'article sur"
+    "Product data on","Données du produit sur"
+
+# app/code/community/Owebia/Shipping2/Model/ConfigParser.php
+    "Configuration disabled","Configuration désactivée"
+    "The cart doesn't match conditions","Le panier ne correspond pas aux conditions"
+    "Infinite loop %s","Boucle infinie %s"
+    "Error in table %s","Erreur dans la table %s"
+    "Usage of deprecated syntax %s","Utilisation d'une syntaxe obsolète %s"
+    "Usage of unknown properties %s","Utilisation de propriétés non reconnues %s"
+    "Usage of deprecated properties %s","Utilisation de propriétés obsolètes %s"
+
+# app/code/community/Owebia/Shipping2/Model/Carrier/Abstract.php
+    "track the package","suivre le colis"
+
+# app/code/community/Owebia/Shipping2/Model/Os2/Data/AddressFilter.php
+    "Africa","Afrique"
+    "Asia","Asie"
+    "Europa","Europe"
+    "North America","Amérique du Nord"
+    "South America","Amérique du Sud"
+    "Oceania","Océanie"
+    "Antartica","Antartique"
+    "European Union","Union Européenne"
+
+# app/code/community/Owebia/Shipping2/Model/System/Config/Source/LoadOnParent.php
+    "Self","Lui-même"
+    "Parent","Parent"
+
+# app/code/community/Owebia/Shipping2/Model/System/Config/Source/ProcessChildren.php
+    "Self","Lui-même"
+    "Children","Enfants"

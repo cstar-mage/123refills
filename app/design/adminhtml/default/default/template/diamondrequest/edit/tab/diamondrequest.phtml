@@ -1,0 +1,159 @@
+<style>
+table tr td{
+	padding-left:20px;	
+}
+</style>
+ <?php 
+		 	$resource = new Mage_Core_Model_Resource();
+			$read = $resource->getConnection('core_read');
+		 	$id = $this->getRequest()->getParam('id');
+		 	$table = Mage::getSingleton('core/resource')->getTableName('diamondrequest');
+		 	
+		 	$query = "select * from `".$table."` where diamondrequest_id = '".$id."'";
+			$result =  $read->fetchAll($query); 
+			$baseurl = Mage::getBaseUrl();	
+			
+			/* echo "<pre>";
+			print_r($result);
+			exit; */
+			
+		 ?>
+<table cellspacing="1" cellpadding="1" border="1" align="center" width="100%">
+	<?php foreach($result as $data):  ?>
+	<tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('ID'); ?> </td>
+        <td width="40%"> <?php echo $data['diamondrequest_id']; ?> </td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Name'); ?> </td>
+        <td width="40%">  <?php echo $data['name']; ?> </td>
+    </tr>    
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('E-mail'); ?> </td>
+        <td width="40%">  <?php echo $data['email']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Phone'); ?> </td> 
+        <td width="40%">  <?php echo $data['phone']; ?> </td>
+    </tr>
+    <?php /*?> <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Last Name'); ?> </td>
+        <td width="40%">  <?php echo $data['lname']; ?> </td>
+    </tr>
+   
+   
+    
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Product Name'); ?> </td>
+        <td width="40%">  <?php echo $data['productname']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Product SKU'); ?> </td>
+        <td width="40%">  <?php echo $data['productsku']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Product Url'); ?> </td>
+        <td width="40%">  <?php echo $data['producturl']; ?> </td>
+    </tr>
+    <?php */?>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Carat Size'); ?> </td>
+        <td width="40%">  <?php echo $data['caratsizefrom']; ?> - <?php echo $data['caratsizeto']; ?> </td>
+    </tr>   
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Color'); ?> </td>
+        <td width="40%">  <?php echo $data['colorfrom']; ?> - <?php echo $data['colorto']; ?></td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Clarity'); ?> </td>
+        <td width="40%">  <?php echo $data['clarityfrom']; ?> - <?php echo $data['clarityto']; ?></td>
+    </tr>
+    
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Price Range'); ?> </td>
+        <td width="40%">  <?php echo $data['pricerangefrom']; ?> - <?php echo $data['pricerangeto']; ?></td>
+    </tr>
+    
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Lab'); ?> </td>
+        <td width="40%">  <?php echo $data['lab']; ?></td>
+    </tr>     
+    <?php /*?>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Product Name'); ?> </td>
+        <td width="40%">  <?php echo $data['productname']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Product SKU'); ?> </td>
+        <td width="40%">  <?php echo $data['productsku']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Product Url'); ?> </td>
+        <td width="40%">  <?php echo $data['producturl']; ?> </td>
+    </tr>
+    
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Interested Rings'); ?> </td>
+        <td width="40%">  <?php $Rings = explode(',',$data['rings']); ?>
+        			<?php foreach ($Rings as $rng){ ?>
+        			 <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."media/customcontactnew/Ring_Images/".$rng.".jpg"; ?>" alt="" title="" />        				
+        			<?php }?>
+        </td>
+    </tr> <?php */?>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Stone Type'); ?> </td>
+        <td width="40%">  <?php echo $data['stonetype']; ?> </td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('How did you find our site?'); ?> </td>
+        <td width="40%">  <?php echo $data['referred_by']; ?></td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Time To contact'); ?> </td>
+        <td width="40%">  <?php echo $data['best_time']; ?></td>
+    </tr>
+      <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Remarks'); ?> </td>
+        <td width="40%">  <?php echo $data['remark']; ?></td>
+    </tr>       
+     <?php /*?>  <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Prefered Metal Color'); ?> </td>
+    	 <td width="40%">  <?php echo $data['metalcolors']; ?> </td>
+     <td width="40%">  <?php $metalcolors = explode(',',$data['metalcolors']); ?>
+        			<?php foreach ($metalcolors as $metalcolor){ ?>
+        			 <img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB)."media/customcontactnew/Ring_Images/".$metalcolor.".jpg"; ?>" alt="" title="" />        				
+        			<?php }?>
+        </td>
+        <?php */?>
+    </tr>
+    <?php /*?>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Price Range'); ?> </td>
+        <td width="40%">  <?php echo $data['pricerange']; ?> </td>
+    </tr>
+      <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Date(DD-MM-YY) : '); ?> </td>
+        <td width="40%">  <?php echo $data['day'].'/'.$data['month'].'/'.$data['year']; ?> </td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Comment'); ?> </td>
+        <td width="40%">  <?php echo $data['comment']; ?> </td>
+    </tr>
+   
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Image 1'); ?> </td>
+        <td width="40%">  <img <?php if(!empty($data['image1'])){?>height="400" width="400"<?php }?> src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$data['image1']; ?>" alt="" title="" /> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Image 2'); ?> </td>
+       <td width="40%">  <img <?php if(!empty($data['image2'])){?>height="400" width="400"<?php }?> src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$data['image2']; ?>" alt="" title="" /> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Image 3'); ?> </td>
+       <td width="40%">  <img <?php if(!empty($data['image3'])){?>height="400" width="400"<?php }?> src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$data['image3']; ?>" alt="" title="" /> </td>
+    </tr> <?php */?>
+     
+   
+    
+    <?php endforeach; ?>
+</table>

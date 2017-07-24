@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    <reference name="root" >
+		<action method="unsetChild" ifconfig="evolved/breadcrumbs/enable">
+	       <child>breadcrumbs</child>
+	    </action>
+    </reference>
+    <reference name="head">
+    		<action method="removeItem"><type>skin_css</type><name>css/evolved.css</name></action>
+    		<!-- <action method="addItem"><type>skin_js</type><name>js/headhesive.js</name></action>  -->
+    		<!-- <action method="addItem"><type>skin_css</type><name>css/headhesive.css</name><params/></action>  -->
+    		<action method="addItem"><type>skin_css</type><name>css/cs.animate.css</name><params/></action> 
+    		<action method="addItem"><type>skin_css</type><name>css/font-awesome.css</name><params/></action>
+    		<action method="addItem"><type>skin_css</type><name>selectdropdown/jquery.selectbox.css</name><params/></action>
+    		<action method="addItem"><type>skin_js</type><name>selectdropdown/jquery.selectbox-0.1.3.js</name></action>
+    </reference>
+    <reference name="before_body_end">
+		   <block type="page/html_head" name="evolved_css" template="evolved/head.phtml">
+		       <action method="additem"><type>skin_css</type><name>css/evolved.css</name></action>
+		       <action method="addItem"><type>skin_js</type><name>js/evolvedscript.js</name></action>         
+		   </block>
+	 </reference>
+     <reference name="catalog.topnav">
+            <block type="core/template" name="top.search" as="topSearch" template="catalogsearch/form.mini.phtml"/>
+     </reference>
+	<reference name="footer">
+		<block type="evolved/evolved" name="footer.footerbar" as="footer_footerbar" template="page/html/footerbar/footerbar.phtml" />
+     </reference>
+     <reference name="footer.footerbar">
+   		<block type="evolved/evolved" name="footer.footerbar.subscribeandsocialmedia" as="subscribe_and_social_media" template="page/html/footerbar/subscribe_and_social_media.phtml" />
+		<block type="evolved/evolved" name="footer.footerbar.subscribeonly" as="subscribe_only" template="page/html/footerbar/subscribe_only.phtml" />
+		<block type="evolved/evolved" name="footer.footerbar.socialmediaonly" as="social_media_only" template="page/html/footerbar/social_media_only.phtml" />
+		<block type="evolved/evolved" name="footer.footerbar.htmlonly" as="html_only" template="page/html/footerbar/html_only.phtml" />
+     </reference>
+    </default>
+    
+    <cms_index_index>
+        <reference name="head">
+    		<action method="removeItem"><type>skin_js</type><name>js/slideshow.js</name></action>
+    	</reference>
+    	<reference name="content">
+    		<!-- <block type="slideshow/slideshow" name="slideshow" template="slideshow/slideshow.phtml" />
+    		<block type="evolved/evolved" name="head_css_style" template="evolved/home-content.phtml" /> -->
+			<block type="core/template" name="sort_order" template="evolved/sortorder.phtml" />
+    	</reference>
+    </cms_index_index>
+    
+    <catalog_category_default>
+        <reference name="root">
+			 <action method="setTemplate" ifconfig="evolved/productlist_leftsidebar/enable">
+		       	<template>page/1column.phtml</template>
+		     </action>
+        </reference>
+    </catalog_category_default>
+    <catalog_category_layered>
+        <reference name="root">
+			 <action method="setTemplate" ifconfig="evolved/productlist_leftsidebar/enable">
+		       	<template>page/1column.phtml</template>
+		     </action>
+        </reference>
+    </catalog_category_layered>
+    
+    <contacts_index_index translate="label">
+       <reference name="head">
+	        <action method="setTitle" translate="title" module="contacts"><title helper="evolved/getContactsMetaKeywords" /></action>
+	        <action method="setkeywords"><title helper="evolved/getContactsMetaKeywords" /></action>
+            <action method="setDescription"><title helper="evolved/getContactsMetaDescription" /></action>
+		</reference>
+    </contacts_index_index>
+    
+</layout>

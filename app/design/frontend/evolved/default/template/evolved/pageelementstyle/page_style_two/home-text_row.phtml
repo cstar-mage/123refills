@@ -1,0 +1,25 @@
+<?php //$theme = $this->getConfig(); ?>
+<?php 
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_two')['homepage_element_two_style'])
+{
+	$evolved_homepage_element_two_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_two')['homepage_element_two_style']);
+	$theme = array_merge($evolved_homepage_element_two_content);	
+}
+else 
+{
+	$theme = $this->getConfig();
+}
+?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php if($theme['homepage_element_2_textrow_enabled'] == 1): ?>
+	<div class="home-info homepage_element_2_textrow homepage_textrow" <?php if($theme['homepage_element_two_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_two_style_margintop']."px"; ?>" <?php endif; ?>>
+    	<div class="textrow" id="homepage_element_2_textrow">
+		<?php $html = $processor->filter($theme['homepage_element_2_textrow_style_image']); ?>
+		<?php echo nl2br($html); ?>
+        </div>
+	</div>
+<?php endif; ?>

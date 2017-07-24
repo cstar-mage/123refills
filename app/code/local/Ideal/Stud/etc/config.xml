@@ -1,0 +1,173 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Stud>
+            <version>1.0.0</version>
+        </Ideal_Stud>
+    </modules>
+    <frontend>
+        <routers>
+            <stud>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Stud</module>
+                    <frontName>diamond-stud-builder</frontName> 
+                </args>
+            </stud>
+        </routers>
+        <layout>
+            <updates>
+                <stud>
+                    <file>stud.xml</file>
+                </stud>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<stud>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Stud</module>
+					<frontName>stud</frontName>
+				</args>
+			</stud>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <stud after="Ideal_Adminhtml">Ideal_Stud_Adminhtml</stud>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    
+    <adminhtml>
+		<menu>
+			<catalog module="stud">
+        		<children>
+					<stud module="stud">
+						<title>Manage Stud Builder</title>
+						<sort_order>0</sort_order>
+						<action>adminhtml/stud/new/</action>
+						<children>
+							<stud module="stud">
+								<title>Setting</title>
+								<sort_order>100</sort_order>
+								<action>adminhtml/studsetting/setting</action>  
+							</stud>
+						</children>
+					</stud>
+				</children>
+			</catalog>
+		</menu>
+		<!--<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Ideal_Stud>
+							<title>Stud Module</title>
+							<sort_order>10</sort_order>
+						</Ideal_Stud>
+					</children>
+				</admin>
+			</resources>
+		</acl>-->
+		<acl>
+            <resources>
+                <admin>
+                    <children>
+                        <catalog>
+                            <children>
+								<stud>
+										<title>Manage Stud Builder</title>
+								</stud>
+							</children>
+                        </catalog>
+						<system>
+						  <children>
+							<config>
+							  <children>
+								<stud>
+								  <title>Stud Builder Config</title>
+								</stud>
+							  </children>
+							</config>
+						  </children>
+						</system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+		<layout>
+			<updates>
+				<stud>
+					<file>stud.xml</file>
+				</stud>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <stud>
+                <class>Ideal_Stud_Model</class>
+                <resourceModel>stud_mysql4</resourceModel>
+            </stud>
+            <stud_mysql4>
+                <class>Ideal_Stud_Model_Mysql4</class>
+                <entities>
+                    <stud>
+                        <table>stud</table>
+                    </stud>
+
+                    <clarity>
+                        <table>clarity</table>
+                    </clarity>
+
+                     <carat>
+                        <table>carat</table>
+                    </carat>
+ 
+
+                </entities>  
+            </stud_mysql4>
+        </models>
+        <resources>
+            <stud_setup>
+                <setup>
+                    <module>Ideal_Stud</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </stud_setup>
+            <stud_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </stud_write>
+            <stud_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </stud_read>
+        </resources>
+        <blocks>
+            <stud>
+                <class>Ideal_Stud_Block</class>
+            </stud>
+        </blocks>
+        <helpers>
+            <stud>
+                <class>Ideal_Stud_Helper</class>
+            </stud>
+        </helpers>
+    </global>
+</config>

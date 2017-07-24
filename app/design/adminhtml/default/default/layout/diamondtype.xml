@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <diamondtype_adminhtml_diamondtype_index>
+        <reference name="content">
+            <block type="diamondtype/adminhtml_diamondtype" name="diamondtype" />
+        </reference>
+    </diamondtype_adminhtml_diamondtype_index>
+</layout>

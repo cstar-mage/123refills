@@ -1,0 +1,13 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_taskproduction_index>
+        <reference name="content">
+            <block type="taskproduction/adminhtml_taskproduction" name="taskproduction" />
+        </reference>
+    </adminhtml_taskproduction_index>
+    <adminhtml_taskproduction_edit>
+        <reference name="content">
+            <block type="taskproduction/adminhtml_taskproduction" name="taskproduction" template="taskproduction/ticket_edit.phtml" />
+        </reference>
+    </adminhtml_taskproduction_edit>
+</layout>

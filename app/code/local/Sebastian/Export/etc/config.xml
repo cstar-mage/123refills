@@ -1,0 +1,164 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Sebastian_Export>
+            <version>0.1.0</version>
+        </Sebastian_Export>
+    </modules>
+    
+    <global>
+        <models>
+            <export>
+                <class>Sebastian_Export_Model</class>
+                <resourceModel>export_mysql4</resourceModel>
+            </export>
+            <export_mysql4>
+                <class>Sebastian_Export_Model_Mysql4</class>
+                <entities>
+                    <export>
+                        <table>export</table>
+                    </export>
+                </entities>
+            </export_mysql4>
+        </models>
+        <blocks>
+            <export>
+                <class>Sebastian_Export_Block</class>
+            </export>
+            <adminhtml>
+                <rewrite>
+                    <sales_order_grid>Sebastian_Export_Block_Sales_Order_Grid</sales_order_grid>
+                </rewrite>
+            </adminhtml>
+        </blocks>
+        <helpers>
+            <export>
+                <class>Sebastian_Export_Helper</class>
+            </export>
+        </helpers>
+        <resources>
+            <export_setup>
+                <setup>
+                    <module>Sebastian_Export</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </export_setup>
+            <export_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </export_write>
+            <export_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </export_read>
+        </resources>
+    </global>
+    
+    <admin>
+        <routers>
+            <export>
+                <use>admin</use>
+                <args>
+                    <module>Sebastian_Export</module>
+                    <frontName>export</frontName>
+                </args>
+            </export>
+        </routers>
+    </admin>
+
+    <frontend>
+        <events>
+            <checkout_submit_all_after>
+                <observers>
+                    <checkout>
+                        <type>singleton</type>
+                        <class>export/observer</class>
+                        <method>checkoutTypeOnepageSaveOrderAfter</method>
+                    </checkout>
+                </observers>
+            </checkout_submit_all_after>
+        </events>
+    </frontend>
+
+    <crontab>
+        <jobs>
+            <export_apply_all>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>export/observer::cronjob</model>
+                </run>
+            </export_apply_all>
+        </jobs>
+    </crontab>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <mage_adminhtml>
+                    <files>
+                        <export>Sebastian_Export.csv</export>
+                    </files>
+                </mage_adminhtml>
+            </modules>
+        </translate>
+        
+        <menu>
+            <sales>
+                <children>
+                    <export translate="title" module="export">
+                        <title>Order Export</title>
+                        <action>export</action>
+                        <sort_order>1000</sort_order>
+                    </export>
+                </children>
+            </sales>
+        </menu>
+        
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <sales>
+                            <children>
+                                <export>
+                                    <title>Order Export</title>
+                                </export>
+                            </children>
+                        </sales>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <export>
+                                            <title>Order Export</title>
+                                        </export>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        
+        <layout>
+            <updates>
+                <export>
+                    <file>export.xml</file>
+                </export>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <default>
+        <admin>
+            <orderexport/>
+        </admin>
+    </default>
+</config>

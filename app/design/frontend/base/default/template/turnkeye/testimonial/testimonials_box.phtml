@@ -1,0 +1,50 @@
+<?php
+/**
+ * TurnkeyE Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0).
+ * It is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you are unable to obtain it through the world-wide-web, please send
+ * an email to info@turnkeye.com so we can send you a copy immediately.
+ *
+ * @category   Turnkeye
+ * @package    Turnkeye_Testimonial
+ * @copyright  Copyright (c) 2010-2012 TurnkeyE Co. (http://turnkeye.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * side box template of testimonials
+ *
+ * @category   Turnkeye
+ * @package    Turnkeye_Testimonial
+ * @author     Viacheslav Fedorenko <v.fedorenko@turnkeye.com>
+ */
+
+/**
+ * @var $this Turnkeye_Testimonial_Block_Testimonial
+ */
+?>
+<?php $testimonials = $this->getTestimonials(); ?>
+<?php $i = 0;?>
+<?php if ($testimonials->count() > 0): ?>
+<div class="block testimonials_sidebar">
+	<div class="block-title">
+	<strong><span><?php echo $this->__('Testimonials') ?></span></strong>
+	</div>
+	<div class="block-content">
+		<?php foreach ($testimonials as $testimonial): ?>
+			<div class="testimonial_sidebar_box">
+				<div class="testimonial_sidebar_text"><?php echo $testimonial->getTestimonialText(); ?></div>
+				<div class="testimonial_sidebar_name"><?php echo $testimonial->getTestimonialName(); ?></div>
+			</div>
+		<?php endforeach; ?>
+		<div class="actions">
+		    <a href="<?php echo $this->getUrl('testimonials'); ?>"><?php echo $this->__('View All Testimonials'); ?></a>
+		</div>
+    </div>
+</div>
+<?php endif;?>

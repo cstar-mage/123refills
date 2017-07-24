@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * Package :- Robots
+ * Edition :- community
+ * Developed By :- CueBlocks.com
+ * 
+ */
+-->
+<layout version="0.1.0">
+	<robots_adminhtml_robots_index>
+		<reference name="content">
+			<block type="robots/adminhtml_robots" name="robots" />
+		</reference>
+	</robots_adminhtml_robots_index>
+</layout>

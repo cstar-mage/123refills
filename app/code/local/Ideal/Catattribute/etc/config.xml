@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Catattribute>
+            <version>0.1.0</version>
+        </Ideal_Catattribute>
+    </modules>
+    <global>
+        <resources>
+            <catattribute_setup>
+                <setup>
+                    <module>Ideal_Catattribute</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </catattribute_setup>
+            <catattribute_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </catattribute_write>
+            <catattribute_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </catattribute_read>
+        </resources>
+    </global>
+</config>

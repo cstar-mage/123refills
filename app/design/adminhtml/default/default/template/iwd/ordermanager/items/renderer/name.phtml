@@ -1,0 +1,101 @@
+<?php
+/**
+ * @see Mage_Adminhtml_Block_Sales_Items_Column_Name
+ * @var $this Mage_Adminhtml_Block_Sales_Items_Column_Name
+ * @var $item Mage_Sales_Model_Order_Item
+ */
+?>
+
+<?php if ($item = $this->getItem()): ?>
+    <h5 class="title">
+        <span id="order_item_<?php echo $item->getId() ?>_title"><?php echo $this->escapeHtml($item->getName()) ?></span>
+    </h5>
+    <div>
+        <strong><?php echo $this->helper('sales')->__('SKU') ?>:</strong>
+        <?php echo implode('<br />', Mage::helper('catalog')->splitSku($this->escapeHtml($this->getSku()))); ?>
+    </div>
+    <?php if ($this->getOrderOptions()): ?>
+        <dl class="item-options">
+        <?php foreach ($this->getOrderOptions() as $_option): ?>
+            <dt><?php echo $_option['label'] ?></dt>
+            <dd>
+            <?php if (isset($_option['custom_view']) && $_option['custom_view']): ?>
+                <?php echo $this->getCustomizedOptionValue($_option); ?>
+            <?php else: ?>
+                <?php $_option = $this->getFormattedOption($_option['value']); ?>
+                <?php echo $_option['value']; ?><?php if (isset($_option['remainder']) && $_option['remainder']): ?><span id="<?php echo $_dots = 'dots' . uniqid()?>"> ...</span><span id="<?php echo $_id = 'id' . uniqid()?>"><?php echo $_option['remainder'] ?></span>
+                    <script type="text/javascript">
+                    $('<?php echo $_id ?>').hide();
+                    $('<?php echo $_id ?>').hide();
+                    $('<?php echo $_id ?>').up().observe('mouseover', function(){$('<?php echo $_id ?>').show();});
+                    $('<?php echo $_id ?>').up().observe('mouseover', function(){$('<?php echo $_dots?>').hide();});
+                    $('<?php echo $_id ?>').up().observe('mouseout',  function(){$('<?php echo $_id ?>').hide();});
+                    $('<?php echo $_id ?>').up().observe('mouseout',  function(){$('<?php echo $_dots ?>').show();});
+                    </script>
+                <?php endif; ?>
+            <?php endif; ?>
+            </dd>
+        <?php endforeach; ?>
+        </dl>
+    <?php endif; ?>
+    <i title="<?php echo $this->helper('sales')->__('Description'); ?>"><?php echo $this->htmlEscape($item->getDescription()) ?></i>
+
+    <script type="text/javascript">
+        <?php
+            $imageHelper = Mage::helper('iwd_ordermanager/image');
+            $product = $item->getProduct();
+            $adminUrl = Mage::helper('adminhtml')->getUrl('*/catalog_product/edit', array('id' => $product->getId()));
+            $frontUrl = $product->isVisibleInSiteVisibility()
+                ? sprintf('<a href="%s" target="_blank">%s</a>', $product->getProductUrl(), 'Go to product')
+                : '';
+
+            try {
+                $image = (string)$imageHelper->init($item->getProduct(), 'image')->resize(200);
+            } catch (Exception $e) {
+                $image = Mage::getDesign()->getSkinUrl($imageHelper->getPlaceholder(), array('_area' => 'frontend'));
+            }
+
+            $params = array(
+                'adminUrl' => sprintf('<a href="%s" target="_blank">%s</a>', $adminUrl, 'Edit product'),
+                'frontUrl' => $frontUrl,
+                'productImage' => $image,
+                'Sku' => $product->getSku(),
+                'Title' => $product->getName(),
+                'Type' => $product->getTypeId(),
+                'Price' => $item->getOrder()->getStore()->formatPrice($product->getPrice()),
+                'Qty' => (string)$product->getStockItem()->getQty() * 1,
+                'Visible' => Mage_Catalog_Model_Product_Visibility::getOptionText($product->getVisibility()),
+                'In Stock' => $product->getStockItem()->getIsInStock() ? 'Yes' : 'No'
+            );
+
+            if ($product->getTypeId() == 'configurable') {
+                $params['Qty'] = null;
+
+                /**
+                 * @var $childrenItem Mage_Sales_Model_Order_Item
+                 */
+                foreach ($item->getChildrenItems() as $childrenItem) {
+                    $childrenProduct = $childrenItem->getProduct();
+                    $adminUrl = Mage::helper('adminhtml')->getUrl('*/catalog_product/edit', array('id' => $childrenProduct->getId()));
+                    $frontUrl = $childrenProduct->isVisibleInSiteVisibility()
+                        ? sprintf('<a href="%s" target="_blank">%s</a>', $childrenProduct->getProductUrl(), $childrenProduct->getName())
+                        : $childrenProduct->getName();
+
+                    $params['children']['Simple product'] = array(
+                        'Sku' =>$childrenProduct->getSku(),
+                        'Title' => sprintf('%s (<a href="%s" target="_blank">%s</a>)', $frontUrl, $adminUrl, 'edit product'),
+                        'Price' => $item->getOrder()->getStore()->formatPrice($childrenProduct->getPrice()),
+                        'Qty' =>(string)$childrenProduct->getStockItem()->getQty() * 1,
+                        'Visible' => Mage_Catalog_Model_Product_Visibility::getOptionText($childrenProduct->getVisibility()),
+                        'In Stock' => $childrenProduct->getStockItem()->getIsInStock() ? 'Yes' : 'No'
+                    );
+                }
+            }
+        ?>
+        IWD.OrderManager.OrderedItemProductInfo = IWD.OrderManager.OrderedItemProductInfo || {};
+        IWD.OrderManager.OrderedItemProductInfo.addItem(
+            'order_item_<?php echo $item->getId() ?>_title',
+            <?php echo json_encode($params); ?>
+        );
+    </script>
+<?php endif; ?>

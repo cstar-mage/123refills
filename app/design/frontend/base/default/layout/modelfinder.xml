@@ -1,0 +1,14 @@
+<?xml version="1.0"?>   
+<layout version="0.1.0">   
+	<!--
+  <modelfinder_index_index>   
+    <reference name="root">   
+      <action method="setTemplate"><template>page/1column.phtml</template></action>   
+    </reference>   
+    <reference name="content">   
+      <block type="modelfinder/index" name="modelfinder_index" template="modelfinder/index.phtml"/>   
+    </reference>   
+  </modelfinder_index_index>   
+	-->
+</layout>   
+	

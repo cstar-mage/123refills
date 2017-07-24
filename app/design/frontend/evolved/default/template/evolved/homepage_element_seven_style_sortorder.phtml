@@ -1,0 +1,32 @@
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php $html_img_one = $processor->filter($theme['homepage_element_seven_style_image_one']);
+$html_img_two = $processor->filter($theme['homepage_element_seven_style_image_two']);
+$html_img_three = $processor->filter($theme['homepage_element_seven_style_image_three']);
+?>
+
+<div class="home-main">
+<div class="page_element_seven">
+	<div class="center">
+		<a href="<?php echo $theme['homepage_element_seven_style_link_one']; ?>" title="<?php echo $theme['homepage_element_seven_style_title_one']; ?>" >
+			<?php echo nl2br($html_img_one); ?>
+		</a>
+	</div>
+	<div class="center">
+		<a href="<?php echo $theme['homepage_element_seven_style_link_two']; ?>" title="<?php echo $theme['homepage_element_seven_style_title_two']; ?>" >
+			<?php echo nl2br($html_img_two); ?>
+		</a>
+	</div>
+	<div class="center">
+		<a href="<?php echo $theme['homepage_element_seven_style_link_three']; ?>" title="<?php echo $theme['homepage_element_seven_style_title_three']; ?>" >
+			<?php echo nl2br($html_img_three); ?>
+		</a>
+	</div>
+</div>
+</div>
+<?php //echo "<br />homepage_element_two_style_sortorder"; ?>
+<?php //echo "<br />homepage_element_three_style_sortorder"; ?>
+<?php //echo "<br />homepage_element_four_style_sortorder"; ?>

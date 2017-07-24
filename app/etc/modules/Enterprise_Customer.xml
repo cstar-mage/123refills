@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Enterprise_Customer>
+            <active>true</active>
+            <codePool>core</codePool>
+        </Enterprise_Customer>
+    </modules>
+</config>

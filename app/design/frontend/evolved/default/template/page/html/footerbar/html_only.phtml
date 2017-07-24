@@ -1,0 +1,26 @@
+<?php
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	if($evolvedmethod->getBlockConfig('evolved_form_footerbar')['footer_footerbar_htmlblock'])
+	{
+		$htmlonly = $evolvedmethod->getBlockConfig('evolved_form_footerbar')['footer_footerbar_htmlblock'];
+	}
+	else 
+	{
+		$theme = Mage::helper('evolved')->getThemeConfig();
+		$htmlonly = $theme['footer_footerbar_htmlblock'];
+	}
+}
+else 
+{
+	$theme = Mage::helper('evolved')->getThemeConfig();
+	$htmlonly = $theme['footer_footerbar_htmlblock'];
+}
+
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<div class="html_only">
+	<?php echo $processor->filter($htmlonly); ?>
+</div>

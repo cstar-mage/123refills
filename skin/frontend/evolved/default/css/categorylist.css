@@ -1,0 +1,9 @@
+@import url(http://fonts.googleapis.com/css?family=Open+Sans:400,400italic,300italic,600,600italic,700,700italic);
+.catalog-category-view .main-container{}
+.catalog-category-view .main{margin: 0 auto;max-width: 1220px;padding: 0 10px;}
+.catalog-category-view .breadcrumbs{float:left; width:100%; background:#87aca7;}
+.catalog-category-view .breadcrumbs ul{}
+.catalog-category-view .breadcrumbs ul li a,.catalog-category-view .breadcrumbs ul li strong{font-size:17.33px; font-family: 'Open Sans', sans-serif; font-weight:400; color:#FFF;}
+.catalog-category-view .breadcrumbs ul li  span{color:#FFF; font-size:17.33px;}
+.catalog-category-view .breadcrumbs ul li{/*padding:2px 0;*/}
+.product-image{border: none;}

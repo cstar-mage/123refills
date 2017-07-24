@@ -1,0 +1,285 @@
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/captch/jquery.plugin.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/captch/jquery.realperson.js'; ?>"></script>
+<link type="text/css" href="<?php echo $this->getBaseUrl().'js/captch/jquery.realperson.css'; ?>" rel="stylesheet" ></link>  
+
+<script>
+jQuery(function() {
+	jQuery('#defaultReal').realperson();
+});
+
+</script>
+
+
+
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+
+<div class="custmain customcontactnewmain">
+
+<div class="loose_diamonds_main">
+    	
+                        
+
+
+		<form id="contactForm" name="contactForm" method="post" action="<?php echo $this->getBaseUrl().'/diamondrequest/index/post/' ?>" enctype="multipart/form-data">
+<input id="fCache" name="fCache" value="No" type="hidden">
+<input id="fCache2" name="fCache2" value="No" type="hidden">
+<input id="fSearchType" name="fSearchType" value="Loose" type="hidden">
+
+<div class="content top">
+		       	<h3>Choose your stone</h3>
+		       	<input type="hidden" name="user_id" value="<?php echo $userId; ?>">
+		        <div class="checkboxes">
+					<div class="ckcs">
+                    	
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/round.png'); ?>" alt="Round"/><label>Round</label></div>
+						<span class="dia"><input id="Checkbox1" value="RB" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox1"></label>
+						</span>
+					</div>
+					<div class="ckcs">
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/princess.png'); ?>" alt="Princess"/><label>Princess</label></div>
+						<span class="dia"><input id="Checkbox2" value="PR" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox2"></label></span>
+					</div>
+					<div class="ckcs">
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/cushion.png'); ?>" alt="Cushion"/><label>Cushion</label></div>
+						<span class="dia"><input id="Checkbox11" value="CU" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox11"></label>
+						</span>
+					</div>
+
+	                <div class="ckcs">
+	                	<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/asscher.png'); ?>" alt="Asscher" /><label>Asscher</label></div>
+	                	<span class="dia"><input id="Checkbox10" value="AS" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+	                		<label for="Checkbox10"></label>
+	                	</span>
+	                </div>
+					<div class="ckcs">
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/oval.png'); ?>" alt="Oval"/><label>Oval</label></div>
+						<span class="dia"><input id="Checkbox5" value="OV" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox5"></label>
+						</span>
+					</div>
+					<div class="ckcs">
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/radiant.png'); ?>" alt="Radiant"/><label>Radiant</label></div>
+						<span class="dia"><input id="Checkbox4" value="RAD" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox4"></label>
+						</span>
+					</div>
+
+					<div class="ckcs">
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/emerald.png'); ?>" alt="Emerald"/><label>Emerald</label></div>
+						<span class="dia"><input id="Checkbox3" value="EC" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox3"></label>
+						</span>
+					</div>
+	                <div class="ckcs">
+	                	<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/pear.png'); ?>" alt="Pear"><label>Pear</label></div>
+	                	<span class="dia"><input id="Checkbox6" value="PS" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+	                		<label for="Checkbox6"></label>
+	                	</span>
+	                </div>
+	                
+	                <div class="ckcs">
+	                	<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/heart.png'); ?>" alt="Heart"/><label>Heart</label></div>
+	                	<span class="dia"><input id="Checkbox9" value="HS" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+	                		<label for="Checkbox9"></label>
+	                	</span>
+	                </div>
+	                
+	                <div class="ckcs last">
+						<div class="imgbxs"><img src="<?php echo $this->getSkinUrl('images/diamond_request_imgs/marquise.png'); ?>" alt="Marquise"/><label>Marquise</label></div>
+						<span class="dia"><input id="Checkbox7" value="MQ" name="stonetype[]" class="validate-one-required-by-name chks validation-passed" type="checkbox">
+							<label for="Checkbox7"></label>
+						</span>
+					</div>
+					
+		        </div>
+			</div>
+	                    
+	                    
+	       <div class="content middle">
+	          	<ul>
+		          	<li class="first">
+		          		<?php $weightArr = array('0.5', '0.75', '1.0', '1.25', '1.50', '1.75', '2.0', '2.25', '2.50', '2.75', '3 or more'); ?>
+		            	<span>Weight</span>
+		                
+		             <div class="select">
+	               		<label>
+		                    <select name="caratsizefrom" id="caratsizefrom" class="">
+								<option value="">Select</option>
+								<?php for($i=0; $i<count($weightArr); $i++) : 
+		                            echo "<option value='".$weightArr[$i]."'>".$weightArr[$i]."</option>";
+		                          endfor; ?>
+		                    </select>
+	                    </label>
+	                </div>
+	                
+	                 <div class="select">
+	                 	<label>
+		                    <select name="caratsizeto" id="caratsizeto" class="">
+	                          	<option value="">Select</option>
+								<?php for($i=0; $i<count($weightArr); $i++): 
+	                            	echo "<option value='".$weightArr[$i]."'>".$weightArr[$i]."</option>";
+	                            endfor; ?>
+	                        </select>
+	                    </label>
+	                </div>
+	                
+	                
+		            </li>
+	            
+	            
+	           	 <li>
+	           	 	<?php $colorArr = array('D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'); ?>
+	             	<span>Color</span>
+	               		<div class="select">
+	               		<label>
+		                    <select name="colorfrom" id="fColorFrom" class="">
+								<option value="">Select</option>
+								<?php for($i=0; $i<count($colorArr); $i++) : 
+		                            echo "<option value='".$colorArr[$i]."'>".$colorArr[$i]."</option>";
+		                          endfor; ?>
+		                    </select>
+	                    </label>
+	                </div>
+	                
+	                 <div class="select">
+	                 	<label>
+		                    <select name="colorto" id="fColorTo" class="">
+	                          	<option value="">Select</option>
+								<?php for($i=0; $i<count($colorArr); $i++): 
+	                            	echo "<option value='".$colorArr[$i]."'>".$colorArr[$i]."</option>";
+	                            endfor; ?>
+	                        </select>
+	                    </label>
+	                </div>
+	            </li>
+	            
+	            <li>
+	            	<?php $clarityArr = array('FL', 'IF', 'VVS1', 'VVS2', 'VS1', 'VS2', 'SI1', 'SI2', 'SI3', 'I1', 'I2', 'I3'); ?>
+	             	<span>Clarity</span>
+	                <div class="select">
+	                	<label>
+	                    	<select name="clarityfrom" id="fClarityFrom" class="">
+	                        	<option value="">--Select--</option>
+								<?php for($i=0; $i<count($clarityArr); $i++): 
+	                            	echo "<option value='".$clarityArr[$i]."'>".$clarityArr[$i]."</option>";
+	                            endfor; ?>
+	                        </select>
+	                    </label>
+	                </div>
+	                
+		             <div class="select">
+		             	<label>
+		                    <select name="clarityto" id="fClarityTo" class="">
+		                    	<option value="">--Select--</option>
+								<?php for($i=0; $i<count($clarityArr); $i++): 
+		                           	echo "<option value='".$clarityArr[$i]."'>".$clarityArr[$i]."</option>";
+		                        endfor; ?>
+		                    </select>
+		                </label>
+		            </div>
+		        </li>
+	            
+		        <li class="last">
+		           	<span>Price</span>
+		            <input class="input-field" id="Text3" name="pricerangefrom" value="" placeholder="From" type="text" />
+		             
+		            <input class="input-field margin_left" id="Text4" name="pricerangeto" value="" placeholder="To" type="text" />
+		        </li>
+			</ul>
+		</div>
+	          
+		<div class="content bottom">
+			<div class="inner">
+		    	<div class="input-field-area">
+					<input type="text" class="input-field-large required-entry" id="name" name="name" value="" placeholder="First & last name" />
+                    
+				</div>
+		        <div class="input-field-area">
+		        	<input type="text" id="AreaCode" name="AreaCode" class="input-field-large" value="" placeholder="Phone number" />
+		        </div>
+		        <div class="input-field-area">
+		        	<input type="text" id="email" name="email" class="input-field-large required-entry validate-email" value="" placeholder="Email address" />
+		        </div>
+		      <div class="buttons-set">
+				            		<?php if(Mage::getStoreConfig('evolved/contacts_custom_captcha/enable')==1): ?>
+					            		<div class="input-box">
+							       			<input type="text" class="required-entry" id="defaultReal" name="defaultReal">
+							       		</div>  
+				            		<?php endif; ?>
+				  </div>
+				  
+<input type="submit" id="fSubmit" name="fSubmit" class="submit_btn" value="SUBMIT" style="background: #3B3B3B <?php //echo $customer->getRequestFormButton(); ?> " /> 
+			
+			</div>
+		</div>
+
+
+
+
+
+</form>
+</div>
+</div>
+<!-- 
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('jquery/jquery-ui.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('jquery/jquery.ui.touch.js') ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('jquery/QapTcha.jquery.js') ?>"></script>
+<script type="text/javascript">
+	jQuery(document).ready(function(){
+		jQuery('.QapTcha').QapTcha();
+	});
+</script>
+ -->
+<script type="text/javascript">
+
+//<![CDATA[
+
+    var contactForm = new VarienForm('contactForm', true);
+
+//]]>
+
+    function checkvalue(chkid)
+    {       
+		if(document.getElementById(chkid).checked==false){
+			document.getElementById(chkid).checked=true;
+		}else{
+			document.getElementById(chkid).checked=false;
+		}
+    }
+</script>
+<script language="javascript">
+function applyWeightRange () {
+	var i = document.getElementById("caratsizefrom").selectedIndex;
+	if (i==0) i=-2;
+	if (i>11) i=11;
+	document.getElementById("caratsizeto").selectedIndex = i+2;
+}
+
+function applyOther() {
+	contactForm.fWeightRanges.selectedIndex = 0;
+}
+</script>
+<script language="javascript">
+function applyColorRange () {
+	var i = document.getElementById("fColorFrom").selectedIndex;	
+	if (i==0) i=-2;
+	if (i>21) i=21;
+	document.getElementById("fColorTo").selectedIndex = i+2;
+}
+</script>
+<script language="javascript">
+function applyClarityRange () {
+	var i = document.getElementById("fClarityFrom").selectedIndex;
+	if (i==0) i=-2;
+	if (i>9) i=9;
+	document.getElementById("fClarityTo").selectedIndex = i+2;
+}
+</script>
+<script type="text/javascript">
+//<![CDATA[
+    // var diamondRequestForm = new VarienForm('diamond-request-form', true);
+//]]>
+</script> 

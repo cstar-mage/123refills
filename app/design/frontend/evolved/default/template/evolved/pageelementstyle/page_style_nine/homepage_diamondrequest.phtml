@@ -1,0 +1,76 @@
+<?php //$theme = $this->getConfig(); ?>
+<?php 
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_nine')['homepage_element_nine_style'])
+{
+	$evolved_homepage_element_nine_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_nine')['homepage_element_nine_style']);
+	$theme = array_merge($evolved_homepage_element_nine_content);	
+}
+else 
+{
+	$theme = $this->getConfig();
+}
+?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<?php 
+	if($theme['homepage_element_9_diamondrow_style_content_option'] == 'dynamic')
+	{
+		$dynamicloosdiamond = "dynamicloosdiamond";
+		$drowfill = array();
+		$drowempty = array();
+		for($shapecount=1; $shapecount<=$theme['homepage_element_9_diamondrow_dynamic_shape_table_row_count']; $shapecount++ )
+		{
+			if($theme['homepage_element_9_diamondrow_dynamic_shape_table_sortorder_row'.$shapecount])
+			{
+				if(!in_array($theme['homepage_element_9_diamondrow_dynamic_shape_table_sortorder_row'.$shapecount],$drowfill))
+				{
+					$drowfill[$shapecount] = $theme['homepage_element_9_diamondrow_dynamic_shape_table_sortorder_row'.$shapecount];
+				}
+				else
+				{
+					$drowfill[$shapecount] = $theme['homepage_element_9_diamondrow_dynamic_shape_table_sortorder_row'.$shapecount] + 0.01;
+				}
+			}
+			else
+			{
+				$drowempty[$shapecount] = "";
+			}
+		}
+		asort($drowfill);
+		$mergesortarr = $drowfill + $drowempty;
+	}
+?>
+<?php //if($theme['homepage_element_9_diamondrow_enabled'] == 1): ?>
+	<div class="home-info homepage_element_9_loosediamonds homepage_loosediamonds" <?php if($theme['homepage_element_nine_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_nine_style_margintop']."px"; ?>" <?php endif; ?>>
+    	<div class="loosediamonds <?php echo $dynamicloosdiamond; ?>"  id="homepage_element_9_loosediamonds">
+    		<?php if($theme['homepage_element_9_diamondrow_style_content_option'] == 'dynamic'): ?>
+    				<div class="shape">
+						<div class="imageshape">
+							<a href="<?php echo ($theme['homepage_element_9_diamondrow_dynamic_style_content_title_url']) ? Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).$theme['homepage_element_9_diamondrow_dynamic_style_content_title_url'] : Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB); ?>">
+									<span class="select_main_heading"><?php echo $theme['homepage_element_9_diamondrow_dynamic_style_content_title']; ?></span>
+									<span class="select_sub_heading">    				
+										<?php $html = $processor->filter($theme['homepage_element_9_diamondrow_dynamic_style_content_below_title']); ?>
+					    				<?php echo nl2br($html); ?>
+					    			</span>
+							</a>
+							<?php foreach($mergesortarr as $mergesortarrkey => $mergesortarrvalue): ?>
+								<?php //for($shapecount=1; $shapecount<=$theme['homepage_element_9_diamondrow_dynamic_shape_table_row_count']; $shapecount++ ): ?>
+											<?php if($theme['homepage_element_9_diamondrow_dynamic_shape_table_enable_row'.$mergesortarrkey]==1): ?>
+												<a href="/diamond-search/?shape=<?php echo strtolower($theme['homepage_element_9_diamondrow_dynamic_shape_table_title_row'.$mergesortarrkey]); ?>">
+													<img width="62" height="78" alt="<?php echo $theme['homepage_element_9_diamondrow_dynamic_shape_table_title_row'.$mergesortarrkey]; ?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$theme['homepage_element_9_diamondrow_dynamic_shape_table_image_row'.$mergesortarrkey.'_image']; ?>">
+													<span><?php echo $theme['homepage_element_9_diamondrow_dynamic_shape_table_title_row'.$mergesortarrkey]; ?></span>								
+												</a>
+											<?php endif; ?>
+								<?php //endfor; ?>
+							<?php endforeach;?>
+						</div>
+					</div>
+    		<?php else: ?>
+    				<?php $html = $processor->filter($theme['homepage_element_9_diamondrow_style_image']); ?>
+    				<?php echo nl2br($html); ?>
+    		<?php endif; ?>
+        </div>
+	</div>
+<?php //endif; ?>

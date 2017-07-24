@@ -1,0 +1,152 @@
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:68:"dyncatprod/rule_condition_additional_conditions_discount_catalogrule";s:8:"operator";s:1:">";s:5:"value";s:1:"1";}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:4:"size";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"79";}}}
+ - ''
+ - 33
+-
+ - a:4:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:68:"dyncatprod/rule_condition_additional_conditions_discount_catalogrule";s:8:"operator";s:1:">";s:5:"value";s:1:"1";}}
+ - ''
+ - 32
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:68:"dyncatprod/rule_condition_additional_conditions_discount_catalogrule";s:8:"operator";s:1:">";s:5:"value";s:1:"1";}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"0";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"()";s:5:"value";s:2:"10";}}
+ - ''
+ - 31
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:68:"dyncatprod/rule_condition_additional_conditions_discount_catalogrule";s:8:"operator";s:1:">";s:5:"value";s:1:"1";}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"()";s:5:"value";s:2:"10";}}
+ - ''
+ - 29
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"0";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"==";s:5:"value";s:2:"10";}}
+ - ''
+ - 30
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"()";s:5:"value";s:2:"10";}}
+ - ''
+ - 28
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"()";s:5:"value";s:2:"11";}}
+ - ''
+ - 27
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"()";s:5:"value";s:5:"10,11";}}
+ - ''
+ - 20
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:59:"dyncatprod/rule_condition_additional_conditions_salesreport";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_salesreport_bestsellers";s:8:"operator";s:2:">=";s:5:"value";s:4:"1000";}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"+C";s:5:"value";s:6:"parent";}}
+ - ''
+ - 19
+-
+ - a:5:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:2:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_simples";s:8:"operator";s:2:"+A";}}
+ - ''
+ - 12
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:3:{i:0;s:2:"20";i:1;s:2:"24";i:2;s:2:"25";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"21";}}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"+C";s:5:"value";s:6:"parent";}}
+ - ''
+ - 11
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:3:{i:0;s:2:"20";i:1;s:2:"24";i:2;s:2:"25";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"21";}}s:4:"1--3";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--3--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"RS";s:5:"value";s:6:"parent";}}
+ - ''
+ - 10
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:4:"name";s:8:"operator";s:2:"{}";s:5:"value";s:5:"shirt";}}
+ - ''
+ - 13
+#-
+# - a:4:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:59:"dyncatprod/rule_condition_additional_conditions_salesreport";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_salesreport_bestsellers";s:8:"operator";s:2:">=";s:5:"value";s:3:"700";}}
+# - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}}'
+# - 14
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:14:"category_child";s:8:"operator";s:2:"()";s:5:"value";s:3:"5,7";}}
+ - ''
+ - 15
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:59:"dyncatprod/rule_condition_additional_conditions_salesreport";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_salesreport_bestsellers";s:8:"operator";s:2:">=";s:5:"value";s:4:"7000";}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"RS";s:5:"value";s:6:"parent";}}
+ - ''
+ - 16
+-
+ - a:7:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:2:"OR";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"24";}}s:7:"1--2--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}}
+ - ''
+ - 17
+-
+ - a:4:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}}
+ - ''
+ - 18
+-
+ - a:5:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:7:"type_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:6:"simple";}}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"RS";s:5:"value";s:6:"parent";}}
+ - ''
+ - 4
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}}
+ - ''
+ - 2
+-
+ - a:5:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:14:"category_child";s:8:"operator";s:2:"==";s:5:"value";s:1:"6";}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"SUB";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:12:"category_ids";s:8:"operator";s:2:"==";s:5:"value";s:2:"45";}}
+ - ''
+ - 5
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:2:"OR";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"24";}}}
+ - ''
+ - 1
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:2:"OR";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"24";}}}
+ - ''
+ - 6
+-
+ - a:4:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}}
+ - ''
+ - 3
+-
+ - a:8:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"20";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:16:"attribute_set_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"13";}}s:4:"1--2";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:2:"OR";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"24";}}s:4:"1--3";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"SUB";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--3--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"24";}}}
+ - ''
+ - 7
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:3:{i:0;s:2:"20";i:1;s:2:"24";i:2;s:2:"25";}}}
+ - ''
+ - 8
+-
+ - a:4:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:3:{i:0;s:2:"20";i:1;s:2:"24";i:2;s:2:"25";}}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:5:"color";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:2:"21";}}}
+ - ''
+ - 9
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:59:"dyncatprod/rule_condition_additional_conditions_salesreport";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_salesreport_bestsellers";s:8:"operator";s:2:">=";s:5:"value";s:4:"1000";}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"+C";s:5:"value";s:6:"parent";}}
+ - ''
+ - 19
+-
+ - a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:23:"applied_catalog_rule_id";s:8:"operator";s:2:"()";s:5:"value";s:5:"10,11";}}
+ - ''
+ - 20
+-
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--2";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:11:"is_in_stock";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:1:"1";}}}'
+ - ''
+ - 21
+-
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:11:"is_in_stock";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:1:"0";}}}'
+ - ''
+ - 22
+-
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:7:"type_id";s:8:"operator";s:2:"{}";s:5:"value";a:1:{i:0;s:6:"simple";}}}'
+ - ''
+ - 23
+-
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:7:"type_id";s:8:"operator";s:2:"{}";s:5:"value";a:2:{i:0;s:6:"simple";i:1;s:12:"configurable";}}}'
+ - ''
+ - 24
+-
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:12:"news_to_date";s:8:"operator";s:2:"!!";s:5:"value";s:0:"";}}'
+ - ''
+ - 25
+-
+ - a:6:{i:1;a:2:{s:4:"type";s:33:"dynactprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:59:"dyncatprod/rule_condition_additional_conditions_salesreport";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_salesreport_bestsellers";s:8:"operator";s:2:">=";s:5:"value";s:4:"7000";}s:4:"1--2";a:2:{s:4:"type";s:63:"dyncatprod/rule_condition_additional_conditions_transformations";s:9:"new_child";s:0:"";}s:7:"1--2--1";a:3:{s:4:"type";s:71:"dyncatprod/rule_condition_additional_conditions_transformations_parents";s:8:"operator";s:2:"RS";s:5:"value";s:6:"parent";}}
+ - ''
+ - 26
+-
+ - 'a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:4:{s:4:"type";s:68:"dyncatprod/rule_condition_additional_conditions_discount_catalogrule";s:8:"websites";a:1:{i:0;s:1:"1";}s:8:"operator";s:1:">";s:5:"value";s:1:"0";}s:7:"1--1--2";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--2--1";a:4:{s:4:"type";s:69:"dyncatprod/rule_condition_additional_conditions_discount_specialprice";s:8:"websites";a:1:{i:0;s:1:"1";}s:8:"operator";s:1:">";s:5:"value";s:1:"0";}}'
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:12:"category_ids";s:8:"operator";s:2:"==";s:5:"value";s:1:"4";}}'
+ - 34
+-
+ - 'a:6:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"any";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:4:{s:4:"type";s:68:"dyncatprod/rule_condition_additional_conditions_discount_catalogrule";s:8:"websites";a:1:{i:0;s:1:"1";}s:8:"operator";s:1:">";s:5:"value";s:1:"0";}s:7:"1--1--2";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--2--1";a:4:{s:4:"type";s:69:"dyncatprod/rule_condition_additional_conditions_discount_specialprice";s:8:"websites";a:1:{i:0;s:1:"1";}s:8:"operator";s:1:">";s:5:"value";s:1:"0";}}'
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:12:"category_ids";s:8:"operator";s:2:"==";s:5:"value";s:1:"4";}}'
+ - 35
+-
+ - 'a:4:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:2:{s:4:"type";s:56:"dyncatprod/rule_condition_additional_conditions_discount";s:9:"new_child";s:0:"";}s:10:"1--1--1--1";a:4:{s:4:"type";s:69:"dyncatprod/rule_condition_additional_conditions_discount_specialprice";s:8:"websites";a:1:{i:0;s:1:"1";}s:8:"operator";s:1:">";s:5:"value";s:1:"0";}}'
+ - 'a:3:{i:1;a:2:{s:4:"type";s:33:"dyncatprod/rule_condition_combine";s:9:"new_child";s:0:"";}s:4:"1--1";a:5:{s:4:"type";s:39:"dyncatprod/rule_condition_product_found";s:8:"combiner";s:3:"AND";s:10:"aggregator";s:3:"all";s:5:"value";s:1:"1";s:9:"new_child";s:0:"";}s:7:"1--1--1";a:4:{s:4:"type";s:33:"dyncatprod/rule_condition_product";s:9:"attribute";s:12:"category_ids";s:8:"operator";s:2:"==";s:5:"value";s:1:"4";}}'
+ - 36

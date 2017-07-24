@@ -1,0 +1,98 @@
+<?php
+$collection = Mage::getModel('recieveproducts/recieveproducts')->getCollection()->addFieldToFilter('main_table.recieveproducts_id',$this->getRequest()->getParam('id'));
+//echo $this->getRequest()->getParam('id');
+foreach($collection->getData() as $collections){
+	$purchase_order = $collections['recieveproducts_id'];
+	$purchase_number = $collections['purchase_number'];
+	$recieved_by = $collections['recieved_by'];
+	$recieveproducts_sku[] = $collections['recieveproducts_sku'];
+	$recieveproducts_qty[] = $collections['recieveproducts_qty'];
+	$recieveproducts_stock_id[] = $collections['recieveproducts_stock_id'];
+}
+/*echo "<pre>";
+print_r($recieveproducts_sku);
+exit;*/
+if($this->getRequest()->getParam('id') != ""){
+?>
+<table>
+  <tr>
+    <td><table>
+        <tr>
+          <td><label>Purchase Order Number</label></td>
+          <td><input type="text" name="purchase_number" id="purchase_number" value="<?php echo $purchase_number; ?>" /></td>
+        </tr>        
+        <tr>
+          <td><label>Recieved BY</label></td>
+          <td><input type="text" name="recieved_by" id="recieved_by" value="<?php echo $recieved_by; ?>" /></td>
+        </tr>
+      </table></td>
+    <td><table id="t">
+        <tr>
+          <td><button style="" onclick="addrow()" class="scalable save" type="button" title="Save Item"><span><span>Add Item</span></span></button></td>
+        </tr>
+        <?php for($i=0;$i<count($recieveproducts_sku);$i++) {?>
+            <tr>
+                <td><label>SKU</label><input type="text" name="recieveproducts_sku[]" value="<?php echo $recieveproducts_sku[$i]; ?>" readonly="readonly" /> <label>QUANTITY</label><input type="text" name="recieveproducts_qty[]" value="<?php echo $recieveproducts_qty[$i]; ?>" /><input type="hidden" name="recieveproducts_stock_id[]" value="<?php echo $recieveproducts_stock_id[$i]; ?>"  /></td>
+            </tr>
+        <?php } ?>
+      </table></td>
+  </tr>
+</table>
+
+<?php	
+}else{
+?>
+<table>
+  <tr>
+    <td><table>
+        <tr>
+          <td><label>Purchase Order Number</label></td>
+          <td><input type="text" name="purchase_number" id="purchase_number" /></td>
+        </tr>        
+        <tr>
+          <td><label>Recieved BY</label></td>
+          <td><input type="text" name="recieved_by" id="recieved_by" /></td>
+        </tr>
+      </table></td>
+    <td><table id="t">
+        <tr>
+          <td><button style="" onclick="addrow()" class="scalable save" type="button" title="Save Item"><span><span>Add Item</span></span></button></td>
+        </tr>
+        <tr>
+        	<td><label>SKU</label><input type="text" name="recieveproducts_sku[]" /> <label>QUANTITY</label><input type="text" name="recieveproducts_qty[]" /></td>
+        </tr>
+      </table></td>
+  </tr>
+</table>
+<?php } ?>
+<script type="text/javascript">
+function addrow()
+{
+	var table = document.getElementById('t');
+	var element1 = document.createElement('tr');
+	var element2 = document.createElement('td');
+	
+	var labelsku = document.createElement('label');
+	var t=document.createTextNode("SKU");
+	labelsku.appendChild(t); 
+	
+	var labelqty = document.createElement('label');
+	var qtytxt=document.createTextNode("QUANTITY");
+	labelqty.appendChild(qtytxt); 
+	
+	var inputsku = document.createElement('input');
+	inputsku.setAttribute('type', 'text');
+	inputsku.setAttribute('name', 'recieveproducts_sku[]');
+	
+	var inputqty = document.createElement('input');
+	inputqty.setAttribute('type', 'text');
+	inputqty.setAttribute('name', 'recieveproducts_qty[]');
+	
+	element2.appendChild(labelsku);
+	element2.appendChild(inputsku);
+	element2.appendChild(labelqty);
+	element2.appendChild(inputqty);
+	element1.appendChild(element2); 
+	table.appendChild(element1);
+}
+</script>

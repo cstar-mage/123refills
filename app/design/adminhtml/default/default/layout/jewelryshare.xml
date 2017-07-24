@@ -1,0 +1,33 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_jewelryshare_index>
+        <reference name="content">
+            <block type="jewelryshare/adminhtml_jewelryshare" name="jewelryshare" />
+        </reference>
+    </adminhtml_jewelryshare_index>
+    
+    <adminhtml_jewelryshare_codes_grid_index>
+        <reference name="head">
+            <action method="addItem"><type>js</type><name>prototype/window.js</name></action>
+            <action method="addItem"><type>js_css</type><name>prototype/windows/themes/default.css</name></action>
+            <action method="addItem"><type>js_css</type><name>jewelerslink/jewelerslink.css</name></action>
+        </reference>
+        <reference name="content">
+            <block type="core/template" template="jewelryshare/head/window.phtml" name="head.window" />
+            <block type="jewelryshare/adminhtml_list_codes" name="adminhtml_list_codes" />
+        </reference>
+    </adminhtml_jewelryshare_codes_grid_index>
+    
+    <adminhtml_jewelryshare_items_grid_index>
+        <reference name="content">
+            <block type="jewelryshare/adminhtml_list_items" name="adminhtml_list_items_grid" />
+        </reference>
+    </adminhtml_jewelryshare_items_grid_index>
+    
+    <adminhtml_jewelryshare_importForm>
+        <reference name="content">
+            <block type="jewelryshare/adminhtml_jewelryshare" name="jewelryshare" />
+        </reference>
+    </adminhtml_jewelryshare_importForm>
+    
+</layout>

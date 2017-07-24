@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Financing>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ideal_Financing>
+    </modules>
+</config> 

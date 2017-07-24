@@ -1,0 +1,272 @@
+
+/* Functional styling;
+ * These styles are required for noUiSlider to function.
+ * You don't need to change these rules to apply your design.
+ */
+.noUi-target,
+.noUi-target * {
+-webkit-touch-callout: none;
+-webkit-user-select: none;
+-ms-touch-action: none;
+-ms-user-select: none;
+-moz-user-select: none;
+-moz-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.noUi-base {
+	width: 100%;
+	height: 100%;
+	position: relative;
+}
+.noUi-origin {
+	position: absolute;
+	right: 0;
+	top: 0;
+	left: 0;
+	bottom: 0;
+}
+.noUi-handle {
+	position: relative;
+	z-index: 1;
+}
+.noUi-stacking .noUi-handle {
+/* This class is applied to the lower origin when
+   its values is > 50%. */
+	z-index: 10 !important;
+}
+.noUi-stacking + .noUi-origin {
+/* Fix stacking order in IE7, which incorrectly
+   creates a new context for the origins. */
+	*z-index: -1;
+}
+.noUi-state-tap .noUi-origin {
+-webkit-transition: left 0.3s, top 0.3s;
+	transition: left 0.3s, top 0.3s;
+}
+.noUi-state-drag * {
+	cursor: inherit !important;
+}
+
+/* Slider size and handle placement;
+ */
+.noUi-horizontal {
+	height: 18px;
+}
+.noUi-horizontal .noUi-handle {
+	width: 34px;
+	height: 28px;
+	left: -17px;
+	top: 1px;
+}
+.noUi-horizontal.noUi-extended {
+	padding: 0 15px;
+}
+.noUi-horizontal.noUi-extended .noUi-origin  {
+	right: -15px;
+}
+.noUi-vertical {
+	width: 18px;
+}
+.noUi-vertical .noUi-handle {
+	width: 28px;
+	height: 34px;
+	left: -6px;
+	top: -17px;
+}
+.noUi-vertical.noUi-extended {
+	padding: 15px 0;
+}
+.noUi-vertical.noUi-extended .noUi-origin  {
+	bottom: -15px;
+}
+
+/* Styling;
+ */
+.noUi-background {
+	background: #FAFAFA;
+	box-shadow: inset 0 1px 1px #f0f0f0;
+}
+.noUi-connect {
+	background: #3FB8AF;
+	box-shadow: inset 0 0 3px rgba(51,51,51,0.45);
+-webkit-transition: background 450ms;
+	transition: background 450ms;
+}
+.noUi-origin {
+	border-radius: 5px;
+}
+.noUi-target {
+	border-radius: 4px;
+	border: 1px solid #D3D3D3;
+	box-shadow: inset 0 1px 1px #F0F0F0, 0 3px 6px -5px #BBB;
+}
+.noUi-target.noUi-connect {
+	box-shadow: inset 0 0 3px rgba(51,51,51,0.45), 0 3px 6px -5px #BBB;
+}
+
+/* Handles and cursors;
+ */
+.noUi-dragable {
+	cursor: w-resize;
+}
+.noUi-vertical .noUi-dragable {
+	cursor: n-resize;
+}
+.noUi-handle {
+	border: 1px solid #D9D9D9;
+	border-radius: 3px;
+	background: #FFF;
+	cursor: default;
+	box-shadow: inset 0 0 1px #FFF,
+				inset 0 1px 7px #EBEBEB,
+				0 3px 6px -3px #BBB;
+}
+.noUi-active {
+	box-shadow: inset 0 0 1px #FFF,
+				inset 0 1px 7px #DDD,
+				0 3px 6px -3px #BBB;
+}
+
+/* Handle stripes;
+ */
+.noUi-handle:before,
+.noUi-handle:after {
+	content: "";
+	display: block;
+	position: absolute;
+	height: 14px;
+	width: 1px;
+	background: #E8E7E6;
+	left: 14px;
+	top: 6px;
+}
+.noUi-handle:after {
+	left: 17px;
+}
+.noUi-vertical .noUi-handle:before,
+.noUi-vertical .noUi-handle:after {
+	width: 14px;
+	height: 1px;
+	left: 6px;
+	top: 14px;
+}
+.noUi-vertical .noUi-handle:after {
+	top: 17px;
+}
+
+/* Disabled state;
+ */
+[disabled].noUi-connect,
+[disabled] .noUi-connect {
+	background: #B8B8B8;
+}
+[disabled] .noUi-handle {
+	cursor: not-allowed;
+}
+
+/* Blocked state;
+ */
+.noUi-state-blocked.noUi-connect,
+.noUi-state-blocked .noUi-connect {
+	background: #4FDACF;
+}
+/* user style */
+.noUi-background{height:21px;border-radius:10px; background:none;}
+.noUi-horizontal {
+  background: none repeat scroll 0 0 #E1E1E1;
+  border: 0 none;
+  border-radius: 10px;
+  box-shadow: 0 0 3px #999999 inset;
+  height: 21px;
+}
+.search-noUiSlider .noUiSlider {}
+.noUiSlider .noUi-connect{ background:transparent !important;}
+/*.noUi-horizontal .noUi-base{ height:21px; border:0;border-radius:10px;background:url(../image/bg.png) left top repeat-x !important;border-radius:10px;}*/
+
+.noUi-horizontal .noUi-base {
+    background: none repeat scroll 0 0 #d2daed;
+    border: 0 none;
+    border-radius: 5px;
+    box-shadow: 0 5px 5px #a0a8b5 inset;
+    height: 21px;
+}
+	
+	
+.noUiSlider  .noUi-handle {
+  border: 0px solid #BFBFBF;
+  height: 20px;width: 20px;
+  margin: -1px 0 0 -10px;
+  border-radius: 20px;
+  box-shadow:0px 1px 2px #000000;
+  background:#EEEEEE/* url(../image/slider-handle.png) center center no-repeat*/;
+  left:0;
+  z-index:2;
+  cursor:pointer;
+}
+.noUiSlider .noUi-origin-upper{ z-index:4;border-radius:10px; background:#e1e1e1 !important;box-shadow:inset 0px 0px 3px #999999 !important;}
+.noUiSlider .noUi-origin-lower{z-index:3;}
+.noUiSlider .noUi-active{ background-color:white;}
+.noUiSlider .noUi-active:after{ display:none;}
+
+.minimal-vertical-wrap{height:580px;width:16px;background-color:white;
+ border-radius:50px;}
+#minimal-vertical, .minimal-vertical {
+  float: left;
+  height: 536px;
+  margin-right: 30px;
+  margin-top: 62px;
+  margin:0;
+}
+.noUiSlider2 .noUi-base {
+  box-shadow: none;
+}
+.noUiSlider2.noUi-background{
+	 background-color:transparent;
+  box-shadow:none;
+  border:none;
+}
+.noUiSlider2 .noUi-handle{
+border-radius:50px;
+background:#929292;
+box-shadow:none;
+}
+.noUiSlider2 .noUi-handle.noUi-active{ background: #CCC;}
+.noUiSlider2 .noUi-handle:before,.noUiSlider2 .noUi-handle:after{ display:none;}
+.noUiSlider2.noUi-vertical{
+ width:14px;
+}
+.noUiSlider2.noUi-vertical .noUi-handle{width:16px;left:0px;top:-1px; left:-1px; border:#929292;}
+.ui-slider-left-cap{ position:absolute; left:0;height:21px;border-radius:5px; background:#e1e1e1;box-shadow:inset 0px 0px 3px #999999;}
+.ui-slider-right-cap{ position:absolute;right:0;height:21px;border-radius:5px; background:#e1e1e1;box-shadow:inset 0px 0px 3px #999999;}
+.ui-slider-scale{ padding:0;margin:0; list-style:none;}
+.ui-slider-scale li{ position:absolute; height:21px; border-right:1px solid white; z-index:1;}
+#cut_slider .ui-slider-scale li.fore1{ left:25%;}
+#cut_slider .ui-slider-scale li.fore2{ left:50%;}
+#cut_slider .ui-slider-scale li.fore3{ left:75%;}
+/*#color_slider .ui-slider-scale li.fore1{ left:11%;}
+#color_slider .ui-slider-scale li.fore2{ left:22%;}
+#color_slider .ui-slider-scale li.fore3{ left:33%;}
+#color_slider .ui-slider-scale li.fore4{ left:44%;}
+#color_slider .ui-slider-scale li.fore5{ left:55%;}
+#color_slider .ui-slider-scale li.fore6{ left:66%;}
+#color_slider .ui-slider-scale li.fore7{ left:77%;}
+#color_slider .ui-slider-scale li.fore8{ left:88%;}*/
+#clarity_slider .ui-slider-scale li.fore1{ left:10%;}
+#clarity_slider .ui-slider-scale li.fore2{ left:20%;}
+#clarity_slider .ui-slider-scale li.fore3{ left:30%;}
+#clarity_slider .ui-slider-scale li.fore4{ left:40%;}
+#clarity_slider .ui-slider-scale li.fore5{ left:50%;}
+#clarity_slider .ui-slider-scale li.fore6{ left:60%;}
+#clarity_slider .ui-slider-scale li.fore7{ left:70%;}
+#clarity_slider .ui-slider-scale li.fore8{ left:80%;}
+#clarity_slider .ui-slider-scale li.fore9{ left:90%;}
+
+#fluorescence_slider .ui-slider-scale li.fore1{ left:20%;}
+#fluorescence_slider .ui-slider-scale li.fore2{ left:40%;}
+#fluorescence_slider .ui-slider-scale li.fore3{ left:60%;}
+#fluorescence_slider .ui-slider-scale li.fore4{ left:80%;}
+
+.noUi-handle:before, .noUi-handle:after{ display:none;}
+.noUi-handle:before{ display:block; background:transparent; width:40px; height:40px; left:-50%;  top:-50%;}
+.noUi-handle-lower:before{ left:-5px;}
+.noUi-handle-upper:before{left: auto; right:-5px;}

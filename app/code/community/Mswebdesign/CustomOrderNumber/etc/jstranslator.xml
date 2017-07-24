@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jstranslator>
+    <validate-order-number-prefix translate="message" module="mswebdesign_customordernumber">
+        <message>Please enter a valid prefix. For example test1-, test1 or Test.</message>
+    </validate-order-number-prefix>
+</jstranslator>

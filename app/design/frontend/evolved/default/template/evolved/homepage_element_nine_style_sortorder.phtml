@@ -1,0 +1,40 @@
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php $html_img_one = $processor->filter($theme['homepage_element_nine_style_image_one']);
+$html_img_two_up = $processor->filter($theme['homepage_element_nine_style_image_two_up']);
+$html_img_two_down = $processor->filter($theme['homepage_element_nine_style_image_two_down']);
+$html_img_three = $processor->filter($theme['homepage_element_nine_style_image_three']);
+?>
+
+<div class="home-main">
+<div class="page_element_nine">
+	<div class="center">
+		<a href="<?php echo $theme['homepage_element_nine_style_link_one']; ?>" title="<?php echo $theme['homepage_element_nine_style_title_one']; ?>" >
+			<?php echo nl2br($html_img_one); ?>
+		</a>
+	</div>
+	<div class="center">
+		<div class="up">
+			<a href="<?php echo $theme['homepage_element_nine_style_link_two_up']; ?>" title="<?php echo $theme['homepage_element_nine_style_title_two_up']; ?>" >
+				<?php echo nl2br($html_img_two_up); ?>
+			</a>
+		</div>
+		<div class="down">
+			<a href="<?php echo $theme['homepage_element_nine_style_link_two_down']; ?>" title="<?php echo $theme['homepage_element_nine_style_title_two_down']; ?>" >
+				<?php echo nl2br($html_img_two_down); ?>
+			</a>
+		</div>
+	</div>
+	<div class="center">
+		<a href="<?php echo $theme['homepage_element_nine_style_link_three']; ?>" title="<?php echo $theme['homepage_element_nine_style_title_three']; ?>" >	
+			<?php echo nl2br($html_img_three); ?>
+		</a>
+	</div>
+</div>
+</div>
+<?php //echo "<br />homepage_element_two_style_sortorder"; ?>
+<?php //echo "<br />homepage_element_three_style_sortorder"; ?>
+<?php //echo "<br />homepage_element_four_style_sortorder"; ?>

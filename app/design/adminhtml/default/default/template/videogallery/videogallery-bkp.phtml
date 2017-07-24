@@ -1,0 +1,181 @@
+<?php //return; ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('videogallery'); ?>/css/jquery.jscrollpane_api.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('videogallery'); ?>/css/playlistBottom_scroll.css" />
+<!--[if lte IE 8 ]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
+        
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery-1.11.0.min.js"></script>
+<script type="text/javascript">
+	jQuery.noConflict();
+</script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.easing.1.3.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.address.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.mousewheel.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.dotdotdot-1.5.1.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/froogaloop.js"></script>
+<script type="text/javascript" src="http://www.youtube.com/player_api"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.apPlaylistManager.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.apYoutubePlayer.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.apVimeoPlayer.min.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.func.js"></script>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/jquery.videoGallery.min.js"></script>
+<script type="text/javascript">
+					
+	jQuery(document).ready(function() {
+		//init component
+		jQuery('#componentWrapper').videoGallery({	
+		/* REQUIRED */
+		/* componentFixedSize: true/false. Responsive = false, fixed = true */
+		componentFixedSize: false,
+		/* playlistPosition: bottom/right (default thumbnail position) */
+		playlistPosition:'bottom',
+		/* scrollType: buttons / scroll  */
+		scrollType: 'scroll',
+					
+		/* DEEPLINKING SETTINGS */
+		/* useDeeplink: true, false */
+		useDeeplink:true,
+		/* startUrl: deeplink start url, enter 'ul' data-address/'li' data-address (two levels). Or just 'ul' data-address (single level). */
+		startUrl: 'video1',
+					
+		/* NO DEEPLINKING SETTINGS */
+		/*activePlaylist: enter element 'id' attributte, or leave empty for none like this: activePlaylist:'' */
+		activePlaylist:'',
+		/*activeItem: video number to start with (-1 = none, 0 = first, 1 = second, 2 = third ...etc) */
+		activeItem:0,
+					
+		/* DEFAULTS */
+		/*defaultVolume: 0-1 */
+		defaultVolume:0.5,
+		/*autoPlay: true/false (video autoplay). Default false on mobile. */
+		autoPlay:true,
+		/* loopingOn: loop playlist on end, true/false */
+		loopingOn:true,
+		/* randomPlay: random play in playlist, true/false */
+		randomPlay:false,
+		/*autoAdvanceToNextVideo: true/false */
+		autoAdvanceToNextVideo:true,
+		/* autoOpenPlaylist: open playlist on start (true/false) */
+		autoOpenPlaylist: true,
+		/* closePlaylistOnVideoSelect: close playlist on video select */
+		closePlaylistOnVideoSelect: false,
+		/* useYoutubeHighestQuality: true/false (use highest available quality for youtube video, if false, then it set to default)  */
+		useYoutubeHighestQuality:false,
+					
+		/* videoGallerySetupDone:function() {
+			//console.log('videoGallerySetupDone');
+			initDemo();
+		} */
+	});	
+				
+	//var api_panel, api_panel_wrap, toggle_api_panel, api_panel_opened, tgtime = 600, tgease = 'easeOutExpo';
+				
+	/* function initDemo(){
+					
+		if($.fn.videoGallery.getIsMobile()) {
+			jQuery('#api_panel').remove();
+			jQuery('.toggle_panel').remove();
+				jQuery.fn.videoGallery.loadMedia('playlist8/vimeo_channel1');//
+				return;	
+			}
+					
+			api_panel = jQuery('#api_panel').css('display', 'block');
+			api_panel_wrap = jQuery('#api_panel_wrap');
+			api_panel.css('left', - api_panel_wrap.outerWidth(true)-10+'px');
+			
+			toggle_api_panel = jQuery('.toggle_panel').css('cursor','pointer').bind('click', function(){
+				if(api_panel_opened){
+					api_panel.stop().animate({ 'left': - api_panel_wrap.outerWidth(true)-10+'px'},  {duration: tgtime, easing: tgease});
+					toggle_api_panel.removeClass().addClass('toggle_panel');
+					api_panel_opened=false;	
+				}else{
+					api_panel.stop().animate({ 'left': 41+'px'},  {duration: tgtime, easing: tgease});
+					toggle_api_panel.removeClass().addClass('toggle_panel_close');
+					api_panel_opened=true;
+				}
+				return false;	
+			});
+			toggle_api_panel.click();//
+	} */
+				
+});		
+</script>
+<!-- wrapper for the whole component -->
+<div id="componentWrapper">
+         
+	<!-- video holders -->
+    <div class="mediaWrapper">
+    	<div class="youtubeHolder"></div>	
+        <div class="vimeoHolder"></div>
+   </div>
+             
+	<!-- holder for thumbnails (delete this whole div completely to hide the playlist!) -->
+	<div class="thumbHolder">
+    	<div class="playlistControls">
+        	<div class="advance_controls">
+            	<div class="playlist_prev"></div>
+                	<div class="playlist_toggle"></div>
+                    <div class="playlist_next"></div>
+                </div>
+            <div class="playlist_switch"></div>
+        </div>	
+        <div class="thumbContainer"><div class="thumbInnerContainer"></div></div>	
+	</div>
+              
+	<!-- media preloader for thumbs -->
+    	<div class="mediaPreloader"></div>
+             
+        <!-- this just holds the data, this is hidden -->
+        <div class="componentPlaylist">
+                 
+            <?php /* dynamic from Ideal_Videos module (closed) ?>
+            <?php $videos = Mage::getModel('videos/videos')->getCollection(); ?> 
+         	<!-- YOUTUBE EXAMPLES -->
+            
+            <?php if(count($videos) > 0): $i=1; ?> 
+            <ul id='gallery' data-address="gallery" >
+            	<!-- single video 
+                data-path: video id -->
+                <?php foreach($videos as $video): ?>
+                	<?php 
+                		$videoUrl = $video->getVideoUrl();
+                	
+                		if($videoUrl):
+	                		if (FALSE === strpos($videoUrl, 'youtu.be')) {
+	                			parse_str(parse_url($videoUrl, PHP_URL_QUERY), $id);
+	                			$videoId = $id['v'];
+	                		} else {
+	                			$videoId = basename($videoUrl);
+	                		}
+                		?>
+                		<li data-address="video<?php echo $i; ?>" data-type='youtube_single' data-path="<?php echo $videoId; ?>" ></li>
+                	<?php $i++; endif; ?>
+
+                <?php endforeach; ?>	
+                	<!-- <li data-address="youtube_single1" data-type='youtube_single' data-path="F08U2yCxbYg" ></li>
+	                <li data-address="youtube_single2" data-type='youtube_single' data-path="jXSxzMTrKq0" ></li>
+	                <li data-address="youtube_single3" data-type='youtube_single' data-path="NY-4XAQR_uk" ></li> -->
+            </ul>
+            <?php endif; ?>
+            
+            <?php */ ?>
+            <ul id='gallery' data-address="gallery" >
+            	<!-- single video 
+                data-path: video id -->
+                <li data-address="video1" data-type='youtube_single' data-path="ndo3NFCI2es" ></li>
+                <li data-address="video2" data-type='youtube_single' data-path="RfqS9QFA-ZI" ></li>
+                <li data-address="video3" data-type='youtube_single' data-path="baHYMeXmxtc" ></li>
+                <li data-address="video4" data-type='youtube_single' data-path="G-v8wECTC7c" ></li>
+                <li data-address="video5" data-type='youtube_single' data-path="2XMMyBCZLjM" ></li>
+            </ul>
+            <!-- <ul id='playlist16' data-address="playlist16">
+            	youtube playlist
+                data-path: playlist id
+                data-limit: number of results to retrieve (if not set, all results will be retrieved! Youtube playlist contains maximum of 200 entries.)
+                data-sort: position, commentCount, duration, reversedPosition, title, published, viewCount
+                
+                <li data-address="youtube_playlist" data-type='youtube_playlist' data-path="PL18D7B402EBCEF582" data-limit="22" data-sort="position" ></li>
+            </ul>
+            -->
+		</div>               
+</div>

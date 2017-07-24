@@ -1,0 +1,96 @@
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/calendar/calendar.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/calendar/calendar-setup.js'; ?>"></script>
+<link type="text/css" href="<?php echo $this->getBaseUrl().'js/calendar/calendar-win2k-1.css'; ?>" rel="stylesheet" ></link>
+			<h1>CUSTOM REQUEST</h1>
+			<h4>FILL OUT THE FORM BELOW</h4>
+			
+			<form action="<?php echo Mage::getBaseUrl(); ?>customrequest/index/postgoldspecialorderbuygold/" id="contactForm" method="post">
+				<input type="hidden" value="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" name="curl" id="curl"/>
+			    <div class="fieldset">
+			      
+			        <ul class="form-list">
+			            <li>
+			            		<div class="field">
+			                    <div class="input-box">
+			                        <input name="name" id="name" placeholder="FULL NAME" title="<?php echo Mage::helper('contacts')->__('Name') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry" type="text" />
+			                    </div>
+			                </div>
+			            </li>
+			            <li>
+			            	<div class="field">
+			                    <div class="input-box">
+			                        <input name="email" id="email" placeholder="EMAIL ADDRESS" title="<?php echo Mage::helper('contacts')->__('Email') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="text" />
+			                    </div>
+			                </div>
+			            </li>
+			            <li>
+			            	<div class="field">
+			                <div class="input-box">
+			                    <input name="phone" id="phone" placeholder="PHONE NUMBER" title="<?php echo Mage::helper('contacts')->__('Telephone') ?>" value="" class="input-text required-entry" type="text" />
+			                </div>
+			            	</div>
+
+			            </li>
+			           <div class="man_sel"> <li>
+			            	<div class="field">
+			                <div class="input-box producttype">
+				                <select class="validation-passed" id="producttype" name="producttype">
+	
+					            	<option>PRODUCT TYPE</option>
+	                                <option value="ENGAGEMENT RING">ENGAGEMENT RING</option>
+	
+					            	<option value="WEDDING BAND">WEDDING BAND</option>
+	
+					            	<option value="EARRINGS">EARRINGS</option>
+	
+					            	<option value="NECKLACE">NECKLACE</option>
+	
+					            	<option value="BRACELETS">BRACELETS</option>
+	
+									<option value="LOOSE STONE">LOOSE STONE</option>
+	
+					            </select>
+				            </div>
+			                </div>
+			            </li>
+			            <li>
+			            	<div class="field">
+			                <div class="input-box pricerange">
+				                <select title="Do you have price range?" class="lilsmallselect" id="pricerange" name="pricerange">
+	
+					            	<option value="">PRICE RANGE</option>
+	
+					            	<!--<option value="Below $500">Below $500</option>-->
+	
+					            	<option value="$500">$500</option>
+	
+					            	<option value="$500 - $1000">$500 - $1000</option>
+	
+					            	<option value="$1000 - $5000">$1000 - $5000</option>
+	
+									<option value="$5000 - $10,000">$5000 - $10,000</option>
+	
+									<option value="$10,000 - $25,000">$10,000 - $25,000</option>
+	
+									<option value="$25,000 - $50,000">$25,000 - $50,000</option>
+	
+									<option value="$50,000 - $75,000">$50,000 - $75,000</option>
+	
+									<option value="$75,000 - $100,000">$75,000 - $100,000</option>
+	
+					            </select>
+				            </div>
+			                </div>
+			            </li></div>
+			            <li>
+			            	<div class="buttons-set">
+						        <?php /*?><p class="required"><?php echo Mage::helper('contacts')->__('* Required Fields') ?></p><?php */ ?>
+						        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+						        <button type="submit" title="<?php echo Mage::helper('contacts')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('contacts')->__('Submit') ?></span></span></button>
+						    </div>
+			            </li>
+			        </ul>
+			    </div>
+			    
+		   
+			</form>

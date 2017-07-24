@@ -1,0 +1,146 @@
+@font-face {
+    font-family: 'economicabold';
+    src: url('fonts/economica-bold-otf-webfont.eot');
+    src: url('fonts/economica-bold-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-bold-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-bold-otf-webfont.woff') format('woff'),
+         url('fonts/economica-bold-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-bold-otf-webfont.svg#economicabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'economicaitalic';
+    src: url('fonts/economica-italic-otf-webfont.eot');
+    src: url('fonts/economica-italic-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-italic-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-italic-otf-webfont.woff') format('woff'),
+         url('fonts/economica-italic-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-italic-otf-webfont.svg#economicaitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'economicabold_italic';
+    src: url('fonts/economica-bolditalic-otf-webfont.eot');
+    src: url('fonts/economica-bolditalic-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-bolditalic-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-bolditalic-otf-webfont.woff') format('woff'),
+         url('fonts/economica-bolditalic-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-bolditalic-otf-webfont.svg#economicabold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'economica';
+    src: url('fonts/economica-regular-otf-webfont.eot');
+    src: url('fonts/economica-regular-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-regular-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-regular-otf-webfont.woff') format('woff'),
+         url('fonts/economica-regular-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-regular-otf-webfont.svg#economicaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+:focus{ outline:0 !important;}
+.main {padding: 0 0 80px;max-width: 786px; background: #fffffe;}
+:focus{ outline:0 !important; }
+.pr5{padding-right:5px;}
+.pl5{padding-left:5px;}
+.pt5{padding-top:5px;}
+.pt10{padding-top:10px;}
+.pt15{padding-top:15px;}
+.pt20{padding-top:20px;}
+.pb5{padding-bottom:5px;}
+.pb10{padding-bottom:10px;}
+.pb15{padding-bottom:15px;}
+.pb20{padding-bottom:20px;}
+
+/*
+.product-shape li{float:left;width:24%;margin:0 0.5%;}
+.product-shape li a {min-width:60px;min-height:65px;padding:60px 2px 10px; font-size: 12px;}
+*/
+.ds-container{font-family:economica !important;font-size:16px}
+.ds-container table th, .ds-container table td{font-family:economica !important;}
+.ds-container .keep-open, .ds-container .dropup{display: inline-block !important;}
+.ds-container label{font-family:economica !important;font-size: 14px;}
+.ds-container table{font-family:economica !important;font-size: 16px;}
+.ds-container b,.ds-container strong {font-family:economicabold !important;font-weight: 100;}
+
+.product-shape li a {min-height:65px;padding:60px 2px 10px; font-size: 12px;text-transform:uppercase;
+float:left;width:24%;margin:5px 0.5% 0 0.5%;}
+.product-shape li.special-shape a {min-height:180px;margin-top:5px;padding:100px 2px 10px; font-size: 12px;
+float:left;width:24%;margin:5px 0.5% 0 0.5%;}
+
+.product-shape li.active a, .product-specialshape li.active a {background-color: #d2daed;color: #000;}
+.ds-container .noUi-connect{background-color: #d2daed;}
+.ds-container .panel-heading{background-color: #d2daed;}
+.btn-viewdiamond{background-color: #d2daed;}
+
+.li-clearer {float: left !important;width: 100% !important;}
+#refresh_search, .link-hide, .compare-viewlink, .compare-deletelink {color: #fff !important;}
+#btn_search_mobile,#btn-mobilefilter{background-color: #d2daed;}
+
+.slider_pipes {
+  margin: 0;
+  position: relative;
+  width: 100%;
+}
+.slider_pipes li {
+  border-right: 1px solid #fff;
+  height: 22px;
+  position: absolute;
+  top: -22px;
+  z-index: 1;
+}
+.slider_values {
+  float: left;
+  font-size: 10px;
+  width: 100%;
+}
+.slider_values span {
+  float: left;
+  margin: 0;
+  text-align: center;
+  font-family:economica !important;
+}
+.slider-data.form-inline input{width:100px;}
+ul.option_slider{border:1px solid #dedede; border-width:1px 0;}
+ul.option_slider li{background:#fff;cursor:pointer;border-radius:17px 0px;margin: 2px 0;}
+ul.option_slider li.active{background:#d2daed;}
+.ul-reports li{float:left; width:33%;}
+.adv-search-panel h4 a.adv_search_lnk{line-height: 32px;text-decoration:none}
+.adv-search-panel form .input-group #stock_number{height:34px;}
+/*#search-results tr:nth-child(2n-1) {border-top:1px solid #ddd;}*/
+
+table#search-results > tbody > tr {border-bottom:1px solid #ddd;}
+table#search-results table {
+    margin-bottom: 0;
+}
+table#search-results td {
+    color: #000;
+    font-size: 10px;
+    font-weight: normal;
+    padding: 10px 5px;
+    text-align: center;
+    vertical-align: middle;
+	border:none;
+}
+table#search-results td span,table#search-results td a{
+    color: #393939;
+    font-size: 18px;
+	display:inline-block;
+}
+
+@media (max-width: 374px) {
+	select.form-control,input.form-control{width: 96%;padding: 5px 2%;}
+}
+
+/* CHANGING DEFAULT BOOTSTRAP */
+.shape .nav > li > a:focus,.shape .nav > li > a:hover {background-color: inherit;text-decoration: inherit;}
+/* ENDS CHANGING DEFAULT BOOTSTRAP */
+
+/* REMOVING CONFLICTS */
+
+/* ENDS REMOVING CONFLICTS */

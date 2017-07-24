@@ -1,0 +1,33 @@
+<?php if(Mage::getStoreConfig('catalog/schema/enable')): ?>
+	<?php if(Mage::getStoreConfig('catalog/schema/wrap')): ?>
+		<div class="hide-rich-snippets">
+	<?php endif ?>
+		<?php $_product = $this->getProduct() ?>
+		<div itemscope itemtype="http://schema.org/Product">
+			<meta itemprop="name" content="<?php echo $_product->getName() ?>" />
+			<meta itemprop="image" content="<?php echo $this->getNonCachedImage($_product) ?>" />
+			<meta itemprop="description" content="<?php echo $this->getProductDescription($_product) ?>" />
+		
+			<div itemtype="http://schema.org/AggregateRating" itemscope itemprop="aggregateRating">
+				<?php $review = $this->getReviewSummary() ?>
+				<meta itemprop="worstRating" content="1">
+				<meta itemprop="bestRating" content="5">
+				<meta itemprop="ratingValue" content="<?php echo $review->getRatingSummary()/20 ?>">
+				<meta itemprop="reviewCount" content="<?php echo $review->getReviewsCount() ?>">
+			</div>
+		
+			<div itemprop="offers" itemscope itemtype="http://schema.org/Offer">
+		        <meta itemprop="priceCurrency" content="<?php echo $this->getCurrencyCode() ?>" />
+		    	<meta itemprop="price" content="<?php echo $this->getProductPrice() ?>" />
+		    	<?php if($_product->isSaleable()): ?>
+		    		<link itemprop="availability" href="http://schema.org/InStock" />
+		    	<?php endif ?>
+		  	</div>
+		</div>
+	<?php if(Mage::getStoreConfig('catalog/schema/wrap')): ?>
+		</div>
+		<style>
+			.hide-rich-snippets {display:none;}
+		</style>
+	<?php endif ?>
+<?php endif ?>

@@ -1,0 +1,260 @@
+
+/********************************************
+
+			List Page new Filter page
+
+*********************************************/
+.catalog-category-view .main-container {
+    width: 100%;
+    display: block;
+    max-width: 100%;
+    padding: 0;
+}
+.wrapper{/*width:100%; float:left; margin:0px;*/}
+.top_banner{width:100%; display:inline-block;/*float:left;*/ background:#ececec url('../images/bubls.jpg') top left no-repeat; height:279px; margin:0px;}
+.link_and_toner{width:49%; float:left; border-right:1px solid #ddd; margin:50px 0px;}
+.form_div{width:58%; float:right;}
+.series_select_menu{width:100%; float:left; position:relative; margin:15px 0px 0px;}
+.form_div h1{font-size:25px; color:#000; font-family: 'Montserrat', sans-serif; font-weight:normal; margin:0px; padding:0px 0px 0px;}
+.form_div p{font-size:13px; color:#000; font-family: 'Montserrat', sans-serif; margin:0px; padding:0px 0px 0px;}
+.brand_div{width:50%; float:right; margin:0px 0px;}
+.brand_text{width:52%; float:left; margin:0px 0px 0px 15px;}
+.brand_text h1{margin:0px; padding:20% 0px 0px;}
+.brand_text img {max-width: 205px;  width: 100%; /*max-height: 50px; margin: 0 auto;*/}
+.brand_text p{font-size:13px; color:#000; font-family: 'Montserrat', sans-serif; margin:0px; padding:8px 0px 0px;text-align: justify;}
+.brand_img{width:40%; float:right;}
+.brand_img img{width:100%;padding: 40px 10px 0 0;max-width: 250px;	max-height: 250px;}
+
+.contain_wrapper{width:100%; float:left; position:relative; margin:0px; padding:0px;}
+.contain_wrapper:before{width:100%; position:absolute; content:""; top:63px; left:0px; border-bottom:1px solid #e0e0e0; margin:0px; padding:0px;}
+.container_brand{width:90%; max-width:1100px; margin:auto;}
+.left_contain{width:30%; float:left;margin: 0 0 15px;}
+.left_contain ul{width:80%; float:left; list-style:none; margin:0px; padding:0px;}
+.left_contain li{width:100%; float:left; font-size:13px; /*line-height:56px; */color:#000; font-family: 'Montserrat', sans-serif; position:relative; border-bottom:1px solid #e0e0e0; /*margin:0px; padding:0px;*/margin: 15px auto 0; padding: 0 0 15px;}
+.left_contain li:before{/*width:28px; height:18px; position:absolute; content:""; top:22px; right:20px; background:url(../images/down.png) no-repeat;*/}
+.left_contain li a{ background: rgba(0, 0, 0, 0) url("../images/down.png") no-repeat scroll right center;
+    box-sizing: border-box;
+    color: #000;    
+    display: block;    
+    margin: 0;
+    padding: 0;  
+    text-decoration: none;
+}
+.left_contain ul li a.active {color: #01cafe; background: rgba(0, 0, 0, 0) url("../images/right.png") no-repeat scroll right center;}
+.left_contain li a:hover{text-decoration:none; color:#01cafe;}
+.right_contain{width:70%; float:left;position:relative;}
+.right_contain ul{/*width:25%; float:left;*/ list-style:none; margin:20px 0px 0px; padding:0px; -moz-column-count: 3;-webkit-column-count: 3;column-count: 3;
+    float: left;
+    height: 100%;
+    max-width:670px;
+    width: 100%;}
+.right_contain li{color: #000;
+    display: inline-block;
+    font-family: "Montserrat",sans-serif;
+    font-size: 13px;
+        width: 100%;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+    position: relative;}
+.right_contain li a{text-decoration:underline; color:#2c83d0;}
+.left_contain p{width:100%; display:block; font-size:20px; color:#000; font-family: 'Montserrat', sans-serif; margin:0px; padding:20px 0px;}
+.right_contain p{width:100%; display:block; font-size:20px; color:#000; font-family: 'Montserrat', sans-serif; text-align:center; margin:0px; padding:20px 0px;}
+.series_select_menu .dropdown {
+  margin: 0 0px;
+  vertical-align: top;
+  
+}
+#loading-image{ 
+	background: url("../images/ajax-loader.gif") no-repeat scroll center center;
+    display: block;
+    height: 48px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    text-align: center;
+    top: 80px;
+    width: 48px;
+	margin:0 auto;
+}
+
+.series_select_menu  .dropdown {
+  display: inline-block;
+  position: relative;
+  overflow: hidden;
+  height: 38px;
+  width: 45%;
+  background: #fff;
+  border: 0;
+  border-color: white #f7f7f7 #f5f5f5;
+  margin:0px 10px 0px 0px;
+ 
+}
+.select_btn{height:38px; float:left; font-size:15px; color:#fff; font-family: 'Montserrat', sans-serif; border:0px; background:#01cafe !important; padding:0px 17px; margin:20px 0px 0px;} 
+.series_select_menu .dropdown:after {
+  content: '>';
+  position: absolute;
+  z-index: 2;
+  top: 5px;
+  right: 10px;
+  width: 0;
+  height: 0;
+ 
+  transform:rotate(90deg);
+}
+
+.series_select_menu  .dropdown:after {
+  margin-top: 7px;
+  border-top-style: solid;
+  border-bottom: none;
+}
+
+.series_select_menu  .dropdown-select {
+  position: relative;
+  width: 130%;
+  margin: 0;
+  padding: 6px 8px 6px 10px;
+  height: 38px;
+  line-height: 14px;
+  font-size: 12px;
+  color: #62717a;
+  text-shadow: 0 1px white;
+  /* Fallback for IE 8 */
+  background: #f2f2f2;
+  /* "transparent" doesn't work with Opera */
+  background: rgba(0, 0, 0, 0) !important;
+  border: 0;
+  border-radius: 0;
+  -webkit-appearance: none;
+}
+.series_select_menu  .dropdown-select:focus {
+  z-index: 3;
+  width: 100%;
+  color: #394349;
+  outline: 2px solid #49aff2;
+  outline: 2px solid -webkit-focus-ring-color;
+  outline-offset: -2px;
+}
+.series_select_menu  .dropdown-select > option {
+  margin: 3px;
+  padding: 6px 8px;
+  text-shadow: none;
+  background: #f2f2f2;
+  border-radius: 3px;
+  cursor: pointer;
+}
+.related-product-view .jcarousel-control-prev {
+    left: 0;
+    top: 45%;
+    transform: none;
+    z-index: 999999;
+}
+.related-product-view .jcarousel-control-prev:hover{
+background: rgba(0, 0, 0, 0) url("/skin/frontend/evolved/default/images/related_prev.png") no-repeat scroll 0 0;
+left: 0;
+    top: 45%;
+    transform: none;
+    z-index: 999999;
+}
+.related-product-view .jcarousel-control-next {
+    right: 0;
+    top: 45%;
+    transform: none;
+    z-index: 999999;
+}
+.related-product-view .jcarousel-control-next:hover{
+background: rgba(0, 0, 0, 0) url("/skin/frontend/evolved/default/images/related_next.png") no-repeat scroll 0 0;
+ right: 0; 
+    top: 45%;
+    transform: none;
+    z-index: 999999;
+}
+@media only screen and (max-width:960px) {
+	.form_div{width: 100%;padding: 0 10px;float: none;}
+	.samsung_img{margin:10% 0px 0px;}
+	.samsung_text h1 {margin: 0px;padding: 20% 0px 0px;}
+	.right_contain{width:57%;}
+	.left_contain{width:43%;}
+	.right_contain ul{list-style:none; 
+	margin:20px 0px 0px;
+	 padding:0px; 
+	 -moz-column-count: 2;
+	 -webkit-column-count: 2;
+	 column-count: 2;
+    float: left;
+    height: 100%;
+    max-width:670px;
+    width: 100%;}
+	
+}
+@media only screen and (max-width:800px) {
+	.left_contain p, .right_contain p {font-size:16px;}
+}
+@media only screen and (max-width:768px) {
+	.samsung_text h1 img{width:100%;margin: 0 auto;}
+}
+
+@media only screen and (max-width:750px) {
+.right_contain ul{list-style:none; 
+	margin:20px 0px 0px;
+	 padding:0px; 
+	 -moz-column-count: 2;
+	 -webkit-column-count: 2;
+	 column-count: 2;
+    float: left;
+    height: 100%;
+    max-width:670px;
+    width: 100%;}
+    
+.right_contain li {
+    color: #000;
+    display: inline-block;
+    font-family: "Montserrat",sans-serif;
+    width:100%;
+    font-size: 13px;
+    line-height: 40px;
+    margin: 0;
+    padding: 0;
+    position: relative;
+}
+}
+    
+    
+@media only screen and (max-width:720px) {
+	.right_contain li {width: 100%;text-align: center;}
+}
+@media only screen and (max-width:640px) {
+	.series_select_menu  .dropdown{width:44%;}
+	.form_div h1{font-size:20px;}
+	.select_btn{padding:0 10%;}
+	.right_contain{width:45%;}
+	.left_contain{width:55%;}
+}
+@media only screen and (max-width: 560px) {	
+	.brand_text h1 {padding: 0 0 10px 0;}
+	.link_and_toner {width: 100%;border-right: 0px;display: inline-block;margin:0px;}
+	.brand_div {width: 100%;margin: 0px 0px;display: inline-block;padding: 0 0 15px 0;}
+	.brand_text {width: 100%;text-align: center;padding: 0 10px;margin: 0;float: none;}
+	.brand_img {margin: 0;width: 100%;display: inline-block;float: none;}
+	.brand_img img {padding: 35px 10px 0 0;}
+	.right_contain ul{list-style:none; 
+	margin:20px 0px 0px;
+	 padding:0px; 
+	 -moz-column-count: 1;
+	 -webkit-column-count: 1;
+	 column-count: 1;
+    float: left;
+    height: 100%;
+    max-width:670px;
+    width: 100%;}
+}
+@media only screen and (max-width:520px) {
+	.right_contain li {width: 100%;text-align: center;}
+	.left_contain li a,.left_contain ul li a.active {background: none;}
+}
+@media only screen and (min-width: 480.1px) and (max-width: 560px){
+	.top_banner {height: initial;}
+}
+@media only screen and (max-width: 440px){
+	.left_contain p, .right_contain p {font-size: 14px;}
+}

@@ -1,0 +1,1015 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+/**
+ * @var Mage_Page_Block_Html_Header $this
+ */
+?>
+<link type="text/css" rel="stylesheet" href="<?php echo $this->getSkinUrl('css/jquery.mmenu.all.css'); ?>" />
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('js/jquery.mmenu.all.min.js'); ?>"></script>
+
+<script type="text/javascript" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_JS) ?>modelfinder.js"></script>
+<script type="text/javascript">var loadformURL ="<?php echo Mage::getUrl('modelfinder/index/alllist')?>";</script> 
+<script type="text/javascript">var formURL ="<?php echo Mage::getUrl('modelfinder/index/serieslist')?>";</script> 
+<script type="text/javascript">var modelURL ="<?php echo Mage::getUrl('modelfinder/index/modellist')?>";</script> 
+<script type="text/javascript">var printerData ="<?php echo Mage::getUrl('modelfinder/index/printerData')?>";</script> 
+<script type="text/javascript">var printerData1 ="<?php echo Mage::getUrl('modelfinder/index/printerData1')?>";</script>
+<script type="text/javascript">var printerData2 ="<?php echo Mage::getUrl('modelfinder/index/printerData2')?>";</script> 
+
+ 
+
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>venobox/venobox.css" media="screen" />
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>venobox/venobox.min.js"></script>
+
+<link rel="stylesheet" type="text/css" href="<?php  echo $this->getSkinUrl(); ?>css/showYtVideo.css" media="screen" />
+<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>js/jquery.showYtVideo.js"></script>
+
+<script type="text/javascript">
+var width1 = jQuery(window).width();
+       jQuery(document).ready(function(){
+            if(jQuery(window).width() <= 770){
+                jQuery('#nav-mobile').mmenu();
+                jQuery('#nav-mobile').css('display','block');
+				jQuery('#nav').css('display','none');
+            }
+			 if(jQuery(window).width() >= 770){
+				jQuery('#nav').css('display','block');	
+				 jQuery('#nav-mobile').css('display','none');
+			}
+    
+    });
+    jQuery(window).resize(function() {
+            if(jQuery(window).width() <= 770){
+				
+               jQuery('#nav-mobile').mmenu();
+                jQuery('#nav-mobile').css('display','block');	
+				jQuery('#nav').css('display','none');		   
+            } 
+			if(jQuery(window).width() >= 771){	
+					jQuery('#nav').css('display','block');
+					jQuery('#nav-mobile').css('display','none');
+			}
+    });
+  
+
+    
+</script>
+
+
+<script type="text/javascript">
+
+/*jQuery(function(){
+	var jQuerywindow = jQuery(window).on('resize', function(){
+			var height = jQuery(".responsivebanner").height();
+		    jQuery('.defaultimg').height(height);
+	    }).trigger('resize'); //on page load
+	
+});
+*/
+
+/*jQuery(function() {  
+    jQuery.scrollSpeed(100, 800);
+});*/
+
+jQuery(window).resize(function(){
+	   var height = jQuery(".responsivebanner").height();
+	   jQuery('.defaultimg').height(height);
+	   //alert(height);
+});  
+jQuery(window).resize(); 
+/*
+jQuery(document).ready(function(){
+	jQuery("#nav a").click(function(){
+		if(jQuery(this).attr("target")=="_new")
+		{
+		 window.open(jQuery(this).attr("href"), 'popup_name','height=' + screen.height + ',width=' + screen.width + ',resizable=yes,scrollbars=yes,toolbar=yes,menubar=yes,location=yes');
+		}
+	});
+});
+*/
+jQuery( document ).ready(function() {
+	jQuery('.skip-link.skip-cart.no-count').on('click', function(){
+		jQuery('.search_main').css("display", "none");
+		jQuery('.search-button').css("display", "none");
+    });
+});
+jQuery( document ).ready(function() {
+	jQuery('.skip-link.skip-account').on('click', function(){
+		jQuery('.search_main').css("display", "none");
+		jQuery('.search-button').css("display", "none");
+    });
+});
+jQuery( document ).ready(function() {
+	jQuery('.skip-link.skip-search').on('click', function(){
+		if(jQuery('.skip-link.skip-search').hasClass("skip-active"))
+		{
+			jQuery('.search_main').css("display", "block");
+			jQuery('.search-button').css("display", "block");
+		}
+		else
+		{
+			jQuery('.search_main').css("display", "none");
+			jQuery('.search-button').css("display", "none");
+
+		}	
+    });
+	jQuery('.search_cls').on('click', function(){
+		if(jQuery('#header-search').css("display") == "block")
+		{
+			jQuery('#header-search').css("display", "none");
+		}
+		else
+		{
+			jQuery('#header-search').css("display", "block");
+		}
+    });
+});
+
+/*jQuery( document ).ready(function() {
+
+	jQuery('.skip-link.skip-search').on('click', function(){
+		
+		if(jQuery('.page-header-container #header-search').hasClass("header_serach_block"))
+		{
+			jQuery('.page-header-container #header-search').removeClass("header_serach_block");
+		}
+		else
+		{
+			jQuery('.page-header-container #header-search').addClass("header_serach_block");	
+		}
+		
+		
+		if(jQuery('.skip-content.mobile').hasClass("header_serach_block"))
+		{
+			
+			jQuery('.skip-content.mobile').removeClass("header_serach_block");	
+		}
+		else
+		{
+			
+			jQuery('.skip-content.mobile').addClass("header_serach_block");	
+		}
+		
+		
+		
+	});
+	
+	jQuery('.skip-link.skip-nav').on('click', function(){
+		
+		if(jQuery('.skip-content.mobile').hasClass("header_serach_block"))
+		{
+			
+			jQuery('.skip-content.mobile').removeClass("header_serach_block");	
+		}
+
+	});
+	
+});*/
+
+//jQuery(window)
+jQuery( document ).ready(function() {
+	jQuery('.search-button').on('click', function(){
+		jQuery(".skip-cart").removeClass("skip-active");
+		jQuery(".block-cart").removeClass("skip-active");
+		jQuery(".skip-content").removeClass("skip-active");
+		//jQuery(".skip-account").removeClass("skip-active");
+		jQuery('.search-button').css("display", "none");
+		/*jQuery('#header-account').css("display", "none");
+		jQuery('#header-cart').css("display", "none");*/
+    });
+});
+
+</script>
+<style>
+/* .new-nav {
+  width: 210px;
+  height: 100%;
+  position: fixed;
+  background: #2a3542;
+  z-index: -1;
+  background: none repeat scroll 0 0 #333333;
+ } 
+ .page {
+  	margin-left: 210px;
+    position :relative;
+ } 
+#header-nav > nav {
+    display: none;
+} */
+/*.nav-primary li span {
+    margin-left: 25px;
+    color: #8a8a8a;
+}*/
+
+</style>
+<?php 
+//$theme = Mage::helper('evolved')->getThemeConfig();
+//echo $theme['header_topbar_custom_block'];
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$evolved_form_header_dropdown_toplink = $evolvedmethod->getBlockConfig('evolved_form_header_dropdown_toplink');
+	$evolved_form_header = $evolvedmethod->getBlockConfig('evolved_form_header');
+	$evolved_form_header_general = $evolvedmethod->getBlockConfig('evolved_form_header_general');
+	$theme = array_merge($evolved_form_header_dropdown_toplink, $evolved_form_header, $evolved_form_header_general);
+	//echo "<pre>"; print_r($theme); echo "</pre>";
+}
+if(count($theme) == 0){ $theme = Mage::helper('evolved')->getThemeConfig(); }
+//echo "<pre>"; print_r($theme); echo "</pre>";
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+$customblocktopbar = $processor->filter($theme['header_topbar_custom_block']);
+ $imageIrl = $this->getSkinUrl('images/cart-H.png', array('_secure'=>true));
+ ?>
+<div class="header-language-background" >
+    <div class="header-language-container">
+		<?php
+		if(Mage::getSingleton('customer/session')->isLoggedIn()){
+			
+			 $customer = Mage::getSingleton('customer/session')->getCustomer();
+			
+			 $customerData = Mage::getModel('customer/customer')->load($customer->getId())->getData();
+			 		 
+			 $Brandid = $customerData['brandid'];
+			 $Seriesid = $customerData['seriesid'];
+			 $Modelid = $customerData['modelid'];
+				 
+			
+		}else{
+			
+			$Brandid = Mage::getSingleton('core/session')->getBrandid();
+			$Seriesid = Mage::getSingleton('core/session')->getSeriesid();
+			$Modelid = Mage::getSingleton('core/session')->getModelid(); 
+			
+		}
+		
+			
+			
+			if($Brandid != "" && $Seriesid != "" && $Modelid != ""){ 
+				
+				$Category=Mage::getModel('catalog/category')->load($Brandid);
+				$catname=$Category->getName();	
+		
+				$productModel = Mage::getModel('catalog/product');
+				$str_attr_label = "printer_model"; 
+				$int_attr_id = 251; 
+				$int_attr_value = $Modelid; 
+
+				$attr = $productModel->getResource()->getAttribute($str_attr_label);
+				$attr = Mage::getModel('catalog/resource_eav_attribute')->load($int_attr_id);
+				$seriesname = $color_label = $attr->getSource()->getOptionText($int_attr_value);
+			?>
+			<p class="printer-find"><i class="fa fa-print" aria-hidden="true"></i><?php echo $catname." ".$seriesname; ?></p>
+			<div class="selectprinter-topmenu groupproduct">
+				<div class="groupproductsub">
+				<?php 
+				$category = Mage::getModel('catalog/category')->load($Brandid);
+
+				$products = Mage::getModel('catalog/product')
+							->getCollection()
+							->addAttributeToSelect('*')
+							->addAttributeToFilter('type_id', array('eq' => 'grouped'))
+							->addCategoryFilter($category)
+							->addAttributeToFilter('printer_series', array('finset' => $Seriesid ))
+							->addAttributeToFilter('printer_model', array('finset' => $Modelid ));
+					
+				foreach($products as $product){
+					$mainproductid = $product->getEntityId();
+					//echo $mainproductid;
+				} 	
+				$_product = Mage::getModel('catalog/product')->load($mainproductid);	
+				$product_counter = 0;
+				$group = Mage::getModel('catalog/product_type_grouped')->setProduct($_product);
+				$group_collection = $group->getAssociatedProductCollection();
+				
+				?> 
+				<div class="proclose">X</div>
+				
+				
+				<?php 
+				
+				$product1 = Mage::getModel('catalog/product');
+				$product1->load($mainproductid);
+				
+				$producturl1 = $product1->getProductUrl();
+
+				$productType = $product1->getTypeInstance(true);
+         $associatedProducts = method_exists($productType, 'getAssociatedProducts') ?  $productType->getAssociatedProducts($product1) : array();
+		 $hasAssociatedProducts = count($associatedProducts) > 0;
+		 //$cartridgesArray[] = '';
+         if ($hasAssociatedProducts) {
+			
+		 foreach ($associatedProducts as $_item) {
+						
+					$itemModel = Mage::getModel('catalog/product')->load($_item->getId());
+					if( strpos(strtolower($itemModel->getName()), 'oem') !== false ) {
+						$oemArray[] = $itemModel;
+					} else if( strpos(strtolower($itemModel->getName()), 'cartridge') !== false ) {
+						$cartridgesArray[] = $itemModel;
+					} else {
+						$otherRelated[] = $itemModel;
+					}
+					
+				}
+		 }
+				?>
+				
+				
+				
+				<div class="group4promain">
+					<h2><?php echo $catname." ".$seriesname." Printer Products"; ?></h2>
+					<div class="group4promain-sub">
+						<ul>
+						<?php
+						$j=0;
+				
+				foreach ($cartridgesArray as $_item){
+						
+					
+					if($j==4){ continue; } 
+					
+					 ?>
+					<li>
+						<div class="image">
+							<?php $headers = get_headers($_item->getImageLink());
+								$ser503 = substr($headers[0], 9, 3); 
+							?>
+						<?php  if ($_item->getImageLink() != '' && $ser503 == '200') : ?>	
+								<img class="thumbnail"
+								 src="<?php echo $_item->getImageLink() ?>"
+								 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+								 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+							<?php else: ?>
+								<img class="thumbnail"
+								 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(70, 70); ?>"
+								 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+								 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+							<?php endif; ?>	 
+						</div>		
+						<div class="rightpop">
+							<a class="pronamepop" href="javascript:;"><?php echo $_item->getName(); ?></a>
+							<div class="rightpop-sub">
+								<p class="pricepop">Price - <span><?php $number=$_item->getFinalPrice($product);
+								echo $currency_symbol = Mage::app()->getLocale()->currency( $currency_code )->getSymbol();
+								echo number_format($number,2);
+								// echo '$'.$_item->getFinalPrice($product); ?></span></p>
+								
+											
+
+							<?php/*	<a href="<?php echo Mage::getBaseUrl().'modelfinder/index/addtocart/?cartid='.$_item->getId(); ?>" class="addtocartpop">add to cart</a> */ ?>
+							<a href="<?php echo Mage::getUrl('checkout/cart/add', array('product'=>$_item->getId(),'qty'=>1, 'form_key' => Mage::getSingleton('core/session')->getFormKey())); ?>" class="addtocartpop">add to cart</a>
+							</div>
+						</div>
+					</li>
+				<?php $j++;  }	?>
+					</ul>
+					<a href="<?php echo Mage::getBaseUrl().'checkout/cart'; ?>" class="procheckpop">Proceed to Checkout</a>
+					<a href="<?php echo $producturl1; ?>" class="viewallpop">View All Products</a>
+					</div>
+				</div>
+				</div>  
+			</div>	
+			
+	<?php }else{   ?>		
+		
+		<p class="printer-find"><i class="fa fa-print" aria-hidden="true"></i>MY PRINTER</p>
+			
+		<div class="selectprinter-topmenu"><?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('part-finder-header')->toHtml();?></div>
+		<?php } ?>
+
+		<p class="call"><i class="fa fa-phone" aria-hidden="true"></i>
+			CALL 866-465-5888 M-F 8am-5pm PST</p>
+		<p class="freeship">FREE SHIPPING ON ORDERS OVER $49</p>
+		
+        <div class="store-language-container">
+            <?php echo $this->getChildHtml('store_language') ?>
+        </div>
+
+        <?php echo $this->getChildHtml('currency_switcher') ?>
+        <?php //echo $this->getChildHtml('my_currency_selector') ?>
+
+        <p class="welcome-msg"><?php// echo $this->getChildHtml('welcome') ?> <?php// echo $this->getAdditionalHtml() ?></p>
+    </div>
+</div>
+
+
+<header id="header" class="page-header">
+		<?php //if($theme['header_dropdown_toplink_option']=="simple"): ?>
+        	  <div class="dropdowntoplink">
+        	  	<div class="dropdowntoplink_main">
+        	  	<?php if($customblocktopbar): ?>
+        	  		<div class="headertopbarcustomblock">
+        	  			<?php echo $customblocktopbar; ?>
+        	  		</div>
+        	  	<?php endif; ?>
+        	  	
+        		 <?php echo $this->getChildHtml('topLinks') ?>
+        		</div>
+        	</div>
+       	<?php //endif; ?>
+    <div class="page-header-container">
+		
+		
+		
+		
+        <a class="logo" href="<?php echo $this->getUrl('') ?>">
+            <img src="<?php echo $this->getLogoSrc() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="large" />
+          
+        </a>
+				<?php if($customblocktopbar): ?>
+        	  		<div class="headertopbarcustomblock mobile">
+        	  			<?php echo $customblocktopbar; ?>
+        	  		</div>
+        	  	<?php endif; ?>
+        <?php // In order for the language switcher to display next to logo on smaller viewports, it will be moved here.
+              // See app.js for details ?>
+               <div class="store-language-container"></div>
+
+       
+		
+        <!-- Skip Links -->		
+        <?php //echo $theme['header_dropdown_toplink_option']; ?>
+      
+	        <div class="skip-links">
+	            <?php /*<a href="#header-nav" class="skip-link skip-nav">
+	                <span class="icon"></span>
+	                <span class="label"><?php echo $this->__('Menu'); ?></span>
+	            </a>*/?>
+				  <a href="#nav-mobile" class="skip-link skip-nav">
+					<span class="icon"></span>
+					<span class="label"><?php echo $this->__('Menu'); ?></span>
+				</a>
+				   <a class="logo mobileview" href="<?php echo $this->getUrl('') ?>" style="display:none;">
+				  <img src="<?php echo $this->getLogoSrcSmall() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="small" />
+				</a>
+				<?php if($theme['header_search_enable'] == 'disable'): ?>
+				<?php else: ?>
+		            <a href="#header-search" class="skip-link skip-search">
+		                <span class="icon"></span>
+		                <span class="label"><?php echo $this->__('Search'); ?></span>
+		            </a>
+				<?php endif; ?>
+
+	
+	     		<?php  ?>
+	            <!--a href="#header-account" class="skip-link skip-account">
+	                <span class="icon"></span>
+	                <span class="label"><?php //echo $this->__('Account'); ?></span>
+	            </a-->
+				<?php  ?>
+				<a href="<?php echo $this->getBaseUrl()."customer/account/"; ?>" class="skip-link skip-account">
+	                <span class="icon"></span>
+	                <span class="label"><?php echo $this->__('My Account'); ?></span>
+	            </a>
+	            <!-- Cart -->
+	
+	            <div class="header-minicart">
+				<?php echo $this->getLayout()->createBlock('cms/block')->setBlockId('social')->toHtml();?>
+	            
+	                <?php echo $this->getChildHtml('minicart_head'); ?>
+	                
+	                
+	            </div>
+	
+	
+	        </div>
+		
+        <!-- Account -->
+        
+        <div id="header-account" class="skip-content">
+            <?php echo $this->getChildHtml('topLinks') ?>
+        </div>
+
+        <!-- Cart -->
+
+        <div id="header-cart" class="skip-content">
+            <div class="mini-cart">
+                <div class="menu-wrapper">
+                    <div class="menu cart-menu">
+                        <div class="empty">Your cart is empty.</div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+        <div id="header-nav" class="skip-content">
+            <?php echo $this->getChildHtml('topMenu') ?>
+        </div>
+    
+    
+    <!-- Navigation -->
+    
+            
+        
+         
+         <!-- Search -->
+            <?php if($theme['header_search_enable'] == 'disable'): ?>
+            <?php else: ?>
+                <?php if( !$theme['header_search_inside_menu_enable'] && $theme['header_search_enable'] == 'enable'): ?>
+                    <div id="header-search" class="skip-content">
+                            <?php echo $this->getChildHtml('topSearch'); ?>
+                    </div>
+                <?php elseif( !$theme['header_search_inside_menu_enable'] && $theme['header_search_enable'] == 'clickable'): ?>
+                    <div id="header-search" class="skip-content">
+                            <?php echo $this->getChildHtml('topSearch');?>
+                    </div>
+                <?php elseif( $theme['header_search_inside_menu_enable'] && $theme['header_search_enable'] == 'clickable'): ?>
+                    <div id="header-search" class="skip-content 
+                    <?php if( $theme['header_search_inside_menu_enable'] && $theme['header_search_enable'] == 'clickable'){ ?> mobile<?php } ?>">
+                        <?php echo $this->getChildHtml('topSearch'); ?>
+                    </div>
+                <?php elseif( $theme['header_search_inside_menu_enable'] && $theme['header_search_enable'] == 'enable'): ?>
+                    <div id="header-search" class="skip-content
+                    <?php if( $theme['header_search_inside_menu_enable'] && $theme['header_search_enable'] == 'enable'){ ?> mobile<?php } ?>">
+                        <?php echo $this->getChildHtml('topSearch'); ?>
+                    </div>
+                    
+                <?php endif; ?>
+            <?php endif; ?>   
+            
+            <div class="header-right-links header-minicart">
+				
+				<ul class="right-links shoppingcart">
+					<li class="shoppingcartli"><i class="fa fa-shopping-bag" aria-hidden="true"></i><?php
+					  $count = $this->helper('checkout/cart')->getSummaryCount();  //get total items in cart
+					  $total = $this->helper('checkout/cart')->getQuote()->getGrandTotal(); //get total price
+					  if($count==0)
+					  {
+						echo $this->__('<a href="/checkout/cart" class="cartgo">0</a>',$count);
+					  }
+					  if($count==1)
+					  {
+						echo $this->__('<a href="/checkout/cart" class="cartgo">1</a>',$count);
+					  }
+					  if($count>1)
+					  {
+						echo $this->__('<a href="/checkout/cart" class="cartgo">%s</a>',$count);
+					  }
+					  echo $this->__('', $this->helper('core')->formatPrice($total, false));
+					?>Cart<span class="plus"></span></li>
+					
+					
+					
+    
+    
+					<li class="cartminislider">
+					<div class="header-minicart">
+		                <?php echo $this->getChildHtml('minicart_head'); ?>
+		            </div>
+					</li>					
+				</ul>			
+		</div>
+		
+		
+		
+		
+		
+		</div>
+		
+		
+		
+		
+		
+
+		
+		<script type="text/javascript">
+		jQuery( document ).ready(function() 
+		{
+		
+		jQuery('.cartminislider').hide();
+		jQuery(document).find('.shoppingcartli').mouseover(function() {	
+			
+			jQuery('.cartminislider').show();			
+			jQuery('.cartminislider').addClass('show'); 
+			
+			if(jQuery(document).find('.cartminislider').hasClass('show')){
+				
+				jQuery(document).find('.cartminislider').mouseover(function(){
+				
+					//jQuery('.shoppingcartli').css({'background-color':'#fff','color' : '#3399cc','padding-bottom':'26px','padding-top':'15px','top' : '0','background-position' : '8px 10px !important;','background-repeat' : 'no-repeat !important;'}); 
+					jQuery('.cartminislider').show();	
+				});
+				
+				jQuery(document).find('.cartminislider').mouseout(function() {
+				
+					jQuery('.shoppingcartli').removeAttr("style");
+					jQuery('.cartminislider').removeClass('show');
+					jQuery('.cartminislider').hide();
+				});
+			}
+			
+			/*jQuery('.cartminislider').slideToggle('1000', function() {
+				if (jQuery('.cartminislider').is(':hidden')){
+					jQuery('.cartminislider').show();
+				}else{
+					jQuery('.cartminislider').hide();
+				}
+			});*/
+			        
+		});
+		
+		/*jQuery(document).find('.shoppingcartli').mouseout(function() {
+			jQuery('.cartminislider').removeClass('show');
+		});*/
+		
+		/*--set your printer show/hide--*/
+		
+		jQuery('.selectprinter-topmenu').hide();
+		
+		jQuery('.printer-find').click(function() {	
+			jQuery('.selectprinter-topmenu').slideToggle('1000', function() {
+					if (jQuery('.selectprinter-topmenu').is(':hidden')){
+					 	
+					}				
+			});
+		});
+		
+		jQuery('.proclose').click(function() {	
+			jQuery('.selectprinter-topmenu').slideToggle('1000', function() {
+					if (jQuery('.selectprinter-topmenu').is(':hidden')){
+					 	
+					}				
+			});
+		});
+		
+		
+
+
+		/*jQuery('body').bind("DOMSubtreeModified",function(){
+			if(jQuery(".snize-ac-results > div:nth-child(3)").length > 0)
+			  	jQuery( ".snize-ac-results > div:nth-child(3)" ).remove();
+		}); */
+		
+		});
+		</script>
+		
+  		<style>
+			.snize-ac-results > div:nth-child(3){
+				visibility: hidden;	
+			}
+		</style>
+		
+
+
+
+
+
+     
+	<?php if($theme['sticky_header_options'] == 'enable'): ?>
+	<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl();?>css/headhesive.css">
+	<script type="text/javascript" src="<?php echo $this->getSkinUrl();?>js/headhesive.js"></script>
+	<script>
+	(function($) {
+		$(document).ready(function(){  
+			    	$(window).resize(function(){
+			    			$(this).stickyheader();
+			    	});		    	
+		    		$(window).resize();
+	    });
+	}(jQuery));
+	</script>
+		<div class="banner" style="display:none; height:60px; width:100%;"> 
+			<div class="page-header-container">
+				<a class="logo" href="<?php echo $this->getUrl('') ?>">
+					<img src="<?php echo $this->getLogoSrcSmall() ?>" alt="<?php echo $this->getLogoAlt() ?>" class="large" />          
+				</a>
+				 
+			</div>
+			<?php echo $this->getChildHtml('topMenu'); ?>
+		</div>
+	<?php endif; ?>
+</header>
+<a id="showHere"></a>
+
+<?php echo $this->getChildHtml('topContainer'); ?>
+
+
+<?php if ($this->getIsHomePage()): ?>
+<?php echo $this->getChildHtml('revslideshow.homepage');?>
+<?php endif ?>
+<script>
+jQuery(document).ready(function(){
+
+    /* default settings */
+    jQuery('.venobox').venobox(); 
+
+
+    /* custom settings */
+    jQuery('.venobox_custom').venobox({
+        framewidth: '400px',        // default: ''
+        frameheight: '300px',       // default: ''
+        border: '10px',             // default: '0'
+        bgcolor: '#5dff5e',         // default: '#fff'
+        titleattr: 'data-title',    // default: 'title'
+        numeratio: true,            // default: false
+        infinigall: true            // default: false
+    });
+
+    /* auto-open #firstlink on page load */
+    jQuery("#firstlink").venobox().trigger('click');
+    
+});</script>
+
+
+
+<script>
+/* jQuery( ".nav-primary .level0.nav-5 a" ).attr( 'target','_self'); 
+
+jQuery( ".nav-primary .level0.nav-5 a" ).attr( 'href','javascript:void(0)');
+
+jQuery( ".nav-primary .level0.nav-5 a" ).attr( 'data-type','youtube');
+
+jQuery( ".nav-primary .level0.nav-5 a" ).addClass("show-modal1");*/
+
+</script>
+
+<script>
+ jQuery(document).ready(function ($) {
+            jQuery('.show-modal1').on('click', function () {
+                jQuery.showYtVideo({
+                    videoId: 'G4SIkCp-EGA'
+                });
+            });
+        });
+</script>
+
+
+<script type="text/javascript">
+jQuery( window ).resize(function() {
+	
+		//setCarouselHeight1();
+});
+ setCarouselHeight1();
+    function setCarouselHeight1()
+    {
+        var slideHeight1 = [];
+        
+        jQuery('.testi_details').each(function()
+        {   		
+			slideHeight1.push(jQuery(this).height());
+			
+        });
+        
+        max = Math.max.apply(null, slideHeight1);
+
+		var max1 = max+40; 
+        
+		jQuery('.testi_details').each(function()
+        {   		
+			var mar = max - jQuery(this).height();
+			if(mar >= 20){
+				jQuery(this).css('padding',mar+'px  0');
+			}
+			
+        });
+        
+       
+        jQuery('.testi_details').each(function()
+        {	
+            jQuery(this).css('height',max1+'px');
+        }); 
+    }
+</script>
+
+
+
+<?php
+$jsonfile = Mage::getBaseDir().'/ajaxsearchdata/search_json_data.txt';
+$jsondata = file_get_contents($jsonfile);
+
+?>
+
+<?php 
+if($category = Mage::registry('current_category')){        
+$layer = Mage::getSingleton('catalog/layer');
+$_category = $layer->getCurrentCategory();
+$currentCategoryId= $_category->getId();
+
+}
+
+?>
+
+
+<script>
+jQuery(document).ready(function(){
+
+var jsondata = '<?php echo $jsondata; ?>';
+
+var jsondata = jQuery.parseJSON(jsondata);
+
+
+
+jQuery(".dropdown-element #finder11").change(function() {
+	
+		var value = jQuery(this).val();	
+		
+		
+		
+			jQuery("#finder22").find('option').remove();
+			jQuery("#finder33").find('option').remove();
+			
+			option1 = "<option value='0'>Select Printer Mode</option>";
+			jQuery("#finder33").append(option1);
+			
+			var option = "";
+			option += "<option value='0'>Select Printer Series</option>";
+			
+			
+			if(jsondata[value] != undefined){
+			
+				var finder11 = jsondata[value];
+			
+					jQuery.each( finder11, function( key, value ) {
+						var items = key.split('-');
+						
+						option += "<option value='"+items[0]+"'>"+items[1]+"</option>"; 		
+					  
+					});
+		
+			}
+			
+			jQuery("#finder22").append(option);
+		
+});
+
+
+jQuery(".dropdown-element #finder22").change(function() {
+	
+		var value1 = jQuery("#finder11").val();	
+		var value2key = jQuery(this).val();	
+		var value2val = jQuery("#finder22 option:selected").text();
+		
+			
+		var keyvalue = value2key+"-"+value2val;
+		
+		var finder33 = jsondata[value1][keyvalue];
+		
+		
+		jQuery("#finder33").find('option').remove();
+		var option = "";
+		option += "<option value='0'>Select Printer Model</option>";
+		 
+		
+		 
+			if(finder33 != undefined){
+			
+				
+					jQuery.each( finder33, function( key, value ) {
+						
+												
+						option += "<option value='"+key+"'>"+value+"</option>"; 		
+					  
+					});
+		
+			}
+			
+			jQuery("#finder33").append(option);
+
+		
+});
+
+
+
+jQuery(".top_banner.desktop .dropdown-serieslist").change(function() {
+	
+		var catid = "<?php echo $currentCategoryId; ?>";
+		var key11 = jQuery(this).val();	
+		var value11 = jQuery(".top_banner.desktop .dropdown-serieslist option:selected").text();	
+		
+		var keyvalue1 = key11+"-"+value11;	
+		
+		jQuery(".top_banner.desktop .dropdown-model-list").find('option').remove();
+		
+		modellist = jsondata[catid][keyvalue1];
+		
+		var option = ""; 
+		
+		option += "<option value='0'>Printer Model</option>";
+			 
+		if(modellist != undefined){
+			jQuery.each( modellist, function( key, value ) {
+					option += "<option value='"+key+"'>"+value+"</option>"; 		
+			});
+		}
+		jQuery(".top_banner.desktop .dropdown-model-list").append(option);
+				  
+});
+
+jQuery(".top_banner.mobile .dropdown-serieslist").change(function() {
+	
+		 var catid1 = "<?php echo $currentCategoryId; ?>";
+		var key111 = jQuery(this).val();	
+		var value111 = jQuery(".top_banner.mobile .dropdown-serieslist option:selected").text();	
+		
+		var keyvalue11 = key111+"-"+value111;	
+			
+		var modellist1 = jsondata[catid1][keyvalue11];
+			jQuery(".top_banner.mobile .dropdown-model-list").find('option').remove();
+		var option1 = "";
+		
+		option1 += "<option value='0'>Printer Model</option>";
+			 
+		if(modellist1 != undefined){
+			jQuery.each( modellist1, function( key1, value1 ) {
+					option1 += "<option value='"+key1+"'>"+value1+"</option>"; 		
+			});
+		}
+		jQuery(".top_banner.mobile .dropdown-model-list").append(option1);
+		 
+});
+
+
+jQuery(".dropdown-element #finder111").change(function() {
+	
+		var value = jQuery(this).val();	
+		
+			jQuery("#finder222").find('option').remove();
+			jQuery("#finder333").find('option').remove();
+			
+			option1 = "<option value='0'>Select Printer Mode</option>";
+			jQuery("#finder333").append(option1);
+			
+			var option = "";
+			option += "<option value='0'>Select Printer Series</option>";
+			
+			
+			if(jsondata[value] != undefined){
+			
+				var finder11 = jsondata[value];
+			
+					jQuery.each( finder11, function( key, value ) {
+						var items = key.split('-');
+						
+						option += "<option value='"+items[0]+"'>"+items[1]+"</option>"; 		
+					  
+					});
+		
+			}
+			
+			jQuery("#finder222").append(option);
+		
+});
+
+
+jQuery(".dropdown-element #finder222").change(function() {
+	
+		var value1 = jQuery("#finder111").val();	
+		var value2key = jQuery(this).val();	
+		var value2val = jQuery("#finder222 option:selected").text();
+		
+			
+		var keyvalue = value2key+"-"+value2val;
+		
+		var finder33 = jsondata[value1][keyvalue];
+		
+		
+		jQuery("#finder333").find('option').remove();
+		var option = "";
+		option += "<option value='0'>Select Printer Model</option>";
+		 
+		
+		 
+			if(finder33 != undefined){
+			
+				
+					jQuery.each( finder33, function( key, value ) {
+						
+												
+						option += "<option value='"+key+"'>"+value+"</option>"; 		
+					  
+					});
+		
+			}
+			
+			jQuery("#finder333").append(option);
+
+		
+});
+
+
+
+
+	
+});
+</script>

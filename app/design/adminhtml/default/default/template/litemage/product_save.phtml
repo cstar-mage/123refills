@@ -1,0 +1,50 @@
+<?php
+/**
+ * LiteMage
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see https://opensource.org/licenses/GPL-3.0 .
+ *
+ * @package   LiteSpeed_LiteMage
+ * @copyright  Copyright (c) 2016 LiteSpeed Technologies, Inc. (https://www.litespeedtech.com)
+ * @license     https://opensource.org/licenses/GPL-3.0
+ */
+
+if ($this->canShowButton()):
+	if ($prodsaveurl = $this->getProductSaveOptionUrl()) :
+		//$lmhelper = Mage::helper('litemage/data');
+?>
+<br/>
+
+<div class="entry-edit"><ul class="messages">
+		<li class="notice-msg">
+<form action="<?php echo $prodsaveurl;?>" method="post" id="litemage_prodsave">
+<?php echo $this->getBlockHtml('formkey')?>			
+LiteMage Cache: Clicking the Save Button Will Automatically Purge Cache  
+<select name="litemage_prodpurgeoption" onchange="submit()">
+	<?php echo $this->getCurrentProdSaveOptions(); ?>
+</select>
+<div class="form-buttons">
+ <input type="submit" class="form-button" name="litemage_purgeprod" value="Purge This Product" id="litemage_purgeprod" /> 
+ <input type="submit" class="form-button" name="litemage_purgepcats" value="Purge This Product and Parent Categories" id="litemage_purgepcats" />
+</div>
+</form>
+</li>
+</ul></div>
+
+<?php 
+endif;
+endif;
+?>

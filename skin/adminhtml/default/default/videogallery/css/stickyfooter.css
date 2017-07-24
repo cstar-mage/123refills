@@ -1,0 +1,113 @@
+#trainingstickyfooter {
+	bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 100%;
+    z-index: 11;
+}
+
+#trainingstickyfooter .title > span {
+    color: #fff;
+    text-transform: uppercase;
+}
+#trainingstickyfooter .description {
+  color: #fff;
+    display: inline-block;
+    float: none;
+    font-weight: bold;
+    text-transform: uppercase;
+    vertical-align: middle;
+    margin: 0 40px 0 0;
+}
+#trainingstickyfooter .contentdescription .description a {
+    text-decoration: none;
+}
+#trainingstickyfooter #welcome {
+  	color: #fff;
+    font-family: arial;
+    font-size: 11px;
+    margin-right: 100px;
+    text-transform: uppercase;
+    width: 245px;
+}
+#trainingstickyfooter #welcome strong
+{
+	font-size: 14px;
+	display: block;
+}
+#trainingstickyfooter .contentdescription #welcome .sub-description {
+    display: block;
+    font-size: 11px;
+    font-weight: normal;
+    padding-bottom: 10px;
+      line-height: 13px;
+}
+#trainingstickyfooter #invoice {
+    width: 100px;
+    background: url("../images/1.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+#trainingstickyfooter #invoice .sub-description {
+    display: block;
+    padding: 0 0 0 50px;
+}
+#trainingstickyfooter .sub-description .updata,
+#trainingstickyfooter .sub-description .downdata {
+    display: block;
+    color: #fff;
+}
+#trainingstickyfooter .sub-description .updata
+{
+	font-size: 9.5px;
+	line-height: 9.5px;
+}
+#trainingstickyfooter .sub-description .downdata
+{
+	font-size: 14px;
+}
+#trainingstickyfooter #user {
+    width: 170px;
+    background: url("../images/2.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+#trainingstickyfooter #user .sub-description {
+    display: block;
+    padding: 0 0 0 35px;
+}
+#trainingstickyfooter #payment {
+    width: 115px;
+    background: url("../images/2.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+#payment .sub-description {
+    display: block;
+    padding: 0 0 0 35px;
+}
+#trainingstickyfooter #media {
+    margin: 0 35px 0 0;
+    width: 150px;
+    background: url("../images/3.png") no-repeat scroll left center rgba(0, 0, 0, 0);
+}
+#trainingstickyfooter #media .sub-description {
+    display: block;
+    padding: 0 0 0 30px;
+}
+#trainingstickyfooter #media .time {
+    color: #ccc;
+    margin-left: 10px;
+}
+#trainingstickyfooter .title {
+    background: url("../images/down-arrow.png") no-repeat scroll 92% 60% #2da11d;
+ /*   background: none repeat scroll 0 0 #2da11d;*/
+    display: block;
+    margin-left: 7%;
+    padding: 5px 5px 0 12px;
+    width: 120px;
+    cursor: pointer;
+}
+#trainingstickyfooter .content
+{
+ background: none repeat scroll 0 0 #111111;
+  border-top: 5px solid #2da11d;
+}
+#trainingstickyfooter .content .contentdescription {
+    margin: 15px auto 0;
+    width: 85%;
+}

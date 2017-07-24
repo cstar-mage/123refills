@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+
+	<default>
+<reference name="before_body_end">
+		<block type="core/template" name="stickyfooter" template="videogallery/stickyfooter.phtml" />
+		</reference>
+	</default>
+	
+	<adminhtml_videogallery_index>    
+		<reference name="content">
+			<block type="core/template" name="videogallery" template="videogallery/videogallery.phtml" />
+		</reference>
+	</adminhtml_videogallery_index>
+	
+	<adminhtml_videogallery_knowledgebase>    
+		<reference name="content">
+			<block type="core/template" name="knowledgebase" template="videogallery/knowledgebase.phtml" />
+		</reference>
+	</adminhtml_videogallery_knowledgebase>
+
+</layout>

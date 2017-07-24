@@ -1,0 +1,29 @@
+<?php $helper = Mage::helper('adminhtml') ?>
+
+<div id="iwd-om-popup-box" class="stocks-assign">
+    <div class="om-iwd-modal fade" id="iwd_om_stocks_popup" tabindex="-1" role="dialog" aria-labelledby="iwd_om" aria-hidden="true">
+        <div class="om-iwd-modal-dialog">
+            <div class="om-iwd-modal-content">
+                <div class="om-iwd-modal-header">
+                    <a class="close" data-dismiss="modal" aria-label="<?php echo $helper->__("Close"); ?>"><span aria-hidden="true">&times;</span></a>
+                    <h4 class="om-iwd-modal-title"></h4>
+                </div>
+                <div class="om-iwd-modal-body">
+                    <div id="iwd_om_popup_stocks_form"></div>
+                </div>
+                <div class="iwd-om-preloader-wrapper">
+                    <div class="iwd-om-preloader"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript">
+    if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
+    $ji(document).ready(function () {
+        IWD.OrderManager.Stock.Order.iwdAssignStockFormUrl = "<?php echo Mage::helper('adminhtml')->getUrl('*/cataloginventory_order/getForm'); ?>?isAjax=true";
+        IWD.OrderManager.Stock.Order.iwdAssignStockUrl = "<?php echo Mage::helper('adminhtml')->getUrl('*/cataloginventory_order/updateInfo'); ?>?isAjax=true";
+        IWD.OrderManager.Stock.Order.init();
+    });
+</script>

@@ -1,0 +1,79 @@
+<div class="financing-main">
+	<div class="financing-main-sub1">
+	<h1>FINANCING AN ENGAGEMNT RING</h1>
+	<p>Now you can choose your diamond when your heart says you're ready, not your checkbook! So, go for a diamond beyond her wildest dreams. Something that reflects how you really feel. Get nothing less than a diamond as unique as your love. Introducing the Mervis finance program, designed to fit your individual needs.</p>
+	<p>Experience the benefits of preferred financing offers, a convenient and fast approval process, deferred payments, and more. With finance available from six months to five years through Synchrony Financial or TD Bank, the process is fast and simple.  It's usually done in-store and takes less than ten minutes to approve.</p>
+	<p>Finance plans include Standard Revolving, Deferred Interest (0%) with minimum payments, and Equal Installments.</p>
+	<p>For more information or to speak directly with one of our financing specialists, please give us a call at : 703-448-9000.  You are welcome to apply online (below) or apply in store.  Please note that in-store limits are often higher than online limits.</p>
+	<img src="<?php echo $this->getSkinUrl('images/financing/fan-1.png'); ?>" />
+	<p class="center1"><a href="#">CLICK HERE to apply with Synchrony Financial</a> (formerly GE Capital)</p> 
+	<img src="<?php echo $this->getSkinUrl('images/financing/fan-2.png'); ?>" />
+	</div>
+	<div class="financing-main-sub2">
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+<div class="page-title">
+    <h1><?php echo Mage::helper('financing')->__('Financing') ?></h1>
+</div>
+<form action="<?php echo $this->getUrl('financing/index/save'); ?>" id="financingForm" method="post">
+    <div class="fieldset">       
+        <ul class="form-list">
+        	<li class="wide">
+                <label for="comment" class="required"><?php echo Mage::helper('financing')->__('What Are You Curious About') ?><em>*</em></label>
+                <div class="input-box">                    
+                    <input name="comment" id="comment" title="<?php echo Mage::helper('financing')->__('What Are You Curious About') ?>" value="" class="input-text required-entry" type="text" />
+                </div>
+            </li>
+            <li class="fields">
+                <div class="field">
+                    <label for="firstname" class="required"><?php echo Mage::helper('financing')->__('First Name') ?><em>*</em></label>
+                    <div class="input-box">
+                        <input name="firstname" id="firstname" title="<?php echo Mage::helper('financing')->__('First Name') ?>" value="" class="input-text required-entry" type="text" />
+                    </div>
+                </div> 
+                <div class="field">
+                    <label for="lastname" class="required"><?php echo Mage::helper('financing')->__('Last Name') ?><em>*</em></label>
+                    <div class="input-box">
+                        <input name="lastname" id="lastname" title="<?php echo Mage::helper('financing')->__('Last Name') ?>" value="" class="input-text required-entry" type="text" />
+                    </div>
+                </div>                 
+            </li>
+            <li class="fields"> 
+            	<div class="field">
+                    <label for="email" class="required"><?php echo Mage::helper('financing')->__('Email') ?><em>*</em></label>
+                    <div class="input-box">
+                        <input name="email" id="email" title="<?php echo Mage::helper('financing')->__('Email') ?>" value="" class="input-text required-entry validate-email" type="text" />
+                    </div>
+                </div>
+                <div class="field">
+                <label for="phone_no" class="required"><?php echo Mage::helper('financing')->__('Phone Number') ?><em>*</em></label>
+                <div class="input-box">
+                    <input name="phone_no" id="phone_no" title="<?php echo Mage::helper('financing')->__('Phone Number') ?>" value="" class="input-text required-entry" type="text" />
+                </div>
+                </div>
+            </li>    
+            <li>
+            	<div class="wide">
+                    <label for="near_location" class="required"><?php echo Mage::helper('financing')->__('Your Closest Location') ?><em>*</em></label>
+                    <div class="input-box">
+                        <input type="radio" name="near_location" value="1700 k st. nw, washington, dc" class="validate-one-required"> <label for="1700 k st. nw, washington, dc">1700 k st. nw, washington, dc</label><br>
+                        <input type="radio" name="near_location" value="1775 rockville pike, rockville, md" class="validate-one-required"><label for="1775 rockville pike, rockville, md">1775 rockville pike, rockville, md</label><br>
+                        <input type="radio" name="near_location" value="1900 mervis way, tysons, va" class="validate-one-required"><label for="1900 mervis way, tysons, va">1900 mervis way, tysons, va</label><br>
+                        <input type="radio" name="near_location" value="i don't live in dc area" class="validate-one-required"><label for="i don't live in dc area">i don't live in dc area</label><br>                        
+                    </div>
+                </div>
+            </li>        
+        </ul>
+    </div>
+    <div class="buttons-set">
+       <?php /* <p class="required"><?php echo Mage::helper('financing')->__('* Required Fields') ?></p>  */ ?>
+        <input type="text" name="hideit" id="hideit" value="" style="display:none !important;" />
+        <button type="submit" title="<?php echo Mage::helper('financing')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('financing')->__('Submit') ?></span></span></button>
+    </div>
+</form>
+</div>
+</div>
+<script type="text/javascript">
+//<![CDATA[
+    var financingForm = new VarienForm('financingForm', true);
+//]]>
+</script>

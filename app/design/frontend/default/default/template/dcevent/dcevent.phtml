@@ -1,0 +1,61 @@
+<?php  $news = Mage::getModel('dcevent/dcevent')->getCollection();
+$news->setOrder('dcevent_id','DESC');
+?>
+<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('account_menu_static_block')->toHtml(); ?>
+<div class="event_main">
+<div class="show_main_div">
+	<ul>
+		<li><h1>SHOW DATES FOR 2015</h1></li>
+		<?php foreach($news as $newsas): ?>
+			<li>
+				<p>
+					<span class="title detail-description"><strong><?php echo $newsas->getTitle(); ?></strong></span>
+					<span class="date-duration detail-description">
+						<?php $startdate = new DateTime($newsas->getStartDate());  ?>
+						<?php $enddate = new DateTime($newsas->getEndDate());  ?>
+						<?php echo $startdate->format("F jS")."-".$enddate->format("jS Y"); ?>
+					</span>
+					<span class="place detail-description"><?php echo $newsas->getplace(); ?></span>
+				</p>
+				<div>
+					<?php if($newsas['filename']): ?>
+							<img alt="" src="<?php echo Mage::getBaseUrl('media').$newsas['filename']; ?>">
+					<?php endif; ?>
+				</div>
+			</li>
+		<?php endforeach; ?>
+	</ul>
+</div>
+<?php /* ?>
+	<div class="event-left">
+		<h4 class="event-left-main-title"><?php echo $this->__('SHOW DATES FOR 2015') ?></h4>
+		<div class="content">
+			<?php foreach($news as $newsas): ?>
+				<div class="description">
+						<span class="title detail-description"><?php echo $newsas->getTitle(); ?></span>
+						<?php $startdate = new DateTime($newsas->getStartDate());  ?>
+						<?php $enddate = new DateTime($newsas->getEndDate());  ?>
+						<span class="date-duration detail-description">
+							<span class="start-date-duration"><?php echo $startdate->format("F jS");//echo $startdate->format("F jS Y"); ?></span>
+							<span class="seprator">-</span>
+							<span class="end-date-duration"><?php echo $enddate->format("jS Y");//echo $enddate->format("F jS Y"); ?></span>
+						</span>
+						<span class="place detail-description"><?php echo $newsas->getplace(); ?></span>
+						<?php //echo "<pre>"; print_r($newsas); echo "</pre>"; ?>
+				</div>
+			<?php endforeach; ?>
+		</div>
+	</div>
+	<div class="event-right">
+		<div class="event">
+				<ul>
+					<?php foreach($news as $newsas): ?>
+						<?php if($newsas['filename']): ?>
+							<li><img src="<?php echo Mage::getBaseUrl('media').$newsas['filename'] ?>" /></li>
+						<?php endif; ?>
+					<?php endforeach; ?>
+				</ul>
+		</div>
+	</div>
+	<?php */ ?>
+</div>

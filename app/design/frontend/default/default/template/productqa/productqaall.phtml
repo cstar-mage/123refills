@@ -1,0 +1,32 @@
+<?php 
+	$productsku = $this->getRequest()->getParam('ps'); 
+	$product = Mage::getModel('catalog/product')->loadByAttribute('sku',$productsku);
+if($product){
+$collection = Mage::getModel('productqa/productqa')->getCollection()
+			  ->addFieldToFilter('product_sku',$productsku)			
+        	  ->setOrder('productqa_id', 'DESC');
+$cnt = count($collection);
+$i=0;
+if($cnt > 0){
+?>
+	<h4><?php  echo $this->__('Question and answer about '). $product->getName();?></h4>
+<?php 
+}else{
+	?>
+	<h4><?php  echo $this->__('No question answer for this product')?></h4>
+<?php 
+}
+foreach ($collection as $item) {
+  if($item->getanswer() != ""){	
+?>
+	<h2><?php echo $item->getQuestion(); ?></h2>
+	<p><?php echo $item->getanswer(); ?></p>
+<?php	
+  }
+}
+}else{
+?>
+	<h4><?php  echo $this->__('Sorry This Sku is Not Exist '). $productsku;?></h4>
+<?php	
+}
+?>

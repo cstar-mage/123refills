@@ -1,0 +1,322 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/*
+00037     const STATUS_PENDING        = 1; // No items shipped, invoiced, canceled, refunded nor backordered
+00038     const STATUS_SHIPPED        = 2; // When qty ordered - [qty canceled + qty returned] = qty shipped
+00039     const STATUS_INVOICED       = 9; // When qty ordered - [qty canceled + qty returned] = qty invoiced
+00040     const STATUS_BACKORDERED    = 3; // When qty ordered - [qty canceled + qty returned] = qty backordered
+00041     const STATUS_CANCELED       = 5; // When qty ordered = qty canceled
+00042     const STATUS_PARTIAL        = 6; // If [qty shipped or(max of two) qty invoiced + qty canceled + qty returned] < qty ordered
+00043     const STATUS_MIXED          = 7; // All other combinations
+00044     const STATUS_REFUNDED       = 8; // When qty ordered = qty refunded
+00045 
+00046     const STATUS_RETURNED       = 4; // When qty ordered = qty returned // not used at the moment
+*/
+
+?>
+
+<?php $_order = $this->getOrder() ?>
+
+<style>
+	
+	.grid td input.input-text {width:auto;}
+	.custom_box{border:1px solid #ABADB3;background-color:#EBEBE4;padding:3px;}
+	.price-incl-tax .custom_box .price, .price-excl-tax .custom_box .price {font-weight:normal;}
+	.readtext {border:1px solid #ABADB3;background-color:#EBEBE4;padding:2px;}
+</style>
+
+<!--<form id="items_form" method="post" action="<?php //echo Mage::getModel('adminhtml/url')->getUrl('ordereditor/adminhtml_ordereditor/saveItems') ?>">-->
+
+<form id="items_form" method="post">
+
+<div class="grid np">
+  <div class="hor-scroll">
+    <table cellspacing="0" class="data order-tables">
+        <col width="40%" />
+        <col width="3%" />
+        <col width="5%" />
+        <col width="15%" />
+        <col width="3%" />
+        <col width="15%" />
+        <col width="5%" />
+        <col width="5%" />
+        <col width="5%" />
+        <col width="5%" />
+		<col width="3%" />
+		<col width="3%" />
+        <thead>
+            <tr class="headings">
+                <th><?php echo $this->helper('sales')->__('Product') ?></th>
+                <th><span class="nobr"><?php echo $this->helper('sales')->__('Status') ?></span></th>
+                <th><span class="nobr"><?php echo $this->helper('sales')->__('Original Price') ?></span></th>
+                <th><?php echo $this->helper('sales')->__('Price') ?></th>
+                <th class="a-center"><?php echo $this->helper('sales')->__('Qty') ?></th>
+                <th><?php echo $this->helper('sales')->__('Subtotal') ?></th>
+                <th><span class="nobr"><?php echo $this->helper('sales')->__('Tax') ?></span></th>
+                <th><span class="nobr"><?php echo $this->helper('sales')->__('Tax %') ?></span></th>
+                <th><span class="nobr"><?php echo $this->helper('sales')->__('Discount') ?></span></th>
+				<th><span class="nobr"><?php echo $this->helper('sales')->__('Discount %') ?></span></th>
+                <th class="nobr"><span class="nobr"><?php echo $this->helper('sales')->__('Row Total') ?></span></th>
+				<th class="last"><span class="nobr"><?php echo $this->helper('sales')->__('Remove') ?></span></th>
+            </tr>
+        </thead>
+        <?php $_items = $this->getItemsCollection() ?>
+        <?php $i=0;foreach ($_items as $_item):?>
+            <?php if ($_item->getParentItem()) continue; else $i++;?>
+            <tbody class="<?php echo $i%2?'even':'odd' ?>" id="tbody<?php echo $_item->getId() ?>">
+                <?php echo $this->getItemHtml($_item) ?>
+                <?php echo $this->getItemExtraInfoHtml($_item) ?>
+            </tbody>
+        <?php endforeach; ?>
+		
+		
+    </table>
+  </div>
+</div>
+
+<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+<input type="hidden" name="order_id" id="order_id" value="<?php echo $_order->getId();?>" />
+	
+</form>
+<div class="grid">
+ <table cellpadding="0" cellspacing="0">
+ 	<tfoot>
+			<tr>
+				<td colspan="12">
+
+					<?php $objAddLink = new Mage_Adminhtml_Block_Sales_Order_View();?>
+					<button class="scalable save" onclick="setLocation('<?php echo $objAddLink->getEditUrl(); ?>')" style="float:left;">
+						<span><span><span><?php echo $this->helper('sales')->__('Add Items') ?></span></span></span>
+					</button>
+				</td>
+				<td>
+										
+					<input type="checkbox" name="allow_edit_reason" onclick="showHideFields('allow_edit_reason')" id="allow_edit_reason" value="">
+					<label><?php echo $this->helper('sales')->__('Order Edit Reason') ?></label>
+
+					 <input style="margin-left:10px;" type="checkbox" name="notify_customer_it" id="notify_customer_it" value="">
+					<label><?php echo $this->helper('sales')->__('Notify Customer by Email') ?></label>
+		 			
+					<div id="edit_reason_div" style="display:none;">
+						<label style="vertical-align:top;font-weight:bold;"><?php echo $this->helper('sales')->__('Edit Reason') ?></label>
+						<textarea id="edit_reason" style="width:85%;" name="edit_reason"></textarea>
+					</div>
+					
+				</td>
+				<td>
+						<button class="scalable save" onclick="saveItems()" style="float:right;">
+							<span><span><span><?php echo $this->helper('sales')->__('Save Items') ?></span></span></span>
+						</button> 
+				</td>
+			</tr>
+		</tfoot>
+</table>
+</div>
+<script>
+	function saveItems()
+	{
+		editForm = new varienForm('items_form');
+		if(editForm.validate())
+		{
+			var params = {};   	
+			var $form = $("items_form");
+			var str = $("items_form").serialize();
+		 
+			var edit_reason_check = document.getElementById('allow_edit_reason').checked;
+			var edit_reason = document.getElementById('edit_reason').value;
+			var notify_customer = document.getElementById('notify_customer_it').checked;
+	
+			
+			//send request for saving
+				new Ajax.Request('<?php echo Mage::getModel('adminhtml/url')->getUrl('ordereditor/adminhtml_ordereditor/saveItems') ?>', {
+					method: 'post',
+					parameters: str + '&edit_check=' + edit_reason_check + '&edit_text=' + edit_reason + '&notify_check=' + notify_customer ,
+					//parameters: {company: 'example', limit: 12},
+					//data: "parameters="+str,
+					onSuccess: function(transport) {
+	
+						if(transport.responseText == 'Successfully updated.') {
+							window.location.reload();
+						} else {
+							//alert(transport.responseText);
+						}
+					},
+					
+					onFailure: function()
+					{	//alert("not worked");  
+					}
+	
+	
+				});	
+		}	
+	}
+	
+	function keyUpTax(value,id)
+	{
+		var subtotal = document.getElementById('item_price_'+id).value * document.getElementById('qty_'+id).value ;
+		
+		if(value == ""){document.getElementById('tax_'+id).value = 0;}
+		var result = (subtotal*value)/100;
+		result = result.toFixed(2);
+		document.getElementById('tax_'+id).value = result;
+	}
+	
+	function keyUpDiscount(value,id)
+	{
+		var subtotal = document.getElementById('item_price_'+id).value * document.getElementById('qty_'+id).value ;
+		if(value == ""){document.getElementById('discount_'+id).value = 0;}
+		var result = (subtotal*value)/100;
+		result = result.toFixed(2);
+		document.getElementById('discount_'+id).value = result;
+	}
+	function calTaxDiscount(id)
+	{
+		var tax = document.getElementById('tax_per_'+id).value ;
+		keyUpTax(tax,id);
+		var discount = document.getElementById('discount_per'+id).value ;
+		keyUpDiscount(discount,id)
+	}
+	function autoShipPrice()
+	{
+		var taxPercentage = document.getElementById('ship_tax').value ;
+		if(taxPercentage == "" || taxPercentage == 0){		document.getElementById('ship_inc_price').value = document.getElementById('ship_price').value ;}
+		else{
+			var totalShipPrice = document.getElementById('ship_price').value * document.getElementById('ship_tax').value ;
+			var result = (totalShipPrice)/100;
+
+			result = Number(result) + Number(document.getElementById('ship_price').value) ;
+			document.getElementById('ship_inc_price').value = result ;
+		}
+	}
+	
+</script>
+
+<script>
+function removeItemRow(id,itemStatus,item_type = '')
+{
+	var form = document.getElementById("items_form");
+	var checkboxName = document.getElementsByName('countRemove') ; 
+	var removeCheckboxLength = document.getElementsByName('countRemove').length ; 
+	var allowToDelete = 1 ;
+
+/* Disallow to delete order all Items starts*/
+	if(document.getElementById('remove_'+id).checked  == true)
+	{ document.getElementById('countRemove_'+id).checked = true ; }else{ document.getElementById('countRemove_'+id).checked = false; }
+
+	 var countCheckboxChecked = 0; 
+	 for (var i=0; i<removeCheckboxLength; i++) {
+		if (checkboxName[i].type === "checkbox" && checkboxName[i].checked === true) {
+				countCheckboxChecked++;
+			}
+		}
+	
+
+	
+	//alert(countCheckboxChecked);alert(removeCheckboxLength); 
+	if(countCheckboxChecked >= removeCheckboxLength){allowToDelete = 2;}
+	if(allowToDelete == 2)
+	{
+		var msgPre = '<?php echo $this->helper('sales')->__('Cannot delete Order all Items.');?>';
+		var msgNewLine = '\n';
+		var msgAfterV1 = '<?php echo $this->helper('sales')->__('You can click "Edit" button to add/edit/delete more Items.') ?>' ;
+		alert(msgPre + msgNewLine + msgAfterV1);
+		$('remove_'+id).checked = 0;
+		
+		if(document.getElementById('remove_'+id).checked  == false){ document.getElementById('countRemove_'+id).checked = false ;  }
+		return false;
+	}
+/* Disallow to delete order all Items Ends*/
+ 
+	if(itemStatus != 1 )
+	{
+		if(itemStatus == 6){itemStatus = '<?php echo $this->helper('sales')->__('Partially Invoiced Or Refunded');?>';}
+		
+		var msgPre = '<?php echo $this->helper('sales')->__('Item is already ');?>';
+		var msgAfterV1 = '<?php echo $this->helper('sales')->__(' and cannot be delete.') ?>' ;
+		var msgNewLine = '\n';
+		var msgAfterV2 = '<?php echo $this->helper('sales')->__('To delete this please "Delete Invoice" by clicking on "Delete Invoice" Button(near the Edit button).') ?>' ;
+		
+		alert(msgPre + itemStatus + msgAfterV1 + msgNewLine + msgAfterV2);
+		
+		$('remove_'+id).checked = 0;
+		
+		return false;
+	}
+	
+	if(item_type == 'bundle'){
+	
+		if($('remove_'+id).checked == 0){$('tablerow'+id).setStyle({ 'color': ''});$('tbody'+id).setStyle({ 'color': ''});}
+		else{$('tablerow'+id).setStyle({ 'color': '#CCCCCC', fontSize: '12px' });$('tbody'+id).setStyle({ 'color': '#CCCCCC', fontSize: '12px' });}
+		
+	}
+	else{
+			if($('remove_'+id).checked == 0){$('tablerow'+id).setStyle({ 'color': ''});}
+			else{$('tablerow'+id).setStyle({ 'color': '#CCCCCC', fontSize: '12px' });}
+	}
+	
+}
+</script>
+<script>
+function saveShipping()
+{
+
+shippingForm = new varienForm('shiping_form');
+if(shippingForm.validate())
+{
+	var params = {};   	
+    var $form = $("shiping_form");
+		var str = $("shiping_form").serialize();
+		//send request for saving
+			new Ajax.Request('	<?php echo Mage::getModel('adminhtml/url')->getUrl('ordereditor/adminhtml_ordereditor/saveshipping') ?>', {
+				method: 'post',
+				parameters: str,
+				onSuccess: function(transport) {
+
+    				if(transport.responseText == 'Successfully updated.') {
+    					window.location.reload();
+    				} else {
+    					//alert(transport.responseText);
+    				}
+				},
+				
+				onFailure: function()
+				{	//alert("not worked");  
+				}
+
+
+			});	
+	}	
+
+}
+</script>
+<script>
+	function showHideFields(fieldId)
+	{
+		if(document.getElementById(fieldId).checked){document.getElementById('edit_reason_div').style.display = 'block';}
+		else{document.getElementById('edit_reason_div').style.display= 'none';}
+	}
+</script>

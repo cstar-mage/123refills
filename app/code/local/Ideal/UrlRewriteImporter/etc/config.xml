@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_UrlRewriteImporter>
+            <version>1.0.0.0</version>
+        </Ideal_UrlRewriteImporter>
+    </modules>
+    <global>
+        <models>
+            <ideal_urlrewriteimporter>
+                <class>Ideal_UrlRewriteImporter_Model</class>
+            </ideal_urlrewriteimporter>
+        </models>
+        <blocks>
+            <ideal_urlrewriteimporter>
+                <class>Ideal_UrlRewriteImporter_Block</class>
+            </ideal_urlrewriteimporter>
+        </blocks>     
+    </global>
+    <adminhtml>
+        <events>
+            <adminhtml_widget_container_html_before>
+                <observers>
+                    <ideal_urlrewriteimporter_injectImportUrlRewritesButton>
+                        <class>ideal_urlrewriteimporter/observer</class>
+                        <method>injectImportUrlRewritesButton</method>
+                    </ideal_urlrewriteimporter_injectImportUrlRewritesButton>
+                </observers>
+            </adminhtml_widget_container_html_before>
+        </events>
+    </adminhtml>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <Ideal_UrlRewriteImporter after="Mage_Adminhtml">Ideal_UrlRewriteImporter_Adminhtml</Ideal_UrlRewriteImporter>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>     
+</config>

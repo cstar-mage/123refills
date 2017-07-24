@@ -1,0 +1,29 @@
+.grid-view .diamonds-control{background-color: #444;}
+.grid-view .diamonds-control label {color: #fff;font-weight: normal;}
+
+.grid-view .diamonds-control a.item-view {background-position:center -12px;display: inline-block;height: 22px;width: 25px;}
+.grid-view .diamonds-control #show_s2{background-image:url("../image/s2.png");}
+.grid-view .diamonds-control #show_s3{background-image:url("../image/s3.png");}
+.grid-view .diamonds-control #show_s4{background-image:url("../image/s4.png");}
+
+.grid-view .diamonds-control .btn-sortdir{color:#555 !important}
+
+.grid-view .diamonds-control .btn-sortdir[data-dir="asc"] i:before{content:"\e093"}
+.grid-view .diamonds-control .btn-sortdir[data-dir="desc"] i:before{content:"\e094"}
+
+
+.grid-view .itm-clr{clear:both;height:1px;}
+.grid-view .item .diam-image{min-height:280px;position:relative;}
+.grid-view .item .diam-image span {background: #fff;bottom: 30%;color: #900 !important;font-size: 12px; left: 0; position: absolute; right: 0;}
+.grid-view .item .shape-name{text-transform:uppercase;}
+.grid-view .item .info{font-family: economicabold;}
+.grid-view .item .diam-price{color: #090;font-size:20px;}
+/* from custom.css */
+.grid-view .item .btn-addtocart{color: #fff !important;}
+
+@media (max-width: 991px) {
+ul.dsearch-main-tabs li a {font-size: 18px;}
+.text-left-sm{text-align:left;}
+.grid-view .item .diam-image{min-height: 340px;text-align: center;}
+.grid-view .item .diam-image img{display:inline !important;}
+}

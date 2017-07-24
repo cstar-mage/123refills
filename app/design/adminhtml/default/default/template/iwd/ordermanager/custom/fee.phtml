@@ -1,0 +1,64 @@
+<?php
+/**
+ * @var $this IWD_OrderManager_Block_Adminhtml_Sales_Order_Create_Fee | IWD_OrderManager_Block_Adminhtml_Sales_Order_View_Tab_Fee
+ */
+$helper = Mage::helper('sales');
+$amount = $this->getAdditionalAmount();
+$amountInclTax = $this->getAdditionalAmountInclTax();
+$taxPercent = $this->getTaxPercent();
+$description = $this->getAdditionalAmountDescription();
+?>
+
+<?php if($this->isAdditionalDiscountEnabled()): ?>
+    <div class="box-right">
+        <!--Custom Amount-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-custom-amount"><?php echo $helper->__('Custom Amount') ?></h4>
+            </div>
+            <div class="hor-scroll">
+                <fieldset id="order_custom_amount">
+                    <table>
+                        <tr>
+                            <?php if (!$this->isManageTax()) : ?>
+                                <td width="1"><label><?php echo $helper->__('Add Custom Amount') ?></label></td>
+                            <?php endif; ?>
+                            <td width="1">
+                                <input type="text" id="iwd_om_custom_amount" name="iwd_om_custom_amount" class="fee-decimal-validation input-text" placeholder="$0.00 Excl Tax" value="<?php echo $amount; ?>"/>
+                                <?php if ($this->isManageTax()) : ?>
+                                    <span>+</span>
+                                    <input type="text" id="iwd_om_custom_amount_percent" name="iwd_om_custom_amount_percent" class="fee-decimal-validation input-text" placeholder="0.00%" value="<?php echo $taxPercent; ?>"/>
+                                    <span>%</span>
+                                    <span>=</span>
+                                    <input type="text" id="iwd_om_custom_amount_incl_tax" name="iwd_om_custom_amount_incl_tax" class="fee-decimal-validation input-text" placeholder="$0.00 Incl Tax" value="<?php echo $amountInclTax; ?>"/>
+                                <?php endif; ?>
+                            </td>
+                            <td>
+                                <input type="text" id="iwd_om_custom_amount_desc" name="iwd_om_custom_amount_desc" class="input-text" placeholder="Description" value="<?php echo $description; ?>"/>
+                            </td>
+                            <td width="1">
+                                <button title="<?php echo $helper->__('Apply') ?>" type="button" class="scalable disabled" disabled="disabled"
+                                        id="iwd_om_custom_amount_apply">
+                                    <span><span><span><?php echo $helper->__('Apply') ?></span></span></span>
+                                </button>
+                                <button title="<?php echo $helper->__('Remove') ?>"
+                                        <?php if(empty($amount)): ?>style="display:none;"<?php endif; ?>
+                                        id="iwd_om_custom_amount_remove"
+                                        type="button" class="scalable">
+                                    <span><span><span><?php echo $helper->__('Remove') ?></span></span></span>
+                                </button>
+                            </td>
+                        <tr>
+                    </table>
+                </fieldset>
+            </div>
+        </div>
+    </div>
+    <script>
+        IWD.OrderManager.AdditionalDiscount.applyUrl = "<?php echo $this->applyUrl() ?>?isAjax=true";
+        IWD.OrderManager.AdditionalDiscount.minimalAmount = <?php echo $this->getMinimalAmount() ?>;
+        IWD.OrderManager.AdditionalDiscount.createOrder = <?php echo $this->isCreatingOrder() ?>;
+        IWD.OrderManager.AdditionalDiscount.isManageTax = <?php echo $this->isManageTax() ? 'true' : 'false' ?>;
+        IWD.OrderManager.AdditionalDiscount.init();
+    </script>
+<?php endif; ?>

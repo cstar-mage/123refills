@@ -1,0 +1,3 @@
+#popupoverlay{position:fixed; display:none; opacity:0.8;}
+#popupquestion{display:none; position:fixed; background:#fff; padding:10px; border:7px solid #000000;}
+.popupclose{position: absolute; right: -21px; top: -19px;}

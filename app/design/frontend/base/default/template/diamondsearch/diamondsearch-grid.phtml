@@ -1,0 +1,905 @@
+<link href="<?php echo $this->getSkinUrl("dsearch/css/bootstrap.min.css") ?>" rel="stylesheet">
+<?php /*<link href="<?php echo $this->getSkinUrl("dsearch/css/bootstrap-theme.min.css") ?>" rel="stylesheet">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous">*/?>
+<link href="<?php echo $this->getSkinUrl("dsearch/css/nouislider.css") ?>" rel="stylesheet">
+<link href="<?php echo $this->getSkinUrl("dsearch/css/global-dsearch.css") ?>" rel="stylesheet">
+<link href="<?php echo $this->getSkinUrl("dsearch/css/global-dsearch-grid.css") ?>" rel="stylesheet">
+
+<?php if(Mage::getStoreConfig("diamondsearch/general_settings/include_jquery")): ?>
+<script type="text/javascript" src="<?php echo $this->getJsUrl("dsearch/jquery.1.10.2.js") ?>"></script>
+<?php endif ?>
+<script type="text/javascript">$j = jQuery.noConflict();</script>
+<?php /*
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+*/ ?>
+<script type="text/javascript" src="<?php echo $this->getJsUrl("dsearch/bootstrap.min.js") ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getJsUrl("dsearch/nouislider.js") ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getJsUrl("dsearch/global-dsearch-grid.js") ?>"></script>
+
+<?php
+$sliders_data = array();
+function sortByOrder($a, $b) {return $a['sortorder'] - $b['sortorder'];}
+function msort($array, $key, $sort_flags = SORT_REGULAR, $order = SORT_ASC){
+    if (is_array($array) && count($array) > 0) {
+        if (!empty($key)) {
+            $mapping = array();
+            foreach ($array as $k => $v) {
+                $sort_key = '';
+                if (!is_array($key)) {
+                    $sort_key = $v[$key];
+                } else {
+                    foreach ($key as $key_key) {
+                        $sort_key .= $v[$key_key];
+                    }
+                }
+                $mapping[$k] = $sort_key;
+            }
+			switch ($order) {
+				case SORT_ASC:
+				asort($mapping, $sort_flags);
+				break;
+				case SORT_DESC:
+				arsort($mapping, $sort_flags);
+				break;
+			}
+
+            $sorted = array();
+            foreach ($mapping as $k => $v) {
+                $sorted[] = $array[$k];
+            }
+            return $sorted;
+        }
+    }
+    return $array;
+}
+
+//get General Configs
+$com_req_label = "Compare";
+if(Mage::getStoreConfig("diamondsearch/general_settings/compare_request"))
+	$com_req_label = "Request";
+//is call for price ??
+$cfp_data = Mage::helper("diamondsearch")->getCallForPriceData();
+$is_cfp = $cfp_data["is_cfp"];
+$cfp_msg = $cfp_data["cfp_msg"];
+
+//get Shape Configs
+$shapeConfig = unserialize(Mage::getStoreConfig("diamondsearch/shape_settings/shape_available"));
+usort($shapeConfig, 'sortByOrder');
+$shapesLabelArray = array();
+$shapesArray = array();
+foreach ($shapeConfig as $_item):
+	$shapesLabelArray[] = $_item["label"];
+	$shapesimageArray[] = $_item["shapeimage"];
+	$shapesArray[] = array("label" => $_item["label"], "sortorder" => $_item["sortorder"]);
+endforeach;
+//$sliders_data["shapes"] = $shapesArray;
+
+//get Special Shape Configs
+$specialshapeConfig = unserialize(Mage::getStoreConfig("diamondsearch/shape_settings/specialshape_available"));
+usort($specialshapeConfig, 'sortByOrder');
+$specialshapesLabelArray = array();
+$specialshapesArray = array();
+$specialshapesImagesArray=array();
+foreach ($specialshapeConfig as $_item):
+	$specialshapesImagesArray[] = $_item["spacialshapeimage"];
+	$specialshapesLabelArray[] = $_item["label"];
+	$specialshapesArray[] = array("label" => $_item["label"], "sortorder" => $_item["sortorder"], "text" => $_item["text"]);
+endforeach;
+
+//color slider
+$colorSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/color_slider"));
+usort($colorSliderConfig, 'sortByOrder');
+$colorsArray = array();
+foreach ($colorSliderConfig as $_item):
+	 $colorsArray[] = $_item["label"];
+endforeach;
+$sliders_data["colors"] = $colorsArray;
+//fancycolor slider
+$fancycolorSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/fancycolor_slider"));
+usort($fancycolorSliderConfig, 'sortByOrder');
+$fancycolorsArray = array();
+foreach ($fancycolorSliderConfig as $_item):
+	 $fancycolorsArray[] = $_item["label"];
+endforeach;
+$sliders_data["fancycolors"] = $fancycolorsArray;
+//clarity slider
+$claritySliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/clarity_slider"));
+usort($claritySliderConfig, 'sortByOrder');
+$claritiesArray = array();
+foreach ($claritySliderConfig as $_item):
+	 $claritiesArray[] = $_item["label"];
+endforeach;
+$sliders_data["clarities"] = $claritiesArray;
+//cut slider
+$cutSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/cut_slider"));
+usort($cutSliderConfig, 'sortByOrder');
+$cutsArray = array();
+foreach ($cutSliderConfig as $_item):
+	 $cutsArray[] = $_item["label"];
+endforeach;
+$sliders_data["cuts"] = $cutsArray;
+//fluorescence slider
+$fluorescenceSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/fluorescence_slider"));
+usort($fluorescenceSliderConfig, 'sortByOrder');
+$fluorescencesArray = array();
+foreach ($fluorescenceSliderConfig as $_item):
+	 $fluorescencesArray[] = $_item["label"];
+endforeach;
+$sliders_data["fluorescences"] = $fluorescencesArray;
+//certificate slider
+$certificateSliderConfig = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/certificate_slider"));
+usort($certificateSliderConfig, 'sortByOrder');
+$certificatesArray = array();
+foreach ($certificateSliderConfig as $_item):
+	$avail=$_item['avilability'];
+	if(isset($avail) && $avail != 1) continue;
+	 $certificatesArray[] = $_item["label"];
+endforeach;
+//get Slider Configs ENDS
+$attribute_position = unserialize(Mage::getStoreConfig("diamondsearch/attribute_position"));
+//echo "<pre>";print_r($attribute_position);
+$attribute_position = msort($attribute_position, array('sortorder'));
+
+$custom_diamond_certificate=Mage::getStoreConfig("diamondsearch/general_settings/custom_diamond_certificate");
+$custom_diamond_inhouse=Mage::getStoreConfig("diamondsearch/general_settings/custom_diamond_inhouse");
+$custom_diamond_image=Mage::getStoreConfig("diamondsearch/general_settings/custom_diamond_image");  
+?>
+<script type="text/javascript">
+var shape_ranges = <?php echo Mage::helper("diamondsearch")->getShapeRangesJson(); ?>;
+
+<?php //carat and price min max values
+$minMaxData = Mage::helper("diamondsearch")->getInitSearchPanelDataJson();
+?>
+var min_carat = <?php echo (Mage::getStoreConfig("diamondsearch/general_settings/diamondscarat_min") ? Mage::getStoreConfig("diamondsearch/general_settings/diamondscarat_min") : $minMaxData["min_carat"]) ?>;
+var max_carat = <?php echo (Mage::getStoreConfig("diamondsearch/general_settings/diamondscarat_max") ? Mage::getStoreConfig("diamondsearch/general_settings/diamondscarat_max") : $minMaxData["max_carat"]) ?>;
+
+var min_price = <?php echo $minMaxData["min_totalprice"] ?>;
+var max_price = <?php echo $minMaxData["max_totalprice"] ?>;
+var min_ratio = <?php echo $minMaxData["min_ratio"] ?>;
+var max_ratio = <?php echo $minMaxData["max_ratio"] ?>;
+
+var attribute_position = <?php echo json_encode($attribute_position); ?>;
+var sliders_data = <?php echo json_encode($sliders_data); ?>;
+var sort_by = '<?php echo Mage::getStoreConfig("diamondsearch/general_settings/deafault_filter_by") ?>';
+var order_by = 'asc';
+var offset = 0;
+
+var addtocart_url = '<?php echo $this->getUrl("uploadtool/index/addtocart"); ?>';
+
+var is_shared_url = false;
+var sharing_url = '<?php echo $this->getUrl("diamond-search/index/index"); ?>';
+<?php
+$params = $this->getRequest()->getParams();
+if($params["shared"]){
+	echo "is_shared_url = true;";
+	echo "var shared_params = ".json_encode($params).";";
+}
+?>
+
+<?php
+echo "var com_req_label = '".$com_req_label."';";
+echo "var is_cfp = ".$is_cfp.";";
+echo "var cfp_msg = '".$cfp_msg."';";
+
+echo "var show_origin = false;";
+if(Mage::getStoreConfig("diamondsearch/general_settings/show_origin"))
+	echo "show_origin = true;";
+echo "var show_rapper = false;";
+if(Mage::getStoreConfig("diamondsearch/general_settings/show_rapper"))
+	echo "show_rapper = true;";
+?>
+<?php /*** CONFIGURE TABLE COLUMNS ***/ 
+$results_table_columns = array();
+$results_table_columns[] = array("field"=>"compare", "checkbox"=>true, "align"=>"center", "valign"=>"middle");
+$results_table_columns[] = array("field"=>"id", "title"=>"ID", "valign"=>"middle");
+$results_table_columns[] = array("field"=>"lotno", "title"=>"SKU", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"shape", "title"=>"SHAPE", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"carat", "title"=>"CARAT", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"color", "title"=>"COLOR", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"clarity", "title"=>"CLARITY", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"cut", "title"=>"CUT", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"fluorescence", "title"=>"FLUOR", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"ratio", "title"=>"L:W", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"certificate", "title"=>"REPORT", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_inhouse"))
+	$results_table_columns[] = array("field"=>"inhouse", "title"=>(Mage::getStoreConfig("diamondsearch/general_settings/inhousetextcolumn")? Mage::getStoreConfig("diamondsearch/general_settings/inhousetextcolumn"):"IN-HOUSE"), "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"totalprice", "title"=>"PRICE", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_rapdiscount"))
+	$results_table_columns[] = array("field"=>"percent_rap", "title"=>"RAP%", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_availability"))
+	$results_table_columns[] = array("field"=>"availability", "title"=>"AVAIL", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_dimensions"))
+	$results_table_columns[] = array("field"=>"dimensions", "title"=>"DIM", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_depth"))
+	$results_table_columns[] = array("field"=>"depth", "title"=>"DEPTH", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_tabl"))
+	$results_table_columns[] = array("field"=>"tabl", "title"=>"TABLE", "sortable"=>true, "align"=>"center");
+$results_table_columns[] = array("field"=>"view", "title"=>"View", "align"=>"center", "events"=>"operateEvents", "formatter"=>"operateFormatter");
+echo "var results_table_columns = ".json_encode($results_table_columns).";";
+
+$recentlyview_table_columns = array();
+$recentlyview_table_columns[] = array("field"=>"id", "title"=>"ID", "valign"=>"middle");
+$recentlyview_table_columns[] = array("field"=>"lotno", "title"=>"SKU", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"shape", "title"=>"SHAPE", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"carat", "title"=>"CARAT", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"color", "title"=>"COLOR", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"clarity", "title"=>"CLARITY", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"cut", "title"=>"CUT", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"certificate", "title"=>"REPORT", "sortable"=>true, "align"=>"center");
+if(Mage::getStoreConfig("diamondsearch/general_settings/showcolumn_inhouse"))
+	$recentlyview_table_columns[] = array("field"=>"inhouse", "title"=>(Mage::getStoreConfig("diamondsearch/general_settings/inhousetextcolumn")? Mage::getStoreConfig("diamondsearch/general_settings/inhousetextcolumn"):"IN-HOUSE"), "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"totalprice", "title"=>"PRICE", "sortable"=>true, "align"=>"center");
+$recentlyview_table_columns[] = array("field"=>"view", "title"=>"View", "align"=>"center", "events"=>"operateEvents", "formatter"=>"operateFormatter");
+echo "var recentlyview_table_columns = ".json_encode($recentlyview_table_columns).";";
+
+?>
+</script>
+
+<style type="text/css">
+/* Shapes */
+.product-shape li.active a, .product-specialshape li.active a {
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/shape_bgcolor") ? "background-color:".Mage::getStoreConfig("diamondsearch/design_settings/shape_bgcolor")." !important;" : "";?>;
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/shape_color") ? "color:".Mage::getStoreConfig("diamondsearch/design_settings/shape_color")." !important;" : "";?>;
+}
+
+/*SLIDERS */
+.ds-container .noUi-connect{<?php echo Mage::getStoreConfig("diamondsearch/design_settings/slider_bgcolor") ? "background:".Mage::getStoreConfig("diamondsearch/design_settings/slider_bgcolor").";" : "";?>}
+
+/* Switcher buttons */
+.color_switcher, .shape_switcher{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/colorswitch_button_textcolor") ? "color: ".Mage::getStoreConfig("diamondsearch/design_settings/colorswitch_button_textcolor")." !important;" : "";
+?>
+}
+.color_switcher, .shape_switcher {
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/colorswitch_button_color") ? "background-color: ".Mage::getStoreConfig("diamondsearch/design_settings/colorswitch_button_color").";" : "";
+?>
+}
+.color_switcher:hover, .shape_switcher:hover {
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/colorswitch_button_hover_color") ? "background-color: ".Mage::getStoreConfig("diamondsearch/design_settings/colorswitch_button_hover_color").";" : "";
+?>
+}
+
+/*ADVANCED SEARCH */
+.adv-search-panel h4 a.adv_search_lnk, .ds-container #frm-stocknumber label{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/advanced_search_textcolor") ? "color:".Mage::getStoreConfig("diamondsearch/design_settings/advanced_search_textcolor")." !important;" : "";
+?>
+}
+.adv-search-panel .panel-heading{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/advanced_search_bgcolor") ? "background-color:".Mage::getStoreConfig("diamondsearch/design_settings/advanced_search_bgcolor").";" : "";
+?>
+}
+
+/*SORT ARROWS style if light*/
+.grid-view .diamonds-control a.item-view{
+<?php echo (Mage::getStoreConfig("diamondsearch/design_settings/table_sort_arrow_style") == "light") ? "background-position:center -62px;" : ""; ?>
+}
+.grid-view .diamonds-control .btn-sortdir{
+<?php echo (Mage::getStoreConfig("diamondsearch/design_settings/table_sort_arrow_style") == "light") ? "color:#fff !important;" : ""; ?>
+}
+
+/*TAB text */
+.nav-tabs > li > a, .nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/tabs_textcolor") ? "color:".Mage::getStoreConfig("diamondsearch/design_settings/tabs_textcolor").";" : "";
+?>
+}
+/*TAB bg */
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover {
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/tabs_bgcolor") ? "background-color:".Mage::getStoreConfig("diamondsearch/design_settings/tabs_bgcolor").";" : "";
+?>
+}
+
+
+/*TABLE HEADERS text */
+.fixed-table-container table thead th{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/table_header_textcolor") ? "color:".Mage::getStoreConfig("diamondsearch/design_settings/table_header_textcolor").";" : "";
+?>
+}
+/*TABLE HEADERS bg */
+.ds-container .tab-content .fixed-table-header {
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/table_header_bgcolor") ? "background:".Mage::getStoreConfig("diamondsearch/design_settings/table_header_bgcolor").";" : "";
+?>
+}
+
+/*ODD row bg */
+#results_table tr:nth-child(2n+1), #recentlyview_table tr:nth-child(2n+1){
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/table_row_odd_bgcolor") ? "background-color:".Mage::getStoreConfig("diamondsearch/design_settings/table_row_odd_bgcolor").";" : "";
+?>
+}
+/*EVEN row bg */
+#results_table tr:nth-child(2n), #recentlyview_table tr:nth-child(2n){
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/table_row_even_bgcolor") ? "background:".Mage::getStoreConfig("diamondsearch/design_settings/table_row_even_bgcolor").";" : "";
+?>
+}
+/*row hover*/
+#results_table > tbody > tr:hover > td, #recentlyview_table > tbody > tr:hover > td{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/table_row_hover_bgcolor") ? "background-color:".Mage::getStoreConfig("diamondsearch/design_settings/table_row_hover_bgcolor").";" : "";
+?>
+}
+
+/* Grid cell text color */
+.fixed-table-container table td {
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/diamond_font_color") ? "color:".Mage::getStoreConfig("diamondsearch/design_settings/diamond_font_color").";" : ""; ?>
+}
+
+/*ADD TO CART button text */
+.btn-addtocart{
+<?php echo Mage::getStoreConfig("diamondsearch/design_settings/view_button_textcolor") ? "color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_textcolor").";" : "";
+?>
+}
+/*ADD TO CART button bg */
+.btn-addtocart{
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/view_button_color") ? "background-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_color")."; border-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_color").";" : "";
+?>
+}
+/*ADD TO CART button HOVERs bg */
+.btn-addtocart:hover {
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/view_button_hover_color") ? "background-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_hover_color")."; border-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_hover_color").";" : "";
+?>
+}
+/*VIEW DIAMOND button bg */
+.btn-viewdetail{
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/view_button_color") ? "border:1px solid ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_color")."; border-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_color").";color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_textcolor").";" : "";
+?>
+}
+/*VIEW DIAMOND button HOVERs bg 
+.btn-viewdetail:hover {
+ <?php echo Mage::getStoreConfig("diamondsearch/design_settings/view_button_hover_color") ? "background-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_hover_color")."; border-color: ".Mage::getStoreConfig("diamondsearch/design_settings/view_button_hover_color").";" : "";
+?>
+}
+*/
+				
+/* SETTING DYNAMIC Shapes */
+<?php 
+for($i=0;$i<count($shapesArray);$i++):
+	$imageurl=Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'dsearch'.DS.'shape' .DS.$shapesimageArray[$i];
+	$url = getimagesize($imageurl);
+	if($shapesimageArray[$i] && is_array($url)) 
+	{	
+		$resizeImage=Mage::helper('diamondsearch')->resizeImage($shapesimageArray[$i], 50, 65, 'dsearch/shape');	
+		echo ".product-shape .".strtolower( str_replace(' ','-', $shapesArray[$i]["label"]) )."-details a{
+		background-image: url('".$resizeImage."');
+		background-position: center top;
+		background-repeat: no-repeat;
+		}";
+	}
+	else
+	{
+		echo ".product-shape .".strtolower( str_replace(' ','-', $shapesArray[$i]["label"]) )."-details a{
+		background-image: url('".$this->getSkinUrl("dsearch/shape_style")."/".Mage::getStoreConfig("diamondsearch/shape_settings/shape_style")."_".strtolower( str_replace(' ','-', $shapesArray[$i]["label"]) ).".png');
+		background-position: center top;
+		background-repeat: no-repeat;
+		}";
+	}	
+endfor;
+?>
+/* SETTING DYNAMIC special Shapes */
+<?php    
+for($i=0;$i<count($specialshapesArray);$i++):
+	$htmlen=htmlentities($specialshapesArray[$i]["label"]);
+	$diam=strtolower(preg_replace("/&#?[a-z0-9]+;/i","",$htmlen));
+	$string = str_replace(' ', '-',$diam );
+	//echo $string; 
+	$specialCustomimage=$specialshapesImagesArray[$i];
+	if($specialCustomimage)
+	{
+		$images=$specialCustomimage;
+		$resizeImages=Mage::helper('diamondsearch')->resizeImage($images, 85, 85, 'dsearch/specialshapes/uploded');
+		echo ".product-specialshape .".$string."-details a{
+		background-image: url('".$resizeImages."');
+		background-position: center 10px;
+    	background-repeat: no-repeat;
+		}";
+	}
+	else
+	{	 	
+		$images=$string.".jpg";
+		$resizeImages=Mage::helper('diamondsearch')->resizeImage($images, 85, 85, 'dsearch/spacialshaps');
+		echo ".product-shape .".$string."-details a{
+			background-image: url('".$resizeImages."');
+			background-position: center 10px;
+    		background-repeat: no-repeat;
+			}";
+	}
+endfor;
+?>
+</style>
+
+<!-- SITE BODY START -->
+<div class="container ds-container">
+	<div class="primary-filters">
+    	<?php if(Mage::getStoreConfig("diamondsearch/general_settings/header_text")): ?>
+        <?php echo Mage::getStoreConfig("diamondsearch/general_settings/header_text"); ?>
+        <?php endif; ?>
+        <div class="row">
+            <div class="col-md-12 text-right">
+            	<div id="share_link_block" style="font-family: courier; color: rgb(102, 102, 102); border: 1px solid rgb(204, 204, 204); position: absolute; top: 25px; background: rgb(255, 255, 255) none repeat scroll 0% 0%; z-index: 100; padding: 10px; text-align: left; font-size: 14px; right: 0px;display:none;">
+                	<a href="javascript:" onclick='jQuery("#share_link_block").toggle("fast");' style="position: absolute; right: 10px; top: 5px;">X</a>
+                	<div class="form-group">
+                        <label for="share_link_text">Copy this link to share :</label>
+                        <input id="share_link_text" class="form-control" type="text" onmouseup="return false;" onfocus="this.select();">
+                    </div>
+                </div>
+                <a class="btn-sm btn-primary" id="share_search" href="javascript:"><i class="glyphicon glyphicon-share"></i>&nbsp;&nbsp;SHARE SEARCH</a>
+                <a href="javascript:" data-href="<?php echo $this->getUrl("diamond-search") ?>" id="refresh_search" class="btn-sm btn-danger"><i class="glyphicon glyphicon-refresh"></i>&nbsp;&nbsp;REFRESH</a>
+            </div>
+    	</div>
+        <div class="row pt15 shape">
+            <div class="col-md-1 text-center-sm">
+            	<b>SHAPE</b>
+            </div>
+            <div class="col-md-11">
+                <ul class="nav nav-justified product-shape">
+                <?php
+					foreach($shapesArray as $shape): 
+					echo '<li class="'.strtolower(str_replace(' ','-', $shape["label"])).'-details"><a data-shape="'.str_replace(" ","_",ucfirst(strtolower($shape["label"]))).'" href="javascript:">'.$shape["label"].'</a></li>';
+					endforeach; 
+				?>
+                <?php if(Mage::getStoreConfig("diamondsearch/general_settings/spacial_diamond_avilability")): ?> 
+                <?php
+					echo '<li class="li-clearer"></li>';
+					$clearCnt = 0;
+					foreach($specialshapesArray as $specialshape): 
+					 $htmlen=htmlentities($specialshape["label"]);
+					 $diam=strtolower(preg_replace("/&#?[a-z0-9]+;/i","",$htmlen));
+					 $string = str_replace(' ', '-',$diam );
+						echo '<li class="special-shape '.$string.'-details"><a data-shape="'.ucfirst(strtolower($specialshape["text"])).'" href="javascript:">'.$specialshape["label"].'</a></li>';
+						if(++$clearCnt==7){echo '<li class="li-clearer"></li>'; $clearCnt=0; }
+					endforeach; 
+				?>
+                <?php endif; ?>
+                </ul>
+            </div>
+    	</div>
+        
+        <div class="row pt15 pb15">
+        	<div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                <div class="row">
+                    <div class="col-md-2 text-center-sm"><b>CARAT</b></div>
+                    <div class="col-md-10">
+                    	<div id="carat_slider"></div>
+                        <div class="slider-data form-inline pt15">
+                          <div class="form-group pull-left">
+                            <input class="form-control input-sm" type="number" id="input-caratmin">
+                          </div>
+                          <div class="form-group pull-right">
+                            <input class="form-control input-sm" type="number" id="input-caratmax">
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                <div class="row">
+                    <div class="col-md-2 text-center-sm"><b>PRICE</b></div>
+                    <?php if(!$is_cfp): ?>
+                    <div class="col-md-10">
+                    	<div id="price_slider"></div>
+                        <div class="slider-data form-inline pt15">
+                          <div class="form-group pull-left">
+                            <input class="form-control input-sm" type="number" id="input-pricemin">
+                          </div>
+                          <div class="form-group pull-right">
+                            <input class="form-control input-sm" type="number" id="input-pricemax">
+                          </div>
+                        </div>
+                    </div>
+					<?php else: ?>
+                    <div class="col-md-10 text-center"><?php echo $cfp_msg;?></div>
+                    <?php endif; ?>
+                </div>
+            </div>
+    	</div>
+        <div class="row pt15 pb15">
+        	<div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                <div class="row color">
+                    <div class="col-md-2 text-center-sm"><b>COLOR</b></div>
+                    <div class="col-md-10">
+                    	<div id="color_slider"></div>
+                        <ol class="slider_pipes">
+                        	<?php 
+							$wd=(100/(count($colorsArray)));
+							for($i=1;$i<count($colorsArray);$i++): echo "<li style='left:".$wd*$i."%'></span>"; endfor; 
+							?>
+                        </ol>
+                        <div class="slider_values pt5 pb5">
+                        	<?php foreach($colorsArray as $color): echo "<span style='width:".(100/count($colorsArray))."%'>".$color."</span>"; endforeach; ?>
+                        </div>
+                        <div class="slider-data form-inline pt20">
+							<div class="row">
+								<div class="col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="input-colormin">
+                                            <?php $i = 0;foreach($colorsArray as $color): 
+                                                echo "<option value='".$i++."'>".$color."</option>";
+                                                endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center pt5">
+                                    <a class="btn-sm color_switcher color" href="javascript:">Fancy Color</a>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-right">
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="input-colormax">
+                                            <?php $i =1;foreach($colorsArray as $color): 
+                                                echo "<option value='".$i++."'>".$color."</option>";
+                                                endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+							</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row fancycolor" style="display:none">
+                    <div class="col-md-2 text-center-sm"><b>FANCY</b></div>
+                    <div class="col-md-10">
+                    	<div id="fancycolor_slider"></div>
+                        <ol class="slider_pipes">
+                        	<?php 
+							$wd=(100/(count($fancycolorsArray)));
+							for($i=1;$i<count($fancycolorsArray);$i++): echo "<li style='left:".$wd*$i."%'></span>"; endfor; 
+							?>
+                        </ol>
+                        <div class="slider_values pt5 pb5">
+                        	<?php foreach($fancycolorsArray as $fancycolor): echo "<span style='width:".(100/count($fancycolorsArray))."%'>".$fancycolor."</span>"; endforeach; ?>
+                        </div>
+                        <div class="slider-data form-inline pt20">
+                            <div class="row">
+                                <div class="col-md-4 col-sm-4">
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="input-fancycolormin">
+                                            <?php $i = 0;foreach($fancycolorsArray as $fancycolor): 
+                                                echo "<option value='".$i++."'>".$fancycolor."</option>";
+                                                endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-center pt5">
+                                    <a class="btn-sm color_switcher fancycolor" href="javascript:">White Diamonds</a>
+                                </div>
+                                <div class="col-md-4 col-sm-4 text-right">
+                                    <div class="form-group">
+                                        <select class="form-control input-sm" id="input-fancycolormax">
+                                            <?php $i =1;foreach($fancycolorsArray as $fancycolor): 
+                                                echo "<option value='".$i++."'>".$fancycolor."</option>";
+                                                endforeach; ?>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        	<div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                <div class="row">
+                    <div class="col-md-2 text-center-sm"><b>CLARITY</b></div>
+                    <div class="col-md-10">
+                    	<div id="clarity_slider"></div>
+                        <ol class="slider_pipes">
+                        	<?php 
+							$wd=(100/(count($claritiesArray)));
+							for($i=1;$i<count($claritiesArray);$i++): echo "<li style='left:".$wd*$i."%'></span>"; endfor; 
+							?>
+                        </ol>
+                        <div class="slider_values pt5 pb5">
+                        	<?php foreach($claritiesArray as $clarity): echo "<span style='width:".(100/count($claritiesArray))."%'>".$clarity."</span>";endforeach; ?>
+                        </div>
+                        <div class="slider-data form-inline pt20">
+                          <div class="form-group pull-left">
+                            <select class="form-control input-sm" id="input-claritymin">
+                                <?php $i = 0;foreach($claritiesArray as $clarity): 
+									echo "<option value='".$i++."'>".$clarity."</option>";
+									endforeach; ?>
+                            </select>
+                          </div>
+                          <div class="form-group pull-right">
+                            <select class="form-control input-sm" id="input-claritymax">
+                                <?php $i=1;foreach($claritiesArray as $clarity): 
+									echo "<option value='".$i++."'>".$clarity."</option>";
+									endforeach; ?>
+                            </select>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    	</div>
+        
+        <div class="panel-group pt10">
+          <div class="panel panel-default adv-search-panel">
+            <div class="panel-heading">
+              <h4 class="panel-title">
+                <a data-toggle="collapse" href="#advanced_search_block" class="adv_search_lnk"><i class="glyphicon glyphicon-menu-hamburger"></i> ADVANCED SEARCH</a>
+                <form class="form-inline" role="search" id="frm-stocknumber">
+                    <div class="form-group hidden-sm hidden-xs">
+                        <label class="checkbox-inline"><input type="checkbox" class="chk-showcols" value="cut" checked="checked">Cut</label>
+                        <label class="checkbox-inline"><input type="checkbox" class="chk-showcols" value="fluorescence">Fluorescence</label>
+                        <label class="checkbox-inline"><input type="checkbox" class="chk-showcols" value="ratio">Ratio</label>
+                        <label class="checkbox-inline"><input type="checkbox" class="chk-showcols" value="certificate" checked="checked">Lab Report</label>
+                        <?php if($custom_diamond_inhouse==1 && isset($custom_diamond_inhouse)): ?>	
+                        <label class="checkbox-inline"><input type="checkbox" class="chk-inhouse" name="input-inhouse">Show IN-HOUSE Only</label>
+                        <?php endif; ?>
+                        
+                    </div>
+                    <div class="input-group">
+                    	<input type="text" placeholder="Stock Number" name="stock_number" id="stock_number" class="form-control input-sm">
+                    	<div class="input-group-btn">
+                    		<button type="submit" class="btn btn-default"><i class="glyphicon glyphicon-search"></i></button>
+                    	</div>
+                    </div>
+                </form>
+              </h4>
+            </div>
+            <div id="advanced_search_block" class="panel-collapse collapse">
+              <div class="panel-body">
+                <div class="row pt15 pb15">
+                    <div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                        <div class="row">
+                            <div class="col-md-12 text-center pb10"><b>CUT</b></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div id="cut_slider"></div>
+                                <ol class="slider_pipes">
+                                    <?php 
+                                    $wd=(100/(count($cutsArray)));
+                                    for($i=1;$i<count($cutsArray);$i++): echo "<li style='left:".$wd*$i."%'></span>"; endfor; 
+                                    ?>
+                                </ol>
+                                <div class="slider_values pt5 pb5">
+                                    <?php foreach($cutsArray as $cut): echo "<span style='width:".(100/count($cutsArray))."%'>".$cut."</span>"; endforeach; ?>
+                                </div>
+                                <div class="slider-data form-inline pt20">
+                                  <div class="form-group pull-left">
+                                    <select class="form-control input-sm" id="input-cutmin">
+                                        <?php $i = 0;foreach($cutsArray as $cut): 
+                                            echo "<option value='".$i++."'>".$cut."</option>";
+                                            endforeach; ?>
+                                    </select>
+                                  </div>
+                                  <div class="form-group pull-right">
+                                    <select class="form-control input-sm" id="input-cutmax">
+                                        <?php $i =1;foreach($cutsArray as $cut): 
+                                            echo "<option value='".$i++."'>".$cut."</option>";
+                                            endforeach; ?>
+                                    </select>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                        <div class="row">
+                            <div class="col-md-12 text-center pb10"><b>L:W RATIO</b></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div id="ratio_slider"></div>
+                                <div class="slider-data form-inline pt15">
+                                    <div class="form-group pull-left">
+                                    	<input class="form-control input-sm" type="number" id="input-ratiomin">
+                                    </div>
+                                    <div class="form-group pull-right">
+                                    	<input class="form-control input-sm" type="number" id="input-ratiomax">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row pt15 pb15">
+                    <div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                        <div class="row">
+                            <div class="col-md-12 text-center pb10"><b>FLUORESCENCE</b></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div id="fluorescence_slider"></div>
+                                <ol class="slider_pipes">
+                                    <?php 
+                                    $wd=(100/(count($fluorescencesArray)));
+                                    for($i=1;$i<count($fluorescencesArray);$i++): echo "<li style='left:".$wd*$i."%'></span>"; endfor; 
+                                    ?>
+                                </ol>
+                                <div class="slider_values pt5 pb5">
+                                    <?php foreach($fluorescencesArray as $fluorescence): echo "<span style='width:".(100/count($fluorescencesArray))."%'>".$fluorescence."</span>"; endforeach; ?>
+                                </div>
+                                <div class="slider-data form-inline pt20">
+                                  <div class="form-group pull-left">
+                                    <select class="form-control input-sm" id="input-fluorescencemin">
+                                        <?php $i = 0;foreach($fluorescencesArray as $fluorescence): 
+                                            echo "<option value='".$i++."'>".$fluorescence."</option>";
+                                            endforeach; ?>
+                                    </select>
+                                  </div>
+                                  <div class="form-group pull-right">
+                                    <select class="form-control input-sm" id="input-fluorescencemax">
+                                        <?php $i =1;foreach($fluorescencesArray as $fluorescence): 
+                                            echo "<option value='".$i++."'>".$fluorescence."</option>";
+                                            endforeach; ?>
+                                    </select>
+                                  </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 col-md-offset-0 col-sm-10 col-sm-offset-1">
+                        <div class="row">
+                            <div class="col-md-12 text-center pb10"><b>Lab Report</b></div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-10 col-md-offset-1">
+                                <div class="row">
+                                <?php
+                                foreach($certificatesArray as $certificate): 
+                                    echo '<div class="col-md-4 col-sm-4"><label class="checkbox-inline">';
+                                    echo '<input type="checkbox" class="chk-certificates" data-certificate="'.$certificate.'" value="'.$certificate.'" name="input-certificates[]"> '.$certificate;
+                                    echo '</label></div>';
+                                endforeach;
+                                ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+   
+                <div class="row pt15 pb15">
+                    <div class="col-md-5 col-md-offset-1 col-sm-10 col-sm-offset-1">
+					<?php if($custom_diamond_certificate==1 && isset($custom_diamond_certificate)): ?>
+                        <div class="row">
+                        <?php
+							$customCertsArray = array("H&A","AGS0","GIA3X");
+							foreach($customCertsArray as $customCert): 
+								echo '<div class="col-md-4 col-sm-4"><label class="checkbox-inline">';
+								echo '<input type="checkbox" class="chk-customcert" data-customcert="'.$customCert.'" value="'.$customCert.'" name="input-customcert[]"> '.$customCert;
+								echo '</label></div>';
+							endforeach;
+                        ?>
+                        </div>
+                    <?php endif; ?> 
+                    </div>
+                    <?php /*
+                    <div class="col-md-5 col-md-offset-1 col-sm-10 col-sm-offset-1">
+						<?php if($custom_diamond_inhouse==1 && isset($custom_diamond_inhouse)): ?>	
+                    	<div class="row">
+                        	<div class="col-md-12">
+                            	<label class="checkbox-inline">
+								<input type="checkbox" class="chk-inhouse" name="input-inhouse"> <b>Show IN-HOUSE Diamonds Only</b></label>
+                            </div>
+                        </div>
+                        <?php endif;  ?>
+                    </div>
+                    */ ?>
+                </div>
+                <?php if($custom_diamond_image==1 && isset($custom_diamond_image)): ?> 
+                <div class="row pt15 pb15">
+                    <div class="col-md-1 col-md-offset-1 text-center-sm"><b>IMAGE</b></div>
+                    <div class="col-md-10 col-sm-10 col-sm-offset-1"> 
+                        <div class="row">
+                        <?php
+                            $imagesArray = array("certimage"=>"Cert Image","dimage"=>"Picture","I&S Image"=>"I&S Image","H&A Image"=>"H&A Image","Sarin"=>"Sarin","3D Sarin"=>"3D Sarin","GemAdvisor"=>"GemAdvisor","ASET Image"=>"ASET Image");
+                            foreach($imagesArray as $v=>$image): 
+                                echo '<div class="col-md-3 col-sm-4"><label class="checkbox-inline">';
+                                echo '<input type="checkbox" class="chk-images" data-images="'.$v.'" value="'.$v.'" name="input-images[]"> '.$image;
+                                echo '</label></div>';
+                            endforeach;
+                        ?>
+                        </div>
+                       
+                    </div>
+                </div>
+                <?php endif; ?> 
+              </div>
+              <div class="panel-footer text-right"><a class="btn-sm btn-danger link-hide" href="javascript:" onclick="jQuery('#advanced_search_block').slideUp('fast', function(){jQuery('.adv_search_lnk').click();});">HIDE <i class="glyphicon glyphicon-chevron-up"></i></a></div>
+            </div>
+          </div>
+        </div>
+        
+        <ul class="nav nav-tabs nav-justified dsearch-main-tabs">
+            <li class="active"><a href="#results-tabpanel" role="tab" data-toggle="tab" id="results-tab" data-table="results_table">Results <span class="badge">0</span></a></li>
+            <li><a href="#recentlyview-tabpanel" role="tab" data-toggle="tab" id="recentlyview-tab" data-table="recentlyview_table">Recently viewed <span class="badge">0</span></a></li>
+            <li><a href="#compare-tabpanel" role="tab" data-toggle="tab" id="compare-tab"><?php echo $com_req_label?> <span class="badge">0</span></a></li>
+        </ul>
+        
+        <!-- Tab panes -->
+        <div class="tab-content grid-view">
+            <div role="tabpanel" class="tab-pane active" id="results-tabpanel">
+                <div class="">
+                	<div class="col-md-12 pt10 pb10 diamonds-control">
+                    	<div class="row">
+                        	<div class="col-md-12">
+                            	<div class="row">
+                                    <div class="col-md-4">
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <label id="total_summary">Items _ to _ of _ total</label>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <?php /*
+                                                <ul class="list-inline" style="margin:0">
+                                                    <li><a href="#" id="show_s2" class="item-view"></a></li>
+                                                    <li><a href="#" id="show_s3" class="item-view"></a></li>
+                                                    <li><a href="#" id="show_s4" class="item-view"></a></li>
+                                                </ul>
+												*/ ?>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4 text-center">
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <label for="sort_by">Sort By:</label>
+                                                <select id="sort_by" class="form-control input-sm">
+                                                    <option value="carat">Carat</option>
+                                                    <option value="totalprice">Price</option>
+                                                </select>
+                                                <a class="btn btn-sm btn-sortdir" title="Sort Order" data-dir="asc" id="sort_dir" href="javascript:" role="button"><i class="glyphicon"></i></a>
+                                            </div>
+                                            <div class="form-group">
+                                                <label for="show_limit">Show:</label>
+                                                <select id="show_limit" class="form-control input-sm">
+                                                    <option>24</option>
+                                                    <option>48</option>
+                                                    <option>96</option>
+                                                </select>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <?php /*
+                                        <form class="form-inline">
+                                            <div class="form-group">
+                                                <label for="sort_by">Sort By:</label>
+                                                <ul class="pagination pagination-sm" style="margin:0;display:block">
+                                                    <li class="disabled"><a href="#">&laquo;</a></li>
+                                                    <li class="active"><a href="#">1</a></li>
+                                                    <li><a href="#">2</a></li>
+                                                    <li><a href="#">3</a></li>
+                                                    <li><a href="#">4</a></li>
+                                                    <li><a href="#">5</a></li>
+                                                    <li><a href="#">&raquo;</a></li>
+                                                </ul>
+                                            </div>
+                                        </form>
+										*/ ?>
+                                   		<div class="row">
+                                            <div class="col-md-3 text-right">
+                                                <?php /* <label>Page:</label> */ ?>
+                                            </div>
+                                            <div class="col-md-9">
+                                                <ul class="pagination pagination-sm" id="pagination_grid" style="margin:0;display:block;float:right">
+                                                <li class="active"><a href="javascript:" data-pn="1">1</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12 pb15" style="border:1px solid #c2c2c2;border-top:none;">
+                        <div class="row" id="results_table" data-url="<?php echo $this->getUrl("diamondsearch/ajax/list") ?>"></div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="recentlyview-tabpanel">
+                <div class="">
+                    <div class="col-md-12 pb15" style="border:1px solid #c2c2c2;border-top:none;">
+                        <div class="row" id="recentlyview_table" data-url="<?php echo $this->getUrl("diamondsearch/ajax/listrecent") ?>"></div>
+                    </div>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="compare-tabpanel">
+                <div class="">
+                    <div class="col-md-12 pb15" style="border:1px solid #c2c2c2;border-top:none;">
+                        <div class="row" id="compare_table" data-url="<?php echo $this->getUrl("diamondsearch/ajax/listcompare") ?>"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

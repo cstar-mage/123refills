@@ -1,0 +1,148 @@
+<?php 
+$_htmlId      = $this->getElement()->getHtmlId();
+$_htmlClass   = $this->getElement()->getClass();
+$_htmlName    = $this->getElement()->getName();
+$_readonly    = $this->getElement()->getReadonly();
+
+//$collection = Mage::registry('diamondsearch_data')->getColorSlider();//->setOrder('sortorder', 'ASC');
+$collection = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/certificate_slider"));
+
+// echo "<pre>";
+// print_r($collection);
+
+/*$Attribute = array(
+	array("Label"=>"GIA","DetailsCode"=>"GIA","sortorder"=>"1","avilable"=>"1"),
+	array("Label"=>"EGL ISR","DetailsCode"=>"EGL ISR","sortorder"=>"2","avilable"=>"1"),
+	array("Label"=>"EGL USA","DetailsCode"=>"EGL USA","sortorder"=>"3","avilable"=>"1"),
+	array("Label"=>"AGS","DetailsCode"=>"AGS","sortorder"=>"4","avilable"=>"1"),	
+	array("Label"=>"HRD","DetailsCode"=>"HRD","sortorder"=>"5","avilable"=>"1"),
+	array("Label"=>"IGI","DetailsCode"=>"IGI","sortorder"=>"6","avilable"=>"1"),
+ 
+	); */	
+
+
+$Attribute = array(
+		array("Label"=>"AGS","DetailsCode"=>"AGS","sortorder"=>"1","avilable"=>"1"),
+		array("Label"=>"EGL","DetailsCode"=>"EGL","sortorder"=>"2","avilable"=>"1"),
+		array("Label"=>"EGL ISR","DetailsCode"=>"EGL ISR","sortorder"=>"3","avilable"=>"1"),
+		array("Label"=>"GIA","DetailsCode"=>"GIA","sortorder"=>"4","avilable"=>"1"),
+		array("Label"=>"HRD","DetailsCode"=>"HRD","sortorder"=>"5","avilable"=>"1"),
+		array("Label"=>"IGI","DetailsCode"=>"IGI","sortorder"=>"6","avilable"=>"1"),
+		array("Label"=>"PGS","DetailsCode"=>"PGS","sortorder"=>"7","avilable"=>"1"),
+		array("Label"=>"NONE","DetailsCode"=>"NONE","sortorder"=>"8","avilable"=>"1"),
+);
+
+
+$slidername = "certificate";
+$_counter = 0;
+?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid <?php echo $slidername ?>slider">
+        <table id="attribute-options-table-<?php echo $slidername ?>" class="dynamic-grid diamondsearch-slider" cellspacing="0" cellpadding="0"><tbody>
+            <tr class="headings">
+				<th><?php echo $this->__('Available') ?></th>
+                <th><?php echo $this->__('Label') ?></th><th><?php echo $this->__('Sortorder') ?></th><th><?php echo $this->__('Sample Image') ?></th>
+                
+            </tr>
+      <?php $image = array()?>      
+<?php foreach ($Attribute as $_item): 
+?>
+<?php 
+	//echo "<pre>";
+	//print_r($collection);
+	//print_r($_item['images']);
+	//exit;
+?>	
+<tr class="option-row diamondsearch-slider-<?php echo $slidername ?>slider" id="<?php echo $slidername ?>slider-row-<?php echo $_counter?>">
+    <td>		
+				<?php $avail=(int)$collection['option_'.$_counter]['avilability']; ?>			 
+				 <?php // echo $collection['option_'.$_counter]['avilability']  ?>
+				 <?php if(!isset($collection['option_'.$_counter]['avilability'])) { $avail=1;   } ?>
+				 <input <?php if($avail==1):?> checked <?php endif ?> type="checkbox"  onclick="changeCertificate('<?php echo $_htmlName; ?>[option_<?php echo $_counter ?>][avilability]')" 
+				 	id="certificate_slider[option_<?php echo $_counter ?>][avilability]" 
+				    value="<?php echo $avail ?>" 
+				   /> 
+				   <input id='<?php echo $_htmlName; ?>[option_<?php echo $_counter ?>][avilability]_check'  name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][avilability]"  type='hidden' value='<?php echo $avail ?>' >	
+		</td>
+    <td><input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][label]" value="<?php echo $_item['Label'] ?>" class="input-text" type="hidden"><?php echo $_item['DetailsCode'] ?> </td>
+   <?php if($collection['option_'.$_counter]['sortorder']){
+					$sort = $collection['option_'.$_counter]['sortorder'];
+				}else{	$sort = $_item['sortorder'];	} ?>	
+    <td><input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][sortorder]" value="<?php echo $sort ?>" class="input-text" type="text"></td>
+	
+	    <td>
+	    	<?php $image=$collection['option_'.$_counter]['image'] ?>
+    	   	<?php if($image != ''):?>
+        <a onclick="imagePreview('<?php echo $image ?>'); return false;" href='<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."dsearch/".$_item['image']?>'>
+        <img height="22" width="22" class="small-image-preview v-middle" alt="<?php echo $_item['image']?>" title="<?php echo $_item['image']?>" 
+        	id="<?php echo $_item['image']?>" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."dsearch/".$image?>">
+        </a>
+        <?php endif; ?>
+        <input type="file" class="input-file"  id="<?php echo 'image' ?>[<?php echo $_counter ?>]" name="<?php echo 'image' ?>[<?php echo $_counter ?>]">
+        <div>No File Selected</div>
+        <?php if($image != ''):?>
+        <span class="delete-image"><input type="checkbox" class="checkbox" value="1" name="deleteimage[<?php echo $_counter ?>]" style="width:5px">
+        	<label for="delete-image"> Delete Image</label><input type="hidden" value="<?php echo $image ?>" name="ima[<?php echo $image?>]">
+        </span>
+        <?php endif; ?>
+    
+       
+</tr>
+<?php
+    $_counter++;
+    endforeach;
+?>
+</tbody></table>
+ 
+<script type="text/javascript">//<![CDATA[
+
+var _<?php echo $slidername ?>form_html_row = '<tr class="option-row diamondsearch-slider-<?php echo $slidername ?>slider" id="<?php echo $slidername ?>slider-row-{{id}}"><td><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][label]" value="" class="input-text" type="text"></td><td><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][sortorder]" value="" class="input-text" type="text"></td><td><input type="file" class="input-file"  name="<?php echo 'image' ?>[<?php echo $_counter ?>]" > <div>No File Selected</div></td><td class="a-left" id="<?php echo $slidername ?>_delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="<?php echo $slidername ?>-delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="$(\'<?php echo $slidername ?>slider-row-{{id}}\').style.display=\'none\'; $(\'<?php echo $slidername ?>-delete-row-{{id}}\').setValue(1);" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+
+var _<?php echo $slidername ?>slider_counter = <?php echo $_counter?>;
+
+$('add_new_option_button_<?php echo $slidername ?>').observe('click', function(){
+    $('attribute-options-table-<?php echo $slidername ?>').insert(_<?php echo $slidername ?>form_html_row.replace(/\{\{id\}\}/ig, _<?php echo $slidername ?>slider_counter));
+    _<?php echo $slidername ?>slider_counter++;
+});
+
+
+ 
+
+
+//]]></script>
+    </td>
+</tr>
+
+<script type="text/javascript">
+
+    jQuery(document).ready(function(){
+
+    	jQuery(document).on('change', 'input[type="file"]', function(e)
+    			{
+    			// your code
+		    	    var fileName = e.target.files[0].name;
+					jQuery(this).next('div').html(fileName);
+    			});
+
+    });
+
+
+    function changeCertificate(val)
+    {
+
+    	if(document.getElementById(val).checked) {
+ 		   // document.getElementById('testNameHidden').disabled = true;
+ 		 // jQuery("."+val).val('1');
+ 		  var input=val+'_check';
+ 			document.getElementById(input).value = 1;	 			   
+ 		}
+ 		else
+ 		{
+ 			 var input=val+'_check';
+ 				document.getElementById(input).value = 0;	  
+ 		}	
+        
+    }
+
+</script>

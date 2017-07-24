@@ -1,0 +1,21 @@
+@CHARSET "UTF-8";
+.amfinder-vertical,
+.amfinder-horizontal
+{
+	border: 1px solid #C4C1BC;
+	background: #F8F7F5;
+	padding: 8px;
+}
+
+.amfinder-vertical .dropdown-title,
+.amfinder-horizontal .dropdown-title
+{
+	font-size: 12px;
+	font-weight: bold;
+}
+
+.amfinder-vertical .dropdown-element
+{
+	padding-bottom: 4px;
+}
+

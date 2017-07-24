@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <diamondsearch_adminhtml_diamondsearch_index>
+        <reference name="content">
+            <block type="diamondsearch/adminhtml_diamondsearch" name="diamondsearch" />
+        </reference>
+    </diamondsearch_adminhtml_diamondsearch_index>
+</layout>

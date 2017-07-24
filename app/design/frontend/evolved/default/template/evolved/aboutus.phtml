@@ -1,0 +1,39 @@
+<?php 
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_aboutus')['aboutus_element_style'])
+{
+	$selectElement = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_aboutus')['aboutus_element_style'];
+}
+else 
+{
+	$elementonemodel = Mage::getModel('evolved/evolved');
+	$elementaboutuscollection = $elementonemodel->getCollection();
+	$elementaboutuscollection->addFieldToFilter('field', array('like' => 'aboutus_element_style'));
+	//echo "<pre>"; print_r($elementaboutuscollection->getData()); echo "</pre>";
+	foreach($elementaboutuscollection as $elementaboutuscollection1)
+	{
+		$selectElement = $elementaboutuscollection1['value'];
+		//$selectElement = $elementaboutuscollection1['field'];
+	}	
+}
+	//echo $filter." ".$selectElement; //exit;
+	switch ($selectElement)
+	{
+		case "aboutus_element_style_two_two_column_with_50_by_50":
+			//echo "aboutus_element_style_two_two_column_with_50_by_50";
+			echo $this->getchildhtml('aboutus_element_style_two_two_column_with_50_by_50');
+			break;
+		case "aboutus_element_style_three_two_column_with_30_by_70":
+			//echo "aboutus_element_style_three_two_column_with_30_by_70";
+			echo $this->getchildhtml('aboutus_element_style_three_two_column_with_30_by_70');
+			break;
+		case "aboutus_element_style_four_two_column_with_70_by_30":
+			//echo "aboutus_element_style_four_two_column_with_70_by_30";
+			echo $this->getchildhtml('aboutus_element_style_four_two_column_with_70_by_30');
+			break;
+		default:
+			//echo "aboutus_element_style_one_one_column";
+			echo $this->getchildhtml('aboutus_element_style_one_one_column');
+			break;
+	}
+
+?>

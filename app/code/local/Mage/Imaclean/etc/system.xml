@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<config>
+
+    <sections>
+        <cronjobs>
+        	<groups>
+                <imaclean translate="label">
+                    <label>Image CleanUp Cron</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+		            <show_in_website>0</show_in_website>
+		            <show_in_store>0</show_in_store>
+                    <fields>
+                    	<enabled translate="label">
+                            <label>Enable Image CleanUp Cron</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled>
+                        <cron_expr translate="label">
+                            <label>Cron Expression (Image CleanUp)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+				            <show_in_website>0</show_in_website>
+				            <show_in_store>0</show_in_store>
+                        </cron_expr>
+                        
+                    </fields>
+                </imaclean>
+        	</groups>
+        </cronjobs>
+        
+    </sections>
+</config>

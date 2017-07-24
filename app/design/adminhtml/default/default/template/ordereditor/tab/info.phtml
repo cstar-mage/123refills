@@ -1,0 +1,390 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     default_default
+ * @copyright   Copyright (c) 2010 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php $_order = $this->getOrder() ?>
+
+<?php error_reporting(0);
+
+$enableOrdereditor = Mage::getStoreConfig('editorder/general/enabled'); 
+$enablePermission = Mage::getStoreConfig('editorder/opermission/penable'); 
+$currentLoginUsername = Mage::getSingleton('admin/session')->getUser()->getData('username');
+
+$permissionArray = array();
+if($enablePermission && $enableOrdereditor == 1)
+{
+	$adminPermission = Mage::getStoreConfig('editorder/opermission/oepermission'); 
+	$adminPermissions = @unserialize($adminPermission);
+
+	if($adminPermissions) {
+	$i = 0;
+		 foreach($adminPermissions as $permission) {
+		 		
+			 $aUserId = $permission['admin_id']; 
+		 
+		 	 //$aUserId = $permission['admin_id'].'__'.$i; 
+		 	 //$permissionArray[$aUserId] .= $permission['feature'].',';
+			 
+			 $permissionArray[$aUserId] .= $permission['feature'].',';
+			 $i++ ;
+		 }
+	 }
+}	//echo '<pre>';print_r($permissionArray);die;
+?>
+	 
+	 	 
+<div>
+    <div id="order-messages">
+        <?php echo $this->getChildHtml('order_messages') ?>
+    </div>
+    <?php echo $this->getChildHtml('order_info') ?>
+    <input type="hidden" name="order_id" value="<?php echo $_order->getId() ?>"/>
+    <?php if ($_order->getIsVirtual()): ?>
+    <div class="box-right">
+    <?php else: ?>
+    <div class="box-left">
+    <?php endif; ?>
+        <!--Payment Method-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-payment-method"><?php echo Mage::helper('sales')->__('Payment Information') ?></h4>
+            </div>
+            <fieldset>
+                <?php echo $this->getPaymentHtml() ?>
+                <div><?php echo Mage::helper('sales')->__('Order was placed using %s', $_order->getOrderCurrencyCode()) ?></div>
+            </fieldset>
+			
+	
+	<?php 
+		
+		$orderManagerExist = Mage::getConfig()->getModuleConfig('Magedev_Ordermanager')->is('active', 'true');
+		
+		if(!$orderManagerExist)
+		{
+			//$installer = new Mage_Core_Model_Resource_Setup();
+			
+			/*$tableOrder = Mage::getSingleton("core/resource")->getTableName('sales_flat_order');
+			$connectionWrite = Mage::getSingleton('core/resource')->getConnection('core_write');
+			$connectionRead = Mage::getSingleton('core/resource')->getConnection('core_read');
+			
+			$sql = "SHOW COLUMNS FROM $tableOrder LIKE 'edit_comments' ";
+			$result = $connectionRead->fetchRow($sql); 		
+			$exists = is_array($result)?TRUE:FALSE;
+			if(!$exists)
+			{
+				$query3A = 'ALTER TABLE `' . $tableOrder . '` ADD COLUMN `edit_comments` TEXT CHARACTER SET utf8 DEFAULT NULL' ; 
+				$connectionWrite->query($query3A);
+			}
+			*/
+		}
+
+	?>
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Order Special Note') ?></h4>
+			</div>
+
+			<fieldset>
+				<span id="admin_comment<?php echo $_order->getId();?>" title="Click to edit"><?php if($_order->getEditComments() != ""){echo nl2br($_order->getEditComments());}else{echo Mage::helper('sales')->__('Click here to set set Order Note');}?></span>
+			</fieldset>
+				<script type="text/javascript">
+								new Ajax.InPlaceEditor('admin_comment<?php echo $_order->getId();?>', '<?php echo $this->getUrl("ordereditor/adminhtml_ordereditor/saveadmincomment/field/comment/")."order_id/".$_order->getId(); ?>',{highlightColor:'#E2F1B1',field_type : 'textarea',rows:5,cols:85});
+			</script>
+			
+	<!-- Delivery Date Information Starts -->
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Delivery Date Information') ?></h4>
+			</div>
+
+			<fieldset>
+		<table>
+				<?php 
+				$controllerName = Mage::app()->getRequest()->getControllerName();
+				if($controllerName == "sales_order"){?>
+			<tr>
+                <td class="label"><label><?php echo Mage::helper('sales')->__('Estimated Delivery Date: ') ?></label></td>
+				<td>
+					<?php 
+						$Ddate = $_order->getDeliveryAt();
+						if($Ddate != "" && $Ddate != "1970-01-01" && $Ddate != '0000-00-00')
+						{
+							$date   = new Datetime($Ddate);
+							echo '<b><i>'.$date->format('M-d-Y').'</i></b>';
+						}else{echo '<b>'.'N/A'.'</i>';}
+					?>
+				</td>
+			</tr>
+			<tr>
+				<td><label><?php echo Mage::helper('sales')->__('Update Delivery Date: ') ?></td>
+                <td> 
+				<span>
+				
+				<form id="save_delivery_date_form" method="post">
+					<input type="text" style="width: 120px;" class="input-text required-entry" value="" id="selected_dev_date" name="selected_dev_date"/>
+
+					<img style="cursor:pointer;" style="" title="Select Date" id="date_delivery_select" class="" alt="" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_SKIN)."frontend/base/default/images/calendar.gif";?> "/>
+					
+					<img style="cursor:pointer;" onclick="saveDeliveryDate()" title="Save" id="save_dev_date" name="save_dev_date" alt="Save" src="<?php echo $this->getSkinUrl('images/success_msg_icon.gif');?> "/>
+ 					<input type="hidden" name="order_id" id="order_id" value="<?php echo $_order->getId(); ?>" />
+					<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+					
+					<script type="text/javascript">
+					//<![CDATA[
+						Calendar.setup({
+							inputField: "selected_dev_date",
+							ifFormat: "%m-%e-%Y",
+							showsTime: false,
+							button: "date_delivery_select",
+							align: "Bl",
+							singleClick : true
+						});
+					//]]>
+					</script>
+				</form>
+			</span>
+				
+				</td>
+            </tr>
+			</table>
+			<?php } ?>
+			</fieldset>
+				<!-- Delivery Date Information Ends -->
+						
+        </div>
+    </div>
+	
+	
+	
+    <?php if (!$_order->getIsVirtual()): ?>
+    <div class="box-right">
+        <!--Shipping Method-->
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Shipping &amp; Handling Information') ?></h4>
+            </div>
+		
+            <fieldset>
+                <?php  if ($_order->getTracksCollection()->count()) : ?>
+                <a href="#" id="linkId" onclick="popWin('<?php echo $this->helper('shipping')->getTrackingPopupUrlBySalesModel($_order) ?>','trackorder','width=800,height=600,resizable=yes,scrollbars=yes')" title="<?php echo $this->__('Track Order') ?>"><?php echo $this->__('Track Order') ?></a>
+                <br/>
+                <?php endif; ?>
+                <?php if ($_order->getShippingDescription()): ?>
+                    <strong><?php echo $_order->getShippingDescription() ?></strong>
+
+                    <?php if ($this->helper('tax')->displayShippingPriceIncludingTax()): ?>
+                        <?php $_excl = $this->displayShippingPriceInclTax($_order); ?>
+                    <?php else: ?>
+                        <?php $_excl = $this->displayPriceAttribute('shipping_amount', false, ' '); ?>
+                    <?php endif; ?>
+                    <?php $_incl = $this->displayShippingPriceInclTax($_order); ?>
+
+                    <?php echo $_excl; ?>
+                    <?php if ($this->helper('tax')->displayShippingBothPrices() && $_incl != $_excl): ?>
+                        (<?php echo $this->__('Incl. Tax'); ?> <?php echo $_incl; ?>)
+                    <?php endif; ?>
+                <?php else: ?>
+                    <?php echo $this->helper('sales')->__('No shipping information available'); ?>
+                <?php endif; ?>
+            </fieldset>
+
+<?php if($enablePermission == 1 && $enableOrdereditor == 1){
+if(isset($permissionArray) && strstr($permissionArray[$currentLoginUsername],"ship_item_info")){?>
+		
+
+		<!--************************************************************************************************************************************************-->				
+
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Edit Custom Shipping') ?></h4>
+			</div>
+
+			<fieldset>
+			
+				<form id="customShippingForm" name="customShippingForm" action="<?php echo Mage::getModel('adminhtml/url')->getUrl('ordereditor/adminhtml_ordereditor/saveshipping') ?>"> 
+				
+					<div>
+						<span>
+							<label> <strong class="label"><?php echo Mage::helper('sales')->__('Custom Carrier');?>: </strong></label>
+						</span>
+						<span>
+							<select id="custom_shipping_method" name="custom_shipping_method" class="select" style="min-width:25px;margin-left:2px;">
+								<option value="none"><?php echo Mage::helper('sales')->__('None');?></option>
+								<option value="Flat"><?php echo Mage::helper('sales')->__('Flat Rate');?></option>
+								<option value="UPS"><?php echo Mage::helper('sales')->__('UPS');?></option>
+								<option value="FedEx"><?php echo Mage::helper('sales')->__('FedEx');?></option>
+								<option value="USPS"><?php echo Mage::helper('sales')->__('USPS');?></option>
+								<option value="Other"><?php echo Mage::helper('sales')->__('Other');?></option>
+							</select>
+						</span>
+					</div>
+
+					<div style="margin-top:5px;">
+						<span style="min-width:25px;">
+							<label style="min-width:25px;"> <strong class="label"><?php echo Mage::helper('sales')->__('Custom Title');?>: </strong></label>
+						</span>
+						<input type="text" class="input-text" name="custom_name" id="custom_name" />
+					</div>
+					
+					<!--<div style="margin-top:5px;width:100%">
+						<span style="width:50%;">
+							<label> <strong class="label">Shipping Tax: </strong></label>
+						</span>
+						<span style="min-width:25px;margin-left:16.5px;">
+							<input type="text" class="input-text" name="ship_tax" id="ship_tax" />
+						</span>
+					</div>-->
+					
+					<div style="margin-top:5px;width:100%">
+						<span style="width:50%;">
+							<label> <strong class="label"><?php echo Mage::helper('sales')->__('Custom Price');?>:</strong></label>
+						</span>
+						<span style="min-width:25px;margin-left:12.5px;">
+							<input type="text" class="input-text validate-not-negative-number" name="ship_price" id="ship_price" />
+						</span>
+					</div>
+<div style="margin-top:5px;width:100%">
+	<span style="width:50%;">		
+	
+		<button type="submit" id="save_custom_shipping" name="save_custom_shipping" style="margin-left:96px;margin-top:5px;">
+			<span><?php echo Mage::helper('sales')->__('Save Shipping');?></span>
+		</button>
+	
+	</span>
+	
+</div>
+<input type="hidden" name="order_id" id="order_id" value="<?php echo $_order->getId();?>"  />
+				</form>
+						
+			</fieldset>
+				 
+<!--************************************************************************************************************************************************-->	
+	
+	
+<?php }}else if($enableOrdereditor == 1){?>
+	
+		
+		
+		<!--************************************************************************************************************************************************-->				
+
+
+			<div class="entry-edit-head">
+				<h4 class="icon-head head-shipping-method"><?php echo Mage::helper('sales')->__('Edit Custom Shipping') ?></h4>
+			</div>
+
+			<fieldset>
+			
+<!--				<form id="customShippingForm" name="customShippingForm" action="<?php //echo Mage::getModel('adminhtml/url')->getUrl('ordereditor/adminhtml_ordereditor/saveshipping') ?>"> -->
+				<form id="shiping_form" method="post">
+				
+			<table style="width:100%;">
+			
+			<tr>
+				<td><label> <strong class="label"><?php echo Mage::helper('sales')->__('Custom Carrier');?>: </strong></label></td>
+				<td><label> <strong class="label"><?php echo Mage::helper('sales')->__('Title');?>: </strong></label></td>
+				<td><label> <strong class="label"><?php echo Mage::helper('sales')->__('Rate');?>:</strong></label></td>
+			</tr>
+			
+			<tr style="width:100%;">
+				<td style="width:25%;">
+ 
+						<span>
+							<select id="custom_shipping_method" name="custom_shipping_method" class="select validate-select" style="min-width:25px;margin-left:2px;width:110px;">
+								<option value=""><?php echo Mage::helper('sales')->__('--Select--');?></option>
+								<option value="None"><?php echo Mage::helper('sales')->__('None');?></option>
+								<option value="Flat"><?php echo Mage::helper('sales')->__('Flat Rate');?></option>
+								<option value="freeshipping"><?php echo Mage::helper('sales')->__('Free Shipping Method');?></option>
+								<option value="UPS"><?php echo Mage::helper('sales')->__('UPS');?></option>
+								<option value="FedEx"><?php echo Mage::helper('sales')->__('FedEx');?></option>
+								<option value="USPS"><?php echo Mage::helper('sales')->__('USPS');?></option>
+								<option value="Other"><?php echo Mage::helper('sales')->__('Other');?></option>
+							</select>
+						</span>
+				</td>
+				
+				<td style="width:30%;">
+						<span><input type="text" class="input-text" name="custom_name" id="custom_name" /></span>
+				</td>
+			 
+				<td>
+				
+					<span>
+						<?php echo Mage::helper('sales')->__('Exc. Tax');?>
+							<input onkeyup="autoShipPrice()" type="text" class="input-text required-entry validate-not-negative-number" style="width:50px;"  name="ship_price" id="ship_price" />
+						<?php echo Mage::helper('sales')->__('+ Tax ');?><input onkeyup="autoShipPrice()" type="text" style="width:50px;" class="input-text" name="ship_tax" id="ship_tax" /> %
+						<br/>
+
+						<?php echo Mage::helper('sales')->__('Incl. Tax');?>
+						<input type="text" readonly="readonly" class="input-text required-entry validate-not-negative-number" style="width:50px;margin-top:2px;background-color:#EBEBE4;"  name="ship_inc_price" id="ship_inc_price" />
+					
+					</span>
+				</td>
+		 
+			</tr>
+</table>
+	<input type="hidden" name="order_id" id="order_id" value="<?php echo $_order->getId();?>"  />
+	<input type="hidden" name="form_key" value="<?php echo $this->getFormKey(); ?>" />
+</form>
+
+<div style="margin-top:10px;width:48%">
+		<button class="scalable save" onclick="saveShipping()">
+			<span><span><span><?php echo $this->helper('sales')->__('Save Shipping') ?></span></span></span>
+		</button> 
+</div>
+
+			</fieldset>
+				 
+<!--************************************************************************************************************************************************-->	
+	
+<?php } ?>
+			
+        </div>
+    </div>
+    <?php endif; ?>
+    <div class="clear"></div>
+
+    <?php echo $this->getGiftmessageHtml() ?>
+
+    <div class="clear"></div>
+    <div class="entry-edit">
+        <div class="entry-edit-head">
+            <h4 class="icon-head head-products"><?php echo Mage::helper('sales')->__('Items Ordered') ?></h4>
+        </div>
+    </div>
+    <?php echo $this->getItemsHtml() ?>
+    <div class="clear"></div>
+
+    <div class="box-left">
+        <div class="entry-edit">
+            <div class="entry-edit-head">
+                <h4><?php echo Mage::helper('sales')->__('Comments History') ?></h4>
+            </div>
+            <fieldset><?php echo $this->getChildHtml('order_history') ?></fieldset>
+        </div>
+    </div>
+    <div class="box-right entry-edit">
+        <div class="entry-edit-head"><h4><?php echo Mage::helper('sales')->__('Order Totals') ?></h4></div>
+        <div class="order-totals"><?php echo $this->getChildHtml('order_totals') ?></div>
+    </div>
+    <div class="clear"></div>
+</div>
+

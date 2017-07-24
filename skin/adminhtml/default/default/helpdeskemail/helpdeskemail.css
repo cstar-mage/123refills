@@ -1,0 +1,101 @@
+.helpdeskemailmain
+{
+	margin: 0 auto;
+    width: 455px;
+    padding: 30px;
+}
+.helpdeskemailmain .tickmain, .helpdeskultimate-customer-view .tickmain {
+    clear: both;
+    margin: 0 auto;
+    max-width: 895px;
+    font: 12px/1.55 "Raleway",sans-serif;
+    float: left;
+}
+.ticket-create-form, .ticket-create-form:hover {
+    text-decoration: none;
+}
+.helpdeskemailmain .ticket-create-form h3 {
+    border-bottom: 1px solid #ededed;
+    color: #636363;
+    font-size: 16px;
+    font-weight: normal;
+    text-transform: uppercase;
+    font-family: "Raleway",sans-serif;
+}
+.helpdeskemailmain form {
+    display: inline;
+}
+.helpdeskemailmain form label
+{
+    font: 12px/1.55 "Raleway",sans-serif;
+}
+.helpdeskemailmain #helpdesk-ticket-form div {
+    margin-top: 8px;
+}
+.helpdeskemailmain span.required {
+    color: #eb340a;
+}
+.helpdeskemailmain input.input-text, .helpdeskemailmain textarea {
+    padding: 0;
+}
+.helpdeskemailmain #content_field {
+    height: 100px;
+    width: 100%;
+    overflow: auto;
+}
+.helpdeskemailmain #helpdesk-ticket-form input#filename {
+    border: 1px solid #c0c0c0;
+}
+.helpdeskemailmain #helpdesk-ticket-form .button-set {
+    border-top: 1px solid #ededed;
+}
+.helpdeskemailmain #helpdesk-ticket-form div {
+    margin-top: 8px;
+}
+.helpdeskemailmain form input.input-text, select, textarea {
+    background: none repeat scroll 0 0 #fff;
+    border: 1.5px solid #e0e0e0;
+}
+.helpdeskemailmain #helpdesk-ticket-form button.button,
+.helpdeskemailmain #helpdesk-ticket-form button.button span,
+.helpdeskemailmain #helpdesk-ticket-form button.button span span {
+    background-color: #000000;
+    background-image: none !important;
+    background-position: 0 0;
+    background-repeat: no-repeat;
+    border: 0 none;
+    cursor: pointer;
+    font-family: "Open Sans",sans-serif;
+    font-weight: 400;
+    margin: 10px 0;
+    overflow: visible;
+    padding: 0;
+    text-transform: uppercase;
+    width: 140px;
+    display: block;
+    font-size: 15px;
+}
+.helpdeskemailmain #helpdesk-ticket-form .req {
+    color: red;
+    float: left;
+    font-size: 12px;
+    margin-left: 10px;
+}
+.helpdeskemailmainmenu
+{
+    background: url("../images/i_question-mark.png") no-repeat scroll 0 0 rgba(0, 0, 0, 0);
+    display: block;
+    float: right;
+    padding: 0 0 0 20px;
+    margin-top: 7px;
+}
+.helpdeskemailmainmenu a,
+.helpdeskemailmainmenu a:hover
+{
+	color: #fff;
+	text-decoration: none;
+}
+#nav {
+    float: left;
+    width: 91%;
+}

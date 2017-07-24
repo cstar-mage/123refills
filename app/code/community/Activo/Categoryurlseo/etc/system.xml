@@ -1,0 +1,57 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2014 Activo Extensions (http://extensions.activo.com)
+ * @license     OSL 3.0
+ */
+-->
+<config>
+    <tabs>
+        <activo translate="label">
+            <label>Activo Extensions</label>
+            <sort_order>101</sort_order>
+        </activo>
+    </tabs>
+    <sections>
+        <activo_categoryurlseo translate="label" module="categoryurlseo">
+            <class>separator-top</class>
+            <label>SEO Friendly Category</label>
+            <tab>activo</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>68</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <global translate="label">
+                    <label>SEO Friendly Category Oprions</label>
+                    <expanded>1</expanded>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <enabled translate="label">
+                            <label>Enabled?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <comment>Select Yes if you wish to ignore the parent category(s) in the Category URLs. Notice once you change this value you may need to reindex the Catalog URL Rewrites.</comment>
+                        </enabled>
+                    </fields>
+                </global>
+            </groups>
+        </activo_categoryurlseo>
+    </sections>
+</config>

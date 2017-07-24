@@ -1,0 +1,86 @@
+<?php if (Mage::registry('current_product')) :
+
+$testimonialcollection =   Mage::getModel('testimonial/testimonial')
+							->getCollection()
+							->addFieldToFilter( 'status', '1' );
+$testcollection = $testimonialcollection->getData();
+?>
+<div class="slideshow-container testimonial-slideshow">
+	<ul class="slideshow1">
+		<?php foreach($testcollection as $data1 ): ?>
+<li>
+<div class="testimonial">
+	<div class="testi_content">	
+		<?php //echo "<pre>"; print_r($record); echo "<pre>"; ?>			
+		
+			<p class="testi_details">
+				<?php echo " \" ".$data1['testimonial']. " \" ";?>
+				<span class="testi_author">
+				<?php echo "- ".$data1['name'];?>
+				</span>
+				<span class="testi_date">
+					<?php echo date('F d, Y', strtotime($data1['testimonial_date']));?>
+				</span>	
+			</p>
+			
+	</div>
+</div>
+</li>
+<?php endforeach; ?>
+</ul>
+   <span class="slideshow-pager" style="display: none"></span><span class="prevarr" style="display: none"></span><span class="nextarr" style="display: none"></span>
+</div>
+
+
+<style> <!--
+.catalog-product-view .slideshow-container {  position: relative; display: block; width: 100%; float: left; margin: 40px 0;}
+.catalog-product-view ul.slideshow1 { width: 100%;}
+.catalog-product-view li.cycle-slide { width: 100%;}
+.catalog-product-view .testimonial { width: 100%; float: left; background: #ec008b;color: #fff;}
+.catalog-product-view .testimonial .testi_content { width: 100%;margin: 0 auto; padding: 30px 20px 20px; text-align: center;}
+.catalog-product-view .testimonial .testi_content { width: 100%; margin: 0 auto;padding: 30px 20px 20px; text-align: center;}
+.catalog-product-view .testi_author { max-width: 100%;}
+.catalog-product-view .prevarr, .catalog-product-view .nextarr{ display: block !important; }
+-->
+</style>
+<script type="text/javascript">
+ setCarouselHeight();
+
+    function setCarouselHeight()
+    {
+        var slideHeight = [];
+        jQuery('.testi_content').each(function()
+        {
+           
+            slideHeight.push(jQuery(this).height());
+        });
+
+        
+        max = Math.max.apply(null, slideHeight);
+
+        
+        jQuery('.testi_content').each(function()
+        {
+            jQuery(this).css('height',max+'px');
+        }); 
+    }
+</script>
+
+<script type="text/javascript">
+    jQuery(document).ready(function() {
+        jQuery(".slideshow-container .slideshow1").cycle({
+            slides: "> li",
+            pager: ".slideshow-pager",
+            pagerTemplate: '<span class="pager-box"></span>',
+            speed: 600,
+            pauseOnHover: !1,
+            swipe: !0,
+            height: 'auto',
+            prev: ".prevarr",
+            next: ".nextarr",
+            fx: "fade",
+            timeout: 9e3
+        })
+    });
+</script>
+<?php endif; ?>

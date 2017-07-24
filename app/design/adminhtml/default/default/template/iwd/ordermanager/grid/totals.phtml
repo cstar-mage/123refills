@@ -1,0 +1,92 @@
+<?php
+/**
+* @var $this IWD_OrderManager_Block_Adminhtml_Sales_Order_Grid_Totals
+*/
+?>
+
+<?php if ($this->isTotalsEnabled()) : ?>
+<?php
+    $helper = Mage::helper('iwd_ordermanager');
+    $totalSets = $this->getSelectedTotalSets();
+    $totalSetsCount = count($totalSets);
+?>
+<div class="iwd-om-totals">
+    <div class="default-totals show">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <td>
+                    <div class="group-title">
+                        (<span class="page_from_to"><span class="page_from"></span> <?php echo $helper->__('to'); ?> </span><span class="page_to"></span>
+                        <span class="one-order" style="display:none"><?php echo $helper->__('order'); ?></span><span class="many-orders"><?php echo $helper->__('orders'); ?></span>)
+                    </div>
+                    <div class="total-block col-2">
+                        <span class="total-title"><?php echo $helper->__('Page Subtotal'); ?></span>
+                        <span class="total-amount page_subtotal"></span>
+                    </div>
+                    <div class="total-block col-2">
+                        <span class="total-title"><?php echo $helper->__('Page Grand Total'); ?></span>
+                        <span class="total-amount page_total"></span>
+                    </div>
+                </td>
+                <td>
+                    <div class="group-title">
+                        (<span class="orders_count"></span>
+                        <span class="one-order" style="display:none"><?php echo $helper->__('order'); ?></span><span class="many-orders"><?php echo $helper->__('orders'); ?></span>)
+                    </div>
+                    <div class="total-block col-2">
+                        <span class="total-title"><?php echo $helper->__('Subtotal'); ?></span>
+                        <span class="total-amount subtotal"></span>
+                    </div>
+                    <div class="total-block col-2">
+                        <span class="total-title"><?php echo $helper->__('Grand Total'); ?></span>
+                        <span class="total-amount total"></span>
+                    </div>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+    <div class="more-totals hide sets-<?php echo $totalSetsCount ?>">
+        <table cellpadding="0" cellspacing="0">
+            <tr>
+                <?php foreach ($totalSets as $id => $label) : ?>
+                    <td>
+                        <div class="col-2">
+                            <div class="group-title ">
+                                (<span class="page_from_to"><span class="page_from"></span> to </span><span class="page_to"></span>
+                                <span class="one-order" style="display:none"><?php echo $helper->__('order'); ?></span><span class="many-orders"><?php echo $helper->__('orders'); ?></span>)
+                            </div>
+                            <div class="total-block">
+                                <span class="total-title"><?php echo $label['page_label']; ?></span><br/>
+                                <span class="total-amount page_<?php echo $id ?>"></span>
+                            </div>
+                        </div>
+                        <div class="col-2">
+                            <div class="group-title">
+                                (<span class="orders_count"></span>
+                                <span class="one-order" style="display:none"><?php echo $helper->__('order'); ?></span><span class="many-orders"><?php echo $helper->__('orders'); ?></span>)
+                            </div>
+                            <div class="total-block">
+                                <span class="total-title"><?php echo $label['label']; ?></span><br/>
+                                <span class="total-amount <?php echo $id ?>"></span>
+                            </div>
+                        </div>
+                    </td>
+                <?php endforeach; ?>
+            </tr>
+        </table>
+    </div>
+
+    <div class="show-less-more more">
+        <span class="show-more"><?php echo $helper->__('Show More'); ?> <i class="fa fa-angle-double-down" aria-hidden="true"></i></span>
+        <span class="show-less"><?php echo $helper->__('Show Less'); ?> <i class="fa fa-angle-double-up" aria-hidden="true"></i></span>
+    </div>
+</div>
+
+<script type="text/javascript">
+    if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
+    $ji(document).ready(function () {
+        IWD.OrderManager.Totals.init(<?php echo $this->getGridOptionsJson() ?>, <?php echo $this->getTotalsJson() ?>);
+    });
+</script>
+<?php endif; ?>

@@ -1,0 +1,295 @@
+<?php 
+$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+$magento_db = $resource['default_setup']['connection']['host'];
+$mdb_user = $resource['default_setup']['connection']['username'];
+$mdb_passwd = $resource['default_setup']['connection']['password'];
+$mdb_name = $resource['default_setup']['connection']['dbname'];
+
+//developm_magento
+$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+if (!$magento_connection)
+{
+	die('Unable to connect to the database');
+}
+@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+
+$table = Mage::getSingleton('core/resource')->getTableName('uploadtool_custom_vendor');
+$query = "SELECT * FROM `$table`";
+
+$result = @mysql_db_query($mdb_name, $query) or die("Failed Query of ".$query);
+$coupon_rule_id = @mysql_insert_id($magento_connection);
+
+$custom_vendor_id = array();
+while($row = mysql_fetch_array($result))
+{
+	$custom_vendor_name[] = $row['custom_vendor_name'];
+	$custom_vendor_id[] = $row['custom_vendor_id'];
+}
+
+$count = count($custom_vendor_id);
+
+
+$inventoryTable = Mage::getSingleton('core/resource')->getTableName('uploadtool_diamonds_inventory');
+
+/* $html = "
+<table width='100%'>
+<tr><td>Vendor Name</td><td>Vendor ID</td></tr>
+"; */
+$html = "
+<table width='100%'>
+<tr><td>Vendor Name</td><td></td></tr>
+";
+
+
+for($i=0; $i<$count; $i++)
+{
+
+
+$select = @mysql_db_query($mdb_name, "select * from `".$inventoryTable."` where `owner`='".$custom_vendor_name[$i]."'") or die("Failed Query of ".$query);
+$vendorCounts = mysql_num_rows($select);
+
+$html .= "<tr id='custom_vendor-row-".$i."'>
+<td><input type='text' name='custom_vendor_1-".$i."' value=".$custom_vendor_name[$i]." class='' style='width:150px;' /></td><td>".$vendorCounts." DIAMONDS</td></tr>";
+}
+	
+for($j=100; $j<200; $j++)
+{
+
+	$html .= "<tr id='custom_vendor-row-".$j."' class='no-display'>
+	<td ><input name='custom_vendor_1-".$j."'  class=''  /></td></tr>";
+
+
+}
+
+$html .= "</table>";
+
+
+
+$html .= '<table id="gallery" class="gallery" border="0" cellspacing="3" cellpadding="0">';
+//$html .= '<thead id="custom_thead_2" class="gallery"><tr class="gallery"><td class="gallery" valign="middle" align="center">Vendor Name</td><td class="gallery" valign="middle" align="center">Vendor Id</td><td class="gallery" valign="middle" align="center">% Rap</td><td class="gallery" valign="middle" align="center">Sort Order</td><td class="gallery" valign="middle" align="center">Delete</td></tr></thead>';
+$html .= '<thead id="custom_thead_2" class="gallery"><tr class="gallery"><td class="gallery" valign="middle" align="center">Vendor Name</td><td class="gallery" valign="middle" align="center">% Rap</td><td class="gallery" valign="middle" align="center">Sort Order</td><td class="gallery" valign="middle" align="center">Delete</td></tr></thead>';
+$widgetButton = $this->getLayout();
+$buttonHtml = $widgetButton->createBlock('adminhtml/widget_button')
+->setData(
+		array(
+				'label'     => 'Add New Vendor',
+				'onclick'   => 'addNewImg3()',
+				'class'     => 'add'))
+				->toHtml();
+
+				$html .= '<tfoot class="gallery">';
+				$html .= '<tr class="gallery">';
+				$html .= '<td class="gallery" valign="middle" align="left" colspan="5">'.$buttonHtml.'</td>';
+$html .= '</tr>';
+$html .= '</tfoot>';
+
+$html .= '<tbody class="gallery">';
+
+$i = 0;
+if (!is_null($this->getValue())) {
+foreach ($this->getValue() as $image) {
+$i++;
+$html .= '<tr class="gallery">';
+foreach ($this->getValue()->getAttributeBackend()->getImageTypes() as $type) {
+$url = $image->setType($type)->getSourceUrl();
+$html .= '<td class="gallery" align="center" style="vertical-align:bottom;">';
+	$html .= '<a href="'.$url.'" target="_blank" onclick="imagePreview(\''.$this->getHtmlId().'_image_'.$type.'_'.$image->getValueId().'\');return false;">
+		<img id="'.$this->getHtmlId().'_image_'.$type.'_'.$image->getValueId().'" src="'.$url.'" alt="'.$image->getValue().'" height="25" align="absmiddle" class="small-image-preview"></a><br/>';
+		$html .= '<input type="text" name="'.$this->getName().'_'.$type.'['.$image->getValueId().']" size="1"></td>';
+	}
+	$html .= '<td class="gallery" align="center" style="vertical-align:bottom;"><input type="input" name="'.parent::getName().'[position]['.$image->getValueId().']" value="'.$image->getPosition().'" id="'.$this->getHtmlId().'_position_'.$image->getValueId().'" size="3"/></td>';
+	$html .= '<td class="gallery" align="center" style="vertical-align:bottom;"><input type="checkbox" name="'.parent::getName().'[delete]['.$image->getValueId().']" value="'.$image->getValueId().'" id="'.$this->getHtmlId().'_delete_'.$image->getValueId().'"/></td>';
+			$html .= '</tr>';
+}
+}
+			if ($i==0) {
+			$html .= '<script type="text/javascript">document.getElementById("custom_thead_2").style.visibility="hidden";</script>';
+}
+
+$html .= '</tbody></table>';
+
+$name = $this->getName();
+$parentName = parent::getName();
+
+$html .= <<<EndSCRIPT
+
+<script language="javascript">
+id = 99;
+
+function addNewImg3(){
+
+id++;
+
+document.getElementById('custom_vendor-row-'+id).className = "no";
+
+/*
+
+document.getElementById("custom_thead_2").style.visibility="visible";
+
+id--;
+new_file_input = '<input type="text" name="{$name}_%j%-%id%" size="1" style="width:100px"/>';
+
+// Sort order input
+var new_row_input = document.createElement( 'input' );
+new_row_input.type = 'text';
+new_row_input.name = '{$parentName}[position]['+id+']';
+new_row_input.size = '3';
+new_row_input.value = '0';
+	
+
+// Delete button
+var new_row_button = document.createElement( 'input' );
+new_row_button.type = 'checkbox';
+new_row_button.value = 'Delete';
+
+table = document.getElementById( "gallery" );
+
+// no of rows in the table:
+noOfRows = table.rows.length;
+
+// no of columns in the pre-last row:
+noOfCols = table.rows[noOfRows-2].cells.length;
+
+// insert row at pre-last:
+var x=table.insertRow(noOfRows-1);
+
+// insert cells in row.
+for (var j = 0; j < noOfCols; j++) {
+
+newCell = x.insertCell(j);
+newCell.align = "center";
+newCell.valign = "middle";
+
+if (j==3) {
+newCell.appendChild( new_row_input );
+}
+else if (j==4) {
+newCell.appendChild( new_row_button );
+}
+else {
+newCell.innerHTML = new_file_input.replace(/%j%/g, j).replace(/%id%/g, id);
+}
+
+}
+
+// Delete function
+new_row_button.onclick= function(){
+
+this.parentNode.parentNode.parentNode.removeChild( this.parentNode.parentNode );
+
+// Appease Safari
+//    without it Safari wants to reload the browser window
+//    which nixes your already queued uploads
+return false;
+};
+
+*/}
+</script>
+
+EndSCRIPT;
+$html.= $this->getAfterElementHtml();
+?>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Manage Custom Vendors</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="vendor" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+			<tbody>
+				<tr>
+	        		<td class="label"><label for="multiline">Custom Vendors <span class="required">*</span></label></td>
+	    			<td class="value">
+	        			<?php echo $html; ?>		
+					</td>
+				</tr>
+			</tbody>
+			</table>
+	    </div>
+	</div>
+</div>
+<?php if($count > 0): ?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Custom Vendor Uploads</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="custom_uploads" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<?php for($k=0; $k<$count; $k++) { ?>
+						<tr>
+							<td class="label"><label for="custom_uploads_<?php echo $custom_vendor_name[$k]; ?>"><?php echo $custom_vendor_name[$k]; ?></label></td>
+							<td class="value"><input type="file" value="" name="custom_uploads[<?php echo $custom_vendor_name[$k]; ?>]" id="custom_uploads_<?php echo $custom_vendor_name[$k]; ?>"></td>
+							<td class="label"><strong>Last Update: <?php echo $this->getLastUpdate($custom_vendor_name[$k]); ?></strong></td>
+						</tr>
+					<?php } ?>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Custom Vendor Import</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="custom_uploads_upload" class="fieldset">
+		<div class="hor-scroll">
+			<div class="content-footer">
+				<table class="custombuttons">		
+					<tr>
+						<td>
+							<ul>
+								<?php for($k=0; $k<$count; $k++) { ?>
+									<li>
+										<button onclick="setLocation('<?php echo $this->getUrl('uploadtool/adminhtml_uploadtool/customImport', array('_current'=>true,'vendor'=>$custom_vendor_name[$k])); ?>')" class="scalable save" type="button" title="Import <?php echo $custom_vendor_name[$k]; ?>">
+											<span><span><span>Import <?php echo $custom_vendor_name[$k]; ?></span></span></span>
+										</button>
+									</li>
+								<?php } ?>
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Remove Custom Vendor Stones</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="custom_uploads_delete" class="fieldset">
+		<div class="hor-scroll">
+			<div class="content-footer">
+				<table class="custombuttons">		
+					<tr>
+						<td>
+							<ul>
+								<?php for($l=0; $l<$count; $l++) { ?>
+									<li>
+										<button onclick="setLocation('<?php echo $this->getUrl('uploadtool/adminhtml_uploadtool/deleteDiamonds', array('_current'=>true,'source'=>$custom_vendor_name[$l])); ?>')" class="scalable save" type="button" title="Import <?php echo $custom_vendor_name[$l]; ?>">
+											<span><span><span>Remove <?php echo $custom_vendor_name[$l]; ?> Stones</span></span></span>
+										</button>
+									</li>
+								<?php } ?>
+							</ul>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</div>
+</div>
+<?php endif; ?>
+<style type="text/css">
+.custombuttons td { padding: 5px 2px; }
+.custombuttons ul li { display: inline-block; margin: 0 5px 5px 0 !important; }
+</style>

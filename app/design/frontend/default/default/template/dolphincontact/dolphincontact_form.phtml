@@ -1,0 +1,63 @@
+<?php 
+$isModuleEnabled = Mage::getStoreConfig('dolphincontact/general/enable_dolphincontact');
+
+if($isModuleEnabled)
+{
+$data = Mage::getSingleton('core/session')->getQuickFormData();
+Mage::getSingleton('core/session')->setQuickFormData(null);
+?>
+<div class="footerform_container">
+    <form id="dolphin_contact" action="<?php echo Mage::getUrl('dolphincontact/contact/submit'); ?>" method="POST">
+        <!--<table>
+            <tr><td><label for="name">Name</label><td></tr>
+            <tr><td><input class="inp_txt" type="text" name="name" /></td></tr>
+            <tr><td><label for="email">email</label></td></tr>
+            <tr><td><input class="inp_txt" type="text" name="email" /></td></tr>
+            <tr><td><label for="message">Message</label></td></tr>
+            <tr><td><textarea class="inp_txtarea" name="message"></textarea></td></tr>
+            
+        </table>-->
+        <div class="form-field">
+            <label for="name_field" class="required"><?php echo $this->__('Name') ?><em>*</em></label><br />
+            <input class="input-text required-entry" name="name" id="name_field" type="text" value="<?php echo $this->htmlEscape($data['name']) ?>" />
+        </div>
+
+        <div class="form-field">
+            <label for="email_field" class="required"><?php echo $this->__('Email') ?><em>*</em></label><br />
+            <input class="input-text required-entry validate-email" name="email" id="email_field" type="text" value="<?php echo $this->htmlEscape($data['email']) ?>" />
+        </div>
+        
+        <div class="form-field">
+            <label for="subject_field" class="required"><?php echo $this->__('Subject') ?><em>*</em></label><br />
+            <input class="input-text required-entry" name="subject" id="subject_field" type="text" value="<?php echo $this->htmlEscape($data['subject']) ?>" />
+        </div>
+        
+        <div class="form-field">
+            <label for="phone_field" class="required"><?php echo $this->__('Phone No.') ?></label><br />
+            <input class="input-text" name="phone" id="phone_field" type="text" value="<?php echo $this->htmlEscape($data['phone']) ?>" />
+        </div>
+
+        <div class="form-field">
+            <label for="message_field" class="required"><?php echo $this->__('Message') ?><em>*</em></label><br />
+            <textarea class="required-entry" name="message" id="message_field" ><?php echo $this->htmlEscape($data['message']) ?></textarea>
+        </div>
+
+        <?php /*?><div class="form-field">
+            <label><?php echo $this->__('Security Code') ?><em>*</em></label>
+            <input name="captacha_code" type="hidden" id="captacha_code" value="<?php echo $code=Mage::helper('dolphincontact')->getNewCode(6)?>" />
+            <label for="image"><img class="mr_captcha_img" style="display: block;" src="<?php echo Mage::helper('dolphincontact')->getSecureImageUrl() ?>CaptchaSecurityImages.php?width=174&height=30&code=<?php echo $code?>" /></label>
+            <input id="security_code" class="input-text required-entry" name="security_code" value="" >
+        </div><?php */?>
+
+        <div class="button-set">
+            <button class="button form-button" type="submit"><span><span><?php echo $this->__('Send') ?></span></span></button>
+        </div>
+        
+    </form>
+<script type="text/javascript">
+//<![CDATA[
+var dolphinContactForm = new VarienForm('dolphin_contact', true);
+//]]>
+</script>
+</div>
+<?php } ?>

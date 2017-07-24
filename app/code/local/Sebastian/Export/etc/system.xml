@@ -1,0 +1,211 @@
+<?xml version="1.0"?>
+<!--
+/**
+ *
+ * Copyright Sebastian Enzinger <sebastian@enzinger.de> www.sebastian-enzinger.de
+ *
+ * All rights reserved.
+ *
+**/
+-->
+<config>
+    <sections>
+        <admin translate="label" module="export">
+            <label>Admin</label>
+            <tab>advanced</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>0</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>0</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+						<orderexport translate="label">
+                    <label>Order Export - Settings</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+												<basedir translate="label">
+                            <label>Base Export Directory</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>Leave empty to use magento directory, or use an absolute path (no trailing slash!)</comment>
+												</basedir>
+												<defaulttype translate="label">
+                            <label>Default Export Type</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>export/config_source_types</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </defaulttype>
+												<autoexport translate="label">
+                            <label>Auto export order after checkout?</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment></comment>
+                        </autoexport>
+														<cronjobexport translate="label">
+                            <label>Enable cron job export?</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment></comment>
+                        </cronjobexport>
+												<setstatus translate="label">
+                            <label>Change order status after export?</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>export/config_source_orderstatus</source_model>
+                            <sort_order>35</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </setstatus>
+												<xmlmarkup translate="label">
+                            <label>XML: XSL template</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment></comment>
+                        </xmlmarkup>
+												<csvmarkup translate="label">
+                            <label>CSV: XSL template</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment></comment>
+                        </csvmarkup>
+												<custommarkup translate="label">
+                            <label>Custom: XSL template</label>
+                            <frontend_type>textarea</frontend_type>
+                            <sort_order>60</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment></comment>
+                        </custommarkup>
+												<enableproductattributes translate="label">
+                            <label>Enable Product Attribute (Product settings) export?</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>Turn off to save memory</comment>
+                        </enableproductattributes>
+												<enableproductoptions translate="label">
+                            <label>Enable Product Attribute and Options (Custom Options,..) export?</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>71</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>Turn off to save memory or avoid encoding issues</comment>
+                        </enableproductoptions>
+												<enablecustomerexport translate="label">
+                            <label>Enable Customer data export?</label>
+                            <frontend_type>select</frontend_type>
+														<source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>70</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>Turn off to save memory</comment>
+                        </enablecustomerexport>
+                    </fields>
+                </orderexport>
+								<orderexportftp translate="label">
+                    <label>Order Export - FTP upload</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>60</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                		<setstatus translate="label">
+                            <label>Set status to downloaded after successful FTP upload?</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>9</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </setstatus>
+												<server translate="label">
+                            <label>FTP-Server: IP / Hostname</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </server>
+												<port translate="label">
+                            <label>FTP-Server: Port</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>Standard Port: 21</comment>
+                        </port>
+												<username translate="label">
+                            <label>FTP-Server: Username</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </username>
+												<password translate="label">
+                            <label>FTP-Server: Password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment></comment>
+                        </password>
+												<path translate="label">
+                            <label>FTP-Server: Path</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>This path has to exist on the FTP server, with trailing slash. -- Ex: /htdocs/</comment>
+                        </path>
+                		<ssl translate="label">
+                            <label>Use SSL upload</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>17</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>1</show_in_store>
+														<comment>Only available if PHP is compiled with OpenSSL support!</comment>
+                        </ssl>
+                    </fields>
+                </orderexportftp>
+						</groups>
+        </admin>
+    </sections>
+</config>

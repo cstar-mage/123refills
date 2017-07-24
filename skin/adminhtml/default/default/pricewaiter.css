@@ -1,0 +1,49 @@
+/*
+ * Copyright 2013-2015 Price Waiter, LLC
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License");
+ * you may not use this file except in compliance with the License.
+ * You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ *
+ */
+h3.pricewaiter-header {
+    background: url(images/pricewaiter_logo.png) no-repeat 0 0;
+    height: 0px;
+    overflow: hidden;
+    padding: 50px 0 0 0;
+    margin: 0px;
+    width: 145px;
+}
+
+ul.tabs a.pricewaiter-tab,
+ul.tabs a.pricewaiter-tab:hover {
+    background: url(images/tabs_span_bg.gif) repeat-x 0 100%;
+    border-bottom: none;
+    padding: 0.5em 0.5em 0.28em 1.5em;
+}
+
+ul.tabs a.pricewaiter-tab:hover {
+    background-color: #d8e6e6;
+}
+
+ul.tabs a.pricewaiter-tab.active,
+ul.tabs a.pricewaiter-tab.active:hover {
+    background-color: #fff;
+}
+
+ul.tabs a.pricewaiter-tab span,
+ul.tabs a.pricewaiter-tab:hover span {
+    background: url(images/pricewaiter_tab.png) no-repeat 0 0;
+    height: 0;
+    overflow: hidden;
+    padding: 14px 0 0;
+    width: 300x;
+}

@@ -1,0 +1,548 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Grouped product data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ * @see Mage_Catalog_Block_Product_View_Type_Grouped
+ */
+?>
+
+<?php $this->setPreconfiguredValue(); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php $_associatedProducts = $this->getAssociatedProducts(); ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<?php echo $this->getChildHtml('product_type_data_extra') ?>
+
+<?php 
+$cartridgesArray = array();
+$oemArray = array();
+$otherRelated = array();
+
+//Task: http://production.idealbrandmarketing.com/task_detail.php?ti=11288
+//1. OEM cartridges will never be in the grid, they will be in a slider below the grid like in the original mock-up
+//the 2 rows under the grid, 1 is for OEM cartridges, the other is for everything else. so refill kits, bulk ink and anything else associated with that printer would go in that second row slider.
+//Task: There are premium cartridges that should be in the grid in the Premium column.  http://production.idealbrandmarketing.com/task_detail.php?ti=12942 
+if ($_hasAssociatedProducts) {
+	foreach ($_associatedProducts as $_item) {
+		$itemModel = Mage::getModel('catalog/product')->load($_item->getId());
+		if( strpos(strtolower($itemModel->getName()), 'oem') !== false ) {
+			$oemArray[] = $itemModel;
+		} else if( ((strpos(strtolower($itemModel->getName()), 'premium') !== false) || (strpos(strtolower($itemModel->getName()), 'cartridge'))) !== false && (!(strpos(strtolower($itemModel->getName()), 'refill kit') !== false))) {
+			
+			$cartridgesArray[$itemModel->getCartId()][] = $itemModel; // groups by cartId
+			
+		} else {
+			$otherRelated[] = $itemModel;
+		}
+	}
+}
+
+?>
+
+<div class="grouped-items-table-wrapper">
+    <table class="data-table grouped-items-table" id="super-product-table">
+        <col />
+        <col />
+        <col width="1" />
+        <tbody>
+        <?php //echo "<pre>"; print_r($cartridgesArray); echo "</pre>"; ?>
+        <?php if (count($cartridgesArray) > 0): ?>
+		
+		<tr>
+                <td>
+					<table style="width: 100%; border: 1px solid silver;">
+						<tr class="mobile_tab">
+							<td><h3>Cartridges</h3></td>
+							<td class="premium_brand"><h3>Premium Brand</h3><span>100% Made in USA <br/>Lifetime Guarantee</span></td>
+							<td class="value_brand"><h3>value Brand</h3><span>Great value <br/>365 Days Guarantee</span></td>
+						</tr>
+					</table>
+					<div class="left_side top">
+						<h3>Cartridges</h3>
+				    </div>
+					<div class="right_side top">
+						<div class="first">
+							<h3>Premium Brand</h3>							
+						</div>
+						<div class="second">
+							<h3>value Brand</h3>							
+						</div>
+					</div>	                    
+                </td>
+		</tr>
+        <?php foreach ($cartridgesArray as $cartId => $_cartIdItems): ?>
+
+        	<?php foreach ($_cartIdItems as $_item):  ?>
+        	
+            <?php $_finalPriceInclTax = $this->helper('tax')->getPrice($_item, $_item->getFinalPrice(), true) ?>
+            <?php
+				$string = $this->escapeHtml($_item->getSku());
+				$premium = ((strpos(strtolower($string), "-xr") !== false) || (strpos(strtolower($_item->getName()), "premium") !== false));
+			?>	
+			
+            <tr class="<?php if (!$premium): ?> Value_Brand <?php else: ?> Premium_Brand <?php endif; ?>">		
+                <td>
+					<div class="left_side">
+						<div class="image">
+							<?php $headers = get_headers($_item->getImageLink());
+								$ser503 = substr($headers[0], 9, 3); 
+							?>
+							<?php if ($_item->getImageLink() != '' && $ser503 == '200') : ?>	
+								<img class="thumbnail"
+								 src="<?php echo $_item->getImageLink() ?>"
+								 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+								 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+							<?php else: ?>
+								<img class="thumbnail"
+								 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+								 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+								 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+							<?php endif; ?>	 
+						</div>				
+						<div class="name">
+							<p class="name-wrapper">	
+								<?php echo $this->escapeHtml($_item->getName()) ?>
+								<div class="clearer"></div>
+								<?php $Yield =  $this->escapeHtml($_item->getYield()); ?>
+								<?php if ($Yield) : ?>
+									<strong>Page Yield - </strong><?php echo $this->escapeHtml($_item->getYield()); ?>
+								<?php endif; ?>	
+								<div class="clearer"></div>
+								<?php 
+									$name = $this->escapeHtml($_item->getName());									
+									$domain = strpos($name, 'Replacement');
+									if ($domain !== false)  : ?>
+										<strong>Replaces - </strong><?php echo $name  ?>									
+										<div class="clearer"></div>						
+									<?php endif; ?>
+								<span class="picture_brand">	
+									<strong>Picture - </strong> <?php if (!$premium): ?> Value Brand <?php else: ?> Premium Brand 
+								</span>	
+								<?php endif; ?>								
+							</p>
+							
+							<!-- MObile Desing for qty and price -->
+							<div class="first mobile">			
+							<?php if ($premium) { ?>								
+								<strong>Item # - </strong><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+								<div class="clearer"></div>
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>							
+									<div class="add-to-cart">
+										<div class="qty-wrapper">
+											<?php if ($_item->isSaleable()) : ?>
+												<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" />
+												<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" />
+												<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" />											
+											<?php else: ?>
+												<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+											<?php endif; ?>
+										</div>
+									</div>
+								</div>
+							<?php } ?>	
+							</div>
+							<div class="second mobile">							
+								<?php if (!$premium) {		?>
+									<strong>Item # - </strong><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+									<div class="clearer"></div>
+									<div class="detail_container">
+										<?php echo $this->getPriceHtml($_item, true) ?>								
+										<div class="add-to-cart">
+											<div class="qty-wrapper">
+												<?php if ($_item->isSaleable()) : ?>
+													<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" />
+													<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" />
+													<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" />
+													
+													<script>
+														jQuery(document).ready(function(){
+														
+														var val = jQuery("#super_group_<?php echo $_item->getId(); ?>").val();
+														
+														jQuery('#add_<?php echo $_item->getId(); ?>').click(function(){
+															
+															currentVal = parseInt(jQuery('#super_group_<?php echo $_item->getId(); ?>').val());
+															
+															 if (parseFloat(currentVal) >= 0 ){
+															 
+															var plus = currentVal+1;
+														   }
+															  jQuery('#super_group_<?php echo $_item->getId(); ?>').val(plus);
+															
+														});
+														jQuery('#minus_<?php echo $_item->getId(); ?>').click(function(){
+															
+															  newVal = parseInt(jQuery('#super_group_<?php echo $_item->getId(); ?>').val());
+															  
+															   if (parseFloat(newVal) >= 1 ){
+															  
+															  var minus = newVal-1;
+															  
+															  jQuery('#super_group_<?php echo $_item->getId(); ?>').val(minus);
+															  
+															  }
+														});
+													});
+													</script>
+													
+												<?php else: ?>
+													<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+												<?php endif; ?>
+											</div>
+										</div>	
+									</div>
+								<?php } ?>	
+							</div>	
+						</div>
+						
+						<?php $clr= $_item->getResource()->getAttribute('product_color')->getFrontend()->getValue($_item); ?>
+							<style>	
+									.only_group_product .left_side .<?php echo $clr ; ?>::before {
+										background: <?php echo $clr ; ?>;
+										border-radius: 16px;
+										content: "";
+									    height: 25px;
+										margin: 0 auto 5px;
+										padding-left: 25px;
+										width: 25px;
+										display: block;
+									}
+							</style>
+							<div class="color mobile">
+								<h1 class="round_color  <?php echo $clr ; ?> ">
+								<?php echo $clr; ?></h1>
+							</div>
+					</div>
+					<div class="right_side content">						
+						<div class="first ">			
+							<?php if ($premium) {		?>								
+								<strong>Item # - </strong><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+								<div class="clearer"></div>
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>							
+									<div class="add-to-cart">
+										<div class="qty-wrapper">
+											<?php if ($_item->isSaleable()) : ?>
+												<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" />
+												<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" />
+												<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" />											
+											<?php else: ?>
+												<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+											<?php endif; ?>
+										</div>
+									</div>
+								</div>
+							<?php } ?>	
+						</div>
+						<div class="second ">
+							
+							<?php if (!$premium) {		?>
+								<strong>Item # - </strong><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+								<div class="clearer"></div>
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>								
+									<div class="add-to-cart">
+										<div class="qty-wrapper">
+											<?php if ($_item->isSaleable()) : ?>
+												<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" />
+												<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" />
+												<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" />
+												
+												<script>
+													jQuery(document).ready(function(){
+													
+													var val = jQuery("#super_group_<?php echo $_item->getId(); ?>").val();
+													
+													jQuery('#add_<?php echo $_item->getId(); ?>').click(function(){
+														
+														currentVal = parseInt(jQuery('#super_group_<?php echo $_item->getId(); ?>').val());
+														
+														 if (parseFloat(currentVal) >= 0 ){
+														 
+														var plus = currentVal+1;
+													   }
+														  jQuery('#super_group_<?php echo $_item->getId(); ?>').val(plus);
+														
+													});
+													jQuery('#minus_<?php echo $_item->getId(); ?>').click(function(){
+														
+														  newVal = parseInt(jQuery('#super_group_<?php echo $_item->getId(); ?>').val());
+														  
+														   if (parseFloat(newVal) >= 1 ){
+														  
+														  var minus = newVal-1;
+														  
+														  jQuery('#super_group_<?php echo $_item->getId(); ?>').val(minus);
+														  
+														  }
+													});
+												});
+												</script>
+												
+											<?php else: ?>
+												<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+											<?php endif; ?>
+										</div>
+									</div>	
+								</div>
+							<?php } ?>	
+						</div>
+					</div>					
+                </td>
+                
+                <?php /* if ($this->getCanShowProductPrice($_product)): ?>
+                <td class="a-right">
+                    <?php if ($this->getCanShowProductPrice($_item)): ?>
+                    <?php echo $this->getPriceHtml($_item, true) ?>
+                    <?php echo $this->getTierPriceHtml($_item) ?>
+                    <?php endif; ?>
+                </td>
+                <?php endif; */?>
+            </tr>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+        <?php else: ?>
+           <tr>
+               <td colspan="<?php if ($_product->isSaleable()): ?>4<?php else : ?>3<?php endif; ?>"><?php echo $this->__('No cartridges of this printer are available.') ?></td>
+           </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">decorateTable('super-product-table')</script>
+
+
+<div class="only-bgcolor">
+	<div class="price-and-add-to-cart">
+		<ul>			
+			<li>
+				<div class="image">
+					<img src=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'wysiwyg/guarantee.png';?>">
+				</div>
+				<span class="text">Our Guarantee <br>Lifetime for Premium Brand </span>
+			</li>
+			<li>
+				<div class="image">
+					<img src=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'wysiwyg/free_ship.png';?>">
+				</div>
+				<span class="text">Free Shipping on <br>Orders Over $49</span>
+			</li>
+			<li class="last">		
+				<p class="action ">
+					<button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+						<span><span><?php echo $this->__('Add to Cart') ?></span></span>
+					</button>
+				</p>
+			</li>	
+		</ul>	
+	</div>
+</div>
+
+
+<?php $_itemModel = Mage::getModel('catalog/product')->load($_item->getId()); ?>
+<div class="cartridge-slider">	
+	<h3> Original Cartridges for <?php echo $_product->getAttributeText('printer_model'); ?></h3>
+	<?php if(count($oemArray) == 0): ?>
+		<?php echo $this->__('No OEM cartridges for this printer are available.') ?>
+	<?php endif; ?>
+	<div class="line"></div>
+	
+	<?php if(count($oemArray) > 0): ?>
+	<div class="wrapper">
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<?php foreach ($oemArray as $_item): ?> 
+						<li>
+							<div class="product">
+								<div class="pro_img">
+									<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">									
+										<?php if ($_item->getSmallImageLink() != '') : ?>										
+											<img class="thumbnail"
+											 src="<?php echo $_item->getSmallImageLink() ?>"
+											 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+											 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+										<?php else: ?>
+											<img class="thumbnail"
+											 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+											 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+											 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+									<?php endif; ?>
+									</a>
+								</div>	
+								
+								<p class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></p>
+	
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>
+									
+									<div class="add-to-cart">
+										<?php if(!$_item->isGrouped()): ?>
+										<div class="qty-wrapper">            
+											<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" />
+											<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" />
+											<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" />
+											<?php echo $this->getChildHtml('addtocart') ?>
+										</div>
+										<?php endif; ?>													
+									</div>												
+									<div class="clear"></div>							
+								</div>													
+							</div>
+						</li>
+					<?php endforeach; ?>	
+				</ul>
+			</div>
+		</div>		
+		<a href="#" class="jcarousel-control-prev"></a>
+		<a href="#" class="jcarousel-control-next"></a>		
+	</div>
+    <?php endif; ?>
+	
+</div>
+
+
+<div class="cartridge-slider">
+	<div class="line"></div>
+	<h3> Other Related Products for <?php echo $_product->getAttributeText('printer_model'); ?></h3>
+	<?php if(count($otherRelated) == 0): ?>
+		<?php echo $this->__('Other related items not found.') ?>
+	<?php endif; ?>
+	<div class="line"></div>
+
+	<?php if(count($otherRelated) > 0): ?>
+	
+	<div class="wrapper">
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<?php foreach ($otherRelated as $_item): ?>
+						<li>
+							<div class="product">
+								<div class="pro_img">
+									<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">
+										<?php if ($_item->getSmallImageLink() != '') : ?>	
+												<img class="thumbnail"
+												 src="<?php echo $_item->getSmallImageLink() ?>"
+												 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+												 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+											<?php else: ?>
+												<img class="thumbnail"
+												 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+												 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+												 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+										<?php endif; ?>
+									</a>
+								</div>
+	
+								<p class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></p>
+	
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>
+									
+									<div class="add-to-cart">
+										<?php if(!$_item->isGrouped()): ?>
+										<div class="qty-wrapper">            											
+											<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" />
+											<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" />
+											<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" />
+											<?php echo $this->getChildHtml('addtocart') ?>
+										</div>
+										<?php endif; ?>													
+									</div>												
+									<div class="clear"></div>							
+								</div>													
+							</div>
+						</li>
+					<?php endforeach; ?>	
+				</ul>
+			</div>
+		</div>		
+		<a href="#" class="jcarousel-control-prev"></a>
+		<a href="#" class="jcarousel-control-next"></a>		
+	</div>
+	<div style="position:relative;">
+		<div class="only-bgcolor desktop">
+			<div class="price-and-add-to-cart">
+				<ul>
+					<li class="mobile">		
+						<p class="action ">
+							<button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+								<span><span><?php echo $this->__('Add to Cart') ?></span></span>
+							</button>
+						</p>
+					</li>
+				</ul>
+			</div>
+		</div>
+	</div>
+    <?php endif; ?>	
+</div>
+
+	
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	if(jQuery('.jcarousel').length > 0) {
+		jQuery('.jcarousel').jcarousel(); 
+	}
+	var width = jQuery(window).width();	
+	if ( width <= 752){
+		jQuery('.mobile_tab td.premium_brand').trigger( "click" );
+	}		
+});
+jQuery(window).resize(function(){
+	var width = jQuery(window).width();
+	//console.log(width);	
+	if ( width <= 752){
+		jQuery('.mobile_tab td.premium_brand').trigger( "click" );	
+		//jQuery('.only_group_product .right_side.content').addClass('toggle');
+		jQuery('.only-bgcolor').addClass('sticky');	
+		
+		/** for mobile toggle premium and brand value*/		
+		
+		jQuery('.mobile_tab td.premium_brand').on('click',function() {				
+			jQuery('.mobile_tab td.value_brand').removeClass("active");
+			jQuery('.mobile_tab td.premium_brand').addClass("active");	
+			jQuery('#super-product-table .Premium_Brand').css('display','block');
+			jQuery('#super-product-table .Value_Brand').css('display','none');
+		});
+
+		jQuery('.mobile_tab td.value_brand').on('click',function() {				  
+			jQuery('.mobile_tab td.premium_brand').removeClass("active");
+			jQuery('.mobile_tab td.value_brand').addClass("active");	
+			jQuery('#super-product-table .Premium_Brand').css('display','none');
+			jQuery('#super-product-table .Value_Brand').css('display','block');  
+		});
+	}
+	if( width > 752){
+		//jQuery('.only_group_product .right_side.content').removeClass('toggle');
+		jQuery('.only-bgcolor').removeClass('sticky');		
+	}
+});
+</script>

@@ -1,0 +1,237 @@
+ <script type="text/javascript">
+ jQuery(document).ready(function(){
+     jQuery("#inline_2").click(function() {
+			jQuery("#inline_content_2").toggle( "fast" );
+			jQuery("#inline_content_2").toggleClass("formopen");
+		});
+});
+ </script>
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<div class="product-view">
+    <div class="product-essential">
+        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+
+            <div class="product-img-box">
+                <div class="product-name">
+                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                </div>
+                <?php echo $this->getChildHtml('media') ?>
+            </div>
+			<div class="product-right">
+	            <div class="product-shop">
+	                <div class="product-name">
+	                    <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span>
+	                </div>
+	                <div class="product-sku">
+	                    <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getSku(), 'sku') ?></span>
+	                </div>
+					
+	                <div class="price-info">
+	                    <?php echo $this->getPriceHtml($_product); ?> 
+	                    <?php echo $this->getChildHtml('bundle_prices') ?>
+	                    <?php echo $this->getTierPriceHtml() ?>
+	                </div>
+						
+	                <div class="extra-info">
+	                    <?php //echo $this->getReviewsSummaryHtml($_product, 'default', false)?>
+	                    <?php //echo $this->getChildHtml('product_type_availability'); ?>
+	                </div>
+	
+	                <?php echo $this->getChildHtml('alert_urls') ?>
+	
+	                <?php if ($_product->getShortDescription()):?>
+	                    <div class="short-description">
+	                        <div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'description') ?></div>
+	                    </div>
+	                <?php endif;?>
+	
+	                <?php echo $this->getChildHtml('other');?>
+	
+	                <?php if ($_product->isSaleable() && $_product['has_options']):?>
+	                    <?php echo $this->getChildChildHtml('container1', '', true, true) ?>
+	                <?php endif;?>
+	
+	            </div>
+	
+	            <div class="add-to-cart-wrapper">
+	                <?php echo $this->getChildHtml('product_type_data') ?>
+	                <?php echo $this->getChildHtml('extrahint') ?>
+	
+	                <?php //if (!$_product->hasOptions()):?>
+	                <?php if (!$_product['has_options']): ?>
+	                    <div class="add-to-box">
+	                        <?php if($_product->isSaleable()): ?>
+	                            <?php echo $this->getChildHtml('addtocart') ?>
+	                            <script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/calendar/calendar.js'; ?>"></script>
+	<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/calendar/calendar-setup.js'; ?>"></script>
+	<link type="text/css" href="<?php echo $this->getBaseUrl().'js/calendar/calendar-win2k-1.css'; ?>" rel="stylesheet" ></link>
+	<link rel="stylesheet" href="<?php echo $this->getSkinUrl(); ?>css/customcontactnew/customcontactnew.css" type="text/css"> 
+	                            <div class="make-apointment">
+	                            	<a class='inline_2' id="inline_2" > <!--href="#inline_content_2" -->Inquire about this item</a>
+	                            </div>
+	                         	    <div class="messages_s" style="display: none; color:#009772; ">
+							       		<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('messages_s')->toHtml(); ?>
+				                        <b style="font-size:16px">Thank You For Your Inquiry
+				                        We will respond to you within 24 hours.
+				                        </b>
+							       </div>
+						    	<div class="apoinmt-form" id="inline_content_2" style="display:none;" >
+							        <?php echo $this->getLayout()->createBlock('customcontactnew/customcontactnew')->setTemplate('customcontactnew/customcontact_detail.phtml')->toHtml(); ?>
+							        <?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('customcontact_new')->toHtml() ?> 
+							    </div>
+	                            
+	                            <?php if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+	                                <span class="or"><?php echo $this->__('OR') ?></span>
+	                            <?php endif; ?>
+	                        <?php endif; ?>
+	                        <?php echo $this->getChildHtml('addto') ?>
+	                        <?php echo $this->getChildHtml('sharing') ?>
+	                    </div>
+	                    <?php echo $this->getChildHtml('extra_buttons') ?>
+	                <?php elseif (!$_product->isSaleable()): ?>
+	                    <div class="add-to-box">
+	                        <?php echo $this->getChildHtml('addto') ?>
+	                        <?php echo $this->getChildHtml('sharing') ?>
+	                    </div>
+	                <?php endif; ?> 
+	               	<?php if($theme['productdetails_tab_attribute_option'] == 'outside'): ?>
+		                <div class="pro_attribute">
+		            	     <?php echo $this->getChildHtml('additional') ?>
+		            	</div>
+		            <?php endif; ?>
+	            </div>
+	
+	            <?php //echo $this->getChildHtml('related_products') ?>
+	
+	            <div class="clearer"></div>
+	            
+	            <?php if ($_product->isSaleable() && $_product['has_options']):?>
+	                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+	            <?php endif;?>
+	  				
+  				<?php if($theme['productdetails_tab_enable'] == 'yes'): ?>
+			    <div class="product-essential product-collateral toggle-content tabs">
+			        <?php if ($detailedInfoGroup = $this->getChildGroup('detailed_info', 'getChildHtml')):?>
+			            <dl id="collateral-tabs" class="collateral-tabs">
+			                <?php foreach ($detailedInfoGroup as $alias => $html):?>
+			                	<?php if(($alias == "additional") && ($theme['productdetails_tab_attribute_option'] == 'outside')): ?>
+			                	<?php continue; ?>
+			                	<?php else: ?>
+			                    <dt class="tab"><span><?php echo $this->escapeHtml($this->getChildData($alias, 'title')) ?></span></dt>
+			                    <dd class="tab-container">
+			                        <div class="tab-content"><?php echo $html ?></div>
+			                    </dd>
+			                    <?php endif; ?>
+			                <?php endforeach;?>
+			            </dl>
+			        <?php endif; ?>
+			    </div>
+				<?php endif; ?>          
+	        <?php echo $this->getChildHtml('related_products') ?>	            
+	        </div>
+
+		 </form>
+	        <script type="text/javascript">
+	        //<![CDATA[
+	            var productAddToCartForm = new VarienForm('product_addtocart_form');
+	            productAddToCartForm.submit = function(button, url) {
+	                if (this.validator.validate()) {
+	                    var form = this.form;
+	                    var oldUrl = form.action;
+	
+	                    if (url) {
+	                       form.action = url;
+	                    }
+	                    var e = null;
+	                    try {
+	                        this.form.submit();
+	                    } catch (e) {
+	                    }
+	                    this.form.action = oldUrl;
+	                    if (e) {
+	                        throw e;
+	                    }
+	
+	                    if (button && button != 'undefined') {
+	                        button.disabled = true;
+	                    }
+	                }
+	            }.bind(productAddToCartForm);
+	
+	            productAddToCartForm.submitLight = function(button, url){
+	                if(this.validator) {
+	                    var nv = Validation.methods;
+	                    delete Validation.methods['required-entry'];
+	                    delete Validation.methods['validate-one-required'];
+	                    delete Validation.methods['validate-one-required-by-name'];
+	                    // Remove custom datetime validators
+	                    for (var methodName in Validation.methods) {
+	                        if (methodName.match(/^validate-datetime-.*/i)) {
+	                            delete Validation.methods[methodName];
+	                        }
+	                    }
+	
+	                    if (this.validator.validate()) {
+	                        if (url) {
+	                            this.form.action = url;
+	                        }
+	                        this.form.submit();
+	                    }
+	                    Object.extend(Validation.methods, nv);
+	                }
+	            }.bind(productAddToCartForm);
+	        //]]>
+	        </script>
+    </div>
+	
+	<?php echo $this->getChildHtml('product_recently_viewed') ?>
+    <?php echo $this->getChildHtml('upsell_products') ?>
+    <?php echo $this->getChildHtml('product_additional_data') ?>
+
+</div>
+
+                            

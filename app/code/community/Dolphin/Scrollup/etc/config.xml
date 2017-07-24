@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Dolphin_Scrollup>
+            <version>1.0.2</version>
+        </Dolphin_Scrollup>
+    </modules>
+    <global>
+        <blocks>
+            <dlscrollup>
+                <class>Dolphin_Scrollup_Block</class>
+            </dlscrollup>
+        </blocks>
+        <helpers>
+            <dlscrollup>
+                <class>Dolphin_Scrollup_Helper</class>
+            </dlscrollup>
+        </helpers>
+        <models>
+            <dlscrollup>
+                <class>Dolphin_Scrollup_Model</class>
+            </dlscrollup>
+        </models>
+    </global>
+    <frontend>
+        <layout>
+            <updates>
+                <dlscrollup>
+                	<file>scrollup.xml</file>
+                </dlscrollup>
+            </updates>
+        </layout>
+    </frontend>
+    <default>
+        <design>
+            <scrollup>
+                <enabled>0</enabled>
+                <scrollduration>0.5</scrollduration>
+                <scrolloffset>0</scrolloffset>
+                <scrollactiveoverlay>75</scrollactiveoverlay>
+                <elementtype>image</elementtype>
+                <scrolltoptext>Top</scrolltoptext>
+                <scrolltopimage>default/scrollup.png</scrolltopimage>
+            </scrollup>
+        </design>
+    </default>
+</config>

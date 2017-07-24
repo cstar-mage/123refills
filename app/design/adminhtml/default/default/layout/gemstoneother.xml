@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <gemstoneother_adminhtml_gemstoneother_index>
+        <reference name="content">
+            <block type="gemstoneother/adminhtml_gemstoneother" name="gemstoneother" />
+        </reference>
+    </gemstoneother_adminhtml_gemstoneother_index>
+</layout>

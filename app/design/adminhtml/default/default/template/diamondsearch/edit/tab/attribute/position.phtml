@@ -1,0 +1,129 @@
+<?php
+/*$Attribute = array( //AttributeCode => AttributeLabel
+	"lotno"			=>	'STOCK NUMBER',
+	"carat"			=>	"CARAT WEIGHT",
+	"polish"		=>	"POLISH",
+	"symmetry"		=>	"SYMMETRY",
+	"fluorescence"	=>	"FLUORESCENCE",
+	"dimensions"	=>	"MEASUREMENTS",
+	"depth"			=>	"DEPTH",
+	"tabl"			=>	"TABLE",
+	"culet"			=>	"CULET",
+	"cert_number"	=>	"CERTIFICATE #",
+	"certificate"	=>	"CERTIFICATE",
+	"length_width_ratio"=>	"L:W RATIO",
+	"Shape"			=>	"Shape",
+);
+
+$AttributeJS = array( //AttributeCode => AttributeForJS in detailpage
+	"lotno"			=>	'stock_number',
+	"carat"			=>	"Carat",
+	"polish"		=>	"Polish",
+	"symmetry"		=>	"Symmetry",
+	"fluorescence"	=>	"Fluorescence",
+	"dimensions"	=>	"Measurements",
+	"depth"			=>	"Depth",
+	"tabl"			=>	"Table",
+	"culet"			=>	"Culet",
+	"cert_number"	=>	"CERTIFICATE #",
+	"certificate"	=>	"CERTIFICATE",
+	"length_width_ratio"	=>	"length_width_ratio",
+	"Shape"			=>	"Shape",
+);*/
+$Attribute = array(
+	array("Label"=>"STOCK NUMBER", "JsCode"=>"stock_number", "DetailsCode"=>"lotno","sortorder"=>"10","avilable"=>"1"),		
+	array("Label"=>"CARAT WEIGHT", "JsCode"=>"Carat", "DetailsCode"=>"carat","sortorder"=>"20","avilable"=>"1"),		
+	array("Label"=>"POLISH", "JsCode"=>"Polish", "DetailsCode"=>"polish","sortorder"=>"30","avilable"=>"1"),		
+	array("Label"=>"SYMMETRY", "JsCode"=>"Symmetry", "DetailsCode"=>"symmetry","sortorder"=>"40","avilable"=>"1"),		
+	array("Label"=>"FLUORESCENCE", "JsCode"=>"Fluorescence", "DetailsCode"=>"fluorescence","sortorder"=>"50","avilable"=>"1"),		
+	array("Label"=>"MEASUREMENTS", "JsCode"=>"Measurements", "DetailsCode"=>"dimensions","sortorder"=>"60","avilable"=>"1"),		
+	array("Label"=>"DEPTH", "JsCode"=>"Depth", "DetailsCode"=>"depth","sortorder"=>"70","avilable"=>"1"),		
+	array("Label"=>"TABLE", "JsCode"=>"Table", "DetailsCode"=>"tabl","sortorder"=>"80","avilable"=>"1"),		
+	array("Label"=>"CULET", "JsCode"=>"Culet", "DetailsCode"=>"culet","sortorder"=>"90","avilable"=>"1"),  		
+	array("Label"=>"CERTIFICATE #", "JsCode"=>"CertNumber", "DetailsCode"=>"cert_number","sortorder"=>"100","avilable"=>"1"),		
+	array("Label"=>"CERTIFICATE", "JsCode"=>"Report", "DetailsCode"=>"certificate","sortorder"=>"110","avilable"=>"1"),		
+	array("Label"=>"L:W RATIO", "JsCode"=>"ratio", "DetailsCode"=>"ratio","sortorder"=>"120","avilable"=>"1"),		
+	array("Label"=>"SHAPE", "JsCode"=>"Shape", "DetailsCode"=>"shape","sortorder"=>"130","avilable"=>"1"), 
+	array("Label"=>"CUT", "JsCode"=>"Cut", "DetailsCode"=>"cut","sortorder"=>"140","avilable"=>"1"),
+	array("Label"=>"COLOR", "JsCode"=>"Color", "DetailsCode"=>"color","sortorder"=>"150","avilable"=>"1"),
+	array("Label"=>"AVAIL", "JsCode"=>"Availability", "DetailsCode"=>"availability","sortorder"=>"160","avilable"=>"1"),
+	array("Label"=>"CLARITY", "JsCode"=>"Clarity", "DetailsCode"=>"clarity","sortorder"=>"180","avilable"=>"1"),
+	array("Label"=>"CROWN", "JsCode"=>"Crown", "DetailsCode"=>"crown","sortorder"=>"190","avilable"=>"1"),
+	array("Label"=>"PAVILION", "JsCode"=>"Pavilion", "DetailsCode"=>"pavilion","sortorder"=>"200","avilable"=>"1"),	
+	array("Label"=>"GIRDLE", "JsCode"=>"Girdle", "DetailsCode"=>"girdle","sortorder"=>"210","avilable"=>"1"),
+	array("Label"=>"MAKE", "JsCode"=>"Make", "DetailsCode"=>"make","sortorder"=>"220","avilable"=>"1"),
+	array("Label"=>"COUNTRY", "JsCode"=>"country", "DetailsCode"=>"country","sortorder"=>"230","avilable"=>"1"),
+	array("Label"=>"GEM ADVISOR", "JsCode"=>"gem_advisor", "DetailsCode"=>"gem_advisor","sortorder"=>"240","avilable"=>"1"),
+	array("Label"=>"HELIUM REPORT", "JsCode"=>"helium_report", "DetailsCode"=>"helium_report","sortorder"=>"250","avilable"=>"1"), 
+	array("Label"=>"IN HOUSE", "JsCode"=>"inhouse", "DetailsCode"=>"inhouse","sortorder"=>"260","avilable"=>"0"), 
+	array("Label"=>"RAP %", "JsCode"=>"percent_rap", "DetailsCode"=>"percent_rap","sortorder"=>"270","avilable"=>"0"), 
+	 
+		 
+);   
+//echo "<pre>";print_r($Attribute);echo "</pre>";
+  
+$collection = unserialize(Mage::getStoreConfig("diamondsearch/attribute_position"));
+$_counter = 0;
+?>
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid <?php echo $slidername ?>slider">
+    	<table id="attribute-options-table-<?php echo $slidername ?>" class="dynamic-grid diamondsearch-slider" cellspacing="0" cellpadding="0">
+		<tbody>
+			 
+        	<tr class="headings">
+        		
+            	<th><?php echo $this->__('Available') ?><th><?php echo $this->__('Attribute Code') ?></th><th><?php echo $this->__('Attribute Label') ?></th><th><?php echo $this->__('Sortorder') ?></th>
+            </tr>
+<?php  foreach($Attribute as $attr): ?>
+		<tr class="option-row diamondsearch-attribute-position" id="attribute-position-row-<?php echo $_counter?>">
+			<td>		
+				<?php $avail=(int)$collection['option_'.$_counter]['avilability']; ?>			 
+				 <?php // echo $collection['option_'.$_counter]['avilability']  ?>
+				 <?php if(!isset($collection['option_'.$_counter]['avilability'])) { $avail=1;   } ?>
+				 <input <?php if($avail==1):?> checked <?php endif ?> type="checkbox"  onclick="changeValue('attribute_position[option_<?php echo $_counter ?>][avilability]')" 
+				 	id="attribute_position[option_<?php echo $_counter ?>][avilability]" 
+				    value="<?php echo $avail ?>" 
+				   />
+				   <input id='attribute_position[option_<?php echo $_counter ?>][avilability]_check'  name="attribute_position[option_<?php echo $_counter ?>][avilability]"  type='hidden' value='<?php echo $avail ?>' >	
+			</td>
+           	<td> 
+			<input type="hidden" name="attribute_position[option_<?php echo $_counter ?>][DetailsCode]" value="<?php echo $attr['DetailsCode'];?>">
+			<input type="hidden" name="attribute_position[option_<?php echo $_counter ?>][JsCode]" value="<?php echo $attr['JsCode'];?>"><?php echo $attr['DetailsCode']?>
+			</td>
+			<td><?php if($collection['option_'.$_counter]['Label']){
+					$Label = $collection['option_'.$_counter]['Label'];
+				}else{	$Label = $attr['Label'];	} ?>
+<input name="attribute_position[option_<?php echo $_counter ?>][Label]" value="<?php echo $Label;?>" class="input-text" type="text"></td>
+		
+			<?php if($collection['option_'.$_counter]['sortorder']){
+					$sort = $collection['option_'.$_counter]['sortorder'];
+				}else{	$sort = $attr['sortorder'];	} ?>	
+            <td><input name="attribute_position[option_<?php echo $_counter ?>][sortorder]" value="<?php echo $sort ?>" class="input-text" type="text"></td>
+		</tr>
+<?php $_counter++;?>
+<?php endforeach;?>
+		</tbody>
+        </table>
+	</td>
+</tr>
+
+<script>
+
+	function changeValue(val)
+	{
+		//alert(val);
+		if(document.getElementById(val).checked) {
+		   // document.getElementById('testNameHidden').disabled = true;
+		 // jQuery("."+val).val('1');
+		  var input=val+'_check';
+			document.getElementById(input).value = 1;	 			   
+		}
+		else
+		{
+			 var input=val+'_check';
+				document.getElementById(input).value = 0;	  
+		}	
+	}			
+				
+</script>

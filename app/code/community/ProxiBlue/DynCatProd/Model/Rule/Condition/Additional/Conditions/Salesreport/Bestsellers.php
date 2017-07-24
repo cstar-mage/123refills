@@ -1,0 +1,103 @@
+<?php
+
+/**
+ * Customer Registration rule condition
+ *
+ * @category  ProxiBlue
+ * @package   DynCatProd
+ * @author    Lucas van Staden <sales@proxiblue.com.au>
+ * @copyright 2016 Lucas van Staden (ProxiBlue)
+ * @license   http://www.proxiblue.com.au/eula EULA
+ * @link      http://www.proxiblue.com.au
+ */
+class ProxiBlue_DynCatProd_Model_Rule_Condition_Additional_Conditions_Salesreport_Bestsellers
+    extends
+    ProxiBlue_DynCatProd_Model_Rule_Condition_Additional_Conditions_Salesreport_Abstract
+{
+
+    protected $_inputType = 'text';
+
+    public function __construct()
+    {
+        parent::__construct();
+        $this->setType(
+            'dyncatprod/rule_condition_additional_conditions_salesreport_bestsellers'
+        )
+            ->setValue(null)
+            ->setConditions(array())
+            ->setActions(array());
+    }
+
+    /**
+     * Render this as html
+     *
+     * @return string
+     */
+    public function asHtml()
+    {
+        $html = $this->getTypeElement()->getHtml() .
+            Mage::helper('dyncatprod')->__(
+                "Products from the best sellers sales report %s %s day(s) before the day the category is viewed",
+                $this->getOperatorElement()->getHtml(),
+                $this->getValueElement()->getHtml()
+            );
+        if ($this->getId() != '1') {
+            $html .= $this->getRemoveLinkHtml();
+        }
+
+        return $html;
+    }
+
+    public function asString($format = '')
+    {
+        $str = Mage::helper('dyncatprod')->__(
+            "Products from the best sellers sales report <strong>%s %s</strong> day(s) before the day the category is viewed",
+            $this->getOperatorName(),
+            $this->getValueName()
+        );
+
+        return $str;
+    }
+
+
+    /**
+     * validate
+     *
+     * @param  Varien_Object $object
+     *
+     * @return boolean
+     */
+    public function _validate(Varien_Object $object)
+    {
+        try {
+            $value = $this->getValueParsed();
+            if ($value != '0' || $value != '') {
+                $collection = $object->getCollection();
+                $customCollection = $this->getCollection();
+                $customCollection->addOrderedQty(
+                    $this->getDateBack($value), $this->getTodayDate()
+                );
+                $this->mergeCollections($collection, $customCollection);
+                $customCollection->getSelect()->order(
+                    'ordered_qty ' . Zend_Db_Select::SQL_DESC
+                );
+                $customCollection->getSelect()->order(
+                    'order_items_name ' . Zend_Db_Select::SQL_ASC
+                );
+                $this->getHelper()->debug(
+                    'BEST SELLERS SQL: ' . $customCollection->getSelect()
+                );
+                // replace the current collection with the sales one.
+                $customCollection->setFlag('is_replaced', true);
+                $object->setCollection($customCollection);
+
+                return true;
+            }
+        } catch (Exception $e) {
+            mage::logException($e);
+        }
+
+        return false;
+    }
+
+}

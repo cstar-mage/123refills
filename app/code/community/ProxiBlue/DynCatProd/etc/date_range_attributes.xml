@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+
+This file defines any attributes that should be conveted to the date range display in the rules
+
+Normal magento convention is to name attribute code in the form of _to and _from for attributes that work in pairs
+to define the ability to make a date range.
+An example of this is new_from and new_to which defines when a product is set to be new
+The module will automatically convert attributes where the codes conform to the convention, however there may be times when
+other custom or 3rd party attributes do not conform. This file can then be placed to allow those to work as a
+date range attribute
+
+These attributes are defined in pairs, as start and end in the xml
+
+<date_range>
+    <transform>
+        <description>The description for this date range that will appear in the rules dropdown</description>
+        <code>
+            <start>Attribute pair start attribute_code</start>
+            <end>Attribute pair end attribute_code</end>
+        </code>
+    </transform>
+</date_range>
+
+-->
+
+<date_range>
+    <transform>
+        <description>Start and End date for product</description>
+        <code>
+            <start>start_date</start>
+            <end>end_date</end>
+        </code>
+    </transform>
+</date_range>

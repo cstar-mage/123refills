@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<config>
+ <modules>
+  <Bss_DeferJS>
+   <version>1.0.9</version>  
+ </Bss_DeferJS> 
+</modules>
+<global>
+  <models>
+   <bss_deferjs>
+    <class>Bss_DeferJS_Model</class> 
+  </bss_deferjs> 
+</models> 
+<blocks>
+ <bss_deferjs>
+   <class>Bss_DeferJS_Block</class> 
+ </bss_deferjs>
+</blocks>
+<helpers>
+ <bss_deferjs>
+   <class>Bss_DeferJS_Helper</class> 
+ </bss_deferjs> 
+</helpers>
+</global>
+<frontend>
+  <events>
+
+    <controller_action_postdispatch>
+      <observers>
+        <bss_deferjs_get_script>
+          <class>bss_deferjs/observer</class>
+          <method>deferScript</method>
+        </bss_deferjs_get_script>
+      </observers>   
+    </controller_action_postdispatch> 
+
+ </events> 
+</frontend>
+
+<adminhtml>
+  <acl>
+    <resources>
+      <all>
+        <title>Allow Everything</title>
+      </all> 
+      <admin>
+        <children>
+          <system>
+            <children>
+              <config>
+                <children>
+                  <deferjs>
+                    <title>Bss Defer Javascript Configuration</title>
+                  </deferjs>    
+                </children>  
+              </config> 
+            </children>   
+          </system>      
+        </children>    
+      </admin>
+    </resources> 
+  </acl>
+</adminhtml>
+
+<default>
+  <deferjs>
+    <general>
+      <active translate="label">1</active>
+      <exclude_home_page translate="label">0</exclude_home_page>
+      <show_path translate="label">0</show_path>
+      <in_body translate="label">0</in_body>
+    </general>
+  </deferjs>
+</default>
+
+</config>

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<config>
+    <modules>
+        <EcommerceTeam_FastImport>
+            <version>1.0</version>
+        </EcommerceTeam_FastImport>
+    </modules>
+    <global>
+    	<blocks>
+	        <ecommerceteam_fastimport><class>EcommerceTeam_FastImport_Block</class></ecommerceteam_fastimport>
+	    </blocks>
+    	<models>
+            <ecommerceteam_fastimport><class>EcommerceTeam_FastImport_Model</class></ecommerceteam_fastimport>
+        </models>
+    	<helpers>
+			<ecommerceteam_fastimport><class>EcommerceTeam_FastImport_Helper</class></ecommerceteam_fastimport>
+		</helpers>
+	</global>
+	<frontend>
+		<routers>
+			<fastimport>
+	            <use>standard</use>
+	            <args>
+	               <module>EcommerceTeam_FastImport</module>
+	               <frontName>fastimport</frontName>
+	            </args>
+			</fastimport>
+        </routers>
+	</frontend>
+	<adminhtml>
+		
+		<menu>
+            <system>
+            	<children>
+	                <convert>
+	                	<children>
+	                		<fastimport>
+								<title>Fast Products Import</title>
+								<action>fastimport/adminhtml_product</action>
+								<sort_order>15</sort_order>
+							</fastimport>
+						</children>
+	                </convert>
+                </children>
+            </system>
+        </menu>
+		<acl>
+	        <resources>
+	            <admin>
+	                <children>
+	                    <system>
+	                        <children>
+	                            <convert>
+	                                <children>
+	                                    <fastimport>
+	                                    	<title>EcommerceTeam - Fast Products Import</title>
+	                                    </fastimport>
+	                                </children>
+	                            </convert>
+	                        </children>
+	                    </system>
+	                </children>
+	            </admin>
+	        </resources>
+	    </acl>
+	</adminhtml>
+	<default>
+		<ecommerceteam_fastimport>
+			<general>
+				<title>EasyCheckout extension by EcommerceTeam</title>
+				<different_shipping_enabled>1</different_shipping_enabled>
+			</general>
+		</ecommerceteam_fastimport>
+	</default>
+</config>

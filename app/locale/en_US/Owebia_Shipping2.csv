@@ -1,0 +1,122 @@
+# en-US
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/Os2/Editor.php
+    "New shipping method","New shipping method"
+    "Remove","Remove"
+    "[meta] %s","[meta] %s"
+    "[data] %s","[data] %s"
+    # Tools
+        "Insert","Insert"
+        "Tools","Tools"
+        "Shipping country","Shipping country"
+        "Cart weight","Cart weight"
+        "Products quantity","Products quantity"
+        "Price incl. tax","Price incl. tax"
+        "Price excl. tax","Price excl. tax"
+        "Weight","Weight"
+        "Tracking number","Tracking number"
+        "Human readable version","Human readable version"
+    # Fields
+        "ID","ID"
+        "Type","Type"
+            "Shipping Method (default)","Shipping Method (default)"
+            "Data","Data"
+            "Meta","Meta"
+        "About","About"
+        "Enabled","Enabled"
+            "Enabled (default)","Enabled (default)"
+            "Disabled","Disabled"
+        "Label","Label"
+        "Description","Description"
+        "Shipping address","Shipping address"
+        "Billing address","Billing address"
+        "Origin address","Origin address"
+        "Conditions","Conditions"
+        "Fees","Fees"
+        "Customer groups","Customer groups"
+        "Tracking url","Tracking url"
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/Os2/Help.php
+    "Refresh","Refresh"
+    "Previous page","Previous page"
+    "Summary","Summary"
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/System/Config/Form/Field/Config.php
+    "Help","Help"
+    "Apply","Apply"
+    "Cancel","Cancel"
+    "Source &amp; Correction","Source &amp; Correction"
+    "Download configuration templates","Download configuration templates (in French)"
+    # JS
+        "Dissociate","Dissociate"
+        "Remove","Remove"
+        "Edit","Edit"
+        "Enter the new value:","Enter the new value:"
+        "[No label]","[No label]"
+        "Loading...","Loading..."
+
+# app/code/community/Owebia/Shipping2/Block/Adminhtml/System/Config/Form/Field/Config.php
+    "Version: %s","Version: %s"
+
+# app/code/community/Owebia/Shipping2/Controller/Abstract.php
+    "Owebia Shipping 2 Editor","Owebia Shipping 2 Editor"
+    "Source &amp; Correction","Source &amp; Correction"
+    "Help","Help"
+    "Donate","Donate"
+    "Close","Close"
+
+# app/code/community/Owebia/Shipping2/controllers/Adminhtml/Os2/AjaxController.php
+    "Editor","Editor"
+    "Source","Source"
+    "Correction","Correction"
+    "Debug","Debug"
+    "Apply","Apply"
+    "Export","Export"
+    "Add a shipping method","Add a shipping method"
+    "New shipping method","New shipping method"
+
+# app/code/community/Owebia/Shipping2/etc/system.xml
+    "Configuration","Configuration"
+    "Tracking URL","Tracking URL"
+    "Debug","Debug"
+    "{debug_help}","Debug displayed on cart while making a shipping estimation"
+    "Auto-escaping","Auto-escaping"
+    "{auto_escaping_help}","Enable systematic auto-escaping of variables"
+    "Auto-correction","Auto-correction"
+    "{auto_correction_help}","This option enables backward compatibility but consommme resources"
+    "Stop to first match","Stop to first match"
+    "General Configuration","General Configuration"
+    "Weight unit","Weight unit"
+    "Bundle Product Management","Bundle Product Management"
+    "Configurable Product Management","Configurable Product Management"
+    "If ""Self"" is selected, options bellow are ignored","If ""Self"" is selected, options bellow are ignored"
+    "Item processing","Item processing"
+    "Item options on","Item options on"
+    "Item data on","Item data on"
+    "Product data on","Product data on"
+
+# app/code/community/Owebia/Shipping2/Model/ConfigParser.php
+    "Configuration disabled","Configuration disabled"
+    "The cart doesn't match conditions","The cart doesn't match conditions"
+    "Infinite loop %s","Infinite loop %s"
+    "Error in table %s","Error in table %s"
+    "Usage of deprecated syntax %s","Usage of deprecated syntax %s"
+    "Usage of unknown properties %s","Usage of unknown properties %s"
+    "Usage of deprecated properties %s","Usage of deprecated properties %s"
+
+# app/code/community/Owebia/Shipping2/Model/Carrier/Abstract.php
+    "track the package","track the package"
+
+# app/code/community/Owebia/Shipping2/Model/Os2/Data/AddressFilter.php
+    "Africa","Africa"
+    "Asia","Asia"
+    "Europa","Europa"
+    "North America","North America"
+    "South America","South America"
+    "Oceania","Oceania"
+    "Antartica","Antartica"
+    "European Union","European Union"
+
+# app/code/community/Owebia/Shipping2/Model/System/Config/Source/LoadOnParent.php
+    "Self","Self"
+    "Parent","Parent"

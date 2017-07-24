@@ -1,0 +1,439 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+             xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns="http://schemas.xmlsoap.org/wsdl/"
+             name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <types>
+        <schema xmlns="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:Magento">
+            <import namespace="http://schemas.xmlsoap.org/soap/encoding/" schemaLocation="http://schemas.xmlsoap.org/soap/encoding/" />
+            <!-- Order Manager Info start-->
+            <!-- Order Manager Info changeStatus request start-->
+            <complexType name="iwd_ordermanager_orderInfoChangeStatusEntityRequest">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="order_status" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_orderInfoChangeStatusEntityRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_orderInfoChangeStatusEntityRequest[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Info changeStatus request end-->
+            <!-- Order Manager Info changeStatus response start-->
+            <complexType name="iwd_ordermanager_orderInfoChangeStatusEntityResponse">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="order_status" type="xsd:string" />
+                    <element name="status" type="xsd:int" />
+                    <element name="message" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_orderInfoChangeStatusEntityResponseArrayOrder">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_orderInfoChangeStatusEntityResponse[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_orderInfoChangeStatusEntityResponseArrayOrders">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_orderInfoChangeStatusEntityResponseArrayOrder[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Info changeStatus response end-->
+            <!-- Order Manager Info end-->
+
+            <!-- Order Manager Shipping start-->
+            <!-- Order Manager Shipping changeShippingMethod request start-->
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodEntityRequest">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="shipping" type="typens:iwd_ordermanager_shippingChangeShippingMethodShippingEntityRequestArray" />
+                    <!--<element name="shipping" wsdl:arrayType="typens:iwd_ordermanager_shippingChangeShippingMethodShippingEntityRequestArrayEntity[]" />-->
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodShippingEntityRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_shippingChangeShippingMethodShippingEntityRequestArrayEntity[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodShippingEntityRequestArrayEntity">
+                <all>
+                    <element name="name" type="xsd:string" />
+                    <element name="amount_excl_tax" type="xsd:double"  minOccurs="0"/>
+                    <element name="amount_incl_tax" type="xsd:double" minOccurs="0" />
+                    <element name="description" type="xsd:string"  minOccurs="0"/>
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodEntityRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_shippingChangeShippingMethodEntityRequest[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Shipping changeShippingMethod request end-->
+            <!-- Order Manager Shipping changeShippingMethod response start-->
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodEntityResponse">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="status" type="xsd:int" />
+                    <element name="message" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodEntityResponseArrayOrder">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_shippingChangeShippingMethodEntityResponse[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_shippingChangeShippingMethodEntityResponseArrayOrders">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_shippingChangeShippingMethodEntityResponseArrayOrder[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Shipping changeShippingMethod response end-->
+            <!-- Order Manager Shipping end-->
+
+            <!-- Order Manager Items start-->
+            <!-- Order Manager Items delete request start-->
+            <complexType name="iwd_ordermanager_itemsDeleteItemRequestEntity">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="item_id" type="xsd:int" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsDeleteItemRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsDeleteItemRequestEntity[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items delete request end-->
+            <!-- Order Manager Items delete response start-->
+            <complexType name="iwd_ordermanager_itemDeleteEntityResponse">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="item_id" type="xsd:int" />
+                    <element name="status" type="xsd:int" />
+                    <element name="message" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsDeleteItemResponseArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemDeleteEntityResponse[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsDeleteItemResponseArrays">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsDeleteItemResponseArray[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items delete response end-->
+
+            <!-- Order Manager Items UpdatePrice request start-->
+            <complexType name="iwd_ordermanager_itemsUpdateItemPriceEntityRequest">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="item_id" type="xsd:int" />
+                    <element name="price" type="xsd:double" />
+                    <element name="type" type="xsd:string" minOccurs="0" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsUpdateItemPriceEntityRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsUpdateItemPriceEntityRequest[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items UpdatePrice request end-->
+
+            <!-- Order Manager Items UpdatePrice response start-->
+            <complexType name="iwd_ordermanager_itemUpdateItemPriceEntityResponse">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="item_id" type="xsd:int" />
+                    <element name="status" type="xsd:int" />
+                    <element name="message" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsUpdateItemPriceResponseArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemUpdateItemPriceEntityResponse[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsUpdateItemPriceResponseArrays">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsUpdateItemPriceResponseArray[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items UpdatePrice response end-->
+            
+            <!-- Order Manager Items UpdateQty request start-->
+            <complexType name="iwd_ordermanager_itemsUpdateItemQtyEntityRequest">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="item_id" type="xsd:int" />
+                    <element name="qty" type="xsd:double" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsUpdateItemQtyEntityRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsUpdateItemQtyEntityRequest[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items UpdateQty request end-->
+
+            <!-- Order Manager Items UpdateQty response start-->
+            <complexType name="iwd_ordermanager_itemUpdateItemQtyEntityResponse">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="item_id" type="xsd:int" />
+                    <element name="qty" type="xsd:double" />
+                    <element name="status" type="xsd:int" />
+                    <element name="message" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsUpdateItemQtyResponseArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemUpdateItemQtyEntityResponse[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsUpdateItemQtyResponseArrays">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsUpdateItemQtyResponseArray[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items UpdateQty response end-->
+            
+            <!-- Order Manager Items add request start-->
+            <complexType name="iwd_ordermanager_itemsAddEntityRequest">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="product_id" type="xsd:int" />
+                    <element name="qty" type="xsd:double" />
+                    <element name="options" type="xsd:string" minOccurs="0"/>
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsAddEntityRequestArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsAddEntityRequest[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items add request end-->
+
+            <!-- Order Manager Items add response start-->
+            <complexType name="iwd_ordermanager_itemAddEntityResponse">
+                <all>
+                    <element name="order_id" type="xsd:int" />
+                    <element name="product_id" type="xsd:int" />
+                    <element name="qty" type="xsd:double" />
+                    <element name="options" type="xsd:string" minOccurs="0"/>
+                    <element name="item_id" type="xsd:int"/>
+                    <element name="status" type="xsd:int" />
+                    <element name="message" type="xsd:string" />
+                </all>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsAddItemResponseArray">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemAddEntityResponse[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <complexType name="iwd_ordermanager_itemsAddItemResponseArrays">
+                <complexContent>
+                    <restriction base="soapenc:Array">
+                        <attribute ref="soapenc:arrayType" wsdl:arrayType="typens:iwd_ordermanager_itemsAddItemResponseArray[]"/>
+                    </restriction>
+                </complexContent>
+            </complexType>
+            <!-- Order Manager Items add response end-->
+
+            <!-- Order Manager Items end-->
+        </schema>
+    </types>
+
+    <!-- Order Manager Info start-->
+    <!-- Order Manager Info changeStatus start-->
+    <message name="iwd_ordermanager_orderInfoChangeStatusRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:iwd_ordermanager_orderInfoChangeStatusEntityRequestArray" />
+    </message>
+    <message name="iwd_ordermanager_orderInfoChangeStatusResponse">
+        <part name="result" type="typens:iwd_ordermanager_orderInfoChangeStatusEntityResponseArrayOrders" />
+    </message>
+    <!-- Order Manager Info changeStatus end-->
+    <!-- Order Manager Info end-->
+
+    <!-- Order Manager Shipping start-->
+    <!-- Order Manager Shipping changeShippingMethod start-->
+    <message name="iwd_ordermanager_shippingChangeShippingMethodRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:iwd_ordermanager_shippingChangeShippingMethodEntityRequestArray" />
+    </message>
+    <message name="iwd_ordermanager_shippingChangeShippingMethodResponse">
+        <part name="result" type="typens:iwd_ordermanager_shippingChangeShippingMethodEntityResponseArrayOrders" />
+    </message>
+    <!-- Order Manager Shipping changeShippingMethod end-->
+    <!-- Order Manager Shipping end-->
+
+    <!-- Order Manager Items start-->
+    <!-- Order Manager Items delete start-->
+    <message name="iwd_ordermanager_itemsDeleteItemRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:iwd_ordermanager_itemsDeleteItemRequestArray" />
+    </message>
+    <message name="iwd_ordermanager_itemsDeleteItemResponse">
+        <part name="result" type="typens:iwd_ordermanager_itemsDeleteItemResponseArrays" />
+    </message>
+    <!-- Order Manager Items delete end-->
+
+    <!-- Order Manager Items updateItemPrice start-->
+    <message name="iwd_ordermanager_itemsUpdateItemPriceRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:iwd_ordermanager_itemsUpdateItemPriceEntityRequestArray" />
+    </message>
+    <message name="iwd_ordermanager_itemsUpdateItemPriceResponse">
+        <part name="result" type="typens:iwd_ordermanager_itemsUpdateItemPriceResponseArrays" />
+    </message>
+    <!-- Order Manager Items updateItemPrice end-->
+
+    <!-- Order Manager Items updateItemQty start-->
+    <message name="iwd_ordermanager_itemsUpdateItemQtyRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:iwd_ordermanager_itemsUpdateItemQtyEntityRequestArray" />
+    </message>
+    <message name="iwd_ordermanager_itemsUpdateItemQtyResponse">
+        <part name="result" type="typens:iwd_ordermanager_itemsUpdateItemQtyResponseArrays" />
+    </message>
+    <!-- Order Manager Items updateItemQty end-->
+
+    <!-- Order Manager Items add start-->
+    <message name="iwd_ordermanager_itemsAddItemRequest">
+        <part name="sessionId" type="xsd:string" />
+        <part name="data" type="typens:iwd_ordermanager_itemsAddEntityRequestArray" />
+    </message>
+    <message name="iwd_ordermanager_itemsAddItemResponse">
+        <part name="result" type="typens:iwd_ordermanager_itemsAddItemResponseArrays" />
+    </message>
+    <!-- Order Manager Items add end-->
+    <!-- Order Manager Items end-->
+
+    <portType name="{{var wsdl.handler}}PortType">
+        <operation name="iwd_ordermanager_orderInfoChangeStatus">
+            <documentation>Change order status</documentation>
+            <input message="typens:iwd_ordermanager_orderInfoChangeStatusRequest" />
+            <output message="typens:iwd_ordermanager_orderInfoChangeStatusResponse" />
+        </operation>
+        <operation name="iwd_ordermanager_shippingChangeShippingMethod">
+            <documentation>Change order shipping</documentation>
+            <input message="typens:iwd_ordermanager_shippingChangeShippingMethodRequest" />
+            <output message="typens:iwd_ordermanager_shippingChangeShippingMethodResponse" />
+        </operation>
+        <operation name="iwd_ordermanager_itemsDeleteItem">
+            <documentation>Delete order items</documentation>
+            <input message="typens:iwd_ordermanager_itemsDeleteItemRequest" />
+            <output message="typens:iwd_ordermanager_itemsDeleteItemResponse" />
+        </operation>
+        <operation name="iwd_ordermanager_itemsUpdateItemPrice">
+            <documentation>Update order item price</documentation>
+            <input message="typens:iwd_ordermanager_itemsUpdateItemPriceRequest" />
+            <output message="typens:iwd_ordermanager_itemsUpdateItemPriceResponse" />
+        </operation>
+        <operation name="iwd_ordermanager_itemsUpdateItemQty">
+            <documentation>Update order item qty</documentation>
+            <input message="typens:iwd_ordermanager_itemsUpdateItemQtyRequest" />
+            <output message="typens:iwd_ordermanager_itemsUpdateItemQtyResponse" />
+        </operation>
+        <operation name="iwd_ordermanager_itemsAddItem">
+            <documentation>Add order items</documentation>
+            <input message="typens:iwd_ordermanager_itemsAddItemRequest" />
+            <output message="typens:iwd_ordermanager_itemsAddItemResponse" />
+        </operation>
+    </portType>
+    <binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+        <operation name="iwd_ordermanager_orderInfoChangeStatus">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="iwd_ordermanager_shippingChangeShippingMethod">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="iwd_ordermanager_itemsDeleteItem">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="iwd_ordermanager_itemsUpdateItemPrice">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="iwd_ordermanager_itemsUpdateItemQty">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+        <operation name="iwd_ordermanager_itemsAddItem">
+            <soap:operation soapAction="urn:{{var wsdl.handler}}Action" />
+            <input>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </input>
+            <output>
+                <soap:body namespace="urn:{{var wsdl.name}}" use="encoded" encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" />
+            </output>
+        </operation>
+    </binding>
+</definitions>

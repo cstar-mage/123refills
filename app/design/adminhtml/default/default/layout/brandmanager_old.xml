@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <brandmanager_adminhtml_brandmanager_index>
+        <reference name="content">
+            <block type="brandmanager/adminhtml_brandmanager" name="brandmanager" />
+        </reference>
+    </brandmanager_adminhtml_brandmanager_index>
+</layout>

@@ -1,0 +1,124 @@
+
+<input type="hidden" id="ibm_page_id" value="<?php echo $this->getPageId(); ?>" />
+<input type="hidden" id="ibm_form_key" value="<?php echo Mage::getSingleton('core/session')->getFormKey(); ?>" />
+<div id="ibm_dialog_container"></div>
+<div id="ibm_builder_temp_data_container"></div>
+<div id="ibm_editor_wrapper" style="display: none;">
+    <div id="ibm_editor_overlay" class="overlay_magento"></div>
+
+    <div id="ibm_editor_content">
+     <!--<a class="CloSe" style="float: right;" href="javascript:;" onclick="IBMEditor.hideEditor()">Close</a> -->
+		
+        <?php $currentUrl = $this->helper('core/url')->getCurrentUrl();
+		$explod = explode('page_id/',$currentUrl);
+		$pageid = explode('/',$explod[1]);
+		$pageID = $pageid[0];
+		?>
+        <?php $model = Mage::getModel('cms/page')->getCollection()
+		->addFieldTofilter('page_id',$pageID)->load();
+		
+		//print_r($model->getdata());
+		//echo $model->getData['title'];
+		$pro = $model->getdata();
+
+		 ?>
+        
+        <div class="category_container expandit">
+			<div class="curent_page"><span class="category_container_minmax">
+					<a href="#" class="min">Min</a>
+					<a href="#" class="max">Max</a>
+				</span><?php echo $pro[0]['title']; ?></div>
+			<div class="categories_list_wrapper">
+				<div id="categories_list_container">
+					
+				</div>
+				<div class="preview_btns">
+					<span>Workspace</span>
+					<a class="ibm_preview_button ibm_phone ibm_button" href="#"></a>
+					<a class="ibm_preview_button ibm_tablet ibm_button" href="#"></a>
+					<a class="ibm_preview_button ibm_screen ibm_button active" href="#"></a>
+				</div>
+			</div>
+			<!--<a class="export_blocks" href="javascript:;" onclick="IBMEditor.fitHtmlToMagentoTextArea()">Save Page</a> -->
+        </div>
+		
+        <div class="block_container" id="block_container">
+			<div id="blocks_thumbnails_container" style="display:none;">
+
+			</div>
+        </div>
+		<div id="blocks_style_container" style="display:none;">
+			<span class="css_editor_close editor_tab_close"><a href="#">Close</a></span>
+			<div id="update_all">
+			<span>EFFECT ALL MODULES</span>
+				<div class="slideTwo">
+					<input type="checkbox" value="None" id="slideTwo" name="check" />
+					<label for="slideTwo"></label>
+				</div>
+			</div>
+			<div id="css_controls_container"></div>
+			<div id="picker"></div>
+			<div id="appearances"></div>
+		</div>
+        <div class="right-side-containers">
+			<div class="ibm_control-buttons">
+				<div class="left-side-buttons">
+					<a class="ibm_undo ibm_button" href="#">Undo</a> 
+					<a class="ibm_redo ibm_button" href="#">Redo</a>
+					
+					<!--<input type="button" id="clear_template" style="display: none;" value="<?php echo $this->__('Clear Template'); ?>">-->
+				</div>
+				<div class="middle-buttons">
+						<a class="ibm_clear ibm_button" id="clear_template" href="#">clear layout</a>	
+				</div>
+				<div class="right-side-buttons">
+					<a class="export_blocks ibm_button" href="javascript:;" onclick="IBMEditor.fitHtmlToMagentoTextArea()">Save Page</a>
+					<!--<a class="ibm_button" href="#">Preview</a>-->
+					<a class="CloSe ibm_button" href="javascript:;" onclick="IBMEditor.hideEditor()"></a>
+				</div>
+				<div class="clear-box"></div>
+			</div>
+			<div class="blocks-container">
+				<div id="blocks_html_holder">
+					<input type="button" id="clear_template" style="display: none;" value="<?php echo $this->__('Clear Template'); ?>">
+					<div id="frame" class="empty">
+
+					</div>
+				</div>
+			</div>
+		</div>
+    </div>
+</div>
+<div id="ibm-loader" style="display: none;"></div>
+
+<style>
+	.blocks-container {
+		background-color: <?php echo $this->getBackgroundColor() ?>;
+	}
+</style>
+
+<script>
+function addActive(elem) {
+		var a = document.getElementsByClassName('category_element');
+		for (var i = 0; i < a.length; i++) {
+			a[i].classList.remove('active');
+		}
+		elem.classList.add('active');
+	}
+
+jQuery(document).ready(function(e) {
+    var height = jQuery(window).height();
+    console.log(height);
+    jQuery('#ibm_editor_overlay').css('height', height);
+	
+	var hgt = jQuery("#categories_list_container").height();
+console.log(hgt);
+	hgt = hgt + 370;
+	var hight = hgt+"px";
+	//jQuery("#categories_list_container").css("max-height", hight);
+	//jQuery('#blocks_thumbnails_container').delay(1600).show(500,"easeOutBack");
+});
+
+IBMEditorCss.imageEditorOnClickUrl = "<?php echo $this->getImageEditorOnClickUrl() ?>";
+
+</script>

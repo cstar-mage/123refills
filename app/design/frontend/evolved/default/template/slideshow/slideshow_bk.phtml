@@ -1,0 +1,70 @@
+<script>
+jQuery(window).load(function(){
+	jQuery(".nextarr").click(function(){
+		jQuery(".cycle-pager-active").next().click();
+		if(jQuery( ".slideshow-pager span" ).last().hasClass("cycle-pager-active"))
+		{
+			//alert("hi");
+			jQuery(".slideshow-pager span").first().click();
+		}
+	});
+	jQuery(".prevarr").click(function(){
+		jQuery(".cycle-pager-active").prev().click();
+		if(jQuery( ".slideshow-pager span" ).first().hasClass("cycle-pager-active"))
+		{
+			//alert("hi");
+			jQuery(".slideshow-pager span").last().click();
+		}
+	});
+});
+
+</script>
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php if(Mage::getStoreConfig("slideshow/general/enable")): ?>
+<?php
+	$bannerCollections = Mage::getModel('slideshow/slideshow')
+	->getCollection()
+	->addFieldToFilter(
+		array('stores', 'stores'),
+		array(
+			array('finset'=>Mage::app()->getStore()->getId()), 
+			array('eq'=>'0'))
+	)
+	//->addFieldToFilter('filename', array('neq' => ''))
+	->addFieldToFilter('status', array('eq' => '1'))->setOrder("sort_order","ASC");	
+	
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<?php if(count($bannerCollections) > 0): ?>
+
+     
+<div class="slideshow-container">
+ 
+			
+	<ul class="slideshow">
+						
+	<?php foreach ($bannerCollections as $item): ?>
+		
+        
+        <li data-transition="<?php echo $item->getData('slide_transition');?>"<?php if($item->getData('slide_url')):?> data-link="<?php echo $item->getData('slide_url');?>"<?php if($item->getData('slide_target')):?> data-target="_blank"<?php endif;?><?php endif;?> data-slotamount="<?php echo $item->getData('slot_amount');?>" data-masterspeed="<?php echo $item->getData('transition_duration');?>"<?php if($item->getData('delay')):?> data-delay="<?php echo $item->getData('delay');?>"<?php endif;?><?php if($navigation_type=='thumb'):?> data-thumb="<?php echo $this->getSkinUrl('images/timthumb.php');?>?src=<?php echo $item->getImageUrl()?>&w=<?php echo $thumbnails_width?>&h=<?php echo $thumbnails_height?>"<?php endif;?>>
+			<a href="<?php echo $item->getData('slide_url');?>">
+				<?php /* ?>
+				<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$item->getFilename() ?>">
+				<?php */ ?>
+				<?php $html = $processor->filter($item->getImageSlide()); ?>
+				<?php echo nl2br($html); ?>
+			</a>
+		</li>
+							
+<?php endforeach;?>
+	</ul>
+
+<span class="slideshow-pager"></span>
+<span class="prevarr"></span>	
+<span class="nextarr"></span>
+</div>
+
+
+<?php endif; ?>
+<?php endif; ?>

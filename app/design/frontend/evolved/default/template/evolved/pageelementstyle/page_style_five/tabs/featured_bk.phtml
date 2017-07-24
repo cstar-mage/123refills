@@ -1,0 +1,91 @@
+<script>
+(function($) {
+    $(function() {
+        var jcarousel = $('.featuredtab .jcarousel');
+        
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var width = jcarousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / 4;
+                } else if (width >= 350) {
+                    width = width / 2;
+                }
+                jcarousel.jcarousel('items').css('width', width + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        $('.featuredtab .jcarousel-control-prev')
+            .jcarouselControl({
+                target: '-=1'
+            });
+
+        $('.featuredtab .jcarousel-control-next')
+            .jcarouselControl({
+                target: '+=1'
+            });
+
+        $('.featuredtab .jcarousel-pagination')
+            .on('.featuredtab jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .on('click', function(e) {
+                e.preventDefault();
+            })
+            .jcarouselPagination({
+                perPage: 1,
+                item: function(page) {
+                    return '<a href="#' + page + '">' + page + '</a>';
+                }
+            });
+    });
+})(jQuery);
+</script>    
+<?php
+$theme = Ideal_Evolved_Block_Evolved::getConfig();
+$categoryId = $theme['homepage_tabs_featured_category']; // a category id that you can get from admin
+$category = Mage::getModel('catalog/category')->load($categoryId);
+$_productCollection = Mage::getModel('catalog/product')
+    ->getCollection()
+    ->addCategoryFilter($category)
+    ->load();
+
+//echo count($_productCollection);
+
+?>
+<?php //if (($_productCollection = $this->getProductCollection()) && $_productCollection->getSize()): ?>
+<?php if(count($_productCollection) != 0): ?>
+<div class="featuredtab">
+<div class="jcarousel-wrapper">
+       <div class="jcarousel">
+            <ul>
+            	<?php foreach ($_productCollection as $_product): ?>
+    			<?php $_product = Mage::getModel('catalog/product')->load($_product->getId()); ?>
+	                <li>
+	                	<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+			                <?php $_imgwidth = 150; 
+			                ?>
+			                <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+			                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgwidth); ?>"
+			                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+			            </a>
+			            <a href="<?php echo $_product->getProductUrl() ?>"><span class="product-name"><?php echo $_product->getName(); ?></span></a>
+  			             <?php $currency_code = Mage::app()->getStore()->getCurrentCurrencyCode();  
+			               		$currency_symbol = Mage::app()->getLocale()->currency( $currency_code )->getSymbol(); ?>
+  			            <span class="product-price"><?php echo $currency_symbol.number_format($_product->getFinalPrice(),2); ?></span>
+			         </li>
+		        <?php endforeach; ?>
+           </ul>
+       </div>
+	       <a href="#" class="jcarousel-control-prev"><!-- &lsaquo;  --></a>
+	       <a href="#" class="jcarousel-control-next"><!-- &rsaquo;  --></a>
+	       <p class="jcarousel-pagination"></p>
+</div>
+</div>
+<?php endif; ?>

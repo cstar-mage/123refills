@@ -1,0 +1,43 @@
+<?php 
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	if($evolvedmethod->getBlockConfig('evolved_form_footerbar')['footer_enable_footerbar'])
+	{
+		$footerbarelement = $evolvedmethod->getBlockConfig('evolved_form_footerbar')['footer_enable_footerbar'];
+	}
+	else 
+	{
+		$theme = Mage::helper('evolved')->getThemeConfig();
+		$footerbarelement = $theme['footer_enable_footerbar'];
+	}
+}
+else
+{
+	$theme = Mage::helper('evolved')->getThemeConfig();
+	$footerbarelement = $theme['footer_enable_footerbar'];
+}
+?>
+
+<div class="footerbar">
+	<div class="footerbar-container">
+		<?php 
+			switch ($footerbarelement) {
+				case "subscribe_and_social_media":
+					echo $this->getChildHtml('subscribe_and_social_media');
+					break;
+				case "subscribe_only":
+					echo $this->getChildHtml('subscribe_only');
+					break;
+				case "social_media_only":
+					echo $this->getChildHtml('social_media_only');
+					break;
+				case "html_only":
+					echo $this->getChildHtml('html_only');
+					break;
+				default:
+					echo "";
+			}
+		?>
+	</div>
+</div>

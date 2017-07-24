@@ -1,0 +1,83 @@
+
+
+<?php $catelist=$this->getcategorylist();  ?>	
+
+<div class="amfinder-horizontal morebrand" id="amfinder_58902ccb2227dContainer">
+	<ul>
+		<li class="dropdown-element">
+			<select data-label="Printer Brand" placeholder="Printer Printer Brand " name="finder[1]" id="finder1111" style="width:120px">
+				<option value="0">Printer Brand	</option>
+				<?php foreach($catelist as $key => $value): ?>
+						<option value="<?php echo $key ?>"><?php echo $value ?></option> 
+				<?php endforeach; ?>
+			</select>  
+		</li>
+
+		<li class="dropdown-element">
+			<select data-label="Printer Series" placeholder="Printer Printer Series " name="finder[2]" id="finder2222"   style="width:120px">
+					<option>Printer Series</option></select> &nbsp;
+		</li>
+    	
+		<li class="dropdown-element">
+			<select   placeholder="Printer Printer Model " class='finder33brands' name="finder[3]" id="finder3333"   style="width:120px">
+					<option>Printer Model</option>
+			</select> &nbsp;
+    	</li>
+    	
+    	<li class="dropdown-button">
+			<div class='finalProductData1 morebrandbutton' style='display: table;'>
+			</div>	
+         	<div class="selectprinter amfinder-buttons" >
+        		<button class="button" title="Find" type="submit"><span><span>Find Now</span></span></button>
+        	 </div>
+    	</li>
+	</ul>	
+</div>
+
+
+<script>
+	/* jQuery(".finder33brands").change(function() {
+  		//alert( "Handler for .change() called." );
+		var value = jQuery(this).val();
+		//alert(value);
+		var $cat=jQuery('#finder1111 option:selected').val();
+		var $ser =jQuery('#finder2222 option:selected').val();
+		 jQuery.ajax(
+		 {	
+
+			url : printerData,
+			type: "GET",
+	        data : {id:value,cat:$cat,ser:$ser},
+ 	        success:function(data, textStatus, jqXHR) 
+	        {
+		 
+				 //init(formData);		
+				jQuery('.selectprinter').remove();	
+				jQuery(".amfinder-buttons").append(data);
+				var href=jQuery('.amfinder-buttons .selectprinter').attr('href');
+				//alert(href); 
+				if(href != '' || href != null )
+				{
+					window.location.replace(href);
+				}	
+	        }
+	    }); 
+		
+	}); */  		
+</script>
+
+<script>
+jQuery(document).ready(function(){
+	 
+/*	if(!jQuery(".finalProductData").has("selectprinter1")){
+		jQuery(".amfinder-buttons").css({"display": "none"});
+	}		
+	else{
+		jQuery(".amfinder-buttons").css({"display": "block"});
+	} */
+});
+</script>
+
+
+
+

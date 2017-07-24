@@ -1,0 +1,88 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento Webshopapps Shipping Module
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category   Webshopapps
+ * @package    Webshopapps_Boxmenu
+ * @copyright   Copyright (c) 2013 Zowta Ltd (http://www.WebShopApps.com)
+ *              Copyright, 2013, Zowta, LLC - US license
+ * @license    http://www.webshopapps.com/license/license.txt
+ * @author     Karen Baker <sales@webshopapps.com>
+*/
+-->
+<config>
+	<menu>
+		<adminshortcut>
+			<title>Shortcuts</title>
+			<sort_order>200</sort_order>             
+			<children>
+					<shipping_methods translate="title"  module="adminshortcut">
+						<title>Shipping Methods</title>
+						<action>adminhtml/system_config/edit/section/carriers</action>
+					</shipping_methods>
+					<shipping_settings  translate="title" module="adminshortcut">
+						<title>Shipping Settings</title>
+						<action>adminhtml/system_config/edit/section/shipping</action>
+					</shipping_settings>  
+					<attributes  translate="title" module="adminshortcut">
+						<title>Attributes</title>
+						<action>adminhtml/catalog_product_attribute</action>
+					</attributes> 
+					<logger  translate="title" module="adminshortcut">
+						<title>WebShopApps Logger</title>
+						<action>adminhtml/system_config/edit/section/wsalogmenu</action>
+					</logger> 
+					<dev_logger  translate="title" module="adminshortcut">
+						<title>Developer Logging</title>
+						<action>adminhtml/system_config/edit/section/dev</action>
+					</dev_logger> 
+			</children>
+		</adminshortcut> 
+ 	</menu>
+	<acl>
+		<resources>
+			<admin>
+                <children>
+                    <adminshortcut>
+                       <title>Shortcuts</title>
+                        <sort_order>200</sort_order>
+                        <children>
+                         <shipping_methods translate="title">
+                            <title>Shipping Methods</title>
+                         </shipping_methods>
+                         <shipping_methods translate="title">
+                            <title>Shipping Settings</title>
+                         </shipping_methods>
+                         <attributes translate="title">
+                          	<title>Attributes</title>
+                      	 </attributes>
+                      	 <logger translate="title">
+                          	<title>WebShopApps Logger</title>
+                      	 </logger>
+                      	 <dev_logger translate="title">
+                          	<title>Developer Logging</title>
+                      	 </dev_logger>
+                        </children> 
+                    </adminshortcut>
+                </children>
+            </admin>
+		</resources>
+	</acl>
+ </config>

@@ -1,0 +1,212 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dolphin_Customcontactnew>
+            <version>0.1.0</version>
+        </Dolphin_Customcontactnew>
+    </modules>
+    <frontend>
+        <routers>
+            <customcontactnew>
+                <use>standard</use>
+                <args>
+                    <module>Dolphin_Customcontactnew</module>
+                    <frontName>customcontactnew</frontName>
+                </args>
+            </customcontactnew>
+        </routers>
+        <layout>
+            <updates>
+                <customcontactnew>
+                    <file>customcontactnew.xml</file>
+                </customcontactnew>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<customcontactnew>
+				<use>admin</use>
+				<args>
+					<module>Dolphin_Customcontactnew</module>
+					<frontName>customcontactnew</frontName>
+				</args>
+			</customcontactnew>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <customcontactnew after="Mage_Adminhtml">Dolphin_Customcontactnew_Adminhtml</customcontactnew>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    <adminhtml>
+		<menu>
+		
+		
+		
+		 <message translate="title" module="customcontactnew">
+                <title>Messages</title>
+                <sort_order>71</sort_order>  
+                <children>	
+                   <customcontactnew module="customcontactnew">
+					<title>Custom Contact Requests</title> 
+					<sort_order>104</sort_order>
+					<action>adminhtml/customcontactnew</action>    
+					<!--<children>
+						<items module="customcontactnew">
+							<title>Manage Requests</title>
+							<sort_order>0</sort_order>
+							<action>customcontactnew/adminhtml_customcontactnew</action>
+						</items>
+						<settings module="customcontactnew">
+                    		<title>Settings</title>
+			                <sort_order>1000</sort_order>
+		                    <action>adminhtml/system_config/edit/section/customcontactnew</action>
+		                </settings>
+					</children>  -->
+				</customcontactnew>
+                </children>
+             </message>
+		
+		
+		
+			
+		</menu>
+		<!--<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<Customcontactnew>
+							<title>Custom Requests</title>
+							<sort_order>10</sort_order>
+						</Customcontactnew>
+					</children>
+				</admin>
+			</resources>
+		</acl>-->
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						 <message translate="title" module="customcontactnew">
+				                <title>Messages</title>
+				                <sort_order>71</sort_order>
+				                <depends><module>Message_Contactform</module></depends>
+				                <children>
+					                   <customcontactnew module="customcontactnew">
+										<title>Custom Contact Requests</title> 
+										<sort_order>104</sort_order>
+										<action>customcontactnew/adminhtml_customcontactnew</action>    
+										<!--<children>
+											<items module="customcontactnew">
+												<title>Manage Requests</title>
+												<sort_order>0</sort_order>
+												<action>customcontactnew/adminhtml_customcontactnew</action>
+											</items>
+											<settings module="customcontactnew">
+					                    		<title>Settings</title>
+								                <sort_order>1000</sort_order>
+							                    <action>adminhtml/system_config/edit/section/customcontactnew</action>
+							                </settings>
+										</children>  -->
+									</customcontactnew>
+				                </children>
+            			 </message>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<customcontactnew>
+					<file>customcontactnew.xml</file>
+				</customcontactnew>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <customcontactnew>
+                <class>Dolphin_Customcontactnew_Model</class>
+                <resourceModel>customcontactnew_mysql4</resourceModel>
+            </customcontactnew>
+            <customcontactnew_mysql4>
+                <class>Dolphin_Customcontactnew_Model_Mysql4</class>
+                <entities>
+                    <customcontactnew>
+                        <table>customcontactnew</table>
+                    </customcontactnew>
+                </entities>
+            </customcontactnew_mysql4>
+        </models>
+        <resources>
+            <customcontactnew_setup>
+                <setup>
+                    <module>Dolphin_Customcontactnew</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </customcontactnew_setup>
+            <customcontactnew_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </customcontactnew_write>
+            <customcontactnew_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </customcontactnew_read>
+        </resources>
+        <template>
+            <email>
+                <customcontactnew_email_email_template translate="label" module="customcontactnew">
+                    <label>Custom Contact New Form</label>
+                    <file>custom_contact_new_form.html</file>
+                    <type>html</type>
+                </customcontactnew_email_email_template>
+                <customcontactnew_email_autoemail_template translate="label" module="customcontactnew">
+                    <label>Auto Custom Contact New Form</label>
+                    <file>auto_custom_contact_new_form.html</file>
+                    <type>html</type>
+                </customcontactnew_email_autoemail_template>
+            </email>
+        </template>
+        <blocks>
+            <customcontactnew>
+                <class>Dolphin_Customcontactnew_Block</class>
+            </customcontactnew>
+        </blocks>
+        <helpers>
+            <customcontactnew>
+                <class>Dolphin_Customcontactnew_Helper</class>
+            </customcontactnew>
+        </helpers>
+    </global>
+    <default>
+        <customcontactnew>
+            <contacts>
+                <enabled>1</enabled>
+            </contacts>
+            <email>
+                <recipient_email><![CDATA[hello@example.com]]></recipient_email>
+                <sender_email_identity>custom2</sender_email_identity>
+                <email_template>customcontactnew_email_email_template</email_template>
+                <autoemail_template>customcontactnew_email_autoemail_template</autoemail_template>
+            </email>
+        </customcontactnew>
+    </default>
+</config>

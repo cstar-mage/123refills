@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <menu>
+        <promo>
+            <children>
+                <subitem translate="title" module="IdealCoupon">
+                    <title>Manage Coupon Urls</title>
+                    <sort_order>30</sort_order>
+                    <action>idealcoupon/IdealCoupon/</action>
+                </subitem>
+            </children>
+        </promo>
+    </menu>
+</config>

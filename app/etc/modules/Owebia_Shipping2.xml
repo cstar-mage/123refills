@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © 2008-2016 Owebia. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config>
+    <modules>
+        <Owebia_Shipping2>
+            <active>true</active>
+            <codePool>community</codePool>
+        </Owebia_Shipping2>
+    </modules>
+</config>

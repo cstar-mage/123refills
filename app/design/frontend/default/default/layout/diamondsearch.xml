@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    
+    	<reference name="head">
+    		<action method="addItem"><type>skin_css</type><name>css/diamondsearch/scrollbar.css</name><params/></action>
+    		<action method="addItem"><type>skin_css</type><name>css/diamondsearch/jquery.nouislider.css</name><params/></action>
+    		<action method="addItem"><type>skin_css</type><name>css/diamondsearch/bootstrap-select.css</name><params/></action>
+    		<block type="diamondsearch/diamondsearch" name="head_css_style" template="diamondsearch/style.phtml" />
+    		<action method="addJs"><script>diamondsearch/new_tab_diamond_result_table.js</script></action>
+        	<action method="addJs"><script>diamondsearch/search_diamond.js</script></action>
+        	<action method="addJs"><script>diamondsearch/json2.js</script></action>
+        	<!-- <action method="addJs"><script>diamondsearch/bootstrap-select.js</script></action> -->
+        	<action method="addJs"><script>diamondsearch/jquery.nouislider.js</script></action>
+        	<action method="addJs"><script>diamondsearch/jquery.tinyscrollbar.min.js</script></action>
+    	</reference>
+    	
+    </default>
+    <diamondsearch_index_index>
+        <reference name="content">
+            <block type="diamondsearch/diamondsearch" name="diamondsearch" template="diamondsearch/diamondsearch.phtml" />
+        </reference>
+    </diamondsearch_index_index>
+</layout> 

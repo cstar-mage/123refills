@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+
+<!--	<catalog_category_default>
+        <reference name="product_list">
+    		<action method="setTemplate"><template>mfmcallforprice/catalog/product/list.phtml</template></action>
+    	</reference>
+    </catalog_category_default>
+
+	 <catalog_category_layered>
+        <reference name="product_list">
+    		<action method="setTemplate"><template>mfmcallforprice/catalog/product/list.phtml</template></action>
+    	</reference>
+    </catalog_category_layered>
+
+	
+	<wishlist_index_index translate="label">
+        <reference name="customer.wishlist">
+			<action method="setTemplate"><template>mfmcallforprice/wishlist/view.phtml</template></action>
+    	</reference>
+    </wishlist_index_index>
+	
+	
+	<catalog_product_compare_index>
+		<reference name="catalog.compare.list">
+			<action method="setTemplate"><template>mfmcallforprice/catalog/product/compare/list.phtml</template></action>
+    	</reference>
+	 </catalog_product_compare_index>
+-->	
+</layout> 

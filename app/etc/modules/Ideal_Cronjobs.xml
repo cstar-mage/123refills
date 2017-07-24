@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Cronjobs>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ideal_Cronjobs>
+    </modules>
+</config>

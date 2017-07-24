@@ -1,0 +1,40 @@
+<?php
+$bannerCollection = $this->getBrandCollection();
+?>
+<script type="text/javascript">
+	function mycarousel_initCallback(carousel) {
+		// Pause autoscrolling if the user moves with the cursor over the clip.
+			carousel.clip.hover(function() {
+				carousel.stopAuto();
+			}, function() {
+				carousel.startAuto();
+			});
+		};
+
+	jQuery(document).ready(function(){
+		   jQuery('#mycarousel').jcarousel({
+				visible:4,
+				scroll:4,
+				maxWidth: 143,
+	            maxHeight: 93,
+        		animation: 600,
+				//auto: 1,
+        		wrap: 'last',  
+        		initCallback: mycarousel_initCallback
+			});
+		});
+	   </script>
+<?php if(count($bannerCollection)>0): ?>
+<div class="home-brands">
+	<div class="heading"><h2><span>Brands</span></h2></div>
+	<ul id="mycarousel" class="jcarousel-skin-tango">
+	<?php foreach ($bannerCollection as $banner): ?>
+		<li>
+			<a target="_blank" href="<?php echo $banner['weblink']; ?>">
+				<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']?>" width="" height="" title="<?php echo $banner['title']?>" alt="<?php echo $banner['title']?>" align="middle"/>
+			</a>
+		</li>
+	<?php endforeach; ?>
+	</ul>
+</div>
+<?php endif; ?>

@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_UrlRewriteImporter>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ideal_UrlRewriteImporter>
+    </modules>
+</config>

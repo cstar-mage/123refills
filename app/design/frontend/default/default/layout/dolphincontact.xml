@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <dolphincontact_index_index>
+        <reference name="content">
+            <block type="dolphincontact/dolphincontact" name="dolphincontact" template="dolphincontact/dolphincontact.phtml" />
+        </reference>
+    </dolphincontact_index_index>
+    
+    <dolphincontact_contact_form>
+        <reference name="content">
+            <block type="dolphincontact/form" name="dolphincontact_form" template="dolphincontact/dolphincontact_form.phtml" />
+        </reference>
+    </dolphincontact_contact_form>
+</layout> 

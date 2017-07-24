@@ -1,0 +1,11 @@
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<?php $theme = $this->getConfig(); ?>
+<?php if($theme['homepage_boxcontent_enabled'] && $theme['homepage_boxcontent_enabled'] != ""): ?>
+	<div class="home-info homepage_boxcontent">
+		<?php $html = $processor->filter($theme['homepage_boxcontent_content']); ?>
+		<?php echo nl2br($html); ?>
+	</div>
+<?php endif; ?>

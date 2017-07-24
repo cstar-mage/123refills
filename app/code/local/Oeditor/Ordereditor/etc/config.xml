@@ -1,0 +1,304 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Oeditor_Ordereditor>
+            <version>1.4.1</version>
+        </Oeditor_Ordereditor>
+    </modules>
+    <admin>
+        <routers>
+			<ordereditor>
+				<use>admin</use>
+				<args>
+					<module>Oeditor_Ordereditor</module>
+					<frontName>ordereditor</frontName>
+				</args>
+			</ordereditor>
+        </routers>
+    </admin>
+    <global>
+        <blocks>
+            <ordereditor>
+                <class>Oeditor_Ordereditor_Block</class>
+            </ordereditor>
+			
+				
+			<!--<paygate>
+				<rewrite> Mage_Paygate_Block_Authorizenet_Info_Cc
+					<authorizenet_info_cc>Oeditor_Ordereditor_Block_Authorizenet_Info_Cc</authorizenet_info_cc>
+				</rewrite>
+			</paygate>-->
+				
+			<adminhtml>
+		
+				<rewrite>
+					<sales_order_view>Oeditor_Ordereditor_Block_Adminhtml_Sales_Order_View</sales_order_view>
+				</rewrite>
+			
+			
+				<rewrite>
+                    <sales_order_create_form>Oeditor_Ordereditor_Block_Adminhtml_Form</sales_order_create_form>
+				</rewrite>
+			
+	    	 	<rewrite>
+                    <sales_order_view_info>Oeditor_Ordereditor_Block_Adminhtml_Info</sales_order_view_info>
+				</rewrite>
+
+				<rewrite>
+                    <sales_order_view_items>Oeditor_Ordereditor_Block_Adminhtml_Order_Items</sales_order_view_items>
+				</rewrite>
+				
+				<!--<rewrite> gives wrong tab info error so rwrite it vai layot xml
+                    <sales_order_view_tab_info>Oeditor_Ordereditor_Block_Adminhtml_Sales_Order_View_Tab_Info</sales_order_view_tab_info>
+				</rewrite>-->
+				
+				<rewrite>
+                    <sales_order_view_items_renderer_default>Oeditor_Ordereditor_Block_Adminhtml_Sales_Order_View_Items_Renderer_Default</sales_order_view_items_renderer_default>
+				</rewrite>
+			 	
+				<rewrite>
+                    <sales_order_view_tab_invoices>Oeditor_Ordereditor_Block_Adminhtml_Sales_Order_View_Tab_Invoices</sales_order_view_tab_invoices>
+				</rewrite>
+		 
+		
+	    	</adminhtml>
+        </blocks>
+		
+		<!--
+		<rewrite> 
+            <oeditor_ordereditor_adminhtml_sales_order_edit>
+                <from><![CDATA[#^/.+?/sales_order_edit/#]]></from>
+                <to>/ordereditor/order_edit/</to>
+            </oeditor_ordereditor_adminhtml_sales_order_edit>
+        </rewrite>
+		-->
+		
+	    <models>
+	        <ordereditor>
+	             <class>Oeditor_Ordereditor_Model</class>
+	             <resourceModel>ordereditor_resource</resourceModel>
+	        </ordereditor>
+	        <ordereditor_resource>
+	        	<class>Oeditor_Ordereditor_Model_Resource</class>
+	        	<entities>
+                    <order_item><table>sales_flat_order_item</table></order_item>
+                    <order_address><table>sales_flat_order_address</table></order_address>
+	        	</entities>
+	        </ordereditor_resource>
+		  
+		
+			  <paygate>
+	  
+	        <rewrite>
+	  
+	           <authorizenet>Oeditor_Ordereditor_Model_Authorizenet</authorizenet>
+	  
+	        </rewrite>
+	     </paygate>
+
+			<!--
+			<adminhtml>
+                <rewrite>
+                    <sales_order_create>Oeditor_Ordereditor_Model_Adminhtml_Sales_Order_Create</sales_order_create>
+                </rewrite>
+            </adminhtml>
+			-->
+			
+			
+			<!-- invoice status starts-->
+			<sales>
+			  <rewrite>
+				  <order_invoice>Oeditor_Ordereditor_Model_Order_Invoice</order_invoice>
+			  </rewrite>
+			</sales>
+			<!-- invoice status ends-->
+			
+	    </models>
+        <helpers>
+            <ordereditor>
+                <class>Oeditor_Ordereditor_Helper</class>
+            </ordereditor>
+        </helpers>
+
+	  <customer>
+            <address>
+                <formats>
+                <editorder  translate="title" module="ordereditor">
+				<title>Editable</title>
+                 <htmlEscape>true</htmlEscape>
+				<defaultFormat><![CDATA[
+						
+{{depend prefix}}<span class="oe_edit_label">Prefix:</span><span id="oe_edit_prefix">{{var prefix}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_prefix', 'url/prefix/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+<span class="oe_edit_label">First Name:</span><span id="oe_edit_firstname">{{var firstname}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_firstname', 'urlfield/firstname/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+
+{{depend middlename}}<span class="oe_edit_label">Middle Name:</span><span id="oe_edit_middlename">{{var middlename}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_middlename', 'urlfield/middlename/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+<span class="oe_edit_label">Last Name:</span><span id="oe_edit_lastname">{{var lastname}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_lastname', 'urlfield/lastname/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+
+{{depend suffix}}<span class="oe_edit_label">Suffix:</span><span id="oe_edit_suffix">{{var suffix}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_suffix', 'urlfield/suffix/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+
+{{depend company}}<span class="oe_edit_label">Company:</span><span id="oe_edit_company">{{var company}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_company', 'urlfield/company/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+<span class="oe_edit_label">Street1:</span><span id="oe_edit_street1">{{var street1}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_street1', 'urlfield/street1/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+
+{{depend street2}}<span class="oe_edit_label">Street2:</span><span id="oe_edit_street2">{{var street2}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_street2', 'urlfield/street2/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+{{depend street3}}<span class="oe_edit_label">Street3:</span><span id="oe_edit_street3">{{var street3}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_street3', 'urlfield/street3/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+{{depend street4}}<span class="oe_edit_label">Street4:</span><span id="oe_edit_street4">{{var street4}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_street4', 'urlfield/street4/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+{{depend city}}<span class="oe_edit_label">City:</span><span id="oe_edit_city">{{var city}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_city', 'urlfield/city/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+{{depend region}}<span class="oe_edit_label">Region:</span><span id="oe_edit_region">{{var region}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_region', 'urlfield/region/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+<span class="oe_edit_label">PostCode:</span><span id="oe_edit_postcode">{{var postcode}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_postcode', 'urlfield/postcode/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+
+<span class="oe_edit_label">Country:</span><span id="oe_edit_country">{{var country}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_country', 'urlfield/country/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+
+{{depend telephone}}<span class="oe_edit_label">Tel.:</span><span id="oe_edit_telephone">{{var telephone}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_telephone', 'urlfield/telephone/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}
+
+{{depend fax}}<span class="oe_edit_label">Fax:</span><span id="oe_edit_fax">{{var fax}}</span><br />
+<script type="text/javascript">
+new Ajax.InPlaceEditor('oe_edit_fax', 'urlfield/fax/type/request_type/order/order_id',{ highlightColor:'#E2F1B1'});
+</script>
+{{/depend}}]]>
+				</defaultFormat></editorder> 
+	   </formats>
+            </address>
+        </customer>
+
+</global>
+
+	<adminhtml>
+		<acl>
+			<resources>
+				<admin>
+					<children>
+						<system>
+							<children>
+								<config>
+									<children>
+										<editorder translate="title">
+											<title>Order Editor</title>
+										</editorder>
+									</children>
+								</config>
+							</children>
+						</system>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		
+		
+		
+			<layout>
+            <updates>
+                <ordereditor>
+                    <file>ordereditor.xml</file>
+                </ordereditor>
+            </updates>
+        </layout>
+		
+	</adminhtml>
+				 
+	
+	
+	<default>
+        <editorder>
+			
+			<license>
+				<lserial>9da38ce7772c644fb1c7c5b8727840e3</lserial>
+			</license>
+            
+			<general>
+                <enabled>1</enabled>
+                <reauth>0</reauth>
+				<more_status>0</more_status>
+            </general>
+			
+			 <orderlog>
+                <detail_edit_log>1</detail_edit_log>
+				<quick_edit_log>1</quick_edit_log>
+            </orderlog>
+			
+			<orderstockmg>
+				<manage_inventory>0</manage_inventory>
+			</orderstockmg>
+			
+			<opermission>
+			 <penable>0</penable>
+			</opermission>
+         </editorder>
+		 
+		  <carriers>
+            <customshipprice>
+                <active>1</active>
+                <sallowspecific>0</sallowspecific>
+                <model>ordereditor/carrier_customshipprice</model>
+                <name>Custom Shipping Price</name>
+                <title>Custom Shipping Price</title>
+                <specificerrmsg>This shipping method is currently unavailable. If you would like to ship using this shipping method, please contact us.</specificerrmsg>
+            </customshipprice>
+        </carriers>
+		
+    </default>	  
+			  
+		</config>

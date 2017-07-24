@@ -1,0 +1,154 @@
+@import url(http://fonts.googleapis.com/css?family=Lato:100,300,400,700,900,100italic,300italic,400italic,700italic,900italic);
+
+.custmain .cutitle h1 {
+    color: #555555;
+    float: left;
+    font-family: 'Lato', sans-serif;
+	font-weight:300;
+	text-transform:uppercase;
+    font-size: 40px;
+    margin-bottom: 70px;
+    text-align: center;
+    width: 100%;
+}
+
+ .custmain .customfrm {
+    float: none;
+    width: 100%;
+}
+
+.custmain .cutitle {
+    background: none repeat scroll 0 0 rgba(0, 0, 0, 0);
+    width: 104%;
+}
+
+.custmain .cutitle h3 {
+    color: #555555;
+    float: left;
+    font-family: 'Lato', sans-serif;
+	font-weight:300;
+	text-transform:uppercase;
+    font-size: 24px;
+    margin-bottom: 50px;
+    text-align: center;
+    width: 100%;
+}
+
+ .ckcs {
+    float: left;
+    text-align: center;
+}
+
+ .ckcs {
+    text-align: center;
+}
+
+.fieldset ul.form-list {
+    float: left;
+}
+
+ .custmain .customfrm .form-list .big {
+    float: none;
+    margin-top: 20px;
+    text-align: center;
+    width: 100%;
+}
+
+ .form-list label {
+    float: none;
+    font-family: 'Lato', sans-serif;
+	font-weight:300;
+	text-transform:uppercase;
+    font-size: 24px;
+    text-align: center;
+}
+
+.custmain .customfrm .form-list .ckeckboxes {
+    margin: 0 auto;
+    padding: 10px 0 0;
+    width: 75%;
+}
+
+ .custmain .customfrm .form-list .ckeckboxes .ckcs {
+    float: left;
+    height: 92px;
+    padding: 30px;
+    width: 85px;
+}
+
+.custmain .customfrm .form-list .ckeckboxes .imgbxs {
+    float: left;
+    height: 62px;
+}
+.custmain .customfrm .form-list .ckeckboxes img {
+    float: left;
+    width: 75px;
+}
+
+ .custmain .customfrm .form-list .ckeckboxes .imgbx-s img {
+    width: 221px;
+}
+.custmain .customfrm .form-list .ckeckboxes span {
+    color: #203A56;
+    float: left;
+    font-family: 'Lato',sans-serif;
+    font-weight: 700;
+    text-align: center;
+    text-transform: uppercase;
+    width: 100%;
+}
+
+ .custmain .customfrm .form-list .ckeckboxes .ckc-s {
+    float: left;
+    height: 221px;
+    padding: 30px 12px;
+    width: 221px;
+}
+
+ .field-s {
+    margin: 0 auto;
+    overflow: hidden;
+    padding: 30px 0 0;
+    text-align: center;
+    width: 85%;
+}
+
+ .form-list label.name {
+    font-family: 'Lato', sans-serif;
+	font-weight:300;
+	text-transform:uppercase;
+}
+
+ .form-list .input-box {
+    width: auto;
+}
+
+ .custmain .customfrm .form-list li.splline {
+    border-bottom: medium none;
+    border-top: medium none;
+    float: none;
+    text-align: center;
+    width: 100%;
+}
+
+ .splline-text {
+    margin: 0 auto;
+    width: 40%;
+}
+
+.splline-text > span {
+    font-weight: bold;
+	font-family: 'Lato', sans-serif;
+	font-size: 12px;
+	color: #555;
+}
+
+ .custmain .customfrm .form-list li.splline .imgsel {
+    float: none;
+    margin: 10px auto;
+    width: 250px;
+}
+.buttons-sets{text-align: center;}
+
+.buttons-sets .custsub{width: 220px;height: 44px;background: #abb6c2;color: #FFF;font-family: 'Lato', sans-serif;
+	font-size: 12px;text-transform: uppercase;border: none;font-weight: bold;}

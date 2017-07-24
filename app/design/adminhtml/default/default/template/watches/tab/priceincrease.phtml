@@ -1,0 +1,190 @@
+<?php 
+$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+$magento_db = $resource['default_setup']['connection']['host'];
+$mdb_user = $resource['default_setup']['connection']['username'];
+$mdb_passwd = $resource['default_setup']['connection']['password'];
+$mdb_name = $resource['default_setup']['connection']['dbname'];
+
+//developm_magento
+$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+if (!$magento_connection)
+{
+	die('Unable to connect to the database');
+}
+@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+
+$table = Mage::getSingleton('core/resource')->getTableName('watches_priceincrease');
+$query = "SELECT * FROM `$table`";
+
+
+$result = @mysql_db_query($mdb_name, $query) or die("Failed Query of ".$query);
+$coupon_rule_id = @mysql_insert_id($magento_connection);
+
+while($row = mysql_fetch_array($result))
+{
+	$price_from[] = $row['price_from'];
+	$price_to[] = $row['price_to'];
+	$price_increase[] = $row['price_increase'];
+
+}
+
+$count = count($price_increase);
+
+$html = "
+<table width='100%'>
+<tr><td>Price From</td><td>Price To</td><td>Price Increase in %</td></tr>
+";
+
+$j = 100;
+
+for($i=0; $i<$count; $i++)
+{
+
+$j++;
+
+	$html .= "<tr><td><input type='text' name='multiline_0-".$j."' value=".$price_from[$i]." /></td>
+	<td><input type='text' name='multiline_1-".$j."' value=".$price_to[$i]." /></td>
+	<td><input type='text' name='multiline_2-".$j."' value=".$price_increase[$i]." /></td></tr>";
+}
+
+$html .= "</table>";
+
+$html .= '<table id="gallery" class="gallery" border="0" cellspacing="3" cellpadding="0">';
+$html .= '<thead id="gallery_thead" class="gallery"><tr class="gallery"><td class="gallery" valign="middle" align="center">Price From</td><td class="gallery" valign="middle" align="center">Price To</td><td class="gallery" valign="middle" align="center">Price Increse ( % )</td><td class="gallery" valign="middle" align="center">Sort Order</td><td class="gallery" valign="middle" align="center">Delete</td></tr></thead>';
+$widgetButton = $this->getLayout();
+$buttonHtml = $widgetButton->createBlock('adminhtml/widget_button')
+->setData(
+		array(
+				'label'     => 'Add New Rule',
+				'onclick'   => 'addNewImg()',
+				'class'     => 'add'))
+				->toHtml();
+
+				$html .= '<tfoot class="gallery">';
+				$html .= '<tr class="gallery">';
+				$html .= '<td class="gallery" valign="middle" align="left" colspan="5">'.$buttonHtml.'</td>';
+				$html .= '</tr>';
+				$html .= '</tfoot>';
+
+				$html .= '<tbody class="gallery">';
+
+				$i = 0;
+				if (!is_null($this->getValue())) {
+				foreach ($this->getValue() as $image) {
+				$i++;
+				$html .= '<tr class="gallery">';
+				foreach ($this->getValue()->getAttributeBackend()->getImageTypes() as $type) {
+				$url = $image->setType($type)->getSourceUrl();
+					$html .= '<td class="gallery" align="center" style="vertical-align:bottom;">';
+					$html .= '<a href="'.$url.'" target="_blank" onclick="imagePreview(\''.$this->getHtmlId().'_image_'.$type.'_'.$image->getValueId().'\');return false;">
+					<img id="'.$this->getHtmlId().'_image_'.$type.'_'.$image->getValueId().'" src="'.$url.'" alt="'.$image->getValue().'" height="25" align="absmiddle" class="small-image-preview"></a><br/>';
+					$html .= '<input type="text" name="'.$this->getName().'_'.$type.'['.$image->getValueId().']" size="1"></td>';
+					}
+					$html .= '<td class="gallery" align="center" style="vertical-align:bottom;"><input type="input" name="'.parent::getName().'[position]['.$image->getValueId().']" value="'.$image->getPosition().'" id="'.$this->getHtmlId().'_position_'.$image->getValueId().'" size="3"/></td>';
+					$html .= '<td class="gallery" align="center" style="vertical-align:bottom;"><input type="checkbox" name="'.parent::getName().'[delete]['.$image->getValueId().']" value="'.$image->getValueId().'" id="'.$this->getHtmlId().'_delete_'.$image->getValueId().'"/></td>';
+					$html .= '</tr>';
+				}
+				}
+				if ($i==0) {
+				$html .= '<script type="text/javascript">document.getElementById("gallery_thead").style.visibility="hidden";</script>';
+				}
+
+				$html .= '</tbody></table>';
+
+				$name = $this->getName();
+				$parentName = parent::getName();
+
+				$html .= <<<EndSCRIPT
+
+				<script language="javascript">
+				id = 0;
+
+				function addNewImg(){
+
+					document.getElementById("gallery_thead").style.visibility="visible";
+
+					id--;
+					new_file_input = '<input type="text" name="{$name}_%j%-%id%" size="1" style="width:100px"/>';
+
+					// Sort order input
+					var new_row_input = document.createElement( 'input' );
+					new_row_input.type = 'text';
+		    new_row_input.name = '{$parentName}[position]['+id+']';
+		    new_row_input.size = '3';
+		    new_row_input.value = '0';
+			new_row_input.id = 'position';
+		
+
+		    // Delete button
+		    var new_row_button = document.createElement( 'input' );
+		    new_row_button.type = 'checkbox';
+		    new_row_button.value = 'Delete';
+
+            table = document.getElementById( "gallery" );
+
+            // no of rows in the table:
+            noOfRows = table.rows.length;
+
+            // no of columns in the pre-last row:
+            noOfCols = table.rows[noOfRows-2].cells.length;
+
+            // insert row at pre-last:
+            var x=table.insertRow(noOfRows-1);
+
+            // insert cells in row.
+            for (var j = 0; j < noOfCols; j++) {
+
+                newCell = x.insertCell(j);
+                newCell.align = "center";
+                newCell.valign = "middle";
+
+                if (j==3) {
+		            newCell.appendChild( new_row_input );
+                }
+                else if (j==4) {
+		            newCell.appendChild( new_row_button );
+                }
+                else {
+                    newCell.innerHTML = new_file_input.replace(/%j%/g, j).replace(/%id%/g, id);
+                }
+
+            }
+
+		    // Delete function
+		    new_row_button.onclick= function(){
+
+                this.parentNode.parentNode.parentNode.removeChild( this.parentNode.parentNode );
+
+			    // Appease Safari
+			    //    without it Safari wants to reload the browser window
+			    //    which nixes your already queued uploads
+			    return false;
+		    };
+
+	    }
+        </script>
+
+EndSCRIPT;
+        $html.= $this->getAfterElementHtml();
+?>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Watches Price Increase</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="watches_priceincrease" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+			<tbody>
+				<tr>
+	        		<td class="label"><label for="multiline">Price Increase in % <span class="required">*</span></label></td>
+	    			<td class="value">
+	        			<?php echo $html; ?>		
+					</td>
+				</tr>
+			</tbody>
+			</table>
+	    </div>
+	</div>
+</div>

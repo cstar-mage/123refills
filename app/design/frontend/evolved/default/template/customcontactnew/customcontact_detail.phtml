@@ -1,0 +1,259 @@
+<!--<link type="text/css" href="<?php echo $this->getSkinUrl('colorbox/colorbox.css')?>" rel="stylesheet" ></link>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('colorbox/jquery.colorbox.js')?>"></script>
+<link href="http://www.jewelrydemo.com/skin/frontend/evolved/default/css/customcontactnew/customcontactnew.css" rel="stylesheet">-->
+<link type="text/css" href="<?php echo $this->getSkinUrl('css/customcontactnew/customcontactnew.css'); ?>" rel="stylesheet" ></link>
+<?php //echo "<pre>"; print_r($_POST);"</pre>";?>
+<?php /*?><script> 
+jQuery(window).load(function(){	 
+jQuery(".inline2").colorbox({inline:true, width:"784", height:"381",scrolling:false});
+		jQuery(".inlineheader").colorbox({inline:true, width:"784", height:"381",scrolling:false});
+	var returnvalue = 0;
+	returnvalue = jQuery(".messages .success-msg ul li span").text();	
+	if(returnvalue == 1){
+		
+			jQuery.colorbox({open:true,href:"http://www.cutcarat.com/custom-contact-success",iframe:true, width:"30%", height:"39%",scrolling: false});
+		}
+	else if(returnvalue == 2){
+		
+		jQuery.colorbox({open:true,href:"http://www.cutcarat.com/custom-contact-failure",iframe:true, width:"30%", height:"39%",scrolling: false});
+	}
+}); 
+</script><?php */?>
+
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/captch/jquery.plugin.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/captch/jquery.realperson.js'; ?>"></script>
+<link type="text/css" href="<?php echo $this->getBaseUrl().'js/captch/jquery.realperson.css'; ?>" rel="stylesheet" ></link>  
+<script>
+jQuery(function() {
+	jQuery('#defaultReal').realperson();
+});
+
+</script>
+<?php
+$postData = Mage::app()->getRequest()->getPost(); 
+$prodname = $postData['prodname'];
+$prodsku = Mage::registry('current_product')->getSku();
+$producturl = $postData['producturl']; 
+?>
+
+<?php /*?><div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div><?php */?>
+<?php //echo $this->getFormActionUrl()?>
+<div class="custmain customcontactnewmain">
+<form id="seeitperson" name="seeitperson" method="post" onsubmit="return checkform(this);" action="<?php echo $this->getBaseUrl(); ?>seeitperson/index/personpost/" enctype="multipart/form-data">
+	<div class="main_popup">
+	    	<!-- <h1 class="lft">Schedule an Appointment</h1>-->
+<?php
+$login_cust = Mage::getSingleton('customer/session')->isLoggedIn();
+if( $login_cust ){ 	
+ $customer = Mage::getSingleton('customer/session')->getCustomer();
+	$customerAddressId = Mage::getSingleton('customer/session')->getCustomer()->getDefaultBilling();
+	$address = Mage::getModel('customer/address')->load($customerAddressId);            
+}
+	 ?>    
+	       		
+	       	<div class="name lft">
+	       	 	<input name="psku" class="skuinput required-entry" value="<?php echo Mage::registry('current_product')->getSku(); ?>" type="hidden" id="productsku">
+	        	<label for="contactname" class="required">Name</label>
+	            <input name="name" class="nameinput input-text required-entry" type="text" id="contactname" <?php if( $login_cust ){  ?> value="<?php echo $customer->getName(); ?>"  <?php } ?>>
+	            <label for="contactemail" class="required">EMAIL</label>
+	            <input name="email" class="nameinput validate-email required-entry" type="text" id="contactemail" <?php if( $login_cust ){  ?> value="<?php echo $customer->getEmail(); ?>" <?php } ?>>
+				<label>ZIP CODE</label>
+	            <input name="zip_code" class="nameinput  required-entry" type="text" id="contactzipcode"  <?php if( $login_cust ){  ?>value="<?php echo $address->getPostcode(); ?>" <?php } ?>>
+	            <label>PHONE</label>
+	            <input name="phone" class="nameinput  required-entry" type="text" id="contactphone"  <?php if( $login_cust ){  ?>value="<?php echo $address->getTelephone(); ?>" <?php } ?>>
+	        
+	       	  <label>Comments</label>
+	            <textarea name="comments" cols="10" id="contactcomment"></textarea>
+	            
+	            <div class="buttons-set">
+                 <?php /* if(Mage::getStoreConfig('evolved/contacts_custom_captcha/enable')==1): ?>
+					            		<div class="input-box">
+							       			<input type="text" class="required-entry capcha" id="defaultReal" name="defaultReal">
+							       		</div>  
+				            		<?php endif; */?>
+				            		</div>
+				            		
+				            		
+				            		
+			
+				<div class="wide">
+			
+
+				<div class="input-box">
+					<input type="text" name="txtInput" id="txtInput" size="30" /><span id="txtCaptchaDiv" style="color:#F00; margin-left: 10px;"></span>
+				 	<input type="hidden" id="txtCaptcha" />
+				</div>
+				</div>
+			
+		
+				            		
+	            <input class="newsubmit submit_btn" type="Button" value="Submit" />
+	        </div>
+	       
+	       
+                 
+	    </div>
+</form>
+
+</div>
+<script type="text/javascript">
+
+//<![CDATA[
+
+    var seeitperson = new VarienForm('seeitperson', false);
+
+//]]>
+
+</script>
+
+
+
+
+
+ <script type="text/javascript">
+			    //<![CDATA[
+			        
+			    //]]>
+			        /*jQuery(".newsubmit").click(function(event){
+						//jQuery(".newsletter-validate-detail").hide();
+						//jQuery('.inquery_form').hide();
+						//jQuery('.messages').show();
+			        	new Ajax.Request('http://www.jewelrydemo.com/seeitperson/personpostAction', {
+			      		  method:'post',
+			        	  //parameters: jQuery('contactForm123').serialize(true),
+			      		  onSuccess: function(transport) {
+							  //alert(transport.responseText);
+							  alert("hi");
+							  return false
+			      		    var response = transport.responseText || "no response text";
+							jQuery('#inline_content_2').hide();
+			          		jQuery('.make-apointment').hide();
+			    			jQuery('.messages_s').css("display","block");
+							jQuery('.messages_s').css("clear","both");
+			      		    return true;
+			      		  },
+			      		  onFailure: function() { alert('Something went wrong...'); }
+			      		});
+					});*/
+
+	jQuery(".newsubmit").click(function(event) {
+
+      event.preventDefault();
+	  
+	  <?php if( !$login_cust ){ 	 ?>
+		if(jQuery.trim(jQuery(".customcontactnewmain #contactname").val()) == ""){
+				
+			alert("Please Enter Name");
+			jQuery(".customcontactnewmain #contactname").focus();
+			return; 
+		}
+		if(jQuery.trim(jQuery(".customcontactnewmain #contactemail").val()) == ""){
+			alert("Please Enter Email");
+			jQuery(".customcontactnewmain #contactemail").focus();
+			return; 
+		}
+		var regexEml = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+		if(!regexEml.test(jQuery.trim(jQuery(".customcontactnewmain #contactemail").val()))){
+			alert("Please Enter Valid Email");
+			jQuery(".customcontactnewmain #contactemail").focus();
+			return; 
+		}
+	
+	
+	if(jQuery("#txtInput").val() != jQuery("#txtCaptchaDiv").text() ){
+	
+			alert("Security code did not match");
+			
+			jQuery(".customcontactnewmain .capcha").focus();
+			return; 
+		}
+	
+	
+
+
+
+
+        
+          
+      
+		
+		<?php } ?>
+       var posting = jQuery.post( '<?php echo $this->getBaseUrl(); ?>seeitperson/index/personpost/', jQuery(this.form).serialize());  
+		  posting.done(function( data ) {
+					jQuery('#inline_content_2').hide();
+	          		jQuery('.make-apointment').hide();
+	    			jQuery('.messages_s').css("display","block");
+					jQuery('.messages_s').css("clear","both");
+					
+					
+					
+					//alert(data);
+		  });
+		   posting.fail(function() {
+				alert( "Something went wrong..." );
+			})
+       
+
+    });
+
+</script>     
+<!--<script type="text/javascript">
+  Calendar.setup({
+  inputField : 'appoinment_input',
+  ifFormat : '%m/%e/%y',
+  button : 'date_from_trig',
+  align : 'Bl',
+  singleClick : true
+  });
+</script>--> 
+</br></br> 
+
+<script type="text/javascript">
+//Generates the captcha function    
+	var a = Math.ceil(Math.random() * 9)+ '';
+	var b = Math.ceil(Math.random() * 9)+ '';       
+	var c = Math.ceil(Math.random() * 9)+ '';  
+	var d = Math.ceil(Math.random() * 9)+ '';  
+	var e = Math.ceil(Math.random() * 9)+ '';  
+	  
+	var code = a + b + c + d + e;
+	document.getElementById("txtCaptcha").value = code;
+	document.getElementById("txtCaptchaDiv").innerHTML = code;	
+</script>
+
+<script type="text/javascript">
+function checkform(theform){
+	var why = "";
+	 
+	if(theform.txtInput.value == ""){
+		why += "- Security code should not be empty.\n";
+	}
+	if(theform.txtInput.value != ""){
+		if(ValidCaptcha(theform.txtInput.value) == false){
+			why += "- Security code did not match.\n";
+		}
+	}
+	if(why != ""){
+		alert(why);
+		return false;
+	}
+}
+	
+// Validate the Entered input aganist the generated security code function   
+function ValidCaptcha(){
+	var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+	var str2 = removeSpaces(document.getElementById('txtInput').value);
+	if (str1 == str2){
+		return true;	
+	}else{
+		return false;
+	}
+}
+
+// Remove the spaces from the entered and generated code
+function removeSpaces(string){
+	return string.split(' ').join('');
+}
+	
+</script>
+

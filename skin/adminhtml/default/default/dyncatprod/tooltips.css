@@ -1,0 +1,43 @@
+
+.tooltips {
+    color: #000000;
+    background: #85A9FF;
+    line-height: 30px;
+    text-align: left;
+    border-radius: 6px;
+    box-shadow: 0px 0px 5px #68359C;
+    padding: 10px;
+}
+.tooltips :after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    right: 100%;
+    margin-top: -8px;
+    width: 0; height: 0;
+    border-right: 8px solid #85A9FF;
+    border-top: 8px solid transparent;
+    border-bottom: 8px solid transparent;
+}
+.tooltips ul {
+    border: none;
+    padding: 0;
+}
+
+.ext-link-icon {
+    background-image: url('../images/dyncatprod/external_link_icon.png');
+    padding: 6px;
+    background-repeat: no-repeat;
+    background-position: 0px 5px;
+}
+
+.tooltip-close {
+    text-align: right;
+    font-size: 71%;
+    position: relative;
+    bottom: -20px;
+}
+
+.rule-help {
+    cursor: pointer
+}

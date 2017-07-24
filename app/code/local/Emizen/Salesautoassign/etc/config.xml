@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Emizen_Salesautoassign>
+      <version>0.1.0</version>
+    </Emizen_Salesautoassign>
+  </modules>
+  <global>
+    <helpers>
+      <salesautoassign>
+        <class>Emizen_Salesautoassign_Helper</class>
+      </salesautoassign>
+    </helpers>
+	<models>
+	  <salesautoassign>
+		<class>Emizen_Salesautoassign_Model</class>
+		<resourceModel>salesautoassign_mysql4</resourceModel>
+	  </salesautoassign>
+	</models>
+    <events>
+	  <checkout_submit_all_after> <!-- identifier of the event we want to catch -->
+        <observers>
+          <checkout_submit_all_after_handler> <!-- identifier of the event handler -->
+            <type>model</type> <!-- class method call type; valid are model, object and singleton -->
+            <class>salesautoassign/observer</class> <!-- observers class alias -->
+            <method>assigncustomer</method>  <!-- observer's method to be called -->
+            <args></args> <!-- additional arguments passed to observer -->
+          </checkout_submit_all_after_handler>
+        </observers>
+      </checkout_submit_all_after>
+    </events>
+  </global>
+  
+  <default>
+  	<emizen><emizen><general>1</general></emizen></emizen>
+  </default>
+</config> 

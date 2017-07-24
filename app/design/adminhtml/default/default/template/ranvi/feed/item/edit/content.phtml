@@ -1,0 +1,187 @@
+<?php
+
+	$feed = $this->getFeed();
+	
+	$type=$this->getRequest()->getParam('type');
+
+	if($data = $this->getFeed()->getContent()){
+		
+		$data = json_decode($data, true);
+		
+	}else if($type == 'amazon'){
+
+		$data = Mage::helper('ranvi_feed')->getAmazonContentJson();
+		$data=json_decode($data, true);
+
+	}else if($type == 'google'){
+
+		$data = Mage::helper('ranvi_feed')->getGoogleContentJson();
+		$data=json_decode($data, true);
+
+	}else{
+
+		$data = array();
+
+	}
+		
+?>
+<div class="entry-edit">
+	
+	<div class="entry-edit-head">
+    	<h4 class="icon-head head-edit-form fieldset-legend"><?php echo $this->__('Fields Mapping')?></h4>
+	</div>
+	<div id="content_fieldset" class="fieldset ">
+		
+		<div class="left">
+			<p style="clear:both;padding-bottom:5px;overflow:hidden;">
+				<input type='hidden' name='show_headers' value='1' />
+	
+				<label style="float:left;margin-right:20px; "><span style="float:left;margin-right:10px;"><?php echo $this->__('Delimiter')?></span>
+				<select style="width:100px;" name="delimiter">
+					
+					<option value="comma" <?php if(($feed->getDelimiter()) == 'comma' || !$feed->getDelimiter()):?> selected="selected" <?php endif;?>><?php echo $this->__('Comma');?></option>
+					<option value="tab" <?php if(($feed->getDelimiter()) == 'tab' ):?> selected="selected" <?php endif;?>><?php echo $this->__('Tab');?></option>
+					<option value="colon" <?php if(($feed->getDelimiter()) == 'colon' ):?> selected="selected" <?php endif;?>><?php echo $this->__('Colon');?></option>
+					<option value="space" <?php if(($feed->getDelimiter()) == 'space' ):?> selected="selected" <?php endif;?>><?php echo $this->__('Space');?></option>
+					<option value="vertical pipe" <?php if(($feed->getDelimiter()) == 'vertical pipe' || ($type == 'amazon' && !$feed->getDelimiter())):?> selected="selected" <?php endif;?>><?php echo $this->__('Vertical pipe');?></option>
+					<option value="semi-colon" <?php if(($feed->getDelimiter()) == 'semi-colon' ):?> selected="selected" <?php endif;?>><?php echo $this->__('Semi-colon');?></option>
+					
+				</select>
+				</label>
+
+				<?php if($type == 'amazon' || $feed->getType() == 'amazon' ) { ?>
+
+				<input type='hidden' name='enclosure' value='3' />
+
+				<?php } else { ?>
+
+				<input type='hidden' name='enclosure' value='2' />
+
+				<?php } ?>
+
+
+				<!-- 
+					Enclosure are
+					 value 2 is for Double quote (")
+					 value 1 is for Double quote (')
+					 value 3 is for Blank ()
+				 -->
+			</p>
+			<!--
+			Remove line break symbols
+			You can use this option for shopzilla.com if your uploaded feed file doesn't work correctly.
+
+			 <p style="clear:both">
+				<label><span style="float:left; width: 170px;"><?php echo $this->__('Remove line break symbols')?></span>
+				<select style="width:50px;" name="remove_lb">
+					<option value="1" <?php if(intval($feed->getRemoveLb()) == 1 ):?> selected="selected" <?php endif;?>><?php echo $this->__('Yes');?></option>
+					<option value="0" <?php if(intval($feed->getRemoveLb()) == 0 ):?> selected="selected" <?php endif;?>><?php echo $this->__('No');?></option>
+				</select>
+				</label><br/>
+				<small><?php echo $this->__('This is the specific option that allows to remove line break symbols from a data feed.')?></small>
+			</p>			
+			 -->
+		</div>
+		<div class="grid" style="clear:both">
+		<style>
+					.grid table td {vertical-align:middle;text-align: center;}
+		</style>
+		<table cellspacing="0" cellpadding="0" class="data" style="width:100%;">
+			<thead>
+				<tr class="headings">
+				<th width="20"><?php echo $this->__('Order')?></th>
+				<th style="width:160px;"><?php echo $this->__('Field Name')?></th>
+				<th width="40%"><?php echo $this->__('Value')?></th>
+				<th style="width:66px;text-align: center;"><?php echo $this->__('Action')?></th>
+				</tr>
+			</thead>
+			<tbody id="mapping-table-body">
+				<?php 
+				    if(empty($data)){
+                		$rows_count = 5;
+                	}else{
+                		$rows_count = count($data);
+                	}				    
+                	echo $this->getLayout()->createBlock('adminhtml/template')
+				                ->setData('feed', $this->getFeed())
+	            				->setTemplate('ranvi/feed/item/edit/content/mapping.phtml')->toHtml(); 
+	            ?>
+			</tbody>
+		</table>
+		<div class="button-set">
+			<script type="text/javascript">
+				
+				var mappingTotalRows = <?php echo $rows_count?>;
+				
+				function removeMappingRow(e){
+					e.parentNode.parentNode.parentNode.removeChild(e.parentNode.parentNode);
+				}
+				
+				function addColumn(tr, content){
+					
+					td = document.createElement('td');
+					td.innerHTML = content;
+					tr.appendChild(td);
+					
+				}
+				
+				function addMappingRow(){
+					
+					var i = ++mappingTotalRows;
+					var tr = document.createElement('tr');
+					
+					var attribute = '<?php echo addslashes($this->getAttributeSelect("[iterator]"));?>';
+					
+					addColumn(tr, '<div style="padding:0 2px;border-color:#AAAAAA #C8C8C8 #C8C8C8 #AAAAAA;border-style:solid;border-width:1px;"><input style="width:100%;border:0;padding:0;" class="input-text" name="field['+i+'][order]" value="" /></div>');
+					addColumn(tr, '<div style="padding:0 2px;border-color:#AAAAAA #C8C8C8 #C8C8C8 #AAAAAA;border-style:solid;border-width:1px;"><input style="width:100%;border:0;padding:0;" type="text" class="input-text" name="field['+i+'][name]" value="" /></div>');
+					addColumn(tr, '<input style="width:98%; display:none;" id="mapping-'+i+'-static-value" type="text" class="input-text" name="field['+i+'][static_value]" value="" />'+attribute.replace(/\[iterator\]/g, i));
+					addColumn(tr, '<button onclick="removeMappingRow(this);return false;" class="button"><span><span><?php echo $this->__('Remove')?></span></span></button>');
+					
+					$('mapping-table-body').appendChild(tr);
+					
+				}
+				
+			</script>
+			<p style="margin-top:10px;"><button onclick="addMappingRow();return false;" class="button"><span><span><?php echo $this->__('Add New Row')?></span></span></button></p>
+		</div>
+		</div>
+	</div>
+</div>
+
+<?php if($feed->getId()>0):?>
+    <script type="text/javascript">
+    //<![CDATA[
+    
+    var maxUploadFileSizeInBytes = <?php echo $this->getDataMaxSizeInBytes() ?>;
+    var maxUploadFileSize = '<?php echo $this->getDataMaxSize() ?>';
+    
+    <?php echo $this->getJsObjectName() ?> = new Flex.Uploader('<?php echo $this->getHtmlId() ?>', '<?php echo $this->getUploaderUrl('media/uploader.swf') ?>', <?php echo $this->getConfigJson() ?>);
+    
+    <?php echo $this->getJsObjectName() ?>.onFilesComplete = function(completedFiles){
+        completedFiles.each(function(file){
+            RanviFeedAdmin.submit(0, file.name);
+            <?php echo $this->getJsObjectName() ?>.removeFile(file.id);
+        });
+        $('<?php echo $this->getHtmlId() ?>-flash').setStyle({display:'none'});
+    }
+     
+    if ($('<?php echo $this->getHtmlId() ?>-flash') != undefined) {
+        $('<?php echo $this->getHtmlId() ?>-flash').setStyle({display:'none'});
+    } 
+    
+    //]]>
+    </script>
+<?php endif; ?> 
+
+
+
+
+
+
+
+
+
+
+
+
+

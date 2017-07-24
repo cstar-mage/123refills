@@ -1,0 +1,112 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+
+<?php
+/**
+ * Currency switcher
+ *
+ * @see Mage_Directory_Block_Currency
+ */
+?>
+<?php /*  1?>
+
+<?php if($this->getCurrencyCount()>1): ?>
+<div class="currency-switcher">
+   <!-- <label for="select-currency"><?php //echo $this->__('Your Currency:') ?></label>-->
+    <?php /* ?><select class="makeMeList" id="select-currency" name="currency" title="<?php echo $this->__('Your Currency') ?>" onchange="setLocation(this.value)">
+        <?php foreach ($this->getCurrencies() as $_code => $_name): ?>
+        <option value="<?php echo $this->getSwitchCurrencyUrl($_code) ?>"<?php if($_code==$this->getCurrentCurrencyCode()): $test = $_code; ?> selected="selected"<?php endif; ?>>
+            <?php echo $this->__($_code); ?>
+        </option>
+    <?php endforeach; ?>
+    </select> <? */ ?>
+
+<?php /* 2 ?>
+
+     <?php foreach ($this->getCurrencies() as $_code => $_name): ?>
+     	<?php if($_code==$this->getCurrentCurrencyCode()): $test = $_code; ?>
+     	<?php endif; ?>
+     <?php endforeach; ?>
+     
+    <div class="scrollableList">
+    	<div class="selectedOption"> <img src="<?php echo Mage::getStoreConfig(Mage_Core_Model_Url::XML_PATH_SECURE_URL); ?>skin/frontend/evolved/default/images/<?php echo $this->__($test); ?>.png" /><?php echo $this->__($test); ?></div>
+	    <ul style="display: none;">
+	    	<?php foreach ($this->getCurrencies() as $_code => $_name): ?>
+	    	<?php if($test != $_code) { ?>
+	        <img src="<?php echo Mage::getStoreConfig(Mage_Core_Model_Url::XML_PATH_SECURE_URL); ?>skin/frontend/evolved/default/images/<?php echo $this->__($_code); ?>.png" />
+	        <li class="<?php if($_code==$this->getCurrentCurrencyCode()): ?> selected="selected"<?php endif; ?>">
+	            <?php /*echo $this->__('Your Currency').$_code //echo $_name ?> <?php //echo $_code */?>
+<?php /* 3 ?>
+	            <a href="<?php echo $this->getSwitchCurrencyUrl($_code) ?>"><?php echo $this->__($_code); ?></a>
+	        </li>
+	        <?php } ?>
+	    <?php endforeach; ?>
+	    </ul>
+	</div>
+</div>
+<?php endif; ?>
+
+
+<script>
+jQuery(function () {
+    /*jQuery('.makeMeList').each(function (index, element) {
+        jQuery(this).parent()
+            .after()
+            .append("<div class='scrollableList'><div class='selectedOption'></div><ul></ul></div>");
+
+        jQuery(element).each(function (idx, elm) {
+            jQuery('option', elm).each(function (id, el) {
+                jQuery('.scrollableList ul:last').append('<li>' + el.text + '</li>');
+            });
+            jQuery('.scrollableList ul').hide();
+            jQuery('.makeMeUl').children('div.selectedOption').text("Select");
+        });
+        jQuery('.scrollableList:last').children('div.selectedOption').text("Select");
+    });
+	*/
+
+/* 4
+    jQuery('.selectedOption').on('click', function () {
+        jQuery(this).next('ul').slideToggle(200);
+        jQuery('.selectedOption').not(this).next('ul').hide();
+    });
+
+    /* jQuery('.scrollableList ul li').on('click', function () {
+        var selectedLI = jQuery(this).text();
+        jQuery(this).parent().prev('.selectedOption').text(selectedLI);
+        jQuery(this).parent('ul').hide();
+    }); */
+
+/* 5
+
+    jQuery('.scrollableList').show();
+    jQuery('.makeMeList').hide();
+});
+
+</script>
+
+<?php */ ?>

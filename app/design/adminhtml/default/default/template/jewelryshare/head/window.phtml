@@ -1,0 +1,42 @@
+<script type="text/javascript">
+function openNewImportWindow(url) {
+    dialog_import_window = Dialog.info('', {
+        draggable:true,                                              
+        resizable:false,                                              
+        closable:true,                                               
+        className:"magento",
+        windowClassName:"popup-window",
+        title:"New import item",
+        top:100,
+        width:600,
+        height:220,
+        zIndex:1000,
+        recenterAuto:false,
+        hideEffect:Element.hide,
+        showEffect:Element.show,
+        id:"browser_window"
+    });
+    new Ajax.Updater($$('#browser_window_content #modal_dialog_message')[0], url, {evalScripts: true});
+}
+
+function saveNewImportItem(url)
+{
+    new Ajax.Request(url, {
+        parameters: $('import_item_form').serialize(true),
+        onSuccess: function(response) {
+            var json = response.responseText.evalJSON();
+            if (json) {
+                dialog_import_window.close();
+                if (typeof(find_feed_list_codesJsObject) == 'object') {
+                    find_feed_list_codesJsObject.reload();
+                }
+            }
+        }
+    });
+}
+
+function closeNewImportItem()
+{
+    dialog_import_window.close();
+}
+</script>

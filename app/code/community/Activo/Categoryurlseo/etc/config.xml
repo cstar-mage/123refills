@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Activo Extensions
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Activo Commercial License
+ * that is available through the world-wide-web at this URL:
+ * http://extensions.activo.com/license_professional
+ *
+ * @copyright   Copyright (c) 2014 Activo Extensions (http://extensions.activo.com)
+ * @license     OSL 3.0
+ */
+-->
+<config>
+    <modules>
+        <Activo_Categoryurlseo>
+            <version>2.0.0</version>
+        </Activo_Categoryurlseo>
+    </modules>
+    
+    <global>
+        <helpers>
+            <categoryurlseo>
+                <class>Activo_Categoryurlseo_Helper</class>
+            </categoryurlseo>
+        </helpers>
+        <models>
+            <categoryurlseo>
+                <class>Activo_Categoryurlseo_Model</class>
+            </categoryurlseo>
+            <catalog>
+                <rewrite>
+                    <url>Activo_Categoryurlseo_Model_Url</url>
+                </rewrite>
+            </catalog>
+        </models>
+    </global>
+    <adminhtml>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <activo_news_categoryurlseo>
+                        <type>singleton</type>
+                        <class>categoryurlseo/feed</class>
+                        <method>observe</method>
+                    </activo_news_categoryurlseo>
+                </observers>
+            </controller_action_predispatch>
+        </events>
+         <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <config>
+                                    <children>
+                                        <activo_categoryurlseo>
+                                            <title>SEO Friendly Category</title>
+                                        </activo_categoryurlseo>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                   </children>
+               </admin>
+           </resources>
+        </acl>
+    </adminhtml>
+    <default>
+        <activo_categoryurlseo>
+            <global>
+                <enabled>1</enabled>
+            </global>
+        </activo_categoryurlseo>
+    </default>
+</config>

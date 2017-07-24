@@ -1,0 +1,27 @@
+<?php
+    $printUrl = null;
+    $helper = Mage::helper('adminhtml');
+    $iwdBulkActions = Mage::getSingleton('adminhtml/session')->getData('iwd_bulk_actions');
+    if (!empty($iwdBulkActions)) {
+        $printUrl = $helper->getUrl('*/sales_bulk/print') . "?" . http_build_query($iwdBulkActions);
+        Mage::getSingleton('adminhtml/session')->unsetData('iwd_bulk_actions');
+    }
+?>
+<?php if ($printUrl): ?>
+    <iframe src="<?php echo $printUrl ?>" width="0" height="0" align="left" style="display:none; border:0;"></iframe>
+<?php endif; ?>
+
+<script type="text/javascript">
+    if(typeof(jQueryIWD) == "undefined"){if(typeof(jQuery) != "undefined") {jQueryIWD = jQuery;}} $ji = jQueryIWD;
+    $ji(document).ready(function () {
+        IWD.OrderManager.Grid.iwdViewOrderedItems = "<?php echo $helper->getUrl('*/sales_grid/orderedItems'); ?>?isAjax=true";
+        IWD.OrderManager.Grid.iwdViewProductItems = "<?php echo $helper->getUrl('*/sales_grid/productItems'); ?>?isAjax=true";
+        IWD.OrderManager.Grid.isFixGridHeader = <?php echo Mage::getModel('iwd_ordermanager/order_grid')->isFixGridHeader(); ?>;
+        IWD.OrderManager.Grid.statusColors = "<?php echo Mage::getModel('iwd_ordermanager/order_grid')->getStatusColors(); ?>";
+        IWD.OrderManager.Grid.columnWidth = '<?php echo Mage::getModel('iwd_ordermanager/order_grid')->getColumnWidth(); ?>';
+        IWD.OrderManager.Grid.init();
+
+        IWD.OrderManager.Massaction.updateUrl = "<?php echo $helper->getUrl('*/sales_massaction/update'); ?>?isAjax=true";
+        IWD.OrderManager.Massaction.init('<?php echo Mage::getModel('iwd_ordermanager/sales_massaction')->getMassactionForCurrentUser() ?>');
+    });
+</script>

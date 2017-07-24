@@ -1,0 +1,202 @@
+.edit_form_evolved_cls .form-list td.label, .edit_form_evolved_cls .form-list td.label label { width: 275px; }
+/*#evolved_tabs_evolved_header_content .form-list td.value,
+#evolved_form_productdetails_attribute .form-list td.value,
+#evolved_form_shipping .form-list td.value,
+#evolved_form_footeradvanced .form-list td.value,
+#evolved_form_footer_advanced .form-list td.value
+{
+	width: 700px;
+}*/
+#evolved_form_navigation .form-list tr:nth-child(13) td.label,
+#evolved_form_navigation .form-list tr:nth-child(13) td.value,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(7) td.label,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(7) td.value,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(13) td.label,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(13) td.value,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(10) td.label,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(10) td.value,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(17) td.label,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(17) td.value,
+#evolved_form_productdetails_attribute_table_tab .form-list tr:nth-child(11) td.label,
+#evolved_form_productdetails_attribute_table_tab .form-list tr:nth-child(11) td.value,
+#evolved_form_shipping .form-list tr:nth-child(6) td.label,
+#evolved_form_shipping .form-list tr:nth-child(6) td.value,
+#evolved_form_shipping .form-list tr:nth-child(17) td.label,
+#evolved_form_shipping .form-list tr:nth-child(17) td.value,
+#evolved_form_shipping .form-list tr:nth-child(21) td.label,
+#evolved_form_shipping .form-list tr:nth-child(21) td.value,
+#evolved_form_footergeneral .form-list tr:nth-child(14) td.label,
+#evolved_form_footergeneral .form-list tr:nth-child(14) td.value,
+#evolved_form_footergeneral .form-list tr:nth-child(18) td.label,
+#evolved_form_footergeneral .form-list tr:nth-child(18) td.value,
+#evolved_form_footeradvanced .form-list tr:nth-child(15) td.label,
+#evolved_form_footeradvanced .form-list tr:nth-child(15) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(2) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(2) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(4) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(4) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(6) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(6) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(8) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(8) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(9) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(9) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(10) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(10) td.value,
+#evolved_form_buttons .form-list tr:nth-child(13) td.label,
+#evolved_form_buttons .form-list tr:nth-child(13) td.value,
+#evolved_form_productlist_general .form-list tr:nth-child(4) td.label,
+#evolved_form_productlist_general .form-list tr:nth-child(4) td.value,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(5) td.label,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(5) td.value,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(11) td.label,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(11) td.value,
+#evolved_form_checkout .form-list tr:nth-child(4) td.label,
+#evolved_form_checkout .form-list tr:nth-child(4) td.value,
+#evolved_form_newsletter .form-list tr:nth-child(4) td.label,
+#evolved_form_newsletter .form-list tr:nth-child(4) td.value,
+#evolved_form_newsletter .form-list tr:nth-child(7) td.label,
+#evolved_form_newsletter .form-list tr:nth-child(7) td.value
+{
+	border-bottom: 1px solid gray !important;
+	padding-bottom: 15px !important;
+}
+#evolved_form_navigation .form-list tr:nth-child(14) td.label,
+#evolved_form_navigation .form-list tr:nth-child(14) td.value,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(8) td.label,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(8) td.value,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(14) td.label,
+#evolved_form_productdetails_generalsetting .form-list tr:nth-child(14) td.value,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(11) td.label,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(11) td.value,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(19) td.label,
+#evolved_form_productdetails_attribute .form-list tr:nth-child(19) td.value,
+#evolved_form_productdetails_attribute_table_tab .form-list tr:nth-child(13) td.label,
+#evolved_form_productdetails_attribute_table_tab .form-list tr:nth-child(12) td.value,
+#evolved_form_shipping .form-list tr:nth-child(7) td.label,
+#evolved_form_shipping .form-list tr:nth-child(7) td.value,
+#evolved_form_shipping .form-list tr:nth-child(18) td.label,
+#evolved_form_shipping .form-list tr:nth-child(18) td.value,
+#evolved_form_shipping .form-list tr:nth-child(22) td.label,
+#evolved_form_shipping .form-list tr:nth-child(22) td.value,
+#evolved_form_footergeneral .form-list tr:nth-child(15) td.label,
+#evolved_form_footergeneral .form-list tr:nth-child(15) td.value,
+#evolved_form_footergeneral .form-list tr:nth-child(19) td.label,
+#evolved_form_footergeneral .form-list tr:nth-child(19) td.value,
+#evolved_form_footeradvanced .form-list tr:nth-child(17) td.label,
+#evolved_form_footeradvanced .form-list tr:nth-child(17) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(3) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(3) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(5) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(5) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(7) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(7) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(9) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(9) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(10) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(10) td.value,
+#evolved_form_footer_advanced .form-list tr:nth-child(11) td.label,
+#evolved_form_footer_advanced .form-list tr:nth-child(11) td.value,
+#evolved_form_buttons .form-list tr:nth-child(14) td.label,
+#evolved_form_buttons .form-list tr:nth-child(14) td.value,
+#evolved_form_productlist_general .form-list tr:nth-child(5) td.label,
+#evolved_form_productlist_general .form-list tr:nth-child(5) td.value
+#evolved_form_productlist_toolbar .form-list tr:nth-child(6) td.label,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(6) td.value,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(13) td.label,
+#evolved_form_productlist_toolbar .form-list tr:nth-child(13) td.value,
+#evolved_form_checkout .form-list tr:nth-child(6) td.label,
+#evolved_form_checkout .form-list tr:nth-child(6) td.value,
+#evolved_form_newsletter .form-list tr:nth-child(5) td.label,
+#evolved_form_newsletter .form-list tr:nth-child(5) td.value,
+#evolved_form_newsletter .form-list tr:nth-child(8) td.label,
+#evolved_form_newsletter .form-list tr:nth-child(8) td.value
+{
+	padding-top: 15px !important;
+}
+#evolved_form_footer_advanced .form-list td.value .buttons-set {
+    margin: 0 0 10px;
+    width: 300px;
+}
+.edit_form_evolved_cls button, .edit_form_evolved_cls .form-button
+{
+	width: 140px;
+	margin: 3px 2px;
+}
+#evolved_form_social input[name=social_icons_size] {
+    margin-right: 5px;
+}
+
+.form-list.aboutus_element_style_two_table_image,
+.form-list.aboutus_element_style_three_table_image,
+.form-list.aboutus_element_style_four_table_image {
+    display: table-cell;
+}
+/************************ Start About us **************************/
+#evolved_homepage_aboutus .form-list td.value textarea {
+    width: 300px;
+}
+#evolved_homepage_aboutus .imagelabelrequire
+{
+	color:red;
+}
+#evolved_homepage_aboutus .form-list td.label label {
+    display: block;
+    padding-right: 15px;
+    padding-top: 1px;
+    width: 130px;
+}
+#evolved_homepage_aboutus .form-list td.label {
+    width: 145px;
+}
+/************************ End About us **************************/
+.edit_form_evolved_cls .entry-edit .evolved_open {
+    background: url("../images/entry_edit_head_arrow_down.gif") no-repeat scroll 99% 50% #6f8992;
+}
+.edit_form_evolved_cls .entry-edit .evolved_close {
+    background: url("../images/entry_edit_head_arrow_up.gif") no-repeat scroll 99% 50% #6f8992;
+    color: #fff;
+    display: block;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+/************************ Start Testimonials **************************/
+.form-list.testimonials_element_style_two_table_image
+{
+	display: table-cell;
+}
+#evolved_homepage_testimonials .form-list td.value textarea {
+	width: 300px;
+}
+#evolved_homepage_testimonials .imagelabelrequire
+{
+	color:red;
+}
+#evolved_homepage_testimonials .form-list td.label label {
+	display: block;
+	padding-right: 15px;
+	padding-top: 1px;
+	width: 130px;
+}
+#evolved_homepage_testimonials .form-list td.label {
+	width: 145px;
+}
+/************************ End Testimonials ****************************/
+
+/************************ Start Loosdiamond **************************/
+.homepage_element_diamondrow_dynamic_shape_table th
+{
+    border: 1px solid #ccc;
+    padding: 10px 8px;
+     font-size: 14px;
+}
+.homepage_element_diamondrow_dynamic_shape_table td {
+    border: 1px solid #ccc;
+    padding: 10px 8px;
+}
+.homepage_element_diamondrow_dynamic_shape_table input, .homepage_element_diamondrow_dynamic_shape_table select {
+    vertical-align: middle;
+    width: 200px;
+}
+/************************ End Loosdiamond **************************/

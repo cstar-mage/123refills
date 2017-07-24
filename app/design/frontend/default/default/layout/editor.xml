@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <editor_index_index>
+        <reference name="content">
+            <block type="editor/editor" name="editor" template="editor/editor.phtml" />
+        </reference>
+    </editor_index_index>
+</layout> 

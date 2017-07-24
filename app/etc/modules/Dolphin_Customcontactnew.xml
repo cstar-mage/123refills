@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dolphin_Customcontactnew>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Dolphin_Customcontactnew>
+    </modules>
+</config> 

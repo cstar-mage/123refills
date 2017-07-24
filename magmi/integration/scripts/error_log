@@ -1,0 +1,10 @@
+[29-Apr-2017 07:01:16 UTC] PHP Fatal error:  Uncaught exception 'PDOException' with message 'SQLSTATE[HY000]: General error: 2006 MySQL server has gone away' in /home/refills/public_html/lib/Zend/Db/Statement/Pdo.php:228
+Stack trace:
+#0 /home/refills/public_html/lib/Zend/Db/Statement/Pdo.php(228): PDOStatement->execute(Array)
+#1 /home/refills/public_html/lib/Varien/Db/Statement/Pdo/Mysql.php(110): Zend_Db_Statement_Pdo->_execute(Array)
+#2 /home/refills/public_html/app/code/core/Zend/Db/Statement.php(291): Varien_Db_Statement_Pdo_Mysql->_execute(Array)
+#3 /home/refills/public_html/lib/Zend/Db/Adapter/Abstract.php(480): Zend_Db_Statement->execute(Array)
+#4 /home/refills/public_html/lib/Zend/Db/Adapter/Pdo/Abstract.php(238): Zend_Db_Adapter_Abstract->query('SELECT `eav_ent...', Array)
+#5 /home/refills/public_html/lib/Varien/Db/Adapter/Pdo/Mysql.php(504): Zend_Db_Adapter_Pdo_Abstract->query('SELECT `eav_ent...', Array)
+#6 /home/refills/public_html/lib/Zend/Db/Adapter/Abstract.php(756): Varien_Db_Adapter_Pdo_Mysql->query(Object(Varien_Db_Select), Array)
+#7 / in /home/refills/public_html/lib/Zend/Db/Statement/Pdo.php on line 235

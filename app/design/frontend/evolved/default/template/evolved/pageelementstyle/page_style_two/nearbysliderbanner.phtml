@@ -1,0 +1,183 @@
+<?php //$theme = $this->getConfig(); ?>
+<?php 
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_two')['homepage_element_two_style'])
+{
+	$evolved_homepage_element_two_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_two')['homepage_element_two_style']);
+	$theme = array_merge($evolved_homepage_element_two_content);	
+}
+else 
+{
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+}
+?>
+<?php 
+if(!$theme['homepage_element_2_slideshow_banner_style_nearby_width'])
+{
+	$theme['homepage_element_2_slideshow_banner_style_nearby_width'] = 1200;
+}
+if(!$theme['homepage_element_2_slideshow_banner_style_nearby_height'])
+{
+	$theme['homepage_element_2_slideshow_banner_style_nearby_height'] = 400;
+}
+if(!$theme['homepage_element_2_slideshow_banner_style_nearby_slidesSpacing'])
+{
+	$theme['homepage_element_2_slideshow_banner_style_nearby_slidesSpacing'] = 0;
+}
+?>
+<?php if($theme['homepage_element_2_slideshow_banner_style'] == "nearby"): ?>
+		<?php if(Mage::getStoreConfig("slideshow/general/enable")): ?>
+		<!-- <meta name="viewport" content="initial-scale=1.0, width=device-width" /> -->
+		<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>royalslider/royalslider-final-new.css" media="all" />
+		<!-- <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/jquery-1.8.3.min.js"></script>  -->
+		<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/royalslider.js"></script>
+		<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/rs.active-class.js"></script>
+		<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/rs.autoplay.js"></script>
+		<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/rs.global-caption.js"></script>
+		<script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>royalslider/visible-nearby.js"></script>
+		<script type="text/javascript">
+		    jQuery(document).ready(function() {
+		        //alert(jQuery( window ).width());
+		        //Horizontal Tab
+		  
+		        
+		        jQuery(".homepage_element_2_slideshow_banner #mainHomeSlider").royalSlider({
+		  		  addActiveClass: true,
+		  		  transitionSpeed: 500,
+		  		  arrowsNav: true,
+		  		  loop: true,
+		  		  // imgWidth: true,
+		  		  loopRewind: true,
+		  		  fadeinLoadedSlide: false,
+		  		  globalCaption: true,
+		  		  arrowsNavAutoHide: false,
+		  		  navigateByClick: false,
+		  		  slidesSpacing: <?php echo $theme['homepage_element_2_slideshow_banner_style_nearby_slidesSpacing']; ?>,
+		  		  imageScalePadding: 0,
+		  		  imageScaleMode: 'fill',
+		  		  autoScaleSliderWidth: <?php echo $theme['homepage_element_2_slideshow_banner_style_nearby_width']; ?>,
+		  		  autoScaleSliderHeight: <?php echo $theme['homepage_element_2_slideshow_banner_style_nearby_height']; ?>,
+		  		  /*controlNavigation: 'tabs',*/
+		  		  navigateByCenterClick: false,
+		  		  autoScaleSlider: true,
+		  		  autoPlay: {
+		  			enabled: true,
+		  			pauseOnHover: true,
+		  			delay: 250
+		  		  },
+		  		  visibleNearby: {
+		  	            enabled: true,
+		  	            centerArea: 1,
+		  	            center: true,
+		  	            navigateByCenterClick: true,
+		  	            hiddenOverflow: false
+		  	        }
+		  		  /*thumbs: {
+		  			spacing: 10,
+		  			arrowsAutoHide: false
+		  		  },*/
+		  		}); 
+				
+		    	  	  /*if(jQuery( window ).width() <= 959)
+		    	      {
+		    	    		 jQuery(".royalSlider").royalSlider({
+		    	     	    	 addActiveClass: true,
+		    	     	    	 slidesSpacing:5,
+		    	     			loop: true,
+		    	     			arrowsNav:true,
+		    	     	    	visibleNearby: {
+		    	     	            enabled: true,
+		    	     	            centerArea: 1,
+		    	     	            center: true,
+		    	     	            navigateByCenterClick: true
+		    	     	        }
+		    	     			
+		    	     	    });  
+		    	      }
+		    	      else
+		    	      {
+		
+		    	    		 jQuery(".royalSlider").royalSlider({
+		    	     	    	 addActiveClass: true,
+		    	     	    	 slidesSpacing:5,
+		    	     			loop: true,
+		    	     			arrowsNav:true,
+		    	     	    	visibleNearby: {
+		    	     	            enabled: true,
+		    	     	            centerArea: 0.65,
+		    	     	            center: true,
+		    	     	            navigateByCenterClick: true
+		    	     	        }
+		    	     			
+		    	     	    });  
+		    	      }*/
+		   
+		    });
+		</script>
+		<?php
+			$bannerCollections = Mage::getModel('slideshow/slideshow')
+			->getCollection()
+			->addFieldToFilter(
+				array('stores', 'stores'),
+				array(
+					array('finset'=>Mage::app()->getStore()->getId()), 
+					array('eq'=>'0'))
+			)
+			//->addFieldToFilter('filename', array('neq' => ''))
+			->addFieldToFilter('status', array('eq' => '1'))->setOrder("sort_order","ASC");	
+			
+		$helper = Mage::helper('cms');
+		$processor = $helper->getPageTemplateProcessor();
+		?>
+		<?php if(count($bannerCollections) > 0): ?>
+				<div class="template template--home homepage_element_2_slideshow_banner">
+					<div class="banner-shadow"></div>
+						  <div class="full-width home-slider-full-width-wrap">
+						  		<main class="max-width-min home__slider-wrap">
+						  			 <ul class="slider--home-main royalSlider rsDefault " id="mainHomeSlider">
+						  			 	<?php foreach ($bannerCollections as $item): ?>
+												<?php
+													$desktop_img = ($item->getDesktopImg()) ? $item->getDesktopImg() : "" ;
+													$landscape_ipad_img = ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+													//$portrait_ipad_img = ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+													$portrait_ipad_img = ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : (($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg()) ;
+													//$mobile_img = ($item->getMobileImg()) ? $item->getMobileImg() : ($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : ($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg() ;
+													$mobile_img = ($item->getMobileImg()) ? $item->getMobileImg() : (($item->getPortraitIpadImg()) ? $item->getPortraitIpadImg() : (($item->getLandscapeIpadImg()) ? $item->getLandscapeIpadImg() : $item->getDesktopImg()));
+												?>
+						  			 	        <li data-rsdelay="5000">
+											          <figure>
+											          		<a href="<?php echo $item->getData('slide_url');?>"> 
+											          			<?php if($desktop_img): ?>
+																	<img class="desktop_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$desktop_img; ?>">	
+																<?php endif; ?>
+																<?php if($landscape_ipad_img): ?>
+																	<img class="landscape_ipad_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$landscape_ipad_img; ?>">
+																<?php endif; ?>
+																<?php if($portrait_ipad_img): ?>
+																	<img class="portrait_ipad_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$portrait_ipad_img; ?>">
+																<?php endif; ?>
+																<?php if($mobile_img): ?>
+																	<img class="mobile_img" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$mobile_img; ?>">
+																<?php endif; ?>
+																<?php if(!$desktop_img): ?>
+												          			<?php $html = $processor->filter($item->getImageSlide()); ?>
+												          			<?php 
+												          					$input=nl2br($html);
+												          					preg_match("<img.*?src=[\"\"'](?<url>.*?)[\"\"'].*?>",$input,$output);
+												          					//echo "<pre>"; print_r($output); echo "</pre>";											          					
+												          			?>
+												          			<img src="<?php echo $output['url']; ?>" data-rsh="400" data-rws="1200" class="rsImg" />
+																<?php endif ?>
+											          		</a> 
+											          </figure>
+										        </li>
+							        	<?php endforeach;?>
+						  			 </ul>
+						  		</main>
+						  </div>
+					</div>
+				</div>
+		<?php endif; ?>
+		<?php endif; ?>
+<?php else: ?>
+	<?php echo Mage::app()->getLayout()->createBlock('slideshow/slideshow')->setTemplate('slideshow/slideshow.phtml')->toHtml(); ?>
+<?php endif; ?>

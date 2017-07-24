@@ -1,0 +1,15 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <stud_index_index>
+			<reference name="root">
+				<action method="setTemplate"><template>page/1column.phtml</template></action>
+			</reference>
+			<reference name="head">	
+				<action method="addItem"><type>skin_css</type><name>page.css</name><params/></action>
+				<action method="setTitle"><title>Diamond Stud</title></action>
+			</reference>		
+			<reference name="content">
+					<block type="stud/stud" name="stud" template='stud/stud.phtml'/>
+			</reference>
+    </stud_index_index>    
+</layout> 

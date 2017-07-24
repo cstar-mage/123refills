@@ -1,0 +1,204 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+/* @var $this Mage_Catalog_Block_Product_List */
+?>
+
+<!-- ------------- Begining List Page Filter ------------------>
+<?php 
+	$_category  = Mage::registry('current_category');
+	//echo "<pre>"; print_r($_category->getData()); echo "</pre>";
+	$_thumbnail = $_category->getThumbnail();	
+	$_otherimage = $_category->getImage();	
+?>
+<?php
+$products = Mage::getModel('catalog/product')
+					->getCollection()
+					->addAttributeToSelect('*')
+					->addAttributeToFilter('printer_series', array('neq' => '' ))
+					->addAttributeToFilter('type_id', array('eq' => 'grouped'))
+					->addCategoryFilter($_category)
+					->addAttributeToSort('name', 'asc');
+
+  			
+		//echo $products->getselect();
+		
+				
+		foreach($products as $product)
+		{
+			$series[$product->getPrinterSeries()]=$product->getAttributeText('printer_series');
+		}
+		
+		$series=array_unique($series);
+?>
+<div class="wrapper">
+	<?php //if ($this->IsTopCategory()) : ?>
+	<div class="top_banner desktop">
+		<div class="link_and_toner">
+			<div class="form_div">
+				<h1>Ink & Toner Search</h1>
+				<p>Select your printer</p>
+				<form action="" method="get">
+					<div class="series_select_menu">
+						<div class="dropdown">
+						 <input type='hidden' id='seriescategory' value="<?php echo $_category->getId() ?>" />		
+						  <select name="one" class="dropdown-select dropdown-serieslist">
+							  	<option value="0">Select</option>;
+							<?php foreach($series as $key=>$list): ?>
+							  	 <option value="<?php echo  $key ?>"><?php echo $list ?></option>
+			 				<?php endforeach; ?>			
+							  
+						  </select>
+						</div>
+						<div class="dropdown">
+						  <select name="one" class="dropdown-select dropdown-model-list">
+							 
+						  </select>
+						</div>
+					<!--	<div class='finalProductData'>
+						<input class="select_btn" value="Select Your Printer" name="" type="button" />
+						</div>	 -->
+					</div>
+				</form>
+			</div>
+		</div>
+		<div class="brand_div">
+			<div class="brand_text">
+				<h1><img src="<?php  echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'catalog/category/'. $_thumbnail; ?>" alt="<?php echo $_category->getName(); ?>" /></h1>
+				<p><?php echo $_category->getDescription(); ?></p>
+			</div>
+			<div class="brand_img">
+				<?php if ($_otherimage) :?>
+					<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'catalog/category/'. $_otherimage; ?>" alt="<?php echo $_category->getName(); ?>" />
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+	
+	<div class="top_banner mobile">
+		<div class="link_and_toner">			
+			<div class="brand_div">
+				<div class="brand_text">
+					<h1><img src="<?php  echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'catalog/category/'. $_thumbnail; ?>" alt="<?php echo $_category->getName(); ?>" /></h1>
+				</div>			
+			</div>
+		
+			<div class="form_div">
+				<h1>Ink & Toner Search</h1>
+				<p>Select your printer</p>
+				<form action="" method="get">
+					<div class="series_select_menu">
+						<div class="dropdown">
+						 <input type='hidden' id='seriescategory' value="<?php echo $_category->getId() ?>" />		
+						 <input type='hidden' id='dropdown-serieslist' value="" />										
+						  <select name="one" class="dropdown-select dropdown-serieslist">
+							  	<option value="0">Select Printer Series</option>;
+							<?php foreach($series as $key=>$list): ?> 
+							  	 <option value="<?php echo  $key ?>"><?php echo $list ?></option>
+			 				<?php endforeach; ?>			
+							  
+						  </select>
+						</div>
+						
+						<div class="dropdown">
+						  <select name="one" class="dropdown-select dropdown-model-list">
+							 
+						  </select>
+						</div>
+						<!-- <div class='finalProductData'>
+						<input class="select_btn" value="Select Your Printer" name="" type="button" />
+						</div>	 -->
+					</div>
+				</form>
+			</div>
+		</div>		
+	</div>
+			
+	<?php //endif;?> 
+	
+	<div class="contain_wrapper">
+		<div class="container_brand">
+			<div class="left_contain">
+				<p><?php echo $_category->getName(); ?> Printer Series</p>
+				<?php 
+					$attributeOptions = Mage::helper('brandfilter')->getBrandPrinterSeries();
+					// echo "<pre>"; print_r($attributeOptions); echo "</pre>"; exit;
+				?>
+				<ul>
+				<?php foreach ($attributeOptions as $value) : ?>
+					<li>
+						<a href="javascript:void(0)" value="<?php echo $value['value']; ?>"><?php echo $value['label']; ?></a>
+					</li>					
+					<?php endforeach; ?>
+				</ul>
+				<script type="text/javascript">
+					jQuery(document).ready(function() {
+						jQuery('#loading-image').hide();
+						jQuery('.left_contain ul li:first-child a').trigger('click');
+						jQuery('.left_contain ul li a').on('click', function(){						
+							jQuery('.left_contain ul li a').removeClass("active");
+							jQuery(this).addClass("active");
+							var head_name = jQuery(this).text(); 
+							jQuery('.right_contain p').html(head_name);
+							var value = jQuery(this).attr("value");
+							//alert(value);
+							var cat_value = "<?php echo $_category->getId(); ?>";
+							//alert(value);							
+							jQuery('#loading-image').show();
+							jQuery.ajax({
+								type: 'POST',
+								url: "<?php echo Mage::getUrl('brandfilter/index/index') ?>",
+								data: ({id : value , cat_id : cat_value}),
+								success: function(res){
+									//console.log(res);
+									jQuery('.right_contain ul ').html(res);
+								},
+								complete: function(){
+									jQuery('#loading-image').hide();
+									jQuery('html, body').animate({scrollTop:jQuery('body').offset().top},'slow');  
+								}
+							});  
+						});
+					});
+				</script>
+			</div>
+			<div class="right_contain">
+				<p></p>
+				<ul>					
+				</ul>
+				<span id="loading-image"></span>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- ------------- End Of List Page Filter ------------------>

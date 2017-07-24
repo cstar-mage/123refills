@@ -1,0 +1,49 @@
+<?xml version="1.0"?>
+<layout>
+<!--
+*
+* Created by:  Milan Simek
+* Company:     Plugin Company
+*
+* LICENSE: http://plugin.company/docs/magento-extensions/magento-extension-license-agreement
+*
+* YOU WILL ALSO FIND A PDF COPY OF THE LICENSE IN THE DOWNLOADED ZIP FILE
+*
+* FOR QUESTIONS AND SUPPORT
+* PLEASE DON'T HESITATE TO CONTACT US AT:
+*
+* SUPPORT@PLUGIN.COMPANY
+*
+-->
+    <!-- CMS PAGE REVISIONS -->
+    <adminhtml_cms_page_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>plugincompany/cmsrevisions.js</name>
+            </action>
+        </reference>
+    </adminhtml_cms_page_edit>
+
+    <cmsrevisions_index_viewpagerevisions>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="plugincompany_cmsrevisions/adminhtml_pagerevisions"/>
+        </block>
+    </cmsrevisions_index_viewpagerevisions>
+
+    <!-- CMS BLOCK REVISIONS -->
+    <adminhtml_cms_block_edit>
+        <reference name="head">
+            <action method="addItem">
+                <type>js</type>
+                <name>plugincompany/cmsrevisions.js</name>
+            </action>
+        </reference>
+        <reference name="content">
+                <block type="core/template" template="plugincompany/cmsrevisions/block/grid_wrap_top.phtml" />
+                    <block name="blockrevisions" as="blockrevisions" type="plugincompany_cmsrevisions/adminhtml_blockrevisions"/>
+                <block type="core/template" template="plugincompany/cmsrevisions/block/grid_wrap_bottom.phtml" />
+        </reference>
+    </adminhtml_cms_block_edit>
+
+</layout>

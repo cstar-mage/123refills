@@ -1,0 +1,43 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <CartController_AddCartController>
+      <version>0.1.0</version>
+    </CartController_AddCartController>
+  </modules>
+  <frontend>
+    <routers>
+      <addcartcontroller>
+        <use>standard</use>
+          <args>
+            <module>CartController_AddCartController</module>
+            <frontName>addcartcontroller</frontName>
+          </args>
+      </addcartcontroller>
+    </routers>
+  </frontend>
+  <global>
+		<rewrite>        
+            <cartcontroller_addcartcontroller_checkout_cartcontroller>
+                <from><![CDATA[#^/checkout/cart/#]]></from> <!-- Mage_Checkout_CartController  -->
+                <to>/addcartcontroller/checkout_cart/</to> <!-- CartController_AddCartController_Checkout_CartController  -->
+            </cartcontroller_addcartcontroller_checkout_cartcontroller>
+		</rewrite>
+    <helpers>
+      <addcartcontroller>
+        <class>CartController_AddCartController_Helper</class>
+      </addcartcontroller>
+    </helpers>
+  </global>
+  <admin>
+	<routers>
+	  <addcartcontroller>
+	    <use>admin</use>
+		<args>
+		  <module>CartController_AddCartController</module>
+		  <frontName>admin_addcartcontroller</frontName>
+		</args>
+	  </addcartcontroller>
+	</routers>
+  </admin>
+</config> 

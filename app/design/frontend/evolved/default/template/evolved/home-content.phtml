@@ -1,0 +1,70 @@
+<?php $theme = $this->getConfig(); ?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php if($theme['homepage_textrow_enabled'] && $theme['homepage_textrow_content'] != ""): ?>
+	<div class="home-info">
+		<?php $html = $processor->filter($theme['homepage_textrow_content']); ?>
+		<?php echo nl2br($html); ?>
+	</div>
+<?php endif; ?>
+
+<?php if($theme['homepage_boxes_row1_enabled'] == 1 || $theme['homepage_boxes_row2_enabled'] == 1 || $theme['homepage_boxes_row3_enabled'] == 1): ?>
+
+
+	<div class="home-main">
+	
+		<?php for($i=1; $i<=3; $i++): ?>
+		
+			<?php if($theme['homepage_boxes_row'.$i.'_enabled']): ?>
+				<div class="home-main-block">
+				
+					<div class="home-main-product">
+						<div class="home-main-product-image">
+							<a href="<?php echo $theme['homepage_boxes_row'.$i.'_col1_link']; ?>"> 
+								<?php $html = $processor->filter($theme['homepage_boxes_row'.$i.'_col1_image']); ?>
+								<?php echo nl2br($html); ?>
+							</a>
+						</div>
+						<div class="home-main-product-text">
+							<a href="<?php echo $theme['homepage_boxes_row'.$i.'_col1_link']; ?>">
+								<?php echo $theme['homepage_boxes_row'.$i.'_col1_title']; ?>
+							</a>
+						</div>
+					</div>
+				
+					<div class="home-main-product">
+						<div class="home-main-product-image">
+							<a href="<?php echo $theme['homepage_boxes_row'.$i.'_col2_link']; ?>">
+								<?php $html = $processor->filter($theme['homepage_boxes_row'.$i.'_col2_image']); ?>
+								<?php echo nl2br($html); ?>
+							</a>
+						</div>
+						<div class="home-main-product-text">
+							<a href="<?php echo $theme['homepage_boxes_row'.$i.'_col2_link']; ?>">
+								<?php echo $theme['homepage_boxes_row'.$i.'_col2_title']; ?>
+							</a>
+						</div>
+					</div>
+				
+					<div class="home-main-product">
+						<div class="home-main-product-image">
+							<a href="<?php echo $theme['homepage_boxes_row'.$i.'_col3_link']; ?>">
+								<?php $html = $processor->filter($theme['homepage_boxes_row'.$i.'_col3_image']); ?>
+								<?php echo nl2br($html); ?>
+							</a>
+						</div>
+						<div class="home-main-product-text">
+							<a href="<?php echo $theme['homepage_boxes_row'.$i.'_col3_link']; ?>">
+								<?php echo $theme['homepage_boxes_row'.$i.'_col3_title']; ?>
+							</a>
+						</div>
+					</div>
+				
+				</div>
+			<?php endif; ?>
+		<?php endfor; ?>
+	</div>
+<?php endif; ?>

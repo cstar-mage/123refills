@@ -1,0 +1,51 @@
+<!--      <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>tab_slider/css/style.css">  -->
+        <!-- Example assets -->
+        <link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>tab_slider/css/jcarousel.responsive.css">
+       <?php /* ?> <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js/jquery.js"></script> <?php */ ?>
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js//jquery.jcarousel.min.js"></script>
+        <!--  <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js/jcarousel.responsive.js"></script>  -->
+<?php $theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+
+<?php if(!$theme['homepage_tabs_enabled']) return; ?>
+<?php 
+$activeTabs = array();
+if($theme['homepage_element_1_newarrival_enabled']==1) $activeTabs['New Arrival'] = Mage::app()->getLayout()->createBlock('catalog/product_new')->setTemplate('evolved/tabs/new.phtml')->toHtml();
+//if($theme['homepage_tabs_featured_enabled']) $activeTabs['Featured_bk'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/featured_bk1.phtml')->toHtml();
+if($theme['homepage_element_1_featured_enabled']==1) $activeTabs['Featured'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/featured.phtml')->toHtml();
+if($theme['homepage_element_1_special_enabled']==1) $activeTabs['Special'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/special.phtml')->toHtml();
+if($theme['homepage_element_1_bestsellers_enabled']==1) $activeTabs['Best Sellers'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/bestsellers.phtml')->toHtml();
+if($theme['homepage_element_1_mostviewed_enabled']==1) $activeTabs['Most Viewed'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/mostviewed.phtml')->toHtml();
+?>
+
+<?php if(count($activeTabs) > 0): ?>
+<div class="home-main featured-tabs toggle-content product-collateral tabs">
+	<hr class="hr_line" />
+	<dl id="collateral-tabs" class="collateral-tabs">
+		<?php foreach($activeTabs as $title => $template): ?>
+			<dt class="tab"><span><?php echo $title ?></span></dt>
+			<dd class="tab-container <?php echo str_replace(" ","_",$title); ?>">
+				<div class="tab-content">
+					<?php echo $template; ?>
+				</div>
+			</dd>
+		<?php endforeach; ?>
+	</dl>
+	
+</div>
+<?php endif; ?>
+<script> 
+jQuery(document).ready(function(){
+	jQuery(".toggle-tabs li span,.collateral-tabs dt.tab").click(function(){
+		//alert(jQuery(this).text());
+		//jQuery(".tab-container").fadeOut("fast");
+		jQuery(window).resize();
+			//jQuery(".tab-container").css("display","none");
+			jQuery(".tab-container.current").css("display","none");
+			var tab_title = jQuery(this).text();
+			var tab_text = tab_title.replace(' ','_');
+			//alert(tab_text);
+			jQuery("." + tab_text).fadeIn(1000);		
+		
+	});
+});
+</script>

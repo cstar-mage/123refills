@@ -1,0 +1,26 @@
+<?php
+$bannerCollections = Mage::getModel('slideshow/slideshow')
+    ->getCollection()
+    ->addFieldToFilter(
+        array('stores', 'stores'),
+        array(
+            array('finset'=>Mage::app()->getStore()->getId()),
+            array('eq'=>'0'))
+    )
+    ->addFieldToFilter('status', array('eq' => '1'))->setOrder("sort_order","ASC");
+
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+
+if($bannerCollections->getSize() == 0) return; ?>
+
+<div class="rsDefault royalSlider contentSlider ibmRsSliderContainer">
+    <?php foreach ($bannerCollections as $item): ?>
+        <?php
+        $desktop_img = ($item->getDesktopImg()) ? $item->getDesktopImg() : "" ;
+        ?>
+        <?php if($desktop_img): ?>
+        <img class="rsImg" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."wysiwyg/slideshow/".$desktop_img; ?>"/>
+        <?php endif; ?>
+    <?php endforeach;?>
+</div>

@@ -1,0 +1,11 @@
+<?php 
+	
+	$testimonialcollection =   Mage::getModel('testimonial/testimonial')
+							->getCollection()
+							->addFieldToFilter( 'status', '1' );
+							//echo "<pre>"; print_r($testcollection1->getData());	
+							$testcollection = $testimonialcollection->getData();											
+?>
+<div class="slideshow-container"><ul class="slideshow2"><?php foreach($testcollection as $data1 ): ?><li><div class="contain_last"><p class="testi_details"><span class='testiname'>"<?php echo $data1['testimonial']; ?>"</span><span class='testi_author'><?php echo "-".$data1['name'];?></span><span class='testi_date'><?php echo date('F d, Y', strtotime($data1['testimonial_date']));?></span></p></div></li><?php endforeach; ?></ul><span class="slideshow-pager" style="display: none"></span><span class="prevarr1" style="display: none"></span><span class="nextarr1" style="display: none"></span></div><script>jQuery(document).ready(function() {jQuery(".slideshow-container .slideshow2").cycle({slides: "> li",pager: ".slideshow-pager", pagerTemplate: '<span class="pager-box"></span>',speed: 2000000000,pauseOnHover: !1,swipe: !0,prev: ".prevarr1",next: ".nextarr1",fx: "fade",timeout: 6e3 }) });</script><style> .page_element_one li.cycle-slide {  right: 0 !important; text-align: center;} .page_element_one .contain_last { margin: 0 auto; max-width: 1240px; text-align: center !important;} .page_element_one .contain_last > p { color: #fff; margin: 0 auto; font-size: 32px; text-align: center; } </style>
+ 
+  

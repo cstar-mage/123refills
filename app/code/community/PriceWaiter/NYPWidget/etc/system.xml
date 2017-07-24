@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright 2013-2015 Price Waiter, LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<config>
+    <sections>
+        <pricewaiter>
+            <label>PriceWaiter</label>
+            <tab>sales</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <class>pricewaiter-tab</class>
+            <header_css>pricewaiter-header</header_css>
+            <groups>
+                <configuration translate="label">
+                    <label>Configuration</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>1</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enabled</label>
+                            <comment>
+                                <![CDATA[Disabling the widget will hide it on
+                                         all product pages.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <api_key translate="label comment">
+                            <label>API Key</label>
+                            <comment>
+                                <![CDATA[The API Key you were given when signing
+                                         up for PriceWaiter.]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </api_key>
+                        <sign_up_token>
+                            <frontend_type>hidden</frontend_type>
+                            <sort_order>100</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sign_up_token>
+                        <sign_up>
+                            <label></label>
+                            <comment></comment>
+                            <frontend_type>button</frontend_type>
+                            <frontend_model>nypwidget/adminhtml_signup</frontend_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sign_up>
+                        <api_secret translate="label comment">
+                            <label>API Secret</label>
+                            <comment>
+                                <![CDATA[The API Secret is not necessary to use PriceWaiter,
+                                         but is required by some premium features.]]>
+                            </comment>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>25</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </api_secret>
+                        <log translate="label comment">
+                            <label>Log Callback Information</label>
+                            <comment>
+                                <![CDATA[Log information about order
+                                         notifications from PriceWaiter. For
+                                         information about setting up the
+                                         callback function, go <a
+                                         href="http://www.pricewaiter.com/">here</a>.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </log>
+                    </fields>
+                </configuration>
+                <customer_groups translate="label">
+                    <label>Disable button by Customer Groups</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <disable translate="label comment">
+                            <label>Disable the "Name Your Price" widget by customer group?</label>
+                            <comment>
+                                <![CDATA[Setting this option to "Yes" will disable the widget for customer groups
+                                selected below]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </disable>
+                        <group_select translate="label comment">
+                            <label>Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>customer/resource_group_collection</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </group_select>
+                    </fields>
+                </customer_groups>
+                <conversion_tools translate="label">
+                    <label>Conversion Tools (such as Exit Intent)</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>7</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <enabled translate="label comment">
+                            <label>Enabled</label>
+                            <comment>
+                                <![CDATA[Disabling this option will disable Conversion Tools on your site. You must have a 'Premium'
+                                account for Conversion Tools to display on your site.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </enabled>
+                        <customer_group_disable translate="label comment">
+                            <label>Disable Conversion Tools by customer group?</label>
+                            <comment>
+                                <![CDATA[Setting this option to "Yes" will disable conversion tools for customer groups
+                                selected below]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>5</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </customer_group_disable>
+                        <group_select translate="label comment">
+                            <label>Customer Groups</label>
+                            <frontend_type>multiselect</frontend_type>
+                            <source_model>customer/resource_group_collection</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </group_select>
+                    </fields>
+                </conversion_tools>
+                <appearance translate="label">
+                    <label>Appearance</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <button_link translate="label comment">
+                            <label>Widget Appearance</label>
+                            <frontend_type>link</frontend_type>
+                            <frontend_model>nypwidget/adminhtml_link</frontend_model>
+                            <comment><![CDATA[Follow the provided link to customize the PriceWaiter widget appearance.]]></comment>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </button_link>
+                    </fields>
+                </appearance>
+                <customer_interaction>
+                    <label>Customer Interaction</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>15</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <send_welcome_email>
+                            <label>Send Welcome Email to New Customers?</label>
+                            <comment>
+                                <![CDATA[With this enabled, new customers created when Magento receives a new
+								order notification will receive your store's Welcome email in addition to
+								PriceWaiter's.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </send_welcome_email>
+                        <send_new_order_email>
+                            <label>Send New Order Email to Customers?</label>
+                            <comment>
+                                <![CDATA[With this enabled, new orders created when Magento receives a new
+								order notification will trigger your store's New Order email in addition to
+								PriceWaiter's.]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </send_new_order_email>
+                    </fields>
+                </customer_interaction>
+                <categories>
+                    <label>Categories</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <expanded>1</expanded>
+                    <fields>
+                        <disable_by_category>
+                            <label>Disable the PriceWaiter Widget by Category?</label>
+                            <comment>
+                                <![CDATA[With this enabled, you can disable the PriceWaiter Name Your Price Widget by Category.
+                                    Visit the "PriceWaiter" tab for the category you want to adjust by going to
+                                    "Catalog"->"Manage Categories".]]>
+                            </comment>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </disable_by_category>
+                    </fields>
+                </categories>
+            </groups>
+        </pricewaiter>
+    </sections>
+</config>

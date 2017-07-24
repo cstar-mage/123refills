@@ -1,0 +1,49 @@
+<?php
+/**
+ * TurnkeyE Co.
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0).
+ * It is available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you are unable to obtain it through the world-wide-web, please send
+ * an email to info@turnkeye.com so we can send you a copy immediately.
+ *
+ * @category   Turnkeye
+ * @package    Turnkeye_Testimonial
+ * @copyright  Copyright (c) 2010-2012 TurnkeyE Co. (http://turnkeye.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+
+/**
+ * template of testimonials
+ *
+ * @category   Turnkeye
+ * @package    Turnkeye_Testimonial
+ * @author     Viacheslav Fedorenko <v.fedorenko@turnkeye.com>
+ */
+
+/**
+ * @var $this Turnkeye_Testimonial_Block_Testimonial
+ */
+?>
+<div class="std testimonials_container">
+    <h1 class="testimonials_title"><?php echo $this->__("Testimonials"); ?></h1>
+    <div class="testimonials">
+    <?php $testimonials = $this->getTestimonials(); ?>
+    <?php $i = 0;?>
+    <?php if ($testimonials->count() > 0): ?>
+    <?php foreach ($testimonials as $testimonial): ?>
+	<div class="testimonial_<?php $i++; echo (is_int($i/2) ? "r" : "l")?>">
+	    <?php if ($testimonial->getTestimonialImg()): ?>
+	    <div class="testimonial_image"><img alt="<?php echo $testimonial->getTestimonialName(); ?>" src="<?php echo $this->getUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA). $testimonial->getTestimonialImg() ?>" /></div>
+	    <?php endif; ?>
+	    <div class="testimonial_text"><?php echo $testimonial->getTestimonialText(); ?>
+		    <h2><?php echo $testimonial->getTestimonialName(); ?></h2>
+	    </div>
+	</div>
+    <?php endforeach; ?>
+    <?php endif;?>
+    </div>
+</div>

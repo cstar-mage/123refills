@@ -1,0 +1,973 @@
+<?php
+class Mage_Uploadtool_Adminhtml_UploadtoolController extends Mage_Adminhtml_Controller_action
+{	
+	
+	
+	
+	protected function _initAction() {
+		$this->loadLayout()
+			->_setActiveMenu("uploadtool/items")
+			->_addBreadcrumb(Mage::helper("adminhtml")->__("Items Manager"), Mage::helper("adminhtml")->__("Item Manager"));
+		
+		return $this;
+	}   
+ 
+	public function indexAction() {
+		$this->_initAction()
+			->renderLayout();
+	}
+
+	public function editAction() {
+		$id     = $this->getRequest()->getParam("id");
+		$model  = Mage::getModel("uploadtool/uploadtool")->load($id);
+
+		if ($model->getId() || $id == 0) {
+			$data = Mage::getSingleton("adminhtml/session")->getFormData(true);
+			if (!empty($data)) {
+				$model->setData($data);
+			}
+
+			Mage::register("uploadtool_data", $model);
+
+			$this->loadLayout();
+			$this->_setActiveMenu("jewelryshare/uploadtool");
+
+			$this->_addBreadcrumb(Mage::helper("adminhtml")->__("Item Manager"), Mage::helper("adminhtml")->__("Item Manager"));
+			$this->_addBreadcrumb(Mage::helper("adminhtml")->__("Item News"), Mage::helper("adminhtml")->__("Item News"));
+
+			$this->getLayout()->getBlock("head")->setCanLoadExtJs(true);
+
+			$this->_addContent($this->getLayout()->createBlock("uploadtool/adminhtml_uploadtool_edit"))
+				->_addLeft($this->getLayout()->createBlock("uploadtool/adminhtml_uploadtool_edit_tabs"));
+
+			$this->renderLayout();
+		} else {
+			Mage::getSingleton("adminhtml/session")->addError(Mage::helper("uploadtool")->__("Item does not exist"));
+			$this->_redirect("*/*/");
+		}
+	}
+ 
+	public function newAction() {
+		$this->_forward("edit");
+	}
+	
+	public function searchstringAction() {
+		$string=$this->getRequest()->getParam('string');
+		//echo "AA";
+		$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+		$magento_db = $resource['default_setup']['connection']['host'];
+		$mdb_user = $resource['default_setup']['connection']['username'];
+		$mdb_passwd = $resource['default_setup']['connection']['password'];
+		$mdb_name = $resource['default_setup']['connection']['dbname'];
+		
+		//developm_magento
+		$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+		if (!$magento_connection)
+		{
+			die('Unable to connect to the database');
+		}
+		@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+		
+		$table = Mage::getSingleton('core/resource')->getTableName('uploadtool_diamonds_inventory');
+		$query = "SELECT * FROM `$table` where lotno like '".$string."%'" ;
+		
+		
+		//echo $query ;
+		
+		$result = @mysql_db_query($mdb_name, $query) or die("Failed Query of ".$query);
+		
+	 
+		
+		$num_rows = @mysql_num_rows($result);
+		if($num_rows > 0)
+		{	
+			echo "<table cellspacing='3' cellpadding='3' style='width:100%'>";
+			//echo
+			echo "<tr><th>STOCK #</th><th>OWNER</th><th>SHAPE</th><th>CARAT</th><th>PRICE</th><th>COLOR</th><th>CLARITY</th>
+			<th>CUT</th><th>FLUOR</th><th>CERTIFICATE</th></tr>";
+			//echo "";
+			while($row = mysql_fetch_array($result))
+			{
+				echo "<tr><td>".$row['lotno']."</td><td>".$row['owner']."</td><td>".$row['shape']."</td>
+				<td>".$row['carat']."</td><td>".$row['totalprice']."</td><td>".$row['color']."</td><td>".$row['clarity']."</td><td>".$row['cut']."</td>
+				<td>".$row['fluorescence']."</td><td>".$row['certificate']."</td></tr>";
+			}
+			//echo ""; 
+			echo "</table>";
+			//return $row;
+			//print_r($owner);
+		}
+		else
+		{
+			echo "<b>No Data Found </b>"; 
+		}		
+		
+	}
+	
+	public function settingsAction() {
+		
+		$data = Mage::getSingleton("adminhtml/session")->getFormData(true);
+		if (!empty($data)) {
+			$model->setData($data);
+		}
+		
+		Mage::register("uploadtool_settings_data", $model);
+		
+		$this->loadLayout();
+		$this->_setActiveMenu("jewelryshare/settings");
+		
+		$this->_addBreadcrumb(Mage::helper("adminhtml")->__("Jewelerslink Settings"), Mage::helper("adminhtml")->__("Jewelerslink Settings"));
+		$this->_addBreadcrumb(Mage::helper("adminhtml")->__("Jewelerslink Settings"), Mage::helper("adminhtml")->__("Jewelerslink Settings"));
+		
+		$this->getLayout()->getBlock("head")->setCanLoadExtJs(true);
+		
+		$this->_addContent($this->getLayout()->createBlock("uploadtool/adminhtml_uploadtool_settings"))
+		->_addLeft($this->getLayout()->createBlock("uploadtool/adminhtml_uploadtool_settings_tabs"));
+		
+		$this->renderLayout();
+		
+	}
+ 
+	public function saveSettings() {
+		
+		$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+		$magento_db = $resource['default_setup']['connection']['host'];
+		$mdb_user = $resource['default_setup']['connection']['username'];
+		$mdb_passwd = $resource['default_setup']['connection']['password'];
+		$mdb_name = $resource['default_setup']['connection']['dbname'];
+		$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+		
+		if (!$magento_connection)
+		{
+			die('Unable to connect to the database');
+		}
+		@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+		
+		$uploadtool_settings = Mage::getSingleton("core/resource")->getTableName('uploadtool_settings');
+		
+		if(isset($_REQUEST['settings']) && $_REQUEST['settings'] != "") {
+			$settings = $_REQUEST['settings'];
+			//echo "<pre>"; print_r($settings); exit;
+			
+			foreach($settings as $field => $value){
+				$select = mysql_query("select * from `$uploadtool_settings` where `field` = '".$field."'") or die(mysql_error());
+				if(mysql_num_rows($select) == 0) {
+					mysql_query("insert into `$uploadtool_settings` set `field` = '".$field."', `value` = '".$value."'") or die(mysql_error());
+				} else {
+					mysql_query("update `$uploadtool_settings` set `value` = '".$value."' where `field` = '".$field."'") or die(mysql_error());
+				}
+			}
+			
+			$config = new Mage_Core_Model_Config();
+			if(isset($settings['jewelerslink_username']) && $settings['jewelerslink_username'] != "") {
+				$config->saveConfig('jewelryshare/user_detail/ideal_username', $settings['jewelerslink_username'] , 'default', 0);
+				$config->saveConfig('uploadtool/user_detail/ideal_username', $settings['jewelerslink_username'] , 'default', 0);
+			}
+			
+			if(isset($settings['jewelerslink_password']) && $settings['jewelerslink_password'] != "") {
+				$config->saveConfig('jewelryshare/user_detail/ideal_password', $settings['jewelerslink_password'] , 'default', 0);
+				$config->saveConfig('uploadtool/user_detail/ideal_password', $settings['jewelerslink_password'] , 'default', 0);
+			}
+			
+			if(isset($settings['rapnet_username']) && $settings['rapnet_username'] != "") {
+				$config->saveConfig('jewelryshare/user_detail/rapnet_username', $settings['rapnet_username'] , 'default', 0);
+				$config->saveConfig('uploadtool/user_detail/rapnet_username', $settings['rapnet_username'] , 'default', 0);
+			}
+				
+			if(isset($settings['rapnet_password']) && $settings['rapnet_password'] != "") {
+				$config->saveConfig('jewelryshare/user_detail/rapnet_password', $settings['rapnet_password'] , 'default', 0);
+				$config->saveConfig('uploadtool/user_detail/rapnet_password', $settings['rapnet_password'] , 'default', 0);
+			}
+			
+		}
+		
+	}
+	
+	public function saveAction() {	
+		try
+		{
+			if(isset($_REQUEST['jewelerslink_settings'])) {
+				$this->saveSettings();
+				Mage::getSingleton("adminhtml/session")->addSuccess("Settings Saved.");
+				$this->_redirect("*/*/settings");
+				return;
+			}
+			
+			$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+			$magento_db = $resource['default_setup']['connection']['host'];
+			$mdb_user = $resource['default_setup']['connection']['username'];
+			$mdb_passwd = $resource['default_setup']['connection']['password'];
+			$mdb_name = $resource['default_setup']['connection']['dbname'];
+			$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+
+			if (!$magento_connection)
+			{
+				die('Unable to connect to the database');
+			}
+			@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");		
+
+			$uploadtool_diamonds_inventory = Mage::getSingleton("core/resource")->getTableName('uploadtool_diamonds_inventory');
+			$uploadtool_price_increase = Mage::getSingleton("core/resource")->getTableName('uploadtool_price_increase');
+			$uploadtool_vendor = Mage::getSingleton("core/resource")->getTableName('uploadtool_vendor');
+			$uploadtool_settings = Mage::getSingleton("core/resource")->getTableName('uploadtool_settings');
+			
+			if(isset($_REQUEST['settings']) && $_REQUEST['settings'] != "") {
+				$settings = $_REQUEST['settings'];
+				//echo $_REQUEST['settings']['jewelerslink_diamondsearch_slidercolor'] . "<pre>"; print_r($settings); exit;
+				if(isset($_REQUEST['settings']['diamond_cfp_enabled']) && $_REQUEST['settings']['diamond_cfp_enabled'] == 'on') {
+					$settings['diamond_cfp_enabled'] = 1; 
+				} else {
+					$settings['diamond_cfp_enabled'] = 0;
+				}
+				
+				foreach($settings as $field => $value){
+					$select = mysql_query("select * from `$uploadtool_settings` where `field` = '".$field."'") or die(mysql_error());
+					if(mysql_num_rows($select) == 0) {
+						mysql_query("insert into `$uploadtool_settings` set `field` = '".$field."', `value` = '".$value."'") or die(mysql_error());
+					} else {
+						mysql_query("update `$uploadtool_settings` set `value` = '".$value."' where `field` = '".$field."'") or die(mysql_error());
+					}
+				}
+			}
+
+			mysql_query("TRUNCATE TABLE $uploadtool_price_increase");
+
+			for($i = 1; $i<1000; $i++)
+			{
+				if(isset($_REQUEST['multiline_0-'.$i]) && ($_REQUEST['multiline_0-'.$i] != ''))
+				{
+					$price_from_0 = $_REQUEST['multiline_0-'.$i];
+					$price_to_1 = $_REQUEST['multiline_1-'.$i];
+					$price_increase_percent = $_REQUEST['multiline_2-'.$i];
+					$price_increase_2 = $_REQUEST['multiline_2-'.$i]/100;
+					$price_to_increase_3 = 	1 + $price_increase_2;
+					
+					$query_insert_1 = "INSERT INTO $uploadtool_price_increase SET price_from = ".$price_from_0.", price_to = ".$price_to_1.", price_increase = ".$price_increase_percent;
+					mysql_query($query_insert_1);
+					}
+			}
+			mysql_query("TRUNCATE TABLE $uploadtool_vendor");
+			
+			for($j = 0; $j<1000; $j++)
+			{
+				if(isset($_REQUEST['vendor_1-'.$j]) && ($_REQUEST['vendor_1-'.$j] != ''))
+				{
+					$vendor_name = $_REQUEST['vendor_1-'.$j];
+					$vendor_id = $_REQUEST['vendor_2-'.$j];
+					$query_insert = "INSERT INTO $uploadtool_vendor SET vendor_name = '".$vendor_name."', vendor_id = '".$vendor_id."'";
+					mysql_query($query_insert);	
+					}
+			}
+				
+			mysql_query("Delete from $uploadtool_diamonds_inventory where owner = 'self'");
+			for($k = 0; $k<1000; $k++)
+				{
+				if(isset($_REQUEST['inventory_1-'.$k]) && ($_REQUEST['inventory_1-'.$k] != ''))
+				{
+					$lotno = $_REQUEST['inventory_1-'.$k];
+					$shape = $_REQUEST['inventory_2-'.$k];
+					$carat = $_REQUEST['inventory_3-'.$k];
+					$cut = $_REQUEST['inventory_4-'.$k];
+					$color = $_REQUEST['inventory_5-'.$k];
+					$clarity = $_REQUEST['inventory_6-'.$k];
+					$depth=$_REQUEST['inventory_7-'.$k];
+					$table = $_REQUEST['inventory_8-'.$k];
+					$polish = $_REQUEST['inventory_9-'.$k];
+					$symmetry = $_REQUEST['inventory_10-'.$k];
+					$fluorescence = $_REQUEST['inventory_11-'.$k];
+					$dimensions = $_REQUEST['inventory_12-'.$k];
+					$price_carat = $_REQUEST['inventory_13-'.$k];
+					$totalprice = $_REQUEST['inventory_14-'.$k];
+					$Lab = $_REQUEST['inventory_15-'.$k];
+					$culet = $_REQUEST['inventory_16-'.$k];
+					$girdle = $_REQUEST['inventory_17-'.$k];
+					$girdle_min = $_REQUEST['inventory_18-'.$k];
+					$girdle_max = $_REQUEST['inventory_19-'.$k];
+					$crown =$_REQUEST['inventory_20-'.$k];
+					$pavilion = $_REQUEST['inventory_21-'.$k];
+					$fancy_intensity = $_REQUEST['inventory_22-'.$k];
+					$fancycolor = $_REQUEST['inventory_23-'.$k];
+					$fancy_overtone = $_REQUEST['inventory_24-'.$k];
+					$cert_number = $_REQUEST['inventory_25-'.$k];
+					$image = $_REQUEST['inventory_26-'.$k];
+					$make = $_REQUEST['inventory_27-'.$k];
+					$city = $_REQUEST['inventory_28-'.$k];
+					$state = $_REQUEST['inventory_29-'.$k];
+					$country = $_REQUEST['inventory_30-'.$k];
+					
+					$query_insert = "INSERT INTO $uploadtool_diamonds_inventory SET owner = 'self',lotno = '".$lotno."', shape = '".$shape."', carat = '".$carat."', cut = '".$cut."', color = '".$color."', clarity = '".$clarity."', depth = '".$depth."', tabl = '".$table."', polish = '".$polish."', symmetry = '".$symmetry."', fluorescence = '".$fluorescence."', dimensions = '".$dimensions."', price_carat = '".$price_carat."', totalprice = '".$totalprice."', certificate = '".$Lab."', culet = '".$culet."', girdle = '".$girdle."', girdle_min = '".$girdle_min."', girdle_max = '".$girdle_max."', crown = '".$crown."', pavilion = '".$pavilion."', fancy_intensity = '".$fancy_intensity."', fancycolor = '".$fancycolor."', fancy_overtone = '".$fancy_overtone."', cert_number = '".$cert_number."', image = '".$image."', make = '".$make."', city = '".$city."', state = '".$state."', country = '".$country."'";
+					mysql_query($query_insert);
+				}
+			}
+			
+	
+			Mage::getSingleton("adminhtml/session")->addSuccess("Successfully Saved.");
+			$this->_redirect("*/*/new");
+			return;
+		}
+		catch (Exception $e) {
+			Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+			$this->_redirect("*/*/new");
+			return;	
+        }
+	}
+	
+	public function getListAction()
+	{
+		$importCSV = Mage::helper('uploadtool')->getImportCSV();
+		if($importCSV['success'] == 0) {
+        	Mage::getSingleton("adminhtml/session")->addError($importCSV['message']);
+        	$this->_redirect("*/*/new");
+		} else {
+			Mage::getSingleton("adminhtml/session")->addSuccess($importCSV['message']);
+			$this->_redirect("*/*/new");
+		}
+	} 
+	
+	public function updateDiamondsAction()
+	{
+	
+		$saveCSV = Mage::helper('uploadtool')->saveCSV();
+	
+		if($saveCSV['success'] == 0) {
+			Mage::getSingleton("adminhtml/session")->addError($saveCSV['message']);
+			$this->_redirect("*/*/new");
+		} else {
+			Mage::getSingleton("adminhtml/session")->addSuccess($saveCSV['message']);
+			$this->_redirect("*/*/new");
+		}
+	}
+	
+	public function getRapnetListAction()
+	{
+		try
+		{
+			$user = Mage::helper('uploadtool')->diamondSettings('rapnet_username');
+			$passwd = Mage::helper('uploadtool')->diamondSettings('rapnet_password');
+			if($user == "" || $passwd == ""){
+				Mage::getSingleton("adminhtml/session")->addError(Mage::helper("adminhtml")->__("Please Enter valid RapNet Login Detail to settings"));
+				$this->_redirect("*/*/new");
+				return;
+			}
+				
+			$auth_url = "https://technet.rapaport.com/HTTP/Authenticate.aspx";
+			$post_string = "username=".$user."&password=" . urlencode($passwd);
+		
+			$request = curl_init($auth_url); //initiate curl object
+			curl_setopt($request, CURLOPT_HEADER, 0); //set to 0 to eliminate header info from response
+			curl_setopt($request, CURLOPT_RETURNTRANSFER, 1); //Returns response data instead of TRUE(1)
+			curl_setopt($request, CURLOPT_POSTFIELDS, $post_string); //use HTTP POST to send form data
+			curl_setopt($request, CURLOPT_SSL_VERIFYPEER, FALSE); //uncomment this line if you get no gateway response.
+			$auth_ticket = curl_exec($request); //execute curl post and store results in $auth_ticket
+			$httpcode = curl_getinfo($request, CURLINFO_HTTP_CODE);
+			curl_close ($request);
+			if($httpcode != "200"){
+				Mage::getSingleton("adminhtml/session")->addError(Mage::helper("adminhtml")->__("Unauthenticate Login. Enter valid RapNet Login Detail to settings"));
+				$this->_redirect("*/*/new");
+				return;
+			}
+			
+			define('RAPNET_LINK', 'technet.rapaport.com/HTTP/DLS/GetFile.aspx?ticket='.$auth_ticket);
+		
+			$handle = fopen('http://'.RAPNET_LINK, 'r');
+			$csv_terminated = "\n";
+			$csv_separator = ",";
+			$csv_enclosed = "'";
+			$csv_escaped = "\\";
+			$CSV = "";
+		
+			while (($data = fgetcsv($handle, 0, ",")) !== FALSE)
+			{
+				for ($field = 0; $field < count($data); $field++)
+				{
+				if($field == 29)
+				{
+				$CSV.= ''.$csv_separator;
+				}
+				else
+				{
+				$CSV.= $data[$field].$csv_separator;
+				}
+				}
+				$CSV.= $csv_terminated;
+			}
+
+			$path = Mage::getBaseDir().DS."/var/import".DS."rapnet".DS;
+			$fp = fopen($path."rapnet.csv", "w") or die("can't open file");
+			fputs($fp, rtrim($CSV));
+			fclose($fp);
+		
+			//echo "Successfully Downloaded a New List.";
+			//exit;
+			Mage::getSingleton("adminhtml/session")->addSuccess("Successfully get list from RapNet Inventory.");
+			$this->_redirect("*/*/new");
+		}
+		catch (Exception $e) {
+			Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+			$this->_redirect("*/*/new");
+			return;
+		}
+	}
+
+	public function updateRapnetDiamondsAction()
+	{
+		try
+		{
+			$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+			$magento_db = $resource['default_setup']['connection']['host'];
+			$mdb_user = $resource['default_setup']['connection']['username'];
+			$mdb_passwd = $resource['default_setup']['connection']['password'];
+			$mdb_name = $resource['default_setup']['connection']['dbname'];
+			$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+				
+			if (!$magento_connection)
+			{
+				die('Unable to connect to the database');
+			}
+			@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+				
+			$uploadtool_diamonds_inventory = Mage::getSingleton("core/resource")->getTableName('uploadtool_diamonds_inventory');
+			$uploadtool_price_increase = Mage::getSingleton("core/resource")->getTableName('uploadtool_price_increase');
+			$uploadtool_vendor = Mage::getSingleton("core/resource")->getTableName('uploadtool_vendor');
+			$uploadtool_settings = Mage::getSingleton("core/resource")->getTableName('uploadtool_settings');
+				
+			mysql_query("TRUNCATE TABLE $uploadtool_diamonds_inventory") or die(mysql_error());
+			//mysql_query("Delete from $uploadtool_diamonds_inventory where owner != 'self'") or die(mysql_error());
+				
+			$path = Mage::getBaseDir("var") . DS ."import/rapnet" . DS;
+			$fp = fopen($path."rapnet.csv",'r') or die("can't open file");
+			$row=0;
+			$count = 1;
+			while($csv_line = fgetcsv($fp,1024)){
+				if($row==0){
+					$row++;
+					continue;
+				}
+						
+				$qstring = "insert into `$uploadtool_diamonds_inventory` SET 
+						owner = '".$csv_line[2]."',
+						shape = '".$csv_line[3]."',
+						carat = '".(intval(($csv_line[4]*100))/100)."',
+						color = '".$csv_line[5]."',
+						fancycolor = '".($csv_line[7])."',
+						fancy_intensity = '".($csv_line[8])."',
+						clarity = '".($csv_line[6])."',
+						cut = '".($csv_line[10])."',
+						polish = '".($csv_line[11])."',
+						symmetry = '".($csv_line[12])."',
+						fluorescence = '".($csv_line[14])."',
+						fluorescence_color = '".$csv_line[13]."',
+						dimensions = '".($csv_line[15])."',
+						certificate = '".($csv_line[20])."',
+						cert_number = '".($csv_line[21])."',
+						stock_number = '".$csv_line[22]."',
+						cost = '".round($csv_line[26])."',
+						totalprice = '".round($csv_line[26])."',
+						depth = '".($csv_line[31])."',
+						tabl = '".($csv_line[32])."',
+						girdle = '".($csv_line[33])."',
+						culet = '".($csv_line[36])."',
+						crown = '".($csv_line[39])."',
+						pavilion = '".($csv_line[40])."',
+						availability = '".($csv_line[30])."',
+						city = '".($csv_line[43])."',
+						state = '".($csv_line[44])."',
+						country = '".($csv_line[45])."',
+						lotno = '".$csv_line[22]."',
+						percent_rap = '".$csv_line[25]."',
+						number_stones = '".($csv_line[49])."',
+						image = '".($csv_line[50])."',
+						diamond_image = '".$csv_line[51]."'";
+				
+					mysql_query($qstring);
+					//echo $qstring; exit;
+			}
+				
+			$query = "SELECT * FROM $uploadtool_price_increase";
+			$result= mysql_query($query);
+			while($row = mysql_fetch_array($result))
+			{
+				$price_from[] = $row['price_from'];
+				$price_to[] = $row['price_to'];
+				$price_increase_per = $row['price_increase']/100 ;
+				$price_increase_final[] = 1 + $price_increase_per ;
+			}
+				
+			$del = "DELETE FROM `$uploadtool_diamonds_inventory` where totalprice = 0.00 or carat=0 or clarity='';";
+			mysql_query($del);
+	
+			for($i=0; $i < count($price_increase_final); $i++)
+			{
+				if($price_increase_final[$i] != '')
+				{
+				$query_update = "UPDATE $uploadtool_diamonds_inventory SET totalprice = totalprice*".$price_increase_final[$i]." where cost between ".$price_from[$i]." AND ".$price_to[$i]." AND owner != 'self'";
+						//echo '<br/>';
+				mysql_query($query_update) or die(mysql_error());
+				}
+					
+			}
+	
+			$ROUND= "update `$uploadtool_diamonds_inventory` set `shape` = 'ROUND' where `shape`='B' or `shape`='RB' or `shape`='BR';";
+			$PRINCESS= "update `$uploadtool_diamonds_inventory` set `shape` = 'PRINCESS' where `shape`='PR';";
+			$EMERALD= "update `$uploadtool_diamonds_inventory` set `shape` = 'EMERALD' where `shape`='E' or `shape`='EC';";
+			$ASSCHER= "update `$uploadtool_diamonds_inventory` set `shape` = 'ASSCHER' where `shape`='AS' or `shape`='AC';";
+			$MARQUISE= "update `$uploadtool_diamonds_inventory` set `shape` = 'MARQUISE' where `shape`='M' or `shape`='MQ';";
+			$OVAL= "update `$uploadtool_diamonds_inventory` set `shape` = 'OVAL' where `shape`='O' or `shape`='OV' or `shape`='OC';";
+			$RADIANT= "update `$uploadtool_diamonds_inventory` set `shape` = 'RADIANT' where `shape`='R' or `shape`='RAD';";
+			$PEAR= "update `$uploadtool_diamonds_inventory` set `shape` = 'PEAR' where `shape`='P' or `shape`='PS';";
+			$CUSHION= "update `$uploadtool_diamonds_inventory` set `shape` = 'CUSHION' where `shape`='C' or `shape`='CU' or `shape`='CMB';";
+			$HEART= "update `$uploadtool_diamonds_inventory` set `shape` = 'HEART' where `shape`='H' or `shape`='HM' or `shape`='HS';";
+			$TRILLION = "update `$uploadtool_diamonds_inventory` set `shape` = 'TRIANGULAR' where `shape`='TRI' or `shape`='T';";
+	
+			$DelShape = "DELETE FROM `$uploadtool_diamonds_inventory` WHERE `shape` NOT IN ('ROUND', 'PRINCESS', 'EMERALD', 'ASSCHER', 'MARQUISE', 'OVAL', 'RADIANT', 'PEAR', 'CUSHION', 'HEART', 'TRIANGULAR') OR `dimensions`='0.00x0.00x0.00' OR `dimensions`='0.00-0.00x0.00';";
+	
+			$shadelight= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 9   where `fancy_intensity`='LIGHT' OR `fancy_intensity`='Light' OR `fancy_intensity`='light' OR `fancy_intensity`='L';";
+			$shadefancylight= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`,`fancycolor` = 10 where `fancy_intensity`='Fancy Light' OR `fancy_intensity`='FANCY LIGHT' OR `fancy_intensity`='fancy light' OR `fancy_intensity`='I';";
+			$shadefancy= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 11  where `fancy_intensity`='FANCY' OR `fancy_intensity`='Fancy' OR `fancy_intensity`='fancy' OR `fancy_intensity`='FC' OR `fancy_intensity`='F';";
+			$shadefancyintense= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 12 where `fancy_intensity`='Fancy Intense' OR `fancy_intensity`='fancy intense' OR `fancy_intensity`='FANCY INTENSE';";
+			$shadefancyvivid= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 13 where `fancy_intensity`='VIVID' OR `fancy_intensity`='Vivid' OR `fancy_intensity`='vivid' OR `fancy_intensity`='V';";
+			$shadefancydeep= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 14 where `fancy_intensity`='Fancy Deep' OR `fancy_intensity`='FANCY DEEP' OR `fancy_intensity`='fancy deep' OR `fancy_intensity`='D';";
+				
+			mysql_query($ROUND);
+			mysql_query($PRINCESS);
+			mysql_query($EMERALD);
+			mysql_query($ASSCHER);
+			mysql_query($MARQUISE);
+			mysql_query($OVAL);
+			mysql_query($RADIANT);
+			mysql_query($PEAR);
+			mysql_query($CUSHION);
+			mysql_query($HEART);
+			mysql_query($TRILLION);
+				
+			mysql_query($DelShape);
+				
+			mysql_query($shadelight);
+			mysql_query($shadefancylight);
+			mysql_query($shadefancy);
+			mysql_query($shadefancyintense);
+			mysql_query($shadefancyvivid);
+			mysql_query($shadefancydeep);
+			
+			/* certificate */
+			$certificate = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/certificate_slider"));
+			$allowedCert=array();
+			foreach($certificate as $cert)
+			{
+				$allowedCert[]="'".$cert['label']."'";
+			}
+			$cert=implode(',',$allowedCert);
+			$delflou="DELETE FROM `$uploadtool_diamonds_inventory`  WHERE `certificate` NOT IN ( $cert ) ;";
+			mysql_query($delflou);
+			//echo $delflou;
+			
+			 	
+			/* clarity_slider */
+			$floure =unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/clarity_slider"));
+			$allowedFloure=array();
+			foreach($floure as $floure)
+			{
+					
+				$allowedFloure[]="'".$floure['label']."'";
+			}
+			$floure=implode(',',$allowedFloure);
+			$delflou="DELETE FROM `$uploadtool_diamonds_inventory`  WHERE `clarity` NOT IN ( $floure ) ;";
+			mysql_query($delflou);
+				
+				
+			/* Cut Slider */
+			$floure =unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/cut_slider"));
+			$allowedFloure=array();
+			foreach($floure as $floure)
+			{
+					
+				$allowedFloure[]=$floure['code'];
+			}
+				
+			$floure=implode(',',$allowedFloure);
+			$floure=explode(",",$floure);
+			//print_r($floure);
+			$allowedFlour=array();
+			foreach($floure as $flo)
+			{
+				$allowedFlour[]="'".$flo."'";
+			}
+			$floure=implode(',',$allowedFlour);
+			$delflou="DELETE FROM `$uploadtool_diamonds_inventory`  WHERE `cut` NOT IN ( $floure ) ;";
+			mysql_query($delflou);
+				
+				
+			/* fluorescence_slider */
+			$floure = unserialize(Mage::getStoreConfig("diamondsearch/slider_settings/fluorescence_slider"));
+			$allowedFloure=array();
+			foreach($floure as $floure)
+			{
+				$allowedFloure[]=$floure['code'];
+			}
+			$floure=implode(',',$allowedFloure);
+			$floure=explode(",",$floure);
+			//print_r($floure);
+			$allowedFlour=array();
+			foreach($floure as $flo)
+			{
+				$allowedFlour[]="'".$flo."'";
+			}
+			$floure=implode(',',$allowedFlour);
+			$delflou="DELETE FROM `$uploadtool_diamonds_inventory`  WHERE `fluorescence` NOT IN ( $floure ) ;";
+			mysql_query($delflou);
+			
+				
+			$sql = "select count(lotno) from $uploadtool_diamonds_inventory where owner != 'self'";
+			$result = mysql_query($sql);
+			$row = mysql_fetch_row($result);
+			$count = $row[0];
+						
+			Mage::getSingleton("adminhtml/session")->addSuccess($count." Diamond(s) Inserted.");
+			$this->_redirect("*/*/new");
+	
+		}
+		catch (Exception $e) {
+		Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+				$this->_redirect("*/*/new");
+				return;
+		}
+	}
+	
+	public function importPolygonAction()
+	{
+		try
+		{
+			$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+			$magento_db = $resource['default_setup']['connection']['host'];
+			$mdb_user = $resource['default_setup']['connection']['username'];
+			$mdb_passwd = $resource['default_setup']['connection']['password'];
+			$mdb_name = $resource['default_setup']['connection']['dbname'];
+			$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+				
+			if (!$magento_connection)
+			{
+				die('Unable to connect to the database');
+			}
+			@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+				
+			$uploadtool_diamonds_inventory = Mage::getSingleton("core/resource")->getTableName('uploadtool_diamonds_inventory');
+				
+			mysql_query("TRUNCATE TABLE $uploadtool_diamonds_inventory");
+
+			$table = Mage::getSingleton('core/resource')->getTableName('uploadtool_settings');
+			$query = "SELECT * FROM `$table` where `field` = 'polygon_id' LIMIT 1";
+			$result = @mysql_db_query($mdb_name, $query) or die("Failed Query of ".$query);
+			
+			$PolygonId = "";
+			$row = mysql_fetch_array($result);
+			$PolygonId = $row['value'];
+			
+			if(!$PolygonId) {
+				Mage::getSingleton("adminhtml/session")->addError("You must save Polygon User ID first");
+				$this->_redirect("*/*/new");
+				return;
+			}
+			
+			$path = Mage::getBaseDir("var") . DS ."import" . DS . "polygon" . DS;
+			
+			if(!file_exists($path.$PolygonId.".csv")) {
+				Mage::getSingleton("adminhtml/session")->addError("There is no file uploaded on Polygon FTP for Id:".$PolygonId);
+				$this->_redirect("*/*/new");
+				return;
+			}
+			
+			$fp = fopen($path.$PolygonId.".csv",'r') or die("can't open file");
+			$row=0;
+			$count = 1;
+			while($csv_line = fgetcsv($fp,1024))
+			{
+				if($row==0){
+					$row++;
+					//echo "<pre>"; print_r($csv_line); echo "</pre>"; exit;
+					continue;
+				}
+	
+				//echo "<pre>"; print_r($csv_line); echo "</pre>"; exit;
+				
+				
+				$qstring = "insert into `$uploadtool_diamonds_inventory` SET
+				owner = '".$csv_line[0]."',
+						shape = '".$csv_line[1]."',
+						carat = '".$csv_line[2]."',
+						color = '".$csv_line[3]."',
+						clarity = '".$csv_line[4]."',
+						totalprice = '".$csv_line[5]."',
+						cost = '".$csv_line[5]."',
+						lotno = '".$csv_line[6]."',
+						stock_number = '".$csv_line[7]."',
+						certificate = '".$csv_line[8]."',
+						cert_number = '".mysql_real_escape_string($csv_line[9])."',
+						image = '".$csv_line[10]."',
+						diamond_image = '".$csv_line[11]."',
+						dimensions = '".$csv_line[12]."',
+						depth = '".$csv_line[13]."',
+						tabl = '".$csv_line[14]."',
+						crown = '".$csv_line[15]."',
+						pavilion = '".$csv_line[17]."',
+						girdle_thin = '".$csv_line[19]."',
+						girdle_thick = '".$csv_line[20]."',
+						girdle = '".$csv_line[21]."',
+						culet = '".$csv_line[22]."',
+						polish = '".$csv_line[24]."',
+						symmetry = '".$csv_line[25]."',
+						fluorescence_color = '".$csv_line[26]."',
+						fluorescence = '".$csv_line[27]."',
+						availability = '".$csv_line[30]."',
+						is_active = '".$csv_line[31]."',
+						fancycolor = '".$csv_line[32]."',
+						fancy_intensity = '".$csv_line[33]."',
+						fancy_overtone = '".$csv_line[34]."',
+						cut = '".$csv_line[40]."'";
+	
+				mysql_query($qstring) or die($qstring . "==>" . mysql_error());
+			}
+	
+			$query = "SELECT * FROM $uploadtool_price_increase";
+			$result= mysql_query($query);
+			while($row = mysql_fetch_array($result))
+			{
+				$price_from[] = $row['price_from'];
+				$price_to[] = $row['price_to'];
+				$price_increase_per = $row['price_increase']/100 ;
+				$price_increase_final[] = 1 + $price_increase_per ;
+			}
+	
+	
+			$del = "DELETE FROM `$uploadtool_diamonds_inventory` where totalprice = 0.00 or carat=0 or clarity='';";
+			mysql_query($del);
+	
+			for($i=0; $i < count($price_increase_final); $i++)
+			{
+			if($price_increase_final[$i] != '')
+			{
+			$query_update = "UPDATE $uploadtool_diamonds_inventory SET totalprice = totalprice*".$price_increase_final[$i]." where cost between ".$price_from[$i]." AND ".$price_to[$i]." AND owner != 'self'";
+					//echo '<br/>';
+					mysql_query($query_update) or die(mysql_error());
+			}
+			}
+	
+			$ROUND= "update `$uploadtool_diamonds_inventory` set `shape` = 'ROUND' where `shape`='B' or `shape`='RB' or `shape`='BR';";
+			$PRINCESS= "update `$uploadtool_diamonds_inventory` set `shape` = 'PRINCESS' where `shape`='PR';";
+			$EMERALD= "update `$uploadtool_diamonds_inventory` set `shape` = 'EMERALD' where `shape`='E' or `shape`='EC';";
+			$ASSCHER= "update `$uploadtool_diamonds_inventory` set `shape` = 'ASSCHER' where `shape`='AS' or `shape`='AC';";
+			$MARQUISE= "update `$uploadtool_diamonds_inventory` set `shape` = 'MARQUISE' where `shape`='M' or `shape`='MQ';";
+			$OVAL= "update `$uploadtool_diamonds_inventory` set `shape` = 'OVAL' where `shape`='O' or `shape`='OV' or `shape`='OC';";
+			$RADIANT= "update `$uploadtool_diamonds_inventory` set `shape` = 'RADIANT' where `shape`='R' or `shape`='RAD';";
+			$PEAR= "update `$uploadtool_diamonds_inventory` set `shape` = 'PEAR' where `shape`='P' or `shape`='PS';";
+			$CUSHION= "update `$uploadtool_diamonds_inventory` set `shape` = 'CUSHION' where `shape`='C' or `shape`='CU' or `shape`='CMB';";
+			$HEART= "update `$uploadtool_diamonds_inventory` set `shape` = 'HEART' where `shape`='H' or `shape`='HM' or `shape`='HS';";
+			$TRILLION = "update `$uploadtool_diamonds_inventory` set `shape` = 'TRIANGULAR' where `shape`='TRI' or `shape`='T';";
+	
+			$DelShape = "DELETE FROM `$uploadtool_diamonds_inventory` WHERE `shape` NOT IN ('ROUND', 'PRINCESS', 'EMERALD', 'ASSCHER', 'MARQUISE', 'OVAL', 'RADIANT', 'PEAR', 'CUSHION', 'HEART', 'TRIANGULAR') OR `dimensions`='0.00x0.00x0.00' OR `dimensions`='0.00-0.00x0.00';";
+	
+			$shadelight= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 9   where `fancy_intensity`='LIGHT' OR `fancy_intensity`='Light' OR `fancy_intensity`='light' OR `fancy_intensity`='L';";
+			$shadefancylight= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`,`fancycolor` = 10 where `fancy_intensity`='Fancy Light' OR `fancy_intensity`='FANCY LIGHT' OR `fancy_intensity`='fancy light' OR `fancy_intensity`='I';";
+			$shadefancy= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 11  where `fancy_intensity`='FANCY' OR `fancy_intensity`='Fancy' OR `fancy_intensity`='fancy' OR `fancy_intensity`='FC' OR `fancy_intensity`='F';";
+			$shadefancyintense= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 12 where `fancy_intensity`='Fancy Intense' OR `fancy_intensity`='fancy intense' OR `fancy_intensity`='FANCY INTENSE';";
+			$shadefancyvivid= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 13 where `fancy_intensity`='VIVID' OR `fancy_intensity`='Vivid' OR `fancy_intensity`='vivid' OR `fancy_intensity`='V';";
+			$shadefancydeep= "update `$uploadtool_diamonds_inventory` set `color` = `fancycolor`, `fancycolor` = 14 where `fancy_intensity`='Fancy Deep' OR `fancy_intensity`='FANCY DEEP' OR `fancy_intensity`='fancy deep' OR `fancy_intensity`='D';";
+	
+			
+			$Delnullsku = "DELETE FROM `$uploadtool_diamonds_inventory` WHERE lotno = ''";
+			mysql_query($Delnullsku);	 		
+			mysql_query($ROUND);
+			mysql_query($PRINCESS);
+			mysql_query($EMERALD);
+			mysql_query($ASSCHER);
+			mysql_query($MARQUISE);
+			mysql_query($OVAL);
+			mysql_query($RADIANT);
+			mysql_query($PEAR);
+			mysql_query($CUSHION);
+			mysql_query($HEART);
+			mysql_query($TRILLION);
+	
+			mysql_query($DelShape);
+	
+			mysql_query($shadelight);
+			mysql_query($shadefancylight);
+			mysql_query($shadefancy);
+			mysql_query($shadefancyintense);
+			mysql_query($shadefancyvivid);
+			mysql_query($shadefancydeep);
+	
+			$sql = "select count(lotno) from $uploadtool_diamonds_inventory where owner != 'self'";
+			$result = mysql_query($sql);
+					$row = mysql_fetch_row($result);
+					$count = $row[0];
+	
+					Mage::getSingleton("adminhtml/session")->addSuccess($count." Diamond(s) Inserted.");
+			$this->_redirect("*/*/new");
+	
+		}
+		catch (Exception $e) {
+			Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+			$this->_redirect("*/*/new");
+			return;
+		}
+	}
+	
+	public function restorePriceIncreaseAction() { 
+		
+		try
+		{
+			$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+			$magento_db = $resource['default_setup']['connection']['host'];
+			$mdb_user = $resource['default_setup']['connection']['username'];
+			$mdb_passwd = $resource['default_setup']['connection']['password'];
+			$mdb_name = $resource['default_setup']['connection']['dbname'];
+			$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+				
+			if (!$magento_connection)
+			{
+				die('Unable to connect to the database');
+			}
+			@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+			
+			$uploadtool_diamonds_inventory = Mage::getSingleton("core/resource")->getTableName('uploadtool_diamonds_inventory');
+			$uploadtool_price_increase = Mage::getSingleton("core/resource")->getTableName('uploadtool_price_increase');
+			$uploadtool_vendor = Mage::getSingleton("core/resource")->getTableName('uploadtool_vendor');
+			$uploadtool_settings = Mage::getSingleton("core/resource")->getTableName('uploadtool_settings');
+			
+			/*mysql_query("Drop table IF EXISTS $uploadtool_price_increase") or die(mysql_error());
+			
+			mysql_query("CREATE TABLE `$uploadtool_price_increase` (
+							`id` int( 11 ) NOT NULL AUTO_INCREMENT ,
+							`price_from` varchar( 255 ) NOT NULL ,
+							`price_to` varchar( 255 ) NOT NULL ,
+							`price_increase` varchar( 255 ) NOT NULL ,
+							PRIMARY KEY ( `id` )
+							) ENGINE = MYISAM DEFAULT CHARSET = latin1")
+						 or die(mysql_error()); 
+			mysql_query("INSERT INTO `$uploadtool_price_increase`	SELECT * FROM `$uploadtool_price_increase_default`") or die(mysql_error());
+			*/
+			mysql_query("TRUNCATE TABLE $uploadtool_price_increase");
+			
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 100000.01, price_to = 10000000, price_increase = 5")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 50000.01, price_to = 100000, price_increase = 8")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 30000.01, price_to = 50000, price_increase = 10")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 25000.01, price_to = 30000, price_increase = 15")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 20000.01, price_to = 25000, price_increase = 18")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 15000.01, price_to = 20000, price_increase = 20")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 10000.01, price_to = 15000, price_increase = 22")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 5000.01, price_to = 10000, price_increase = 25")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 3500.01, price_to = 5000, price_increase = 30")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 2000.01, price_to = 3500, price_increase = 50")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 1000.01, price_to = 2000, price_increase = 60")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 500.01, price_to = 1000, price_increase = 80")or die(mysql_error());
+			mysql_query("INSERT INTO $uploadtool_price_increase SET price_from = 1, price_to = 500, price_increase = 100")or die(mysql_error());
+			
+			Mage::getSingleton("adminhtml/session")->addSuccess("Price Increase Restored to default values.");
+			$this->_redirect("*/*/new");
+				
+		}
+		catch (Exception $e) {
+			Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+			$this->_redirect("*/*/new");
+			return;
+		}
+	}
+ 
+	public function deleteAction() {
+		if( $this->getRequest()->getParam("id") > 0 ) {
+			try {
+				$model = Mage::getModel("uploadtool/uploadtool");
+				 
+				$model->setId($this->getRequest()->getParam("id"))
+					->delete();
+					 
+				Mage::getSingleton("adminhtml/session")->addSuccess(Mage::helper("adminhtml")->__("Item was successfully deleted"));
+				$this->_redirect("*/*/");
+			} catch (Exception $e) {
+				Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+				$this->_redirect("*/*/edit", array("id" => $this->getRequest()->getParam("id")));
+			}
+		}
+		$this->_redirect("*/*/");
+	}
+
+    public function massDeleteAction() {
+        $uploadtoolIds = $this->getRequest()->getParam("uploadtool");
+        if(!is_array($uploadtoolIds)) {
+			Mage::getSingleton("adminhtml/session")->addError(Mage::helper("adminhtml")->__("Please select item(s)"));
+        } else {
+            try {
+                foreach ($uploadtoolIds as $uploadtoolId) {
+                    $uploadtool = Mage::getModel("uploadtool/uploadtool")->load($uploadtoolId);
+                    $uploadtool->delete();
+                }
+                Mage::getSingleton("adminhtml/session")->addSuccess(
+                    Mage::helper("adminhtml")->__(
+                        "Total of %d record(s) were successfully deleted", count($uploadtoolIds)
+                    )
+                );
+            } catch (Exception $e) {
+                Mage::getSingleton("adminhtml/session")->addError($e->getMessage());
+            }
+        }
+        $this->_redirect("*/*/index");
+    }
+	
+    public function massStatusAction()
+    {
+        $uploadtoolIds = $this->getRequest()->getParam("uploadtool");
+        if(!is_array($uploadtoolIds)) {
+            Mage::getSingleton("adminhtml/session")->addError($this->__("Please select item(s)"));
+        } else {
+            try {
+                foreach ($uploadtoolIds as $uploadtoolId) {
+                    $uploadtool = Mage::getSingleton("uploadtool/uploadtool")
+                        ->load($uploadtoolId)
+                        ->setStatus($this->getRequest()->getParam("status"))
+                        ->setIsMassupdate(true)
+                        ->save();
+                }
+                $this->_getSession()->addSuccess(
+                    $this->__("Total of %d record(s) were successfully updated", count($uploadtoolIds))
+                );
+            } catch (Exception $e) {
+                $this->_getSession()->addError($e->getMessage());
+            }
+        }
+        $this->_redirect("*/*/index");
+    }
+  
+    public function exportCsvAction()
+    {
+        $fileName   = "uploadtool.csv";
+        $content    = $this->getLayout()->createBlock("uploadtool/adminhtml_uploadtool_grid")
+            ->getCsv();
+
+        $this->_sendUploadResponse($fileName, $content);
+    }
+
+    public function exportXmlAction()
+    {
+        $fileName   = "uploadtool.xml";
+        $content    = $this->getLayout()->createBlock("uploadtool/adminhtml_uploadtool_grid")
+            ->getXml();
+
+        $this->_sendUploadResponse($fileName, $content);
+    } 
+
+    protected function _sendUploadResponse($fileName, $content, $contentType="application/octet-stream")
+    {
+        $response = $this->getResponse();
+        $response->setHeader("HTTP/1.1 200 OK","");
+        $response->setHeader("Pragma", "public", true);
+        $response->setHeader("Cache-Control", "must-revalidate, post-check=0, pre-check=0", true);
+        $response->setHeader("Content-Disposition", "attachment; filename=".$fileName);
+        $response->setHeader("Last-Modified", date("r"));
+        $response->setHeader("Accept-Ranges", "bytes");
+        $response->setHeader("Content-Length", strlen($content));
+        $response->setHeader("Content-type", $contentType);
+        $response->setBody($content);
+        $response->sendResponse();
+        die;
+    }
+}

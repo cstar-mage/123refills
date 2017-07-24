@@ -1,0 +1,150 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category   Mage
+ * @package    Mage_Quotes
+ * @copyright  Copyright (c) 2004-2007 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+	<tabs>
+        <eternity translate="label" module="eternity">
+            <label>Diamond Eternity</label>
+            <sort_order>101</sort_order>
+        </eternity>
+    </tabs>
+    <sections>
+        <eternity translate="label" module="eternity">
+            <label>Eternity Config</label>
+            <tab>eternity</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+				<!--<eternity translate="label">
+                    <label>Vendor Detail</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <fields>         
+                        <seller_id translate="label">
+                            <label>SELLER IDS</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </seller_id>
+						<seller_name translate="label">
+                            <label>SELLER NAMES</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </seller_name>          
+                    </fields>
+                </eternity>
+				<user_detail translate="label">
+                    <label>User Detail</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <fields>         
+                        <rapnet_username translate="label">
+                            <label>RAPNET USER</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rapnet_username>
+						<rapnet_password translate="label">
+                            <label>RAPNET PASSWORD</label>
+                            <frontend_type>password</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rapnet_password>
+						          
+                    </fields>
+                </user_detail>-->
+				<db_detail translate="label">
+                    <label>Diamond Database Detail</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <fields>         
+                        <db_database translate="label">
+                            <label>Database</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+							<value>localhost</value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </db_database>
+						<db_name translate="label">
+                            <label>Database Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </db_name>
+						<db_username translate="label">
+                            <label>Database User Name</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </db_username>
+						<db_userpassword translate="label">
+                            <label>Database Password</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </db_userpassword>
+						          
+                    </fields>
+                </db_detail>
+				<!--<themes translate="label">
+                    <label>Themes</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <fields>
+						<theme translate="label">
+                            <label>Select Theme</label>
+                            <frontend_type>select</frontend_type>
+							<source_model>eternity/system_themes</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </theme>
+					</fields>
+				</themes>-->
+            </groups>
+        </eternity>
+    </sections>
+</config>

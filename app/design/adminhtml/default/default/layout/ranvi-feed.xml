@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+
+<layout version="1.0">
+    <ranvi_feed_adminhtml_items_index>
+        <reference name="content">
+            <block type="ranvi_feed/adminhtml_items" name="ranvi_feed.admin.items" />
+        </reference>
+    </ranvi_feed_adminhtml_items_index>
+    <ranvi_feed_adminhtml_attributes_index>
+        <reference name="content">
+            <block type="ranvi_feed/adminhtml_attributes" name="ranvi_feed.admin.attributes" />
+        </reference>
+    </ranvi_feed_adminhtml_attributes_index>
+    <ranvi_feed_adminhtml_attributes_edit>
+    	<reference name="head">
+    		<action method="addItem"><type>skin_css</type><name>ranvi/feed.css</name><params>media="screen, projection"</params></action>
+    	</reference>
+    </ranvi_feed_adminhtml_attributes_edit>
+    <ranvi_feed_adminhtml_attributes_new>
+    	<reference name="head">
+    		<action method="addItem"><type>skin_css</type><name>ranvi/feed.css</name><params>media="screen, projection"</params></action>
+    	</reference>
+    </ranvi_feed_adminhtml_attributes_new>    
+    <ranvi_feed_adminhtml_items_edit>
+        <reference name="head">
+    		<action method="addJs"><script>lib/flex.js</script></action>
+    		<action method="addJs"><script>lib/FABridge.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/uploader.js</script></action>
+    	</reference>    	
+    </ranvi_feed_adminhtml_items_edit>
+    <ranvi_feed_adminhtml_items_new>
+        <reference name="head">
+    		<action method="addJs"><script>lib/flex.js</script></action>
+    		<action method="addJs"><script>lib/FABridge.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/flexuploader.js</script></action>
+    		<action method="addJs"><script>mage/adminhtml/uploader.js</script></action>
+    	</reference>
+    </ranvi_feed_adminhtml_items_new>
+</layout>

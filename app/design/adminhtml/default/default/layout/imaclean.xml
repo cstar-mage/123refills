@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_imaclean_index>
+        <reference name="content">
+            <block type="imaclean/adminhtml_imaclean" name="imaclean" />
+        </reference>
+    </adminhtml_imaclean_index>
+</layout>

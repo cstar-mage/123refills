@@ -1,0 +1,174 @@
+<?php if(count($this->getItems()) != 0): ?>
+<?php //echo "<pre>"; print_r($this->getItems()); echo "</pre>"; exit;?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>tab_slider/css/jcarousel.responsive.css">
+        <script type="text/javascript" src="<?php echo $this->getSkinUrl(); ?>tab_slider/js/jquery.jcarousel.min.js"></script>
+<!--<script>
+(function($) {
+    $(function() {
+        var jcarousel = $('.related-product-view .jcarousel');   
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var width = jcarousel.innerWidth();
+//alert(width);
+                if (width >= 600) {
+                    width = width / 4;
+                }
+                else if (width >= 400) {
+                    width = width / 3;
+                }
+                else if (width >= 250) {
+                    width = width / 2;
+                }
+                else if (width >= 150) {
+                    width = width / 1;
+                }
+                jcarousel.jcarousel('items').css('width', width + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        $(window).resize(function(){
+           if($(window).width() >= 600)
+           {
+               $('.related-product-view .jcarousel-control-prev')
+               .jcarouselControl({
+                   target: '-=1'
+               });
+
+               $('.related-product-view .jcarousel-control-next')
+               .jcarouselControl({
+                   target: '+=1'
+               });
+           }
+           else if ($(window).width() >= 400)
+           {
+        	   $('.related-product-view .jcarousel-control-prev').jcarouselControl({
+                   target: '-=1'
+               });
+
+               $('.related-product-view .jcarousel-control-next')
+               .jcarouselControl({
+            	   target: '+=1'
+               });
+           }
+           else if (width >= 300)
+           {
+        	   $('.related-product-view .jcarousel-control-prev').jcarouselControl({
+                   target: '-=1'
+               });
+
+        	   $('.related-product-view .jcarousel-control-next')
+               .jcarouselControl({
+            	   target: '+=1'
+               });
+           }
+        });
+        $(window).resize();
+
+        $('.related-product-view .jcarousel-pagination')
+            .on('jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            })
+            .on('click', function(e) {
+                e.preventDefault();
+            })
+            .jcarouselPagination({
+                perPage: 1,
+                item: function(page) {
+                    return '<a href="#' + page + '">' + page + '</a>';
+                }
+            });
+    });
+})(jQuery);
+</script>--> 
+<script>
+(function($) {
+    $(function() {
+        var jcarousel = $('.related-product-view .jcarousel');
+
+        jcarousel
+            .on('jcarousel:reload jcarousel:create', function () {
+                var width = jcarousel.innerWidth();
+
+                if (width >= 600) {
+                    width = width / 4;
+                } else if (width >= 350) {
+                    width = width / 3;
+                }
+                else if (width >= 250) {
+                    width = width / 2;
+                }
+
+                jcarousel.jcarousel('items').css('width', width + 'px');
+            })
+            .jcarousel({
+                wrap: 'circular'
+            });
+
+        $('.related-product-view .jcarousel-control-prev')
+            .jcarouselControl({
+                target: '-=1'
+            });
+
+        $('.related-product-view .jcarousel-control-next')
+            .jcarouselControl({
+                target: '+=1'
+            });
+
+        $('.related-product-view .jcarousel-pagination')
+            .on('jcarouselpagination:active', 'a', function() {
+                $(this).addClass('active');
+            })
+            .on('jcarouselpagination:inactive', 'a', function() {
+                $(this).removeClass('active');
+            }) 
+            .on('click', function(e) {
+                e.preventDefault();
+            })
+            .jcarouselPagination({ 
+                perPage: 1,
+                item: function(page) {
+                    return '<a href="#' + page + '">' + page + '</a>';
+                }
+            });
+    });
+})(jQuery);
+</script>
+<div class="block block-related">
+    <div class="block-title">
+        <h2><?php echo $this->__('Related Pieces') ?></h2>
+    </div>
+    <div class="block-content">
+    <div class="related-product-view">
+<div class="jcarousel-wrapper">
+	       <a href="#" class="jcarousel-control-prev"><!-- &lsaquo;  --></a>
+	       <a href="#" class="jcarousel-control-next"><!-- &rsaquo;  --></a>
+       <div class="jcarousel">
+            <ul>
+            	<?php foreach ($this->getItems() as $_product): ?>
+    			<?php $_product = Mage::getModel('catalog/product')->load($_product->getId()); ?>
+	                <li>
+	                	<a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+			                <?php $_imgwidth = 150; 
+			                ?>
+			                <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+			                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->keepFrame(false)->resize($_imgwidth); ?>"
+			                     alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+			            </a>
+			            <div class="featuredproductinfo" >
+        			            <a href="<?php echo $_product->getProductUrl() ?>"><span class="product-name"><?php echo $_product->getName(); ?></span></a>
+			            </div>
+			         </li>
+		        <?php endforeach; ?>
+           </ul>
+       </div>
+<!--  <p class="jcarousel-pagination"></p>  -->
+</div>
+</div>
+    </div>
+</div>
+<?php endif; ?>

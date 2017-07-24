@@ -1,0 +1,100 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * @see Mage_Page_Block_Template_Links
+ */
+?>
+<?php 
+//$theme = Ideal_Evolved_Block_Evolved::getConfig(); 
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$evolved_form_header_dropdown_toplink = $evolvedmethod->getBlockConfig('evolved_form_header_dropdown_toplink');
+	$evolved_form_header = $evolvedmethod->getBlockConfig('evolved_form_header');
+	$theme = array_merge($evolved_form_header_dropdown_toplink, $evolved_form_header);
+}
+if(count($theme) == 0){ $theme = Mage::helper('evolved')->getThemeConfig(); }
+
+//echo "<pre>"; print_r($evolved_form_header_dropdown_toplink); echo "</pre>";
+//echo $theme['top_links_option'];
+//$bsurl = $_SERVER['HTTP_HOST']."/".Mage::app()->getStore()->getCode();
+$bsurl = preg_replace('#^https?://#', '', Mage::getBaseUrl());
+$loginFlag = false;
+
+$toplinkoption = explode("|",$theme['top_links_option']); 
+if (in_array('customer/account/login/', $toplinkoption)){
+	$toplinkoption[] = 'customer/account/logout/';	
+	
+	$loginFlag = true;
+}
+else if (in_array('customer/account/', $toplinkoption)){
+	$toplinkoption[] = 'customer/account/logout/';	
+}
+
+//echo $this->getBaseUrl(); ?>
+<?php $_links = $this->getLinks(); ?>
+<?php if(count($_links)>0): ?>
+<div class="links">
+    <?php if($this->getTitle()): ?>
+    <div class="block-title"><strong><span><?php echo $this->__($this->getTitle()); ?></span></strong></div>
+    <?php endif; ?>
+    <ul<?php if($this->getName()): ?> id="<?php echo $this->getName() ?>"<?php endif;?>>
+    
+        <?php foreach($_links as $_link): ?>
+            <?php if ($_link instanceof Mage_Core_Block_Abstract):?>
+                <?php echo $_link->toHtml() ?>
+            <?php else: ?>
+            <?php $erlexplode = explode($bsurl,$_link->getUrl()); ?>
+            <?php $toplinkurl = str_replace($this->getBaseUrl(),"",str_replace("index.php/","",$_link->getUrl())); ?>
+            <?php //echo $toplinkurl; ?>
+            
+            	<?php if (strpos($toplinkurl,'customer/account/login') !== false && $loginFlag == true): ?>
+            	            <?php //echo $toplinkurl; ?>
+            		<li<?php if($_link->getIsFirst()||$_link->getIsLast()): ?> class="<?php if($_link->getIsFirst()): ?>first<?php endif; ?><?php if($_link->getIsLast()): ?> last<?php endif; ?>"<?php endif; ?> <?php echo $_link->getLiParams() ?>><?php echo $_link->getBeforeText() ?><a href="<?php echo $_link->getUrl() ?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><?php echo $_link->getLabel() ?></a><?php echo $_link->getAfterText() ?></li>
+            	<?php else: ?>
+	           	 	<?php if (in_array($erlexplode[1], $toplinkoption)): ?>
+	           	 		<?php if($toplinkurl == "catalogsearch/advanced/"): ?>
+	           	 			<?php if($theme['header_search_enable'] == "clickable"): ?>
+		           	 			<?php if($theme['header_search_icon']): ?>
+		           	 				<li<?php if($_link->getIsFirst()||$_link->getIsLast()): ?> class="<?php if($_link->getIsFirst()): ?>first<?php endif; ?><?php if($_link->getIsLast()): ?> last<?php endif; ?>"<?php endif; ?> <?php echo $_link->getLiParams() ?>><?php echo $_link->getBeforeText() ?><a href="javascript:" class="search_cls" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><img class="searchicon" src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$theme['header_search_icon']; ?>" /></a><?php echo $_link->getAfterText() ?></li>
+		           	 			<?php else: ?>
+						     	    <li<?php if($_link->getIsFirst()||$_link->getIsLast()): ?> class="<?php if($_link->getIsFirst()): ?>first<?php endif; ?><?php if($_link->getIsLast()): ?> last<?php endif; ?>"<?php endif; ?> <?php echo $_link->getLiParams() ?>><?php echo $_link->getBeforeText() ?><a href="javascript:" class="search_cls" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><?php echo $_link->getLabel() ?></a><?php echo $_link->getAfterText() ?></li>
+		           	 			<?php endif; ?>
+	           	 			<?php endif; ?>
+	           	 		<?php else: ?>
+			            	    <li<?php if($_link->getIsFirst()||$_link->getIsLast()): ?> class="<?php if($_link->getIsFirst()): ?>first<?php endif; ?><?php if($_link->getIsLast()): ?> last<?php endif; ?>"<?php endif; ?> <?php echo $_link->getLiParams() ?>><?php echo $_link->getBeforeText() ?><a href="<?php echo $_link->getUrl() ?>" title="<?php echo $_link->getTitle() ?>" <?php echo $_link->getAParams() ?>><?php echo $_link->getLabel() ?></a><?php echo $_link->getAfterText() ?></li>
+	           	 		<?php endif; ?>
+	            	<?php endif; ?>
+	            	
+	            <?php endif; ?>
+	            
+            <?php endif;?>
+        <?php endforeach; ?>
+    </ul>
+</div>
+<?php endif; ?>

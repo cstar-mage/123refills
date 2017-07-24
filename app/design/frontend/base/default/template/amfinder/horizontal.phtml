@@ -1,0 +1,59 @@
+<?php $finderId = 'amfinder_' . uniqid(); ?>
+<form method="post" action="<?php echo $this->getActionUrl() ?>">
+	<input type="hidden" name="finder_id" value="<?php echo $this->getId() ?>">
+	<input type="hidden" name="back_url" value="<?php echo $this->getBackUrl() ?>">
+	<input type="hidden" name="category_id" value="<?php echo $this->getCurrentCategoryId() ?>">
+	<div class="amfinder-horizontal" id="<?php echo $finderId ?>Container">
+	<table>
+	<tr>
+    	<?php foreach ($this->getFinder()->getDropdowns() as $dropdown): ?>
+    	<td>
+    		<?php /* <div class="dropdown-title"><?php echo $this->htmlEscape($dropdown->getName()) ?></div> */ ?>
+    		<div class="dropdown-element">
+    			<select data-label="<?php echo $this->htmlEscape($dropdown->getName()) ?>" placeholder="Printer <?php echo $this->htmlEscape($dropdown->getName()) ?> " <?php echo $this->getDropdownAttributes($dropdown)?> style="width:120px">
+					<?php foreach($this->getDropdownValues($dropdown) as $v): ?>
+						<option value="<?php echo $v['value'] ?>" <?php if ($v['selected']):?>selected="selected"<?php endif; ?>>
+						    <?php echo $this->htmlEscape($v['label']) ?>
+						</option> 
+					<?php endforeach ?>
+    			</select> &nbsp;
+    		</div>
+    	</td>
+    	<?php endforeach ?>
+    </tr>
+    <tr>	
+    	<td colspan="<?php echo count($this->getFinder()->getDropdowns())?>">
+    	    <br />
+        	<div class="amfinder-buttons" style="display:<?php echo ($this->isButtonsVisible() ? 'block' : 'none')?>">
+        		<button  class="button" title="<?php echo $this->__('Find') ?>" type="submit"><span><span><?php echo $this->__('Select Your Printer') ?></span></span></button>
+        	<?php /*	<button class="button reset" name="reset" value="1" title="<?php echo $this->__('Reset') ?>" type="submit"><span><span><?php echo $this->__('Reset') ?></span></span></button> */ ?>
+        	</div>
+    	</td>
+	</tr>
+	</table>
+	</div>
+</form>
+<script type="text/javascript">
+var <?php echo $finderId ?>  = new amFinder(
+    '<?php echo $finderId ?>Container', 
+    '<?php echo $this->getAjaxUrl() ?>', 
+    '<?php echo $this->__('Loading...')?>',
+    '<?php echo Mage::getStoreConfig('amfinder/general/partial_search')?>',
+    <?php echo intval(Mage::getStoreConfig('amfinder/general/auto_submit')) ?>
+);
+</script>
+<br />  
+
+<script type="text/javascript">
+jQuery(document).ready(function(){
+/*
+var descount1 = jQuery("#finder-2--5 option").length;
+var descount2 = jQuery("#finder-2--6 option").length;
+if(descount1 == 0){
+      jQuery('#finder-2--5').append('<option>Printer Series</option>');
+}
+if(descount2 == 0){
+      jQuery('#finder-2--6').append('<option>Printer Model</option>');
+}
+}); */
+</script>

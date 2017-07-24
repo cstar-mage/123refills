@@ -1,0 +1,82 @@
+<?xml version="1.0"?>
+<layout>
+        <adminhtml_sales_order_view>
+			<reference name="order_items">
+				<action method="addItemRender"><type>bundle</type><block>bundle/adminhtml_sales_order_view_items_renderer</block><template>ordereditor/bundle/sales/order/view/items/renderer.phtml</template></action>
+			</reference>
+			
+			<reference name="order_tab_info">
+				<action method="setTemplate"><template>ordereditor/tab/info.phtml</template></action>
+			 </reference>
+			
+    	</adminhtml_sales_order_view>
+		
+		<!--
+		<adminhtml_sales_order_edit_index>
+	        <update handle="adminhtml_sales_order_create_index" />	
+			 <reference name="left">
+				 <remove name="sidebar"></remove>
+			</reference>		
+	    </adminhtml_sales_order_edit_index>
+		-->
+	<!--
+	<adminhtml_sales_order_create_index>
+	
+		<reference name="items">
+				<block type="adminhtml/sales_order_create_items_grid" template="ordereditor/sales/order/create/items/grid.phtml" name="items_grid">
+					<block type="adminhtml/sales_order_create_coupons" template="sales/order/create/coupons/form.phtml" name="coupons">
+						<block type="adminhtml/sales_order_create_coupons_form" template="sales/order/create/coupons/form.phtml" name="form" />
+					</block>
+				</block>
+		</reference>
+		
+		<reference name="shipping_method">
+            <block type="adminhtml/sales_order_create_shipping_method_form" template="ordereditor/customshipprice/price.phtml" name="form" />
+        </reference> 
+		
+			
+		<reference name="totals">
+				<action method="setTemplate"><template>ordereditor/order_create_totals.phtml</template></action>
+		</reference>
+		
+    </adminhtml_sales_order_create_index>
+	
+	
+	<adminhtml_sales_order_create_load_block_data>
+ 	 <remove name="sidebar"></remove>-->
+		<!--
+ 		<reference name="items">
+				<block type="adminhtml/sales_order_create_items_grid" template="ordereditor/sales/order/create/items/grid.phtml" name="items_grid">
+					<block type="adminhtml/sales_order_create_coupons" template="sales/order/create/coupons/form.phtml" name="coupons">
+						<block type="adminhtml/sales_order_create_coupons_form" template="sales/order/create/coupons/form.phtml" name="form" />
+					</block>
+				</block>
+		</reference>
+		
+		<reference name="shipping_method">
+            <block type="adminhtml/sales_order_create_shipping_method_form" template="ordereditor/customshipprice/price.phtml" name="form" />
+        </reference> 
+		
+		<reference name="totals">
+				<action method="setTemplate"><template>ordereditor/order_create_totals.phtml</template></action>
+		</reference>
+		
+		
+ 	</adminhtml_sales_order_create_load_block_data>
+	-->
+	
+	<adminhtml_sales_order_create_load_block_shipping_method>
+        <reference name="shipping_method">
+            <block type="adminhtml/sales_order_create_shipping_method_form" template="ordereditor/customshipprice/price.phtml" name="form" />
+        </reference> 
+    </adminhtml_sales_order_create_load_block_shipping_method>
+
+	<adminhtml_sales_order_create_load_block_totals>
+		
+		<reference name="totals">
+				<action method="setTemplate"><template>ordereditor/order_create_totals.phtml</template></action>
+		</reference>
+			  
+    </adminhtml_sales_order_create_load_block_totals>
+		
+</layout>

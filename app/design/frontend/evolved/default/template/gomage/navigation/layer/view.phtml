@@ -1,0 +1,143 @@
+<?php
+ /**
+ * GoMage Advanced Navigation Extension
+ *
+ * @category     Extension
+ * @copyright    Copyright (c) 2010-2011 GoMage (http://www.gomage.com)
+ * @author       GoMage
+ * @license      http://www.gomage.com/license-agreement/  Single domain license
+ * @terms of use http://www.gomage.com/terms-of-use
+ * @version      Release: 2.1
+ * @since        Class available since Release 1.0
+ */
+?>
+<?php if($this->canShowBlock()): ?>
+<div class="block block-layered-nav gomage-navigation-slider-type-<?php echo $this->getSliderType();?> gomage-navigation-icons-<?php echo $this->getIconStyle();?>">
+    <?php /* ?>
+    <div class="block-title">
+        <strong><span><?php echo $this->__('Shop By') ?></span></strong>
+    </div>
+    <?php */ ?>
+    
+    
+    <div class="block-content">
+        <?php echo $this->getStateHtml() ?>
+        <?php if($this->canShowOptions()): ?>
+            <p class="block-subtitle">
+    			<?php /* ?>
+	    			<span><?php echo $this->__('Shopping Options') ?></span>
+    			<?php */ ?>
+    			<?php if(count($this->getActiveFilters()) > 0):?>
+    			
+    		
+    			<?php /* <button class="button" onclick="setNavigationUrl('<?php echo urlencode($this->getClearUrl(true));?>'); return false;"><span><span><?php echo $this->__('Clear All') ?></span></span></button> */ ?>
+    			<button class="button" onclick="window.location.href='<?php echo $this->getClearUrl();?>'"><span><span><?php echo $this->__('Clear All') ?></span></span></button>
+    			
+    			<?php endif;?>
+    		</p>
+            <dl id="narrow-by-list">
+                <?php $_filters = $this->getFilters() ?>
+                <?php foreach ($_filters as $_filter): 
+                	
+                	$filter_id = 'advancednavigation-filter-content-'.$_filter->_filter->getRequestVar();
+                	
+                ?>
+                
+                
+                <?php if($_filter->getItemsCount() && $_filter->getItemsCount() > 1): ?>
+                
+                    <?php if($_filter->canShowPopup()):?>
+                    
+                        <?php $note_content = trim($_filter->getPopupText())?>
+                        
+    					<?php if(strlen($note_content)):?>
+    						<?php
+    	                    		
+    	                    		$styles = '';
+    	                    		
+    	                    		if($content_width = $_filter->getPopupWidth()){
+    	                    			
+    	                    			$styles .= "width:{$content_width}px;";
+    	                    			
+    	                    		}
+    	                    		if($content_height = $_filter->getPopupHeight()){
+    	                    			
+    	                    			$styles .= "height:{$content_height}px;";
+    	                    			
+    	                    		}
+    	                    		
+    	                    	?>
+    	                    	
+    	                    	<dd id="filter-<?php echo $_filter->getPopupId();?>-note-content" class="filter-note-content" <?php if($styles):?> style="<?php echo $styles;?>" <?php endif;?>>
+    								<?php echo nl2br($note_content);?>
+    	                    	</dd>
+    					<?php endif;?>
+					<?php endif;?>
+                	                	                	
+                    <dt onclick="navigationOpenFilter('<?php echo $_filter->_filter->getRequestVar();?>');">
+                    	<span class="filter-name"><?php echo $this->__($_filter->getName()) ?></span>
+                    	
+                    	<?php if($_filter->canShowPopup()):?>
+                    		                    		                    	
+	                    	<?php if(strlen($note_content)):?>
+	                    	
+	                    	<span class="filter-note-handle" onmouseout="hideNavigationNote();" onmouseover="showNavigationNote('filter-<?php echo $_filter->getPopupId();?>-note-content', this)">?</span>
+	                    		                    	
+	                    	<?php endif;?>
+                    	
+                    	<?php endif;?>
+                    </dt>
+                    <dd id="<?php echo $filter_id;?>" <?php if($_filter->canShowMinimized()){?> style="display:none;" <?php } ?> >
+                    
+                    <?php if ($_filter->canShowResetFirler()): ?>
+                        <?php $_filter_reset =  $this->getResetFirlerUrl($_filter, $_filter->ajaxEnabled()); ?>
+                        <?php if ($_filter_reset): ?>
+                             <a href="<?php echo $_filter_reset; ?>" <?php if ($_filter->ajaxEnabled()): ?>onclick="setNavigationUrl('<?php echo urlencode($_filter_reset); ?>'); return false;"<?php endif; ?> >Reset</a>
+                        <?php endif; ?>
+                    <?php endif; ?>
+                    
+                    
+                    <?php echo $_filter->getHtml() ?>					
+					</dd>
+                <?php endif; ?>
+                <?php endforeach; ?>
+            </dl>
+            <script type="text/javascript">
+            	// <![CDATA[
+            	decorateDataList('narrow-by-list');
+            	// ]]>
+            </script>
+        <?php endif; ?>
+    </div>
+</div>
+<?php endif; ?>
+<?php 
+
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	if($evolvedmethod->getBlockConfig('evolved_form_productlist_sidebar')['productlist_sidebar_left_editor_block'])
+	{
+		$list_left_block = $evolvedmethod->getBlockConfig('evolved_form_productlist_sidebar')['productlist_sidebar_left_editor_block'];	
+	}
+	else 
+	{
+		$theme = Mage::helper('evolved')->getThemeConfig();
+		$list_left_block = $theme['productlist_sidebar_left_editor_block'];
+	}
+}
+else 
+{
+	$theme = Mage::helper('evolved')->getThemeConfig();
+	$list_left_block = $theme['productlist_sidebar_left_editor_block'];
+}
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+if(nl2br($processor->filter($list_left_block))): ?>
+<div class="category-left-block">
+<?php 
+//$theme = Ideal_Evolved_Block_Evolved::getConfig(); 
+echo nl2br($processor->filter($list_left_block));	
+?>
+</div>
+<?php endif; ?>

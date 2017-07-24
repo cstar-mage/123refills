@@ -1,0 +1,35 @@
+@charset "utf-8";
+/* CSS Document */
+
+#accordion1 .carat {
+float: left;
+background: #fff url(../images/carat_bottom.jpg) right bottom no-repeat !important;
+padding-bottom: 100px !important;
+}
+#accordion1 p {
+line-height: 16px;
+margin: 0 0 10px 0;
+/* font-family: arial; */
+font-size: 12px;
+font-style: normal;
+}
+#accordion1 .carat p.half {
+width: 60%;
+}
+#accordion1 img {
+float: left;
+padding: 10px;
+}
+#accordion1 .clarity {
+float: left;
+padding-left: 100px !important;
+background: #fff url(../images/clarity_left_bg.jpg) 10px 0 no-repeat !important;
+}
+#accordion1 .shape ul li {
+display: block;
+float: left;
+padding: 0px;
+height: 140px !important;
+width: 170px !important;
+}
+

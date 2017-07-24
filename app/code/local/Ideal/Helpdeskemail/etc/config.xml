@@ -1,0 +1,51 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Helpdeskemail>
+            <version>0.1.0</version>
+        </Ideal_Helpdeskemail>
+    </modules>
+    <admin>
+        <routers>
+			<helpdeskemail>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Helpdeskemail</module>
+					<frontName>helpdeskemail</frontName>
+				</args>
+			</helpdeskemail>
+        </routers>
+    </admin>
+    <adminhtml>
+		<layout>
+			<updates>
+				<helpdeskemail>
+					<file>helpdeskemail.xml</file>
+				</helpdeskemail>
+			</updates>
+		</layout>
+    </adminhtml>
+    <global>
+    	<template>
+            <email>
+                <helpdeskemail_general_email_template translate="label" module="helpdeskemail">
+                    <label>helpdeskemail</label>
+                    <file>helpdeskemail.html</file>
+                    <type>html</type>
+                </helpdeskemail_general_email_template>
+            </email>
+        </template>
+        <blocks>
+		    <adminhtml><!-- rewrite admin head block -->
+		        <rewrite>
+		            <page_menu>Ideal_Helpdeskemail_Block_Adminhtml_Page_Menu</page_menu>
+		        </rewrite>
+		    </adminhtml>
+		</blocks>
+       <helpers>
+            <helpdeskemail>
+                <class>Ideal_Helpdeskemail_Helper</class>
+            </helpdeskemail>
+        </helpers>
+    </global>
+</config>

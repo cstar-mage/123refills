@@ -1,0 +1,211 @@
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl(); ?>css/jsDatePick_ltr.min.css" media="all" />
+<script type="text/javascript" src="<?php echo $this->getBaseUrl(); ?>js/calendar/calendar.js"></script>
+<script type="text/javascript" src="<?php echo $this->getBaseUrl(); ?>js/calendar/calendar-setup.js"></script>
+<script type="text/javascript" src="<?php echo $this->getBaseUrl(); ?>js/calendar/jsDatePick.min.1.3.js"></script>
+
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/captch/jquery.plugin.js'; ?>"></script>
+<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/captch/jquery.realperson.js'; ?>"></script>
+<link type="text/css" href="<?php echo $this->getBaseUrl().'js/captch/jquery.realperson.css'; ?>" rel="stylesheet" ></link>  
+
+<script>
+jQuery(function() {
+	jQuery('#defaultReal2').realperson();
+});
+</script>
+
+<?php
+//$theme = Ideal_Evolved_Block_Evolved::getConfig();
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$evolved_form_contacts_schedule_an_appointment = $evolvedmethod->getBlockConfig('evolved_form_contacts_schedule_an_appointment');
+	$theme = array_merge($evolved_form_contacts_schedule_an_appointment);
+}
+if(count($theme) == 0){ $theme = Mage::helper('evolved')->getThemeConfig(); }
+
+$postData = Mage::app()->getRequest()->getPost(); 
+$prodname = $postData['prodname'];
+$prodsku = $postData['prodsku'];
+$producturl = $postData['producturl'];
+$css_file = $theme['appointment_theme_setting']."_customcontactnew.css";
+?>
+<style>
+.calendar
+{
+	z-index: 10000;
+}
+</style>
+<link type="text/css" href="<?php echo $this->getSkinUrl('colorbox/colorbox.css')?>" rel="stylesheet" ></link>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('colorbox/jquery.colorbox.js')?>"></script>
+<!--<link href="http://www.jewelrydemo.com/skin/frontend/evolved/default/css/customcontactnew/customcontactnew.css" rel="stylesheet">-->
+<?php /* ?>
+<link type="text/css" href="<?php echo $this->getSkinUrl('css/customcontactnew/customcontactnew.css'); ?>" rel="stylesheet" ></link>
+<?php */ ?>
+<link type="text/css" href="<?php echo $this->getSkinUrl('css/customcontactnew/'.$css_file); ?>" rel="stylesheet" ></link>
+<?php //echo "<pre>"; print_r($_POST);"</pre>";?>
+<script> 
+jQuery(window).load(function(){	 
+jQuery(".inline2").colorbox({inline:true, width:"784", height:"381",scrolling:false});
+		jQuery(".inlineheader").colorbox({inline:true, width:"784", height:"381",scrolling:false});
+	var returnvalue = 0;
+	returnvalue = jQuery(".messages .success-msg ul li span").text();	
+	if(returnvalue == 1){
+		
+			jQuery.colorbox({open:true,href:"http://www.cutcarat.com/custom-contact-success",iframe:true, width:"30%", height:"39%",scrolling: false});
+		}
+	else if(returnvalue == 2){
+		
+		jQuery.colorbox({open:true,href:"http://www.cutcarat.com/custom-contact-failure",iframe:true, width:"30%", height:"39%",scrolling: false});
+	}
+}); 
+</script>
+
+
+
+<?php /*?><div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div><?php */?>
+
+<div class="custmain customcontactnewmain">
+<form id="contactForm123" name="contactForm123" method="post" action="<?php echo $this->getFormActionUrl()?>" enctype="multipart/form-data">
+	<div class="main_popup">
+	    	<h1 class="lft">Schedule an Appointment</h1>
+	        
+	        	<input type="hidden" name="productname" id="productname" value="<?php echo $prodname ?>" />
+	       		<input type="hidden" name="productsku" id="productsku" value="<?php echo $prodsku ?>" />        
+	       		<input type="hidden" name="producturl" id="producturl" value="<?php echo $producturl ?>" />
+	       		<input type="hidden" name="curl" id="curl" value="<?php echo $this->helper('core/url')->getCurrentUrl();?>" />
+	       		
+	       	<div class="name lft">
+	        	<label class="required">Name</label>
+	            <input name="name" class="nameinput required-entry" type="text">
+	            <label class="required">EMAIL</label>
+	            <input name="email" class="nameinput validate-email-with-only-example required-entry" type="text">
+	            <!--<label>ZIP CODE</label>
+	            <input name="zipcode" class="nameinput  required-entry" type="text"> -->
+	            <label class="required">PHONE</label>
+	            <input name="phone" class="nameinput  required-entry" type="text">
+	        </div>
+	        <div class="name">
+	       	  <label>Comments</label>
+	            <textarea name="comments" cols="10"></textarea>
+	           
+	        </div>
+	        
+	        
+	         
+		      <?php $appointment_category_explode = explode("|",$theme['appointment_category']);
+	       	  foreach($appointment_category_explode as $appointment_category_explode_key => $appointment_category_explode_value)
+	       	  {
+	       	  		$cat_explode = explode("-",$appointment_category_explode_value);
+	       	  		for($i=0; $i<count($cat_explode); $i++)
+	       	  		{
+	       	  			if($i==0){ continue; }
+	       	  			$cat_text .= ucfirst($cat_explode[$i])." ";
+	       	  		}
+	       	  		$app_cat[$cat_explode[0]] = $cat_text;
+	       	  		$cat_text = "";
+	       	  } ?>
+	       	 <?php if($theme['appointment_category']): ?>
+		       	  <div class="name interested">
+   	       	  		  <p>To help us to better serve you during your visit please tell us a little bit about what you're interested in:</p>
+			       	  <?php foreach($app_cat as $app_cat_key => $app_cat_value): ?>
+			       	  	          <span><div class="squaredOne"><input name="interestedin[]" type="checkbox" value="<?php echo $app_cat_value; ?>"id="squaredOne<?php echo $app_cat_key; ?>"><label for="squaredOne<?php echo $app_cat_key; ?>"></label></div> <span class="lbls"><?php echo $app_cat_value; ?></span></span>
+		             <?php endforeach; ?>
+	             </div> 
+             <?php endif; ?>
+             
+             <div class="buttons-set">
+             <?php if(Mage::getStoreConfig('evolved/contacts_custom_captcha/enable')==1): ?>
+					            		<div class="input-box">
+							       			<input type="text" class="required-entry" id="defaultReal2" name="defaultReal">
+							       		</div>  
+				            		<?php endif; ?>
+				            		
+				  </div>          		
+             
+	        <div class="contact_prefence">
+	        	<p>CONTACT PREFERENCE</p>
+                <p><div class="squaredOne"><input name="contactpreference[]" type="checkbox" value="BY EMAIL" id="squaredOne1"><label for="squaredOne1"></label> </div><span class="lbls">BY EMAIL</span></p> 
+                <p><div class="squaredOne squaredOne2"><input name="contactpreference[]" type="checkbox" value="BY PHONE" id="squaredOne2"><label for="squaredOne2"></label> </div><span class="lbls">BY PHONE</span></p>
+	            <?php if($theme['appointment_contact_no']): ?>
+	            	<p style="margin-top:6px; letter-spacing:0.4px; font-size:11px;">For a same day appointment please call <span style="font-size:11px;"><?php echo $theme['appointment_contact_no']; ?></span></p>
+	        	<?php endif; ?>
+	        </div>
+            
+            
+	        <?php /* ?>
+	        <div class="appoinment" >
+	        	<p>appointment date</p>
+	            <input name="appointmentdate" class="appoinment_input" type="text" id="date" >
+	            <div class="appoinmentimg">
+                <?php  echo $this->getLayout()->createBlock('core/html_calendar')->setTemplate('page/js/calendar.phtml')->toHtml();?>
+                <a href="#" id="calender_img"><img src="<?php echo $this->getSkinUrl('images/calendar.jpg');?>" width="18" height="21" id="date2"  alt=""/></a></div>
+                <?php //echo $this->getChildHtml('html_calendar') ?>
+			</div>
+            <?php */ ?>
+		   	<div class="appoinment" >
+                 <p><label class="required">appointment date</label></p>
+	            <input name="appointmentdate" class="appoinment_input required-entry" type="text" id="date" >
+	            <div class="appoinmentimg"><a href="javascript:" id="date2"><img src="<?php echo $this->getSkinUrl('images/calendar.jpg');?>" width="18" height="21" id="date2"  alt=""/></a></div>
+                <?php //echo $this->getChildHtml('html_calendar') ?>
+			</div>			
+	       
+	        <div class="time1">
+	        	<p>Time</p>
+	            <select name="appointmenttime" class="time1_input">
+	            	<option>Select</option> 
+	                <option>10:00 am</option>
+	                <option>11:00 am</option>
+	                <option>12:00 pm</option>
+	                <option>1:00 pm</option>
+	                <option>2:00 pm</option>
+	                <option>3:00 pm</option>
+	                <option>4:00 pm</option>
+	                <option>5:00 pm</option>
+	                <option>6:00 pm</option>
+	                <option>7:00 pm</option>	                	                
+	            </select>
+	        </div>
+	        
+	          
+				       		
+	        <button type="sumbit" class="submit_btn">SUBMIT</button>
+	        	
+	    </div>
+	    
+	       
+</form>
+</div>
+
+<script type="text/javascript">
+
+//<![CDATA[
+
+    var contactForm = new VarienForm('contactForm123', true);
+
+//]]>
+
+</script>
+<!--<script type="text/javascript">
+  Calendar.setup({
+  inputField : 'appoinment_input',
+  ifFormat : '%m/%e/%y',
+  button : 'date_from_trig',
+  align : 'Bl',
+  singleClick : true
+  });
+</script>--> 
+
+<script type="text/javascript">
+ window.onload = function(){
+	  new JsDatePick({
+		   useMode:2,
+		   target:"date",
+		   dateFormat:"%m-%d-%Y" 
+	  });
+	  jQuery("#date2").click(function(){
+		  jQuery("#date").click();
+	 });
+ };
+</script>
+
+

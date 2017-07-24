@@ -1,0 +1,1851 @@
+<h4><?php echo $this->__('Diamond Search') ?></h4>
+<!DOCTYPE html>
+<!--<html xmlns="http://www.w3.org/1999/xhtml" xmlns:fb="https://www.facebook.com/2008/fbml">-->
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<script>
+    var dataLayer = dataLayer || [];
+
+    dataLayer.push({ "pageGroup" : "Listing pages" });
+    
+    
+        var content_group = '';
+    
+
+
+</script>
+<title>Search for Diamonds </title>
+
+<link href="http://image2.brilliantearth.com/static/css/global-mini.css?_v=20141106-1" rel="stylesheet">
+
+<!--[if IE 8]><link href="http://image.brilliantearth.com/static/css/ie8.css?_v=20141106-1" rel="stylesheet"><![endif]-->
+<link rel="stylesheet" type="text/css" href="//d2r7ualogzlf1u.cloudfront.net/autocomplete/autocomplete.css?_v=20141106-1">
+<link href="http://image2.brilliantearth.com/static/css/holiday20141014.css?_v=20141106-1" type="text/css" rel="stylesheet">
+<script src="http://image.brilliantearth.com/static/js/global-mini.js?_v=20141106-1" ></script>
+<script src="http://image2.brilliantearth.com/static/js/holiday_2014_style.js?_v=20141106-1" ></script>
+
+
+<script type="text/javascript">
+
+      var pr_style_sheet = 'http://image1.brilliantearth.com/static/css/express.css?_v=20141106-1';
+      var is_mobile = false;
+      var is_ipad = false;
+      var from_ga = '';
+      var canada_country = false;
+      var australia_country = false;
+      
+      
+    </script>
+<!-- <link rel="stylesheet" href="http://image.brilliantearth.com/static/css/scrollbar.css?_v=20141106-1" /> -->
+<!-- <link rel="stylesheet" href="http://image.brilliantearth.com/static/js/nouislider/jquery.nouislider.css?_v=20141106-1" /> -->
+<!-- <link rel="stylesheet" href="http://image.brilliantearth.com/static/css/bootstrap-select.css?_v=20141106-1" /> -->
+<!-- <script type="text/javascript" src="http://image.brilliantearth.com/static/js/jquery.tinyscrollbar.min.js?_v=20141106-1"></script> -->
+<script type="text/javascript" src="http://image.brilliantearth.com/static/js/nouislider/jquery.nouislider.js?_v=20141106-1"></script>
+<script type="text/javascript" src="http://image.brilliantearth.com/static/js/bootstrap-select.js?_v=20141106-1"></script>
+<!-- <script type="text/javascript" src="http://image.brilliantearth.com/static/libs/JSON-js/json2.js?_v=20141106-1"></script> -->
+<!-- <script type="text/javascript" src="http://image.brilliantearth.com/static/js/diamond/search_diamond.js?_v=20141106-1"></script> -->
+<!-- <script type="text/javascript" src="new_tab_diamond_result_table.js"></script> -->
+<!-- <script type="text/javascript" src="search_diamond.js"></script> -->
+<script type="text/javascript">
+  var MIN_PRICE = '', MAX_PRICE = '', MIN_CARAT = '', MAX_CARAT = '';
+  var shape_ranges = {"Asscher": [1640, 106160, 0.44, 6.0], "Heart": [950, 88240, 0.31, 6.02], "Radiant": [990, 127180, 0.33, 7.02], "Marquise": [660, 130390, 0.3, 3.02], "Pear": [600, 320670, 0.25, 11.78], "Princess": [520, 259400, 0.25, 10.2], "Cushion": [1200, 422570, 0.4, 9.06], "Emerald": [470, 431940, 0.25, 10.37], "Oval": [860, 148220, 0.3, 5.1], "Round": [670, 568110, 0.25, 14.08]};
+  var curr_symbol = '$';
+  var collection_params = [];
+  var origin_params = [];
+  var report_params = [];
+  var view_link = "/loose-diamonds/view_detail/";
+  var search_path = "/loose-diamonds/search/";
+  var stock_number_params =  ["all"];
+  var _shapes = '';
+  if (_shapes == "") {
+    _shapes = "Round";
+  }
+
+  $(document).ready(function() {
+    
+      $('.selectpicker').selectpicker();
+    
+
+    if ( 'ontouchstart' in window ) {
+      $('.product-shape li a').hover(function(){
+        $(this).click();
+        this.stopPropagation();
+      }, function() {});
+    } else {
+      // Don't show popover for tablet.
+      $('.collection-hint').popover();
+    }
+
+    var sp_str = reset_diamonds_search_params();
+    // var sp_str = $.cookie('search_params'+$.trim('$'));
+    var prev_curr = $.cookie('search_curr');
+    var sp_dict = undefined;
+
+    if (sp_str) {
+      try {
+        sp_dict = $.parseJSON(sp_str, true);
+      } catch(e) {
+        sp_dict = undefined;
+      }
+    }
+
+    if (sp_dict != undefined) {
+      MIN_PRICE = sp_dict.MIN_PRICE;
+      MAX_PRICE = sp_dict.MAX_PRICE;
+      MIN_CARAT = sp_dict.MIN_CARAT;
+      MAX_CARAT = sp_dict.MAX_CARAT;
+
+      if ('' === '' && sp_dict.shapes != undefined) {
+        _shapes = sp_dict.shapes;
+      }
+
+      if (origin_params.length == 0 && sp_dict.origins) {
+        var _t = '["'+sp_dict.origins+'"]';
+        origin_params = $.parseJSON(_t.replace(/\,/g, '","'));
+      }
+      if (collection_params.length == 0  && sp_dict.collections) {
+        var _t = '["'+sp_dict.collections+'"]';
+        collection_params = $.parseJSON(_t.replace(/\,/g, '","'));
+      }
+      if (report_params.length == 0  && sp_dict.reports) {
+        var _t = '["'+sp_dict.reports+'"]';
+        report_params = $.parseJSON(_t.replace(/\,/g, '","'));
+      }
+      if (sp_dict.stock_number) {
+        var _t = '["'+sp_dict.stock_number+'"]';
+        stock_number_params = $.parseJSON(_t.replace(/\,/g, '","'));
+      }
+
+      var ratio_min_value = 1.00, ratio_max_value = 2.75;
+      if (sp_dict.min_ratio != undefined) { ratio_min_value = sp_dict.min_ratio; }
+      if (sp_dict.max_ratio != undefined) { ratio_max_value = sp_dict.max_ratio; }
+
+      init_search_panel(
+        _shapes,
+        sp_dict.cuts,
+        sp_dict.colors,
+        sp_dict.clarities,
+        sp_dict.min_carat,
+        sp_dict.max_carat,
+        sp_dict.min_price,
+        sp_dict.max_price,
+        ratio_min_value,
+        ratio_max_value,
+        collection_params,
+        origin_params,
+        report_params,
+        stock_number_params
+      );
+      dtl.init('Loose Diamonds', '$', 1, 'CONFLICT FREE DIAMONDS', sp_dict.row, sp_dict.order_by,
+        sp_dict.order_method, 100, view_link, search_path);
+    } else {
+      init_search_panel(
+        _shapes,
+        "",
+        "",
+        "",
+        "0.25",
+        "14.08",
+        "670",
+        "568110",
+        "0.00",
+        "0.00",
+        collection_params,
+        origin_params,
+        report_params,
+        stock_number_params
+      );
+      dtl.init('Loose Diamonds', '$', 1, 'CONFLICT FREE DIAMONDS', 0, 'price',
+        'asc', 100, view_link, search_path);
+    }
+
+    dtl.fetch_result();
+    init_status = setInterval(function() {
+      if (dtl.lastAjax.status !== undefined) {
+        fetch_recently_viewed_result();
+        init_comparson();
+        clearInterval(init_status);
+      }
+    }, 200);
+
+    $('#tab_diamonds_search').click(function(){
+      if (dtl.total_count === 0 && is_similar_show == 'N'){
+        $('#listContainer').addClass('hidden');
+        $('.search-nothing-tips').removeClass('hidden');
+        $('.search-nothing-tips').show();
+      }
+      else{
+        $('.search-nothing-tips').addClass('hidden');
+        $('#listContainer').removeClass('hidden');
+      }
+      $('.scrollbar').css('visibility', 'hidden');
+      $('#result-scrollbar').css('visibility','visible');
+      $('#search_recently_header_table').css('display', 'none');
+      $('#search_comparison_header_table').css('display', 'none');
+      $('#search_result_header_table').css('display', 'block');
+      $('#diamonds_recently_viewed_table').css('display','none');
+      $('#diamonds_comparison_table').css('display','none');
+      $('#diamonds_search_table').css('display','block');
+    });
+    $('#tab_diamonds_recently_viewed').click(function(){
+      $('.search-nothing-tips').addClass('hidden');
+      $('#listContainer').removeClass('hidden');
+      $('.scrollbar').css('visibility', 'hidden');
+      $('#recent-scrollbar').css('visibility','visible');
+      $('#search_recently_header_table').css('display', 'block');
+      $('#search_comparison_header_table').css('display', 'none');
+      $('#search_result_header_table').css('display', 'none');
+      $('#diamonds_recently_viewed_table').css('display','block');
+      $('#diamonds_comparison_table').css('display','none');
+      $('#diamonds_search_table').css('display','none');
+    });
+    $('#tab_diamonds_comparison').click(function(){
+      $('.search-nothing-tips').addClass('hidden');
+      $('#listContainer').removeClass('hidden');
+      $('.scrollbar').css('visibility', 'hidden');
+      $('#cmp-scrollbar').css('visibility','visible');
+      $('#search_recently_header_table').css('display', 'none');
+      $('#search_comparison_header_table').css('display', 'block');
+      $('#search_result_header_table').css('display', 'none');
+      $('#diamonds_recently_viewed_table').css('display','none');
+      $('#diamonds_comparison_table').css('display','block');
+      $('#diamonds_search_table').css('display','none');
+    });
+    $("#recently_viewed_table").delegate("div","click", function(){save_compared(this);});
+    $("#search_result_table").delegate("div","click", function(){save_compared(this);});
+    $("#comparison_table").delegate("div","click", function(){save_compared(this);});
+
+    $.cookie('cyo_shape', "", {path: '/'});
+  });
+</script>
+
+<!-- Start Visual Website Optimizer Asynchronous Code -->
+<script type='text/javascript'>
+    var _vwo_code=(function(){
+      var account_id=10898,
+      settings_tolerance=2000,
+      library_tolerance=2500,
+      use_existing_jquery=false,
+      // DO NOT EDIT BELOW THIS LINE
+      f=false,d=document;return{use_existing_jquery:function(){return use_existing_jquery;},library_tolerance:function(){return library_tolerance;},finish:function(){if(!f){f=true;var a=d.getElementById('_vis_opt_path_hides');if(a)a.parentNode.removeChild(a);}},finished:function(){return f;},load:function(a){var b=d.createElement('script');b.src=a;b.type='text/javascript';b.innerText;b.onerror=function(){_vwo_code.finish();};d.getElementsByTagName('head')[0].appendChild(b);},init:function(){settings_timer=setTimeout('_vwo_code.finish()',settings_tolerance);this.load('//dev.visualwebsiteoptimizer.com/j.php?a='+account_id+'&u='+encodeURIComponent(d.URL)+'&r='+Math.random());var a=d.createElement('style'),b='body{opacity:0 !important;filter:alpha(opacity=0) !important;background:none !important;}',h=d.getElementsByTagName('head')[0];a.setAttribute('id','_vis_opt_path_hides');a.setAttribute('type','text/css');if(a.styleSheet)a.styleSheet.cssText=b;else a.appendChild(d.createTextNode(b));h.appendChild(a);return settings_timer;}};}());_vwo_settings_timer=_vwo_code.init();
+  </script>
+<!-- End Visual Website Optimizer Asynchronous Code -->
+
+</head>
+<body>
+
+<!-- Google Tag Manager -->
+<noscript>
+<iframe src="//www.googletagmanager.com/ns.html?id=GTM-TFWHSR"
+height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+<script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+'//www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+})(window,document,'script','dataLayer','GTM-TFWHSR');</script> 
+<!-- End Google Tag Manager --> 
+
+<!-- Place this render call where appropriate --> 
+
+<!-- Overlay section -->
+
+<div id="overlay" style="left:0;display:none; width:100%; height:100%; position: absolute; z-index: 2008; background-color:#82838E; FILTER: alpha(opacity=60); opacity: 0.6; moz-opacity: 0.6;"> 
+  <script type="text/javascript">
+    if ($.browser.msie) {
+      document.write('<iframe height="100%" width="100%" style="FILTER: alpha(opacity=10); opacity: 0.1; moz-opacity: 0; z-index:2008;" frameborder="no" ></iframe>');
+    }
+    $('#overlay').click(function(){
+      $('.overPopup').hide();
+      $('#overlay').removeClass('overPopup');
+    });
+  </script> 
+</div>
+
+<!-- End Overlay section --> 
+
+<!--START: Header --> 
+<!-- TOP ALERT START -->
+
+
+<script type='text/javascript'>
+  if ($.cookie('black_bar_closed')){
+    $('#black_bar').hide();
+    $('.site-top-alert').css('padding','0px');
+  }
+
+  function display_black_bar(thisObj){
+    $('#black_bar').hide();
+    $.cookie('black_bar_closed', 'true', { expires: 365, path: '/' });
+    $('.site-top-alert').css('padding','0px');
+  }
+</script> 
+<!-- TOP ALERT END --> 
+<!-- SITE QUICK HELP START -->
+
+
+<!-- SITE QUICK HELP END --> 
+<!--END: Header --> 
+
+<!--START: Nav --> 
+
+<script>
+  if( Sys.ie ){
+    $('ul.global-navgation li:lt(2)').css('padding-right', '20px');
+  }
+  $('.header-navgation .navbar-default .navbar-toggle').click(function() {
+    if ($('.header-navgation .navbar-collapse').hasClass('collapse')) {
+      $(this).addClass('active');
+    } else {
+      $(this).removeClass('active');
+    }
+  });
+</script> 
+<!-- SITE NAVGATION END --> 
+
+<!--END: Nav --> 
+<!-- SITE BODY START -->
+
+
+<div class="container">
+  <div class="row pt20">
+    <div class="col-md-8 col-sm-7">
+      <h1 class="h2 fs-26 text-dark mt0 pb40">Search for Diamonds</h1>
+    </div>
+  </div>
+  <div class="search-diamonds">
+    <div id="mobile-ajax-loading" style="width: 100%; position: relative; display: none;">
+      <div class="loading" style="height: 1366px;"> <img src="/static/img/common/ajax-loading.gif"> </div>
+    </div>
+    <div class="search-diamonds-panel">
+      <div class="row">
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 h5"><a style="text-decoration: underline;" href="javascript:void(0);" data-toggle="modal" data-target="#shape">SHAPE</a></div>
+            <div class="col-md-10 col-sm-10" style="padding:0">
+              <ul class="product-shape">
+                <li class="round-details " data-action="unselected" data-label="Loose Diamond|Shape|Round" data-category="Filter" data-shape="Round"><a href="javascript:void(0);"><span>ROUND</span></a></li>
+                <li class="princess-details " data-action="unselected" data-label="Loose Diamond|Shape|Princess" data-category="Filter" data-shape="Princess"><a href="javascript:void(0);"><span>PRINCESS</span></a></li>
+                <li class="cushion-details " data-action="unselected" data-label="Loose Diamond|Shape|Cushion" data-category="Filter" data-shape="Cushion"><a href="javascript:void(0);"><span>CUSHION</span></a></li>
+                <li class="asscher-details " data-action="unselected" data-label="Loose Diamond|Shape|Asscher" data-category="Filter" data-shape="Asscher"><a href="javascript:void(0);"><span>ASSCHER</span></a></li>
+                <li class="marquise-details " data-action="unselected" data-label="Loose Diamond|Shape|Marquise" data-category="Filter" data-shape="Marquise"><a href="javascript:void(0);"><span>MARQUISE</span></a></li>
+                <li class="oval-details " data-action="unselected" data-label="Loose Diamond|Shape|Oval" data-category="Filter" data-shape="Oval"><a href="javascript:void(0);"><span>OVAL</span></a></li>
+                <li class="radiant-details " data-action="unselected" data-label="Loose Diamond|Shape|Radiant" data-category="Filter" data-shape="Radiant"><a href="javascript:void(0);"><span>RADIANT</span></a></li>
+                <li class="pear-details " data-action="unselected" data-label="Loose Diamond|Shape|Pear" data-category="Filter" data-shape="Pear"><a href="javascript:void(0);"><span>PEAR</span></a></li>
+                <li class="emerald-details " data-action="unselected" data-label="Loose Diamond|Shape|Emerald" data-category="Filter" data-shape="Emerald"><a href="javascript:void(0);"><span>EMERALD</span></a></li>
+                <li class="heart-details " data-action="unselected" data-label="Loose Diamond|Shape|Heart" data-category="Filter" data-shape="Heart"><a href="javascript:void(0);"><span>HEART</span></a></li>
+              </ul>
+              <input id="shapes" name="shapes" type="hidden" value="" />
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 h5"><a style="text-decoration: underline;" href="javascript:void(0);" data-toggle="modal" data-target="#price">PRICE</a></div>
+            <div class="col-md-10 col-sm-10">
+              <div class="search-noUiSlider">
+                <div id="shadow_price_slider" class="noUiSlider" data-category="Filter" data-action="Slide" data-label="Loose Diamond|Price"></div>
+                <div class="slider-data form-inline">
+                  <div class="form-group pull-left">
+                    <input id="min_price_display" type="text" pattern="[0-9]*" class="form-control input-sm amount-min" />
+                    <input id="min_price" name="min_price" type='text' class="form-control  input-sm amount-min hidden" />
+                  </div>
+                  <div class="form-group pull-right">
+                    <input id="max_price_display" type="text" pattern="[0-9]*" class="form-control  input-sm amount-max" />
+                    <input id="max_price" name="max_price" type='text' class="form-control  input-sm amount-max hidden" />
+                  </div>
+                </div>
+              </div>
+              <div class="search-noUiSlider">
+                <div id="price_slider" class="noUiSlider hidden"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 h5"><a style="text-decoration: underline;" href="javascript:void(0);" data-toggle="modal" data-target="#carat-weight">CARAT</a></div>
+            <div class="col-md-10 col-sm-10">
+              <div class="search-noUiSlider">
+                <div id="carat_slider" class="noUiSlider" data-category="Filter" data-action="Slide" data-label="Loose Diamond|Carat"></div>
+                <div class="slider-data form-inline">
+                  <div class="form-group pull-left">
+                    <input id="min_carat" name="min_carat"  class="form-control  input-sm amount-min">
+                  </div>
+                  <div class="form-group pull-right">
+                    <input id="max_carat" name="max_carat"  class="form-control  input-sm amount-max">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 h5"><a style="text-decoration: underline;" href="javascript:void(0);" data-toggle="modal" data-target="#cut">CUT</a></div>
+            <div class="col-md-10 col-sm-10">
+              <div class="search-noUiSlider">
+                <div id="cut_slider" class="noUiSlider" data-category="Filter" data-action="Slide" data-label="Loose Diamond|Cut"></div>
+                <ul class="cut-slider-data">
+                  <li>FAIR</li>
+                  <li>GOOD</li>
+                  <li>VERY<br class="visible-xs">
+                    GOOD</li>
+                  <li>IDEAL</li>
+                  <li>SUPER<br class="visible-xs">
+                    IDEAL</li>
+                </ul>
+                <input id="cuts" name="cuts" type="hidden" value="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 h5"><a style="text-decoration: underline;" href="javascript:void(0);" data-toggle="modal" data-target="#color">COLOR</a></div>
+            <div class="col-md-10 col-sm-10">
+              <div class="search-noUiSlider">
+                <div id="color_slider" class="noUiSlider" data-category="Filter" data-action="Slide" data-label="Loose Diamond|Color"></div>
+                <ul class="color-slider-data">
+                  <li>J</li>
+                  <li>I</li>
+                  <li>H</li>
+                  <li>G</li>
+                  <li>F</li>
+                  <li>E</li>
+                  <li>D</li>
+                </ul>
+                <input id="colors" name="colors" type="hidden" value="" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6 item">
+          <div class="row">
+            <div class="col-md-2 col-sm-2 h5"><a style="text-decoration: underline;" href="javascript:void(0);" data-toggle="modal" data-target="#clarity">CLARITY</a></div>
+            <div class="col-md-10 col-sm-10">
+              <div class="search-noUiSlider">
+                <div id="clarity_slider" class="noUiSlider" data-category="Filter" data-action="Slide" data-label="Loose Diamond|Clarity"></div>
+                <ul class="clarity-slider-data">
+                  <li>SI2</li>
+                  <li>SI1</li>
+                  <li>VS2</li>
+                  <li>VS1</li>
+                  <li>VVS2</li>
+                  <li>VVS1</li>
+                  <li>IF</li>
+                  <li>FL</li>
+                </ul>
+                <input id="clarities" name="clarities" type="hidden" value="" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="advanced-search-wrapper">
+      <div class="form-inline advanced-search clearfix brandon-medium">
+        <div class="row">
+          <div class="col-md-2 col-sm-4 heading-wrapper">
+            <div class="heading"><i id="adv_bar_toggler" class="icons-quadrate-plus ico-l"></i> ADVANCED SEARCH</div>
+          </div>
+          <div class="col-md-6 col-sm-8 search-check-lists-wrapper hidden-xs">
+            <div class="search-check-lists">
+              <div class="checkbox checkbox-ty2" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Collections">
+                <label id="adv_bar_collection"><i class="icons-checkbox"></i><a href="javascript:void(0);">Collections</a></label>
+              </div>
+              <div class="checkbox checkbox-ty2" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Origin">
+                <label id="adv_bar_origin"><i class="icons-checkbox"></i><a href="javascript:void(0);">Origin</a></label>
+              </div>
+              <div class="checkbox checkbox-ty2" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Report">
+                <label id="adv_bar_report"><i class="icons-checkbox"></i><a href="javascript:void(0);">Report</a></label>
+              </div>
+              <div class="checkbox checkbox-ty2" data-category="Filter" data-action="Click" data-label="Loose Diamonds|L:W Ratio">
+                <label id="adv_bar_ratio"><i class="icons-checkbox"></i><a href="javascript:void(0);">L:W Ratio</a></label>
+              </div>
+            </div>
+          </div>
+          <div class="visible-sm clearfix"></div>
+          <div class="col-md-4 col-sm-8 col-md-offset-0 col-sm-offset-4 on-or-before-wrapper">
+            <div class="on-or-before"> <span class="pr10 ls-1">DELIVERY DATE</span>
+              <div class="form-group ls-0" style="width:150px; height:30px;">
+                <select name="shipping_day" class="form-control selectpicker" data-size="false" data-category="Filter" data-action="Click">
+                  <option value="">ON OR BEFORE</option>
+                  <option value="2" data-label="Loose Diamonds|Delivery Date|Thursday, November 13"  onclick="test()">Thursday, November 13</option>
+                  <option value="3" data-label="Loose Diamonds|Delivery Date|Friday, November 14"  onclick="test()">Friday, November 14</option>
+                  <option value="4" data-label="Loose Diamonds|Delivery Date|Monday, November 17"  onclick="test()">Monday, November 17</option>
+                  <option value="5" data-label="Loose Diamonds|Delivery Date|Tuesday, November 18"  onclick="test()">Tuesday, November 18</option>
+                  <option value="6" data-label="Loose Diamonds|Delivery Date|Wednesday, November 19"  onclick="test()">Wednesday, November 19</option>
+                  <option value="7" data-label="Loose Diamonds|Delivery Date|Thursday, November 20"  onclick="test()">Thursday, November 20</option>
+                  <option value="8" data-label="Loose Diamonds|Delivery Date|Friday, November 21"  onclick="test()">Friday, November 21</option>
+                  <option value="9" data-label="Loose Diamonds|Delivery Date|Monday, November 24"  onclick="test()">Monday, November 24</option>
+                  <option value="999" data-label="Loose Diamonds|Delivery Date|Any Date">Any Date</option>
+                </select>
+                <script type="text/javascript">
+            function test(){
+            }
+            $('select[name=shipping_day]').on('change', function() {
+              var t = $(this);
+              var val = t.val();
+              t.find('option[value=' + val + ']').click();
+            });
+            </script> 
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="advanced-search-filter" style="display: none;">
+        <div class="container in" id="listpage-filter">
+          <div class="row">
+            <div id="collection_div" class="col-md-3 col-sm-6">
+              <dl>
+                <dt class="h6"><a href="javascript:void(0);" data-toggle="modal" data-target="#collections">Collections</a></dt>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Collections|View All">
+                    <label><i class="icons-checkbox"></i>View All</label>
+                    <input name="c_collection" type="checkbox" value="All" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Collections|Recommended">
+                    <label><i class="icons-checkbox"></i><a href='javascript:void(0);' class="text-dark td-u collection-hint" data-content="Hand-selected diamonds that offer unique beauty and value for any budget." data-toggle="modal" data-trigger="hover" data-target="#recommended">Recommended</a> (Maximum Value)</label>
+                    <input name="c_collection" type="checkbox" value="Recommended" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Collections|Glacier">
+                    <label><i class="icons-checkbox"></i><a href="javascript:void(0);" class="text-dark td-u collection-hint" data-content="Our premium and rarest diamonds, exhibiting the most sparkle and brilliance." data-toggle="modal" data-trigger="hover" data-target="#glacier">Glacier</a> (Exceptional Quality)</label>
+                    <input name="c_collection" type="checkbox" value="Glacier" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Collections|Yosemite">
+                    <label><i class="icons-checkbox"></i><a href="javascript:void(0);" class="text-dark td-u collection-hint" data-content="Beautiful diamonds offering optimal balance between size and quality." data-toggle="modal" data-trigger="hover" data-target="#yosemite">Yosemite</a> (Optimal Balance)</label>
+                    <input name="c_collection" type="checkbox" value="Yosemite" />
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <div id="origin_div" class="col-md-3 col-sm-6">
+              <dl>
+                <dt class="h6"><a href="javascript:void(0);" data-toggle="modal" data-target="#origin">Origin</a></dt>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Origin|Canada">
+                    <label><i class="icons-checkbox"></i><a class="text-dark td-u" href="/canadian-diamonds/">Canada</a></label>
+                    <input name="c_origin" type="checkbox" value="Canada" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Origin|Botswana">
+                    <label><i class="icons-checkbox"></i><a class="text-dark td-u" href="/Botswana-DTC-diamonds/">Botswana DTC</a></label>
+                    <input name="c_origin" type="checkbox" value="Botswana DTC" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Origin|Russia">
+                    <label><i class="icons-checkbox"></i><a class="text-dark td-u" href="/Russian-diamonds/">Russia</a></label>
+                    <input name="c_origin" type="checkbox" value="Russia" />
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <div class="clearfix visible-sm"></div>
+            <div id="report_div" class="col-md-2 col-sm-6">
+              <dl>
+                <dt class="h6"><a href="javascript:void(0);" data-toggle="modal" data-target="#report">Report</a></dt>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Report|GIA">
+                    <label><i class="icons-checkbox"></i>GIA</label>
+                    <input name="c_report" type="checkbox" value="GIA" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Report|Gemscan">
+                    <label><i class="icons-checkbox"></i>Gemscan</label>
+                    <input name="c_report" type="checkbox" value="Gemscan" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Report|AGS">
+                    <label><i class="icons-checkbox"></i>AGS</label>
+                    <input name="c_report" type="checkbox" value="AGS" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Report|IGI">
+                    <label><i class="icons-checkbox"></i>IGI</label>
+                    <input name="c_report" type="checkbox" value="IGI" />
+                  </div>
+                </dd>
+                <dd>
+                  <div class="checkbox checkbox-ty1" data-category="Filter" data-action="Click" data-label="Loose Diamonds|Report|CDL">
+                    <label><i class="icons-checkbox"></i>CDL</label>
+                    <input name="c_report" type="checkbox" value="CDL" />
+                  </div>
+                </dd>
+              </dl>
+            </div>
+            <div class="col-md-3 col-sm-5">
+              <dl class="mb0">
+                <dt class="h6 ratio"><a href="javascript:void(0);" data-toggle="modal" data-target="#ratio">LENGTH TO WIDTH RATIO</a></dt>
+                <dd>
+                  <div class="search-noUiSlider pt15 pb10">
+                    <div id="ratio_slider" class="noUiSlider" data-category="Filter" data-action="Slide" data-label="Loose Diamonds|Length To Width Ratio"></div>
+                    <div class="slider-data form-inline">
+                      <div class="form-group pull-left">
+                        <input id="min_ratio" name="min_ratio" type="text" class="form-control input-sm amount-min" />
+                      </div>
+                      <div class="form-group pull-right">
+                        <input id="max_ratio" name="max_ratio" type="text" class="form-control input-sm amount-max" />
+                      </div>
+                    </div>
+                  </div>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="control-hide">
+        <button id="adv_bar_collapser" type="button" class="btn btn-sm btn-success" style="background:black; border:0; display: none;">HIDE <i class="icons-chevron-up-white ico-r"></i></button>
+      </div>
+    </div>
+    <div class="your-search-results table-responsive">
+      <div id="similar_bar" class="row ysr-heading" style="display: none;">
+        <div class="col-md-8 col-sm-6"><span class="text-dark">SIMILAR DIAMONDS</span></div>
+      </div>
+      <div id="original_bar" class="row ysr-heading">
+        <div class="col-md-9 col-sm-9 col-tabs"> 
+          <!--<span class="text-muted">YOUR SEARCH RESULTS</span>
+       <span class="text-dark">12 CONFLICT FREE DIAMONDS</span>-->
+          <div class="ysr-tabs">
+            <ul class="nav nav-tabs">
+              <li class="active"><a data-toggle="tab" role="tab" id = 'tab_diamonds_search' style="cursor: default;"> <span>conflict free diamond results (</span> <span id="totalResult">&nbsp;&nbsp;&nbsp;&nbsp;</span><span>)</span></a></li>
+              <li class=""><a data-toggle="tab" role="tab" id = 'tab_diamonds_recently_viewed' data-label="Loose Diamond|Search|Recently Viewed" data-action="Click" data-category="Tab" style="cursor: default;"><span>recently viewed (</span><span id="recently_viewed_totalResult">0</span><span>)</span></a></li>
+              <li class=""><a data-toggle="tab" role="tab" id = 'tab_diamonds_comparison' data-label="Loose Diamond|Search|Comparison" data-action="Click" data-category="Tab" style="cursor: default;"><span>comparison (</span><span id="comparison_totalResult">0</span><span>)</span></a></li>
+            </ul>
+          </div>
+        </div>
+        <div class="col-md-3 col-sm-3 reset-search" id = "similar_bar_link" style='display: none;'> <a href="javascript:void(0);" class="text-dark td-u" onclick="dtl.reset_search();">RESET SEARCH</a><br>
+          <span id="original_link">&nbsp;<a href="javascript:void(0);" class="text-dark td-u" onclick="dtl.view_original();">VIEW ORIGINAL DIAMONDS</a></span> </div>
+        <div class="col-md-3 col-sm-3 reset-search" id="orginal_bar_link"> <a href="javascript:void(0);" class="text-dark td-u" onclick="dtl.reset_search();">RESET SEARCH</a><br>
+          <span id="similar_link" style="display: none;">&nbsp;<a href="javascript:void(0);" class="text-dark td-u" onclick="dtl.view_similar();">VIEW SIMILAR DIAMONDS</a></span> </div>
+      </div>
+      <div class="search-nothing-tips mb50 pt20 hidden"> Unfortunately, no diamonds match your selected criteria. Please <a href='/contact/'>contact us</a> to speak to a diamond specialist to help you find the perfect diamond. </div>
+      <div class="cm-row" id="listContainer">
+        <div class="col-md-9">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search-results-outline">
+            <thead>
+              <tr>
+                <th width="100%" scope="col"> <table id="search_result_header_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-head">
+                    <thead>
+                      <tr>
+                        <th width="10%" style="text-align: center;" scope="col"><span data-target="#compare" data-toggle="modal"><a href="javascript:void(0)" style="text-decoration: none; cursor:default">compare</a></span></th>
+                        <th width="12%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#shape"><a href="javascript:void(0)">SHAPE</a></span><a href="javascript:void(0);"><i id="order_by_shape" class="icons-chevron-down" onclick="dtl.change_order_by('shape');"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#carat-weight"><a href="javascript:void(0);">CARAT</a></span><a href="javascript:void(0);"><i id="order_by_carat" class="icons-chevron-down" onclick="dtl.change_order_by('carat');"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#color"><a href="javascript:void(0)">COLOR</a></span><a href="javascript:void(0);"><i id="order_by_color" class="icons-chevron-down" onclick="dtl.change_order_by('color');"></i></a></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#clarity"><a href="javascript:void(0)">CLARITY</a></span><a href="javascript:void(0);"><i id="order_by_clarity" class="icons-chevron-down" onclick="dtl.change_order_by('clarity');"></i></a></th>
+                        <th width="12%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#cut"><a href="javascript:void(0)">CUT</a></span><a href="javascript:void(0);"><i id="order_by_cut" class="icons-chevron-down" onclick="dtl.change_order_by('cut');"></i></a></th>
+                        <th width="0%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#collections"><a href="javascript:void(0)">COLLECTION</a></span><a href="javascript:void(0);"><i id="order_by_collection" class="icons-chevron-down" onclick="dtl.change_order_by('collection');"></i></a></th>
+                        <th width="0%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#ratio"><a href="javascript:void(0)">L:W</a></span><a href="javascript:void(0);"><i id="order_by_l_w" class="icons-chevron-down" onclick="dtl.change_order_by('l:w');"></i></a></th>
+                        <th width="11%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#report"><a href="javascript:void(0)">REPORT</a></span><a href="javascript:void(0);"><i id="order_by_report" class="icons-chevron-down" onclick="dtl.change_order_by('report');"></i></a></th>
+                        <th width="14%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#origin"><a href="javascript:void(0)">ORIGIN</a></span><a href="javascript:void(0);"><i id="order_by_origin" class="icons-chevron-down" onclick="dtl.change_order_by('origin');"></i></a></th>
+                        <th width="12%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#price"><a href="javascript:void(0)">PRICE</a></span><a href="javascript:void(0);"><i id="order_by_price" class="icons-chevron-up" onclick="dtl.change_order_by('price');"></i></a></th>
+                        <th width="9%" scope="col">&nbsp;</th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <table id="search_recently_header_table" style="display:none" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-head">
+                    <thead>
+                      <tr>
+                        <th width="10%" style="text-align: center;" scope="col"><span data-target="#compare" data-toggle="modal"><a href="javascript:void(0)" style="text-decoration: none; cursor:default">compare</a></span></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#shape"><a href="javascript:void(0)">SHAPE</a></span><a href="javascript:void(0);"><i id="r_order_by_shape" class="icons-chevron-down" onclick="new_change_order_by('shape', this);"></i></a></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#carat-weight"><a href="javascript:void(0);">CARAT</a></span><a href="javascript:void(0);"><i id="r_order_by_carat" class="icons-chevron-down" onclick="new_change_order_by('carat', this);"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#color"><a href="javascript:void(0)">COLOR</a></span><a href="javascript:void(0);"><i id="r_order_by_color" class="icons-chevron-down" onclick="new_change_order_by('color', this);"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#clarity"><a href="javascript:void(0)">CLARITY</a></span><a href="javascript:void(0);"><i id="r_order_by_clarity" class="icons-chevron-down" onclick="new_change_order_by('clarity', this);"></i></a></th>
+                        <th width="13%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#cut"><a href="javascript:void(0)">CUT</a></span><a href="javascript:void(0);"><i id="r_order_by_cut" class="icons-chevron-down" onclick="new_change_order_by('cut', this);"></i></a></th>
+                        <th width="0%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#collections"><a href="javascript:void(0)">COLLECTION</a></span><a href="javascript:void(0);"><i id="r_order_by_collection" class="icons-chevron-down" onclick="new_change_order_by('collection', this);"></i></a></th>
+                        <th width="0%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#ratio"><a href="javascript:void(0)">L:W</a></span><a href="javascript:void(0);"><i id="r_order_by_l_w" class="icons-chevron-down" onclick="new_change_order_by('l:w', this);"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#report"><a href="javascript:void(0)">REPORT</a></span><a href="javascript:void(0);"><i id="r_order_by_report" class="icons-chevron-down" onclick="new_change_order_by('report', this);"></i></a></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#origin"><a href="javascript:void(0)">ORIGIN</a></span><a href="javascript:void(0);"><i id="r_order_by_origin" class="icons-chevron-down" onclick="new_change_order_by('origin', this);"></i></a></th>
+                        <th width="11%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#price"><a href="javascript:void(0)">PRICE</a></span><a href="javascript:void(0);"><i id="r_order_by_price" class="icons-chevron-up" onclick="new_change_order_by('price', this);"></i></a></th>
+                        <th width="9%" scope="col">&nbsp;</th>
+                      </tr>
+                    </thead>
+                  </table>
+                  <table id="search_comparison_header_table" style="display:none" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-head">
+                    <thead>
+                      <tr>
+                        <th width="10%" style="text-align: center;" scope="col"><span data-target="#compare" data-toggle="modal"><a href="javascript:void(0)" style="text-decoration: none; cursor:default">compare</a></span></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#shape"><a href="javascript:void(0)">SHAPE</a></span><a href="javascript:void(0);"><i id="r_order_by_shape" class="icons-chevron-down" onclick="new_change_order_by('shape', this);"></i></a></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#carat-weight"><a href="javascript:void(0);">CARAT</a></span><a href="javascript:void(0);"><i id="r_order_by_carat" class="icons-chevron-down" onclick="new_change_order_by('carat', this);"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#color"><a href="javascript:void(0)">COLOR</a></span><a href="javascript:void(0);"><i id="r_order_by_color" class="icons-chevron-down" onclick="new_change_order_by('color', this);"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#clarity"><a href="javascript:void(0)">CLARITY</a></span><a href="javascript:void(0);"><i id="r_order_by_clarity" class="icons-chevron-down" onclick="new_change_order_by('clarity', this);"></i></a></th>
+                        <th width="13%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#cut"><a href="javascript:void(0)">CUT</a></span><a href="javascript:void(0);"><i id="r_order_by_cut" class="icons-chevron-down" onclick="new_change_order_by('cut', this);"></i></a></th>
+                        <th width="0%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#collections"><a href="javascript:void(0)">COLLECTION</a></span><a href="javascript:void(0);"><i id="r_order_by_collection" class="icons-chevron-down" onclick="new_change_order_by('collection', this);"></i></a></th>
+                        <th width="0%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#ratio"><a href="javascript:void(0)">L:W</a></span><a href="javascript:void(0);"><i id="r_order_by_l_w" class="icons-chevron-down" onclick="new_change_order_by('l:w', this);"></i></a></th>
+                        <th width="9%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#report"><a href="javascript:void(0)">REPORT</a></span><a href="javascript:void(0);"><i id="r_order_by_report" class="icons-chevron-down" onclick="new_change_order_by('report', this);"></i></a></th>
+                        <th width="10%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#origin"><a href="javascript:void(0)">ORIGIN</a></span><a href="javascript:void(0);"><i id="r_order_by_origin" class="icons-chevron-down" onclick="new_change_order_by('origin', this);"></i></a></th>
+                        <th width="11%" scope="col" style="text-align: center;"><span data-toggle="modal" data-target="#price"><a href="javascript:void(0)">PRICE</a></span><a href="javascript:void(0);"><i id="r_order_by_price" class="icons-chevron-up" onclick="new_change_order_by('price', this);"></i></a></th>
+                        <th width="9%" scope="col">&nbsp;</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td align="left" valign="top"><div id="search-scrollbar">
+                    <div class="loading hidden" style="height: 710px;" > <img src="http://image.brilliantearth.com/static/img/common/ajax-loading.gif" /> </div>
+                    <div id="result-scrollbar" class="scrollbar">
+                      <div class="minimal-vertical-wrap" style="height: 704px;">
+                        <div class="noUiSlider2 minimal-vertical" style="height: 665px;"></div>
+                      </div>
+                    </div>
+                    <div id="recent-scrollbar" class="scrollbar" style="visibility:hidden;">
+                      <div class="minimal-vertical-wrap" style="height: 704px;">
+                        <div class="noUiSlider2 minimal-vertical" style="height: 665px;"></div>
+                      </div>
+                    </div>
+                    <div id="cmp-scrollbar" class="scrollbar" style="visibility:hidden;">
+                      <div class="minimal-vertical-wrap" style="height: 704px;">
+                        <div class="noUiSlider2 minimal-vertical" style="height: 665px;"></div>
+                      </div>
+                    </div>
+                    <div class="viewport" id = 'diamonds_search_table' style="height: 710px;">
+                      <div class="overview">
+                        <table id="search_result_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-striped search-result-table table-hover">
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="viewport" id = 'diamonds_recently_viewed_table' style="height: 710px; display: none;">
+                      <div class="overview">
+                        <table id="recently_viewed_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-striped search-result-table table-hover">
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                    <div class="viewport" id = 'diamonds_comparison_table' style="height: 710px; display: none;">
+                      <div class="overview">
+                        <table id="comparison_table" width="100%" border="0" cellspacing="0" cellpadding="0" class="table-striped search-result-table table-hover">
+                          <tbody>
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col-md-3">
+          <table width="100%" border="0" cellspacing="0" cellpadding="0" class="search-results-outline">
+            <thead>
+              <tr>
+                <th width="100%" scope="col" style="border-right:0;text-align:center;">DIAMOND INFORMATION</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td valign="top"><div class="diamond-information">
+                    <div class="no-info"> <img src="http://image.brilliantearth.com/static/img/icon/no-info50x50.png" />
+                      <p class="pt20">Hover over a diamond to see further details and shipping information.</p>
+                      <p class="pt20">Check the compare box to send multiple diamonds to the comparison tab.</p>
+                    </div>
+                    <div class="info container" id="diamond_info_panel" style="display: none; padding-top: 10px;"> </div>
+                  </div></td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <input id="id_active_tab" type="hidden" value="None" />
+      <div id="errmsg"></div>
+    </div>
+  </div>
+</div>
+<style type="text/css">
+.dl-horizontal dt{width: 80px;}
+.dl-horizontal dd{margin-left: 90px;}
+
+</style>
+<div class="modal fade modal-type2" id="total-carat" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Eternity Ring Carat Weight</h4>
+      </div>
+      <div class="modal-body">
+        <p>The ring size of an eternity ring determines its total carat weight. The total carat weight range reflects the difference in total carat weight between a size three and a size eight.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="stone-count" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Eternity Ring Gemstones</h4>
+      </div>
+      <div class="modal-body">
+        <p>The ring size of an eternity ring determines its total number of gemstones. The total number of gemstones range reflects the difference in total number of gemstones between a size three and a size eight.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="price" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">PRICE</h4>
+      </div>
+      <div class="modal-body">
+        <p>All of our prices are in US$.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="shape" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">SHAPE</h4>
+      </div>
+      <div class="modal-body">
+        <p>Diamond cut should not be confused with shape. Shape refers to the general outward appearance of the diamond, not its reflective qualities. Brilliant Earth currently carries the following shapes:</p>
+        <div class="popupTable" style="height:200px;">
+          <ol>
+            <li><img src="/media/images/pic/round_tn.jpg" alt="round" /><span>Round</span></li>
+            <li><img src="/media/images/pic/oval_tn.jpg" alt="oval" /><span>Oval</span></li>
+            <li><img src="/media/images/pic/pear_tn.jpg" alt="pear" /><span>Pear</span></li>
+            <li><img src="/media/images/pic/princess_tn.jpg" alt="princess" /><span>Princess</span></li>
+            <li><img src="/media/images/pic/ascher_tn.jpg" alt="asscher" /><span>Asscher</span></li>
+            <li><img src="/media/images/pic/cushion.jpg" alt="cushion" /><span>Cushion</span></li>
+            <li><img src="/media/images/pic/emerald_tn.jpg" alt="emerald" /><span>Emerald</span></li>
+            <li><img src="/media/images/pic//marquise_tn.jpg" alt="marquise" /><span>Marquise</span></li>
+            <li><img src="/media/images/pic/radiant_tn.jpg" alt="radiant" /><span>Radiant</span></li>
+            <li><img src="/media/images/pic/heart_tn.jpg" alt="roundtn" /><span>Heart</span></li>
+          </ol>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="carat-weight" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CARAT</h4>
+      </div>
+      <div class="modal-body">
+        <p>The carat is the unit of weight of a diamond. Carat is often confused with size even though it is actually a measure of weight. One carat equals 200 milligrams or 0.2 grams. Often diamond weight is declared in points. One carat is equal to 100 points. Thus, a .75 carat diamond is equivalent to 75 points. The word comes from the carob bean, whose consistent weight was used in times past to measure gemstones.</p>
+        <p>Once cut, color, and clarity grade have been determined, the carat weight of a diamond can easily be established to fit within a budget. When diamonds are mined, large gems are discovered much less frequently than small ones, which make large diamonds much more valuable. In fact, diamond prices rise exponentially with carat weight. For example, a 2-carat diamond of a given quality is always worth more than two 1-carat diamonds of the same quality. A diamond of double the weight costs around four times more. The cutoff weights are 1/2ct, 3/4ct, 90 points, 1ct, 1.5ct, and 2ct. 'Under-sizes' are diamonds that weigh just below a cutoff weight and while fewer exist, they represent an exceptional value.</p>
+        <p>Total carat weight (t.c.w.) is a phrase used to describe the total mass of diamonds or other gemstone in a piece of jewelry when more than one gemstone is used. Diamond solitaire earrings, for example, are usually quoted in t.c.w., indicating the mass of the diamonds in both earrings and not each individual diamond.</p>
+        <p>To learn more about carat weight or download our Diamond Carat Size Guide, click <a href="/diamond-carat-ranges/" style='text-decoration:underline;'>here</a>. </p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="symmetry" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">SYMMETRY</h4>
+      </div>
+      <div class="modal-body">
+        <p>Describes the alignment of the facets of the diamond. If facets are misaligned, the diamond may poorly reflect light. Symmetry is graded from Ideal / Excellent, Very Good, Good, Fair, or Poor. Symmetry grades of Good or higher have the least effect on the brilliance of the diamond and are suitable for the finest quality jewelry. Certain gem labs, such as Gemscan, incorporate Symmetry into an overall Cut grade.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="depth" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">DEPTH</h4>
+      </div>
+      <div class="modal-body">
+        <p>The height of a gemstone, from the culet to the table. Depth % is the height of the diamond as a percentage of the girdle diameter.</p>
+        <p align="center"><img src="/media/images/pic/cut2.gif" alt="depth" /></p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="measurements" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">MEASUREMENTS</h4>
+      </div>
+      <div class="modal-body">
+        <p>Diamonds are given three measurements to specify their dimensions. For fancy shaped diamonds, the measurement specifies length x width x depth. The length is the larger dimension as you view the diamond from the top and the width is the smaller. The depth is the height of a gemstone, from the culet to the table. The measurements determine the length to width ratio and can indicate the quality of cut of the diamond. </p>
+        <p>For round diamonds, the measurement specifies diameter 1 x diameter 2 x depth. Round diamonds are never quite perfectly round given they are cut by humans. They are given two measurements for diameter to indicate the maximum and minimum diameter. These two diameters vary slightly, but should not vary by very much.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="polish" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">POLISH</h4>
+      </div>
+      <div class="modal-body">
+        <p>Describes the finish of the facets of the diamond. Polish is graded from Ideal, Excellent, Very Good, Good, Fair, or Poor. Polish grades of Good or higher have the least effect on the brilliance of the diamond and are suitable for the finest quality jewelry. Certain gem labs, such as Gemscan, incorporate Polish into an overall cut grade.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="table" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">TABLE</h4>
+      </div>
+      <div class="modal-body">
+        <p> The largest facet of a gemstone, located at the top. Table % is the table width as a percentage of the girdle diameter.</p>
+        <p align="center"><img src="/media/images/pic/cut2.gif" alt="table" /></p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="girdle" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">GIRDLE</h4>
+      </div>
+      <div class="modal-body">
+        <p>The narrow rim around the widest part of a diamond, separating the crown from the pavillion.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="culet" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CULET</h4>
+      </div>
+      <div class="modal-body">
+        <p>The tiny facet at the bottom tip of a gemstone. The optimal culet should be pointed or very small (graded "small" or "none").</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="fluorescence" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">FLUORESCENCE</h4>
+      </div>
+      <div class="modal-body">
+        <p>Describes the diamond's response to ultraviolet light. In diamonds with strong or very strong fluorescence, there may be some interference with the flow of light which causes a milky or oily appearance. Canadian diamonds almost always have none to slight fluorescence.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="color" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">COLOR</h4>
+      </div>
+      <div class="modal-body">
+        <p>Color is the natural color visible in a diamond and does not change over time. Colorless diamonds allow more light to pass through than a colored diamond, releasing more sparkle and fire. Acting as a prism, a diamond divides light into a spectrum of colors and reflects this light as colorful flashes called fire. Just as when looking through colored glass, color in a diamond will act as a filter and will diminish the spectrum of color emitted. The less color in a diamond, the more colorful the fire, and the better the color grade. Color refers to the degree to which a diamond is colorless. Diamond color has a significant impact on its value. Color also has more influence on prices in higher clarity grades.</p>
+        <p>The professional color scale begins with the highest rating of D for colorless, and travels down the alphabet to grade stones with traces of very faint or light yellowish or brownish color. Usually, the closer a diamond is to colorless, the more beautiful and valuable it is. Diamonds graded D-F are considered "colorless," G-J are considered "near-colorless," K-M are "slightly colored," and N-Y usually appear light yellow or brown. Brilliant Earth only carries diamonds of superior color, ranged D-J.</p>
+        <dl class="dl-horizontal">
+          <dt>D:</dt>
+          <dd>Absolutely colorless or icy white. The highest color grade-- extremely rare and most expensive.</dd>
+          <dt>E:</dt>
+          <dd>Colorless. Only miniscule traces of color can be detected by an expert gemologist - a rare, high quality diamond.</dd>
+          <dt>F: </dt>
+          <dd>Colorless. Slight color detected by an expert gemologist, but still considered a "colorless" grade -- a high-quality diamond.</dd>
+          <dt>G-H:</dt>
+          <dd>Near-colorless. Color noticeable when compared to diamonds of better grades, but offers excellent value.</dd>
+          <dt>I-J:</dt>
+          <dd>Near-colorless. Slightly detected color � a good value.</dd>
+          <dt>K-Y:</dt>
+          <dd>Slightly colored or colored. Not carried by Brilliant Earth.</dd>
+        </dl>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="clarity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="scrollbars=auto">
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:550px; overflow:auto;">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CLARITY</h4>
+      </div>
+      <div class="modal-body">
+        <p>A diamond's clarity refers to the presence of impurities on and within the stone. When a rough stone is extracted from carbon deep beneath the earth, tiny traces of natural elements are almost always trapped inside. These elements are called flaws or inclusions because they are formed naturally and are unique to each stone. Inclusions may be crystals of a foreign material or another diamond crystal, or structural imperfections such as tiny cracks that can appear whitish or cloudy. The number, size, color, relative location, orientation, and visibility of inclusions can all affect the relative clarity of a diamond. Diamonds with few inclusions are considered particularly rare and highly valued. After carat weight, clarity has the most influence on cost.</p>
+        <p>A well-cut diamond will optimize the use of light, creating fire and brilliance. Inclusions can hinder how the light reflects, lessening the brilliance and prismatic effect of color in a diamond.</p>
+        <p>When gemologists inspect diamonds for overall quality, they must use a 10x magnification loupe (a small magnifying lens used to examine diamonds) to determine the size, type, and position of the imperfections.</p>
+        <dl class="dl-horizontal">
+          <dt>FL:</dt>
+          <dd>Flawless with no internal or external flaws. Extremely rare and valuable.</dd>
+          <dt>IF:</dt>
+          <dd>Internally Flawless. No internal flaws.</dd>
+          <dt>VVS1:</dt>
+          <dd>Very very slightly included 1. Very difficult to see under 10x magnification.</dd>
+          <dt>VVS2:</dt>
+          <dd>Very very slightly included 2. Very difficult to see under 10x magnification. Slightly more inclusions than VVS1.</dd>
+          <dt>VS1:</dt>
+          <dd>Very slightly included 1. Difficult to see inclusions under 10x magnification. Typically cannot see inclusions with the naked eye.</dd>
+          <dt>VS2:</dt>
+          <dd>Very slightly included 2. Difficult to see inclusions under 10x magnification. Typically cannot see inclusions with the naked eye. Slightly more inclusions than VS1.</dd>
+          <dt>SI1:</dt>
+          <dd>Slightly included 1. Inclusions are visible under 10x magnification, but may not be very visible with unaided eye.</dd>
+          <dt>SI2:</dt>
+          <dd>Slightly included 2. Inclusions are visible under 10x magnification and may be visible with unaided eye. More inclusions than SI1.</dd>
+          <dt>I1 - I3:</dt>
+          <dd>Included 1-3. Inclusions are visible to the unaided eye. Not carried by Brilliant Earth.</dd>
+        </dl>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="cut" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="scrollbars=auto">
+  <div class="modal-dialog">
+    <div class="modal-content" style="height:550px; overflow:auto;">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CUT</h4>
+      </div>
+      <div class="modal-body">
+        <p>The cut refers to the angles and proportions of a diamond. The cut of a diamond - its roundness, its depth and width, the uniformity of the facets - determines its beauty. The skill with which a diamond is cut determines how well it reflects and refracts light. A well-cut diamond will internally reflect light from one mirror-like facet to another and disperse and reflect the light through the top of the stone. This results in a display of brilliance and fire. Fire, or dispersion, is the ability of a diamond to break light into rainbow colors. Brilliance describes the brightness from reflections of white light coming from the diamond.</p>
+        <p>Cut is considered to be the most important diamond characteristic because a well-cut diamond can appear to be of greater carat weight and have enhanced clarity and color.</p>
+        <p>The quality of the cut is determined by a number of factors, including proportion, symmetry, and the relative angles of various facets. The width and depth have the greatest effect on how light travels within the diamond, and how it exits in the form of brilliance. A poorly-cut diamond with facets cut only a few degrees out of alignment can result in a poorly performing stone. A well-cut diamond should reflect most light out from the table (the largest top facet) and make the diamond appear white when viewed from the top. An inferior cut will produce a stone that appears dark at the center and in some extreme cases the ring settings may show through the top of the diamond as shadows.</p>
+        <p align="center"><img src="/media/images/pic/cut1.gif" alt="cut"/></p>
+        <p>The best cut diamonds have proportions that are within specified ranges to maximize brilliance. The cut grading scale of diamonds is based on the reflective properties of the diamond according to the calculated diamond measurements.</p>
+        <dl class="dl-horizontal">
+          <dt>Super Ideal:</dt>
+          <dd>Cut to the most exacting standards. On the diamond certificate, graded as "Excellent" or "Ideal" for cut, polish, and symmetry. These diamonds will also show a "hearts and arrows" facet pattern, have the most desirable girdle and culet dimensions, and be proportioned to return the maximum possible light.</dd>
+          <dt>Ideal:</dt>
+          <dd>Exquisite quality cut to create the optimal combination of brilliance and fire. Reflects nearly all light that enters the diamond. Top 3% of diamond quality based on cut.</dd>
+          <dt>Very Good:</dt>
+          <dd>Superior quality cut that reflects nearly as much light as the ideal cut while at a substantially lower cost. Top 15% of diamond quality.</dd>
+          <dt>Good:</dt>
+          <dd>Premium quality cut to optimize the size without sacrificing quality or beauty. Reflects most light that enters. Top 25% of diamond quality.</dd>
+          <dt>Fair:</dt>
+          <dd>Good quality cut which reflects some light while maximizing weight. While not as brilliant as a good cut, still a quality diamond. Top 35% of diamond quality.</dd>
+          <dt>Poor:</dt>
+          <dd>Inadequate quality cut that reflects minimal amount of light. Brilliant Earth does not provide diamonds with cut grades of poor.</dd>
+        </dl>
+        <div class="h4 mb15">Diamond Characteristics</div>
+        <p align="center"><img src="/media/images/pic/cut2.gif" alt="cut"/></p>
+        <dl class="dl-horizontal">
+          <dt>Diameter:</dt>
+          <dd>Width of diamond as measured through the girdle.</dd>
+          <dt>Culet:</dt>
+          <dd>The tiny facet at the bottom tip of a gemstone. The optimal culet should be pointed or very small (graded &quot;small&quot; or &quot;none&quot;).</dd>
+          <dt>Table:</dt>
+          <dd>The largest facet of a gemstone, located at the top.</dd>
+          <dt>Crown:</dt>
+          <dd>The top portion of the diamond, from the girdle to the table.</dd>
+          <dt>Pavillion:</dt>
+          <dd>The lower portion of a diamond, from the girdle to the culet.</dd>
+          <dt>Girdle:</dt>
+          <dd>The narrow rim around the widest part of a diamond, separating the crown from the pavillion.</dd>
+          <dt>Depth:</dt>
+          <dd>The height of a gemstone, from the culet to the table.</dd>
+        </dl>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="report" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true" style="scrollbars=auto">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">REPORT</h4>
+      </div>
+      <div class="modal-body">
+        <p>A diamond certificate or grading report provides an expert opinion on the quality of the diamond and is provided by an independent gemology lab. Trained gemologists with specialized equipment measure the weight and dimensions of the diamond and assess quality characteristics such as cut, color, and clarity. Brilliant Earth diamonds are certified by the world's leading gem grading labs including GIA, AGS, IGI, and Gemscan. Diamonds graded by CDL (Canadian Diamond Laboratory) are evaluated by specialized equipment on premise. If the diamond lab certificate is not available online, please <a target="_blank" href="/contact/">contact us</a> to request an electronic copy.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="origin" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Certificate of Origin</h4>
+      </div>
+      <div class="modal-body">
+        <p>All Brilliant Earth diamonds come with a certificate guaranteeing the conflict free origin of the diamond. Our diamonds are tracked throughout their chain of custody to ensure that they are mined, cut, and polished in areas not tainted by war. This ensures that the diamonds are certified for their pure origin and are not corrupted by illicit or conflict diamonds. All of our diamonds are also verified to be produced with environmentally responsible methods using ethical labor practices.</p>
+        <p>While other retailers may claim that they do not carry conflict diamonds, very few have auditing processes to guarantee the ethical source of their diamonds. Brilliant Earth provides a diamond origin certification and can track our diamonds back to their source. </p>
+        <p><a href="/conflict-diamond-facts/" style="text-decoration: underline;">Learn more about Conflict Diamond Issues.</a></p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="collections" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">DIAMOND COLLECTIONS</h4>
+      </div>
+      <div class="modal-body">
+        <p>Browse our diamonds according to general preferences and staff recommendations.</p>
+        <p>Our current diamond collections include:</p>
+        <ul>
+          <li>Glacier Collection: Our premium and rarest diamonds, exhibiting the most sparkle and brilliance</li>
+          <li>Yosemite Collection: Beautiful diamonds offering an optimal balance between size and quality.</li>
+          <li>Recommended Collection: Hand-selected by our staff gemologists to offer diamonds of unique beauty that maximize value for any budget. Diamonds are in stock and available immediately.</li>
+        </ul>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="recommended" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">RECOMMENDED COLLECTION</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup_collection_right">
+          <p>Hand-selected by our staff gemologists to offer diamonds of unique beauty that maximize value for any budget.<br/>
+            Diamonds are in stock and available immediately.</p>
+          <p><a href="javascript:void(0)" onclick="javascript:refreshpage('/loose-diamonds/search/?collections=Recommended')" style="text-decoration:underline;">Browse Collection</a></p>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="glacier" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">GLACIER COLLECTION</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup_collection_right">
+          <p>Diamonds of exceptional quality and superior beauty. <br />
+            These diamonds:</p>
+          <ul class="popup_point">
+            <li>represent the finest 3% of diamond quality</li>
+            <li>are colorless with no visible inclusions</li>
+            <li>maximize fire and brilliance</li>
+          </ul>
+          <p><a href="javascript:void(0)" onclick="javascript:refreshpage('/loose-diamonds/search/?collections=Glacier')" style="text-decoration:underline;">Browse Collection</a></p>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="yosemite" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">YOSEMITE COLLECTION</h4>
+      </div>
+      <div class="modal-body">
+        <div class="popup_collection_right">
+          <p><br />
+            These diamonds:</p>
+          <ul class="popup_point">
+            <li>are in the top 15% of world diamond quality</li>
+            <li>balance size with fire, brilliance, and quality</li>
+            <li>have very good dimensions and proportions</li>
+          </ul>
+          <p><a href="javascript:void(0)" onclick="javascript:refreshpage('/loose-diamonds/search/?collections=Yosemite')" style="text-decoration:underline;">Browse Collection</a></p>
+        </div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="ratio" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">L-W RATIO</h4>
+      </div>
+      <div class="modal-body">
+        <p> Length-to-Width Ratio �The length-to-width ratio compares the length of a diamond to its width to show how elongated a fancy-shaped diamond appears when viewed from the top. Length-to-width ratio is a matter of personal preference with some individuals preferring a more elongated shape and others a more equal or square shape. The most popular length-to-width ratios for fancy shapes are below.</p>
+        <p> Ex. A princess-cut diamond that measures 5.05 mm long by 5.00mm has a length-to-width ratio of 1.01 (5.05/5.00), and will appear perfectly square.</p>
+        <p> Most popular length-to-width ratios:<br />
+          Princess: 1.00-1.05<br />
+          Radiant: 1.00-1.05<br />
+          Asscher: 1.00-1.05<br />
+          Cushion: 1.00-1.05<br />
+          Heart: 0.90-1.10<br />
+          Emerald: 1.30-1.40<br />
+          Oval: 1.30-1.70<br />
+          Pear: 1.45-1.75<br />
+          Marquise: 1.75-2.30<br />
+        </p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="origin-certification" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CERTIFICATION</h4>
+      </div>
+      <div class="modal-body">
+        <div class="h4 mb15">Certification of Diamond Origin</div>
+        <p>All Brilliant Earth diamonds come with a certificate guaranteeing the conflict free origin of the diamond. Our diamonds are tracked throughout their chain of custody to ensure that they are mined, cut, and polished in areas not tainted by war. This ensures that the diamonds are certified for their pure origin and are not corrupted by illicit or conflict diamonds. All of our diamonds are also verified to be produced with environmentally responsible methods using ethical labor practices.</p>
+        <p>While other retailers may claim that they do not carry conflict diamonds, very few have auditing processes to guarantee the ethical source of their diamonds. Brilliant Earth provides a diamond origin certification and can track our diamonds back to their source. </p>
+        <p><a href="/conflict-diamond-facts/">Learn more about Conflict Diamond Issues.</a></p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="bank_wire" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">BANK WIRE</h4>
+      </div>
+      <div class="modal-body">
+        <p>You may use a bank wire to pay for Brilliant Earth purchases of $500 or more. For US, Canadian, and Australian bank wires only, Brilliant Earth provides a 1.5% discount to your order. For Canadian, Australian, and other international bank wires, a $30 processing fee will apply to your order. Some financial institutions may also charge a fee for using a bank wire.</p>
+        <p>After you submit your order, Brilliant Earth will give you the account information you will need to provide to your bank to transfer funds from your account directly to a Brilliant Earth account. It may take a few days for your bank to process the bank wire. Once your bank has transferred the funds, Brilliant Earth is immediately notified and your purchase is processed. If you have any questions about the process involved in a bank wire, contact your bank or call Brilliant Earth at 800-691-0952.</p>
+        <p>Please note an ACH transfer is not the same as a wire transfer. At this time, Brilliant Earth does not accept ACH transfers. </p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="chain" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CHAIN LENGTH</h4>
+      </div>
+      <div class="modal-body">
+        <p>The length of the chain will determine where the necklace will fall, whether choker length, at or below the collarbone, or at the neckline. We measure the length from the beginning of one end, to the end of the other, including the clasp (which may add an additional .75 inches). Different lengths are worn for different occasions and different outfits. The most common length is the 18" length, which typically falls at the collarbone.  
+          
+          16": Choker length. Accentuates her neckline.
+          18": At collarbone. Classic length.
+          20": A few inches below collarbone.
+          22": At or above neckline. For more dramatic, stylish look. </p>
+        <p align="center"> <img src="/media/images/pic/neck.jpg" /> </p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="dimensions-centerstone" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Dimensions of Center Stone</h4>
+      </div>
+      <div class="modal-body">
+        <p>The dimensions of the gemstone are the length and width of a gemstone as it appears from the top view. Dimensions represent the size of the gemstone more accurately than carat weight.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="gemstone-color" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Gemstone Color</h4>
+      </div>
+      <div class="modal-body">
+        <p>Color is used to describe the color present within a gemstone. Color is described in terms of tone and hue. Brilliant Earth carefully selects gemstones with even color distributed throughout the gemstone.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="gemstone-clarity" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Gemstone Clarity</h4>
+      </div>
+      <div class="modal-body">
+        <p>Clarity is used to describe the presence of impurities on and within the gemstone. If the clarity of gemstones is specified as "eye clean", no visible impurities or flaws will be seen with the unaided eye. If the gemstone is "moderately included," there may be moderate flaws that are visible upon examination.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="gemstone-cert" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Certification Of Gemstone Origin</h4>
+      </div>
+      <div class="modal-body">
+        <p>All Brilliant Earth gemstones come with a certificate guaranteeing the fair trade origin of the gemstone.</p>
+        <p>At Brilliant Earth we ensure that every gemstone we offer has been handled according to strict labor, trade, and environmental protocols. We track our gemstones from the moment they are mined to their final delivery to our valued customers, in order to provide genuine, high-quality fair trade gems. By holding our suppliers to a high ethical standard we hope to better the lives of those negatively affected by the mining and trade of gemstones, and to create a viable framework for industry accountability that will benefit the global community.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="chain-length" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog" style='padding-top: 80px;'>
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">CHAIN LENGTH</h4>
+      </div>
+      <div class="modal-body">
+        <p>The length of the chain will determine where the necklace will fall, whether choker length, at or below the collarbone, or at the neckline. We measure the length from the beginning of one end, to the end of the other, including the clasp (which may add an additional .75 inches). Different lengths are worn for different occasions and different outfits. The most common length is the 18" length, which typically falls at the collarbone.  
+          
+          16": Choker length. Accentuates her neckline.
+          18": At collarbone. Classic length.
+          20": A few inches below collarbone.
+          22": At or above neckline. For more dramatic, stylish look. </p>
+        <p align="center"> <img src="http://image.brilliantearth.com/media/images/pic/neck.jpg" /> </p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type2" id="tax" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title" id="myModalLabel">Tax</h4>
+      </div>
+      <div class="modal-body">
+        <p>For US orders, Brilliant Earth currently only collects sales tax on orders shipped to addresses in California State. For orders shipped to Canada, Brilliant Earth collects the relevant GST/PST/HST based on the province that the order is being shipped to. For Canadian orders, there are no additional duties. For orders over $1,000 AUD shipped to Australia, Brilliant Earth collects the 10% GST tax.</p>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<script type="text/javascript">
+  function refreshpage(url){
+    window.location.href= url;
+  }
+</script> 
+
+<!-- SITE BODY END --> 
+
+<!-- SITE FOOTER START -->
+
+  <script type="text/javascript">
+    if (Sys.ie){
+      $('#footer_newsletter').attr('value','Your Email Address')
+      $('#footer_newsletter').attr('onfocus',"if (value =='Your Email Address'){value =''}")
+      $('#footer_newsletter').attr('onblur',"if (value ==''){value='Your Email Address'}")
+    }
+    $('#subscription_on_footer input[name=email_address]').keydown(function(e){
+      var e = e || event;
+      var keyNum = e.which || e.keyCode;
+      if (keyNum == 13) {
+        newsletter_subscription('subscription_on_footer');
+        return e.preventDefault();
+      }
+    });
+  </script>
+  
+</div>
+<!-- SITE FOOTER END -->
+
+<div class="modal fade modal-type3" id="email-us" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title fs-30 lh-36" id="myModalLabel">NEED ASSISTANCE?</h4>
+      </div>
+      <div class="modal-body">
+        <div class="row pop-need-assistance">
+          <div class="col-sm-7">
+            <p class="mb20 text-4b" style='color: #333333;'>Our non-commissioned jewelry experts are here to help, and will respond quickly to any questions you may have! Fill out the email form or contact us using one of the other methods below.</p>
+            <iframe frameborder="0" width="100%" height="220" marginheight="0" marginwidth="0" scrolling="no" src="https://forms.netsuite.com/app/site/crm/externalleadpage.nl?compid=666639&formid=34&h=514a95867b8a8fee8b7c&redirect_count=1&did_javascript_redirect=T" id="email_ifrm"></iframe>
+            <script style="text/javascript">
+        dataLayer.push({
+          'event':'gaiFrameCrossDomain',
+          'iFrameID':'email_ifrm'
+        });
+      </script> 
+          </div>
+          <div class="col-sm-5">
+            <dl class="popup-contact-us">
+              <dt class="h6"><i class="icons-tel-green ico-l va-m"></i><a href="/contact/" style='text-decoration:none; color: #6fbf98;'>1.800.691.0952</a></dt>
+              <dd>Call us for assistance</dd>
+              <dt class="h6"><i class="icons-live-chat-green ico-l va-m"></i><a href="javascript:void(0);" onclick="javascript:window.open('https://server.iad.liveperson.net/hc/28108963/?cmd=file&file=visitorWantsToChat&site=28108963&imageUrl=http://server.iad.liveperson.net/hcp/Gallery/ChatButton-Gallery/English/General/1a&referrer='+escape(document.location),'chat28108963','width=475,height=400,resizable=yes');return false;" style="text-decoration:none; color: #6fbf98;" class="_lpChatBtn">live chat</a></dt>
+              <dd>Chat now with a jewelry expert</dd>
+              <dt class="h6"><i class="icons-our-showroom ico-l va-m"></i><a href=""data-target="#visit-showroom" data-toggle="modal" style='text-decoration:none; color: #6fbf98;'>visit our showroom</a></dt>
+              <dd>Schedule an appointment at our San Francisco showroom</dd>
+            </dl>
+            <dl class="h6 customer-dervice-hours">
+              <dt>Customer Service Hours (PT)</dt>
+              <dd>Mon-Fri: 7am - 7pm</dd>
+              <dd>SAT - SUN: 8am - 6pm</dd>
+            </dl>
+            <ul class="list-unstyled text-success ls-1 fs-9 lh-18 brandon-medium">
+              <li><a class="link-unstyled" href="/frequently-asked-questions/">View FAQs</a></li>
+              <li><a class="link-unstyled" href="/customer-care/">View Customer Service</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="brandon-medium privacy-policy">Your privacy is important to us. View our <a href="/security-and-privacy-policies/#privacy" class="td-u">privacy policy</a>.</div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+
+<!-- visit showroom -->
+<div class="modal fade modal-type3 modal-appoiniment" id="visit-showroom" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title"><small>schedule an</small>Appointment</h4>
+        <p id='showroom_tel'>Please use the form below or call us at <a href="/contact/">1.800.691.0952</a> to schedule your personalized one <br>
+          hour visit with a jewelry specialist in our San Francisco showroom. We recommend<br>
+          you make your appointment at least three business days in advance. </p>
+      </div>
+      <div class="modal-body">
+        <div class="row cs-row appoiniment-body">
+          <div class="col-sm-6 fore1">
+            <iframe height="275" frameborder="0" width="358" scrolling="auto" marginwidth="0" marginheight="0" src="https://forms.netsuite.com/app/site/crm/externalleadpage.nl?compid=666639&formid=35&h=cb0f7fae9f2aa2599323&redirect_count=1&did_javascript_redirect=T&customer_ip=122.170.35.65&current_url=http%3A//www.brilliantearth.com/loose-diamonds/search/" id="appointment_ifrm"></iframe>
+            <script style="text/javascript">
+        dataLayer.push({
+          'event':'gaiFrameCrossDomain',
+          'iFrameID':'appointment_ifrm'
+        });
+      </script>
+            <div><img src="http://image2.brilliantearth.com/static/img/pic/google-map.jpg" class="img-responsive"></div>
+          </div>
+          <div class="col-sm-6 fore2">
+            <div class="mb10"><img src="http://image2.brilliantearth.com/static/img/pic/showroom.jpg" class="img-responsive"></div>
+            <p class="mb10"><span class="h6">Located near Union Square</span> in downtown San Francisco, our showroom is an elegant and serene environment to privately view our collection. Our jewelry specialists are here to offer everything from technical gemstone expertise to explaining our ethical practices to full custom design. Knowing your gem or diamond preferences beforehand is exceptionally helpful, as each visit is personally tailored to you. Our ultimate goal is to provide you with the guidance and information you need to find the perfect ethical origin jewelry.</p>
+            <div class="row cs-row text-xs uc">
+              <div class="col-sm-6">
+                <h5 class="h6 mb5 ">Appointment Hours (PT)</h5>
+                <p class='ff'>Mon-Fri: 9am - 7pm<br>
+                  Sat-Sun: 9am - 6pm</p>
+              </div>
+              <div class="col-sm-6">
+                <h5 class="h6 mb5">Showroom Location</h5>
+                <p class='ff'>26 O'Farrell Street, 10th Floor<br>
+                  San Francisco, CA 94108</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <div class="text-xs brandon-medium" id='showroom_footer'>Your privacy is important to us. View our <a href="/security-and-privacy-policies/#privacy" >privacy policy</a>.</div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<div class="modal fade modal-type3 join-our-newsletter" id="join-our-newsletter" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header text-center pt25">
+        <button type="button" class="close more-information" data-dismiss="modal" aria-hidden="true">close <i class="icons-close-green"></i></button>
+        <h4 class="modal-title"><small>join our</small>newsletter</h4>
+      </div>
+      <div class="modal-body">
+        <p>Subscribe now and be the first to know about alluring new styles, special offers, and updates.</p>
+        <form id="subscription_on_frist" method="post">
+          <dd class="address-group-wrap">
+            <div class="input-group input-group-lg email-address-group popup_newsletter">
+              <input type="text" placeholder="your Email Address" name="email_address" class="form-control">
+              <span class="input-group-btn">
+              <button type="button" class="btn btn-success btn-default puretext" onclick="javascript:newsletter_subscription('subscription_on_frist')">submit</button>
+              </span> </div>
+            <!-- /input-group --> 
+          </dd>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <div class="text-xs brandon-medium text-deepgray">Your privacy is important to us. View our <a href="/security-and-privacy-policies/#privacy">privacy policy.</a></div>
+      </div>
+    </div>
+    <!-- /.modal-content --> 
+  </div>
+  <!-- /.modal-dialog --> 
+</div>
+<!-- /.modal --> 
+<!-- Modal END -->
+
+<div class="standar h700" style="display:none;z-index:3008;border-width:2px;position:absolute;width:auto;height:auto;top:100px;left:230px;" id="refer_form">
+  <div style="display:none;" id="loading_refer" class="loading_preview"> <img src="http://image2.brilliantearth.com/static/img/common/ajax-loading.gif" width="100" height="100" /> </div>
+  <div id="loading_content"></div>
+</div>
+<script type="text/javascript" src="//cdn.searchspring.net/autocomplete/searchspring-autocomplete.min.js?_v=20141106-1"></script> 
+<script>
+  // Highlight related top navigation.
+  if ($(window).width() > 767) {
+    (function() {
+      var top_nav_index = {
+       'engagement rings': 0,
+       'wedding & anniversary rings': 1,
+       'diamonds': 2,
+       'sapphires': 3,
+       'sapphires and colored gemstones': 3,
+       'fine jewelry': 4,
+       'vintage': 5,
+       'our movement': 6,
+      };
+      var related_top_nav = $('.breadcrumb li:eq(1)').text().trim().toLowerCase();
+      var related_index = top_nav_index[related_top_nav];
+      if (related_index !== undefined) {
+        $('.global-navgation > li:eq(' + related_index + ') .dropdown-inner > a').css('color', '#6fbf98');
+      }
+    })();
+  }
+</script> 
+<script>
+  //init top navigation dropdown list
+  init_topnav_popup('.js-activated');
+
+  // Init scrollbar for wish list dropdown.
+  $('#wishlist-toggler').parent().on('show.bs.dropdown', function () {
+    $('#wishlist-content').mCustomScrollbar('update');
+    $('#wishlist-content').mCustomScrollbar('scrollTo', 'top', {scrollInertia: 0});
+  });
+  // Init scrollbar for my bag dropdown.
+  $('#mybag-toggler').parent().on('show.bs.dropdown', function () {
+    $('#mybag-content').mCustomScrollbar('update');
+    $('#mybag-content').mCustomScrollbar('scrollTo', 'top', {scrollInertia: 0});
+  });
+
+  //cancel the popup on mobile
+  if (is_mobile) {
+    $(document).off('click.modal.data-api', '[data-toggle="modal"]');
+    $('[data-toggle="modal"]').css('text-decoration', 'none');
+    $('[data-target="#email-us"]').attr('href', '/contact/');
+  }
+</script> 
+<script type="text/javascript">
+  (function() {
+    //add 3 times limit
+    key = content_group.split(' ')[0];
+    var anti_jewe = $.cookie(key);
+    var num = 0;
+    if ( anti_jewe ){
+      num = parseInt(anti_jewe, 10);
+    }
+    if (num <= 3){
+      num = num + 1;
+    }
+    $.cookie(key, num, {path: '/'});
+  })();
+</script> 
+<script>
+  // Update custom reviews.
+    function getReviews() {
+      var reviewWords = $('.pr-snippet-review-count').html();
+      if ( !reviewWords ) { return false; }
+
+      var noReviewRep = /no/gim;
+      if (noReviewRep.test(reviewWords)) {
+        return '0';
+      }
+
+      var reviewCountRep = /\d+/gim;
+      var res = reviewCountRep.exec(reviewWords);
+      if (res) { return res[0]; }
+    }
+
+    function writeReviews() {
+      var reviewCount = getReviews();
+      if (reviewCount) {
+        $('a[href=#profile] em').html('(' + reviewCount + ')');
+      }
+    }
+
+    $(".row.explanation").live("DOMSubtreeModified", function() {
+      writeReviews();
+    });
+  </script> 
+<script type="text/javascript">
+    SearchSpring.Autocomplete.init({
+      siteId: 'zqp8n2',
+      queryClass : 'searchspring-query',
+      offsetY: 2
+    });
+  </script> 
+<script type="text/javascript">
+
+  function resizeSearch(){
+    var curr_width = window.innerWidth ? window.innerWidth : $(document).width();
+    if (curr_width < 992 ) {
+      $("#search-form").css('width', '75px');
+      $("#search-form input.t").css('width', '55px');
+      $("#search-form button").css('display', 'none');
+      $('#search-form input.t').focus(function() {
+        if (curr_width < 992 ) {
+          $("#search-form input.t").animate({width: '100px'}, "slow");
+          $("#search-form").animate({width: '192px'}, "slow");
+          $("#search-form button").fadeIn("slow");
+        }
+      });
+      $('#search-form input.t').blur(function() {
+        search_blur = setTimeout(function() {
+          if(Sys.ie){
+            if ($("#search-form input.t").val() == "" || $("#search-form input.t").val() == "SEARCH") {
+              $("#search-form input.t").animate({width: '55px'}, "slow");
+              $("#search-form button").fadeOut("slow");
+              $("#search-form input.t").parent().animate({width: '75px'}, "slow");
+            }
+          } else {
+            if ($("#search-form input.t").val() == "") {
+              $("#search-form input.t").animate({width: '55px'}, "slow");
+              $("#search-form button").fadeOut("slow");
+              $("#search-form input.t").parent().animate({width: '75px'}, "slow");
+            }
+          }
+        }, 200);
+      });
+      $('#search_icon').click(function() {
+        $("#search-form input.t").focus();
+      });
+    } else {
+      $("#search-form").css('width', '192px');
+      $("#search-form input.t").css('width', '100px');
+      $("#search-form button").css('display', 'block');
+    }
+  }
+  if ('onorientationchange' in window) {
+      $(window).on('orientationchange', function() {
+        resizeSearch();
+      });
+    } else {
+      $(window).on('resize', function() {
+        resizeSearch();
+      });
+    }
+    resizeSearch();
+
+
+  $("#search-icon-test").click(function(){
+    $("#search-panel-test").fadeToggle("slow", "linear");
+    $("#search-panel-test input").focus();
+  });
+  $("#search-panel-test input").blur(function() {
+    if ($("#search-panel-test input").val() == "") {
+      $("#search-panel-test").fadeToggle("slow", "linear");
+    }
+  });
+  $("#Search").click(function(){
+    if($("#search_text").val() == ''){
+      alert('Please enter a valid Keyword or Item #.');
+      return false;
+    }
+    return true;
+  });
+  $("#Search_Mobile").click(function(){
+    if($("#Search_Text_Mobile").val() == ''){
+      alert('Please enter a valid Keyword or Item #.');
+      return false;
+    }
+    return true;
+  });
+</script> 
+<script type="text/javascript">
+// handle the modals popup on mobile & tablet
+  if("ontouchstart" in document) {
+    $("body").append("<style type='text/css'>/* for mobile move bug */.modal-open{overflow:auto;}.modal{position:absolute;top:0;bottom:0;overflow:visible;}body.modal-open{margin-right:0;}</style> ")
+    $(".modal-backdrop").on('click', function() {
+      $(".modal.fade.in").modal('hide');
+    });
+  }
+</script> 
+<script>
+  $(document).ready(function() {
+    if(is_mobile == false){
+      auto_popup();
+    }
+
+    // Init Tooltip
+    $('.center-diamond-checkbox img').tooltip();
+
+    // jump to reviews when clicking view-review-a-tag
+    $('a[href="#ReviewHeader"]').live("click", function() {
+      $('a[href="#profile"]').tab('show');
+    });
+
+    //replace the error telephone number of shopping cart
+    var country_number = '1.800.691.0952';
+    $('.telephone').text(country_number);
+    //replace antique by vintage
+    $('.replace_antique').text('Vintage Rings');
+
+    // Initial refer friend form
+    // initialize_refer_friend("/partial/refer_friend/");
+    // Fix static page's left and right column
+    
+    
+  });
+</script>
+<div style="display: none">
+  <div id="fb_js"></div>
+  <div id="pinterest_js"></div>
+  <div id="adroll_js"></div>
+  <div id="fpw_js"></div>
+  <script src="http://image1.brilliantearth.com/media/js/diamond/lpCheckRepState.js"></script> 
+  
+  <!-- BEGIN LivePerson Monitor. --><script type="text/javascript">
+window.lpTag=window.lpTag||{};if(typeof window.lpTag._tagCount==='undefined'){window.lpTag={site:'28108963',section:lpTag.section||'',autoStart:lpTag.autoStart===false?false:true,ovr:lpTag.ovr||{},_v:'1.5.1',_tagCount:1,protocol:location.protocol,events:{bind:function(app,ev,fn){lpTag.defer(function(){lpTag.events.bind(app,ev,fn)},0)},trigger:function(app,ev,json){lpTag.defer(function(){lpTag.events.trigger(app,ev,json)},1)}},defer:function(fn,fnType){if(fnType==0){this._defB=this._defB||[];this._defB.push(fn)}else if(fnType==1){this._defT=this._defT||[];this._defT.push(fn)}else{this._defL=this._defL||[];this._defL.push(fn)}},load:function(src,chr,id){var t=this;setTimeout(function(){t._load(src,chr,id)},0)},_load:function(src,chr,id){var url=src;if(!src){url=this.protocol+'//'+((this.ovr&&this.ovr.domain)?this.ovr.domain:'lptag.liveperson.net')+'/tag/tag.js?site='+this.site}var s=document.createElement('script');s.setAttribute('charset',chr?chr:'UTF-8');if(id){s.setAttribute('id',id)}s.setAttribute('src',url);document.getElementsByTagName('head').item(0).appendChild(s)},init:function(){this._timing=this._timing||{};this._timing.start=(new Date()).getTime();var that=this;if(window.attachEvent){window.attachEvent('onload',function(){that._domReady('domReady')})}else{window.addEventListener('DOMContentLoaded',function(){that._domReady('contReady')},false);window.addEventListener('load',function(){that._domReady('domReady')},false)}if(typeof(window._lptStop)=='undefined'){this.load()}},start:function(){this.autoStart=true},_domReady:function(n){if(!this.isDom){this.isDom=true;this.events.trigger('LPT','DOM_READY',{t:n})}this._timing[n]=(new Date()).getTime()},vars:lpTag.vars||[],dbs:lpTag.dbs||[],ctn:lpTag.ctn||[],sdes:lpTag.sdes||[],ev:lpTag.ev||[]};lpTag.init()}else{window.lpTag._tagCount+=1}
+</script> 
+  <script type="text/javascript">
+  /* LP Mobile JS Configuration */
+  var _LP_CFG_ = {
+    app_id : "28108963",
+    options : {
+      triggerSelector : '._lpChatBtn',
+      onChatDisabled : function(els) {
+        $('canvas').parent().parent().remove();
+      },
+      onChatEnabled : function(els) {
+        $('canvas').parent().parent().remove();
+      }
+    }
+  };
+  /* End of Configuration */
+  /* LP Mobile JS include */
+  (function(){var a=_LP_CFG_.lpjsid="lpjs-"+(new Date).getTime(),b=document.createElement("script"),s=document.getElementsByTagName("script")[0];b.id=a;b.type="text/javascript";b.async=true;b.src="https://d3tpuxked45kzt.cloudfront.net/lp_lib/liveperson-mobile.js";s.parentNode.insertBefore(b,s)})();
+  /* End of Include */
+</script> 
+  
+  <!-- END LivePerson Monitor. --> 
+  
+  <!-- End of segment tag --> 
+  
+  <script type="text/javascript">
+    // Google remarketing
+    // Google Code for Visited Site Past 7 days Remarketing List
+    var google_conversion_id = 1069152567;
+    var google_conversion_language = "en";
+    var google_conversion_format = "3";
+    var google_conversion_color = "666666";
+    var google_conversion_label = "5MQGCMvewgEQt_Ln_QM";
+    var google_conversion_value = 0;
+  </script> 
+  
+  <!-- Google remarketing --> 
+  <!-- Google Code for Visited Site Past 7 days Remarketing List -->
+  <div id="google_adservices"></div>
+  <noscript>
+  <div style="display:inline;"> <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/1069152567/?label=5MQGCMvewgEQt_Ln_QM&guid=ON&script=0"/> </div>
+  </noscript>
+  <!-- End of Google remarketing --> 
+  
+  <!-- Google Code for Main List --> 
+  <!-- Remarketing tags may not be associated with personally identifiable information or placed on pages related to sensitive categories.
+  For instructions on adding this tag and more information on the above requirements, read the setup guide: google.com/ads/remarketingsetup --> 
+  <!-- #8463 -- > 
+  <!-- remove pixels from site GTM's pixel tag is Google Tag Params  --> 
+  <!-- <script type="text/javascript">
+var google_tag_params = {
+    ecomm_prodid: '',
+    ecomm_pagetype: 'category',
+    ecomm_totalvalue: ''
+};
+</script>  --> 
+  
+</div>
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!--@subject See Item In Person Request@-->
+<!--<ul>
+	<li>Name: {{var data.name}} {{var data.lname}}</li>
+	<li>E-mail: {{var data.email}}</li>
+	<li>Do You Like Any Of These Designs?:<br><br> {{var data.rings}}</li>
+	<li>What kind of stone are you looking for?: {{var data.stonetype}}</li>
+	<li>What Metal Color Do You Prefer?: {{var data.metalcolors}}</li>	
+	<li>Product Name: {{var data.productname}}</li>
+	<li>Product Sku: {{var data.productsku}}</li>
+	<li>Product URL: <a href="{{var data.producturl}}" target="_blank">{{var data.producturl}}</a></li> 
+	
+	<li>Image 1: <a href="{{store url=""}}{{var data.image1}}" target="_blank">{{var data.image1}}</a></li> 
+	<li>Image 2: <a href="{{store url=""}}{{var data.image2}}" target="_blank">{{var data.image2}}</a></li>
+	<li>Image 3: <a href="{{store url=""}}{{var data.image3}}" target="_blank">{{var data.image3}}</a></li>
+</ul>-->
+
+
+<!--@subject See Item In Person Request@-->
+<body>
+	<ul>
+		<li>Product Sku: {{var data.psku}}</li>
+		<li>Name: {{var data.name}}</li>
+		<li>E-mail: {{var data.email}}</li>
+		<li>Zip Code: {{var data.zip_code}}</li>
+		<li>Phone: {{var data.phone}}</li>
+		<li>Comments: {{var data.comments}}</li>
+	</ul>
+</body>

@@ -1,0 +1,94 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Mage_Downloadexports>
+            <version>0.1.0</version>
+        </Mage_Downloadexports>
+    </modules>
+    
+    <global>
+        <models>
+            <downloadexports>
+                <class>Mage_Downloadexports_Model</class>
+                <resourceModel>downloadexports_mysql4</resourceModel>
+            </downloadexports>
+            <downloadexports_mysql4>
+                <class>Mage_Downloadexports_Model_Mysql4</class>
+            </downloadexports_mysql4>
+        </models>
+        <blocks>
+            <downloadexports>
+                <class>Mage_Downloadexports_Block</class>
+            </downloadexports>
+        </blocks>
+        <helpers>
+            <downloadexports>
+                <class>Mage_Downloadexports_Helper</class>
+            </downloadexports>  
+        </helpers>
+    </global>
+    
+    <admin>
+        <routers>
+            <downloadexports>
+                <use>admin</use>
+                <args>
+                    <module>Mage_Downloadexports</module>
+                    <frontName>downloadexports</frontName>
+                </args>
+            </downloadexports>
+        </routers>
+    </admin>
+    
+    <adminhtml>
+        <translate>
+            <modules>
+                <mage_adminhtml>
+                    <files>
+                        <downloadexports>Mage_Downloadexports.csv</downloadexports>
+                    </files>
+                </mage_adminhtml>
+            </modules>
+        </translate>
+        
+        <menu>
+            <system>
+                <children>
+                	<convert>
+                		<children>
+		                    <downloadexports_adminform translate="title" module="downloadexports">
+		                        <title>Download Exported Files</title>
+		                        <action>downloadexports/adminhtml_exportview</action>
+		                        <sort_order>50</sort_order>
+		                    </downloadexports_adminform>
+		                </children>
+		            </convert>
+                </children>
+            </system>
+        </menu>
+        
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <downloadexports_adminform>
+                                    <title>Download Exported Files</title>
+                                </downloadexports_adminform>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        
+        <layout>
+            <updates>
+                <downloadexports>
+                    <file>downloadexports.xml</file>
+                </downloadexports>
+            </updates>
+        </layout>
+    </adminhtml>
+</config>

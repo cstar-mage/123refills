@@ -1,0 +1,6 @@
+/*---header---*/
+#nav-mobile .mm-listview .mm-next{    width: 100%;}
+#nav-mobile .mm-listview .mm-next:before{display:none;}
+
+.search-icon.mm-close.mm-btn:after,.search-icon.mm-close.mm-btn:before{display:none;}
+.search-icon.mm-close.mm-btn{width:100%;}

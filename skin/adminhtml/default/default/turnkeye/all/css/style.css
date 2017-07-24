@@ -1,0 +1,44 @@
+ul.tabs a.turnkey-all-tab span {
+    background: url("../images/turnkeye_small_logo.png") no-repeat scroll 70% 50% transparent;
+}
+
+ul.tabs a.turnkey-all-tab:hover span {
+    background: url("../images/turnkeye_small_logo.png") no-repeat scroll 70% 50% transparent;
+}
+
+ul.tabs a.turnkey-all-tab {
+    background: url("../../../images/tabs_span_bg.gif") repeat-x scroll 0 100% transparent;
+}
+
+ul.tabs a.turnkey-all-tab:hover {
+    background-color: #D8E6E6;
+}
+
+ul.tabs a.turnkey-all-tab.active {
+    background: none repeat scroll 0 0 #FFFFFF;
+}
+
+div.turnkeye-about-logo {
+    float: left;
+}
+
+div.turnkeye-about-info {
+    float: left;
+    padding-left: 30px;
+}
+
+.turnkeye-extensions {
+    width: 400px;
+}
+
+.turnkeye-extensions .extension-name{
+    width: 200px;
+}
+
+.turnkeye-extensions .extension-version {
+    width: 50px;
+}
+
+.turnkeye-extensions .extension-action {
+    width: 150px;
+}

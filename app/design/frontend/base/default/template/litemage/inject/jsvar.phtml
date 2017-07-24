@@ -1,0 +1,52 @@
+<?php
+/**
+ * LiteMage
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see https://opensource.org/licenses/GPL-3.0 .
+ *
+ * @package   LiteSpeed_LiteMage
+ * @copyright  Copyright (c) 2015-2016 LiteSpeed Technologies, Inc. (https://www.litespeedtech.com)
+ * @license     https://opensource.org/licenses/GPL-3.0
+ */
+
+
+/* This is a private block (place holder template) to correct any variable that was set in public cached javascript earlier.
+ * So you do not need to modify your existing code in third-part's theme/template/extension.
+ * Since this will be in private block, so all the information can be set correctly for a particular user based on his own session information
+ *
+ * Example:
+ * in head script from a sns theme, there is
+ * var isLoggedIn="<?php echo (Mage::getSingleton('customer/session')->isLoggedIn())?1:0?>";
+ *
+ * isLoggedIn is set to 1 or 0, and is in public cache
+ * Here we just reassign it to its correct value.
+ *
+ * You can use this template add all other javascript global variables that require different value for individual user.
+ * logged_in and logged_out events will be added automatically to purge this block.
+ * If you have other variables that require different purge events, please modify litemage config.xml to include those events.
+ *
+ * Since this file will be overridden when you upgrade litemage, please keep your own copy if you make any modification.
+ */
+
+?>
+
+<?php if ($this->isAllowed()):?>
+<script type="text/javascript">
+//<![CDATA[
+    isLoggedIn="<?php echo (Mage::getSingleton('customer/session')->isLoggedIn())?1:0?>";
+//]]>
+</script>
+<?php endif?>

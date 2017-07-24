@@ -1,0 +1,30 @@
+<?php $current_product = Mage::registry('current_product'); ?>
+<?php
+$collection = Mage::getModel('productqa/productqa')->getCollection()
+			  ->addFieldToFilter('product_sku',$current_product->getSku())			
+        	  ->setOrder('productqa_id', 'DESC');
+$cnt = count($collection);
+$i=0;
+if($cnt > 0){
+?>
+	<h4><?php echo $this->__('Question and answer about '). $current_product->getName();?></h4>
+<?php 
+}
+foreach ($collection as $item) {
+  if($item->getanswer() != ""){
+	$i++;
+	if($i > 2){
+		break;
+	}
+?>
+	<h2><?php echo $item->getQuestion(); ?></h2>
+	<p><?php echo $item->getanswer(); ?></p>
+<?php	
+  }
+}
+if($cnt > 2){
+?>
+	<a href="<?php echo $this->getUrl('productqa/index/view/')?>?ps=<?php echo $current_product->getSku() ?>">See More</a>
+<?php 
+}
+?>

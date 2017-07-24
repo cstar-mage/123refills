@@ -1,0 +1,43 @@
+<div class="select-your-printer-main">
+<?php $finderId = 'amfinder_' . uniqid(); ?><form method="post" action="<?php //echo $this->getActionUrl() ?>" id="select-pri"><div 
+class="amfinder-vertical" id="<?php echo $finderId ?>Container"><input type="hidden" name="finder_id1" value="<?php echo 
+$this->getId() ?>"><input type="hidden" name="back_url" value="<?php echo $this->getBackUrl() ?>"><input type="hidden" 
+name="category_id" value="<?php echo $this->getCurrentCategoryId() ?>"><h1>Select Your Printer</h1> <div class="formmaxban"> 
+<?php foreach ($this->getFinder()->getDropdowns() as $dropdown): ?> <div class="dropdown-title"><?php echo 
+$this->htmlEscape($dropdown->getName()) ?></div> <div class="dropdown-element"> <select placeholder="Printer <?php echo 
+$this->htmlEscape($dropdown->getName()) ?> " <?php echo $this->getDropdownAttributes($dropdown)?> style="width:150px"><?php 
+foreach($this->getDropdownValues($dropdown) as $v): ?><option value="<?php echo $v['value'] ?>" <?php if 
+($v['selected']):?>selected="selected"<?php endif ?>> <?php echo $this->htmlEscape($v['label']) ?></option><?php endforeach ?> 
+</select> </div> <?php endforeach ?> </div> <br /> <div class="amfinder-buttons" style="display:<?php echo 
+($this->isButtonsVisible() ? 'block' : 'none')?>"> <button class="button selectprinter" title="<?php echo 
+$this->__('Set Your Printer') ?>" type="button"><span><span><?php echo $this->__('Set Your Printer') 
+?></span></span></button> <?php /*<button class="button" name="reset" value="1" title="<?php echo $this->__('Reset') ?>" 
+type="submit"><span><span><?php echo $this->__('Reset') ?></span></span></button> */ ?> </div></div></form>
+</div>
+
+<script type="text/javascript">var <?php echo $finderId ?> = new amFinder('<?php echo $finderId ?>Container','<?php echo 
+$this->getAjaxUrl() ?>','<?php echo $this->__('Loading...')?>','<?php echo 
+Mage::getStoreConfig('amfinder/general/partial_search')?>',<?php echo 
+intval(Mage::getStoreConfig('amfinder/general/auto_submit')) ?>);</script>
+<script>
+ 
+        jQuery(".selectprinter").click(function(e) {
+			 jQuery.ajax({
+                    type: "POST",
+                    url: "http://r.123refills.com/index.php/amfinder/index/newsearch/",
+                    data: jQuery('#select-pri').serialize(),	                    					
+                    success: function(response){
+						jQuery(".select-your-printer-main").html(response);
+                       // jQuery(".select-your-printer-main").html("<span>test</span>");
+						console.log("success"); 						
+                    },
+					error:function(e){
+						console.log("error");
+					}
+                });
+		});
+ 
+</script>
+
+
+<script type="text/javascript">jQuery(document).ready(function(){ var descount1 = jQuery("#finder-1--2 option").length;var descount2 = jQuery("#finder-1--3 option").length;if(descount1 == 0){ jQuery('#finder-1--2').append('<option>Printer Series</option>');}if(descount2 == 0){ jQuery('#finder-1--3').append('<option>Printer Model</option>');}});</script><script type="text/javascript">jQuery(document).ready(function(){var descount1 = jQuery("#finder-2--5 option").length;var descount2 = jQuery("#finder-2--6 option").length;if(descount1 == 0){      jQuery('#finder-2--5').append('<option>Printer Series</option>');}if(descount2 == 0){jQuery('#finder-2--6').append('<option>Printer Model</option>');}});</script>

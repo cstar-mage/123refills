@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_customrequest_index>
+        <reference name="content">
+            <block type="customrequest/adminhtml_customrequest" name="customrequest" />
+        </reference>
+    </adminhtml_customrequest_index>
+</layout>

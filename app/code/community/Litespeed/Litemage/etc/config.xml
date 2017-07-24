@@ -1,0 +1,546 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * LiteMage
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see https://opensource.org/licenses/GPL-3.0 .
+ *
+ * @package   LiteSpeed_LiteMage
+ * @copyright  Copyright (c) 2015-2016 LiteSpeed Technologies, Inc. (https://www.litespeedtech.com)
+ * @license     https://opensource.org/licenses/GPL-3.0 
+ */
+-->
+<config>
+    <modules>
+        <Litespeed_Litemage>
+            <version>1.3.5</version>
+        </Litespeed_Litemage>
+    </modules>
+    <global>
+        <ignore_user_agents>
+            <litemage1>litemage_walker</litemage1>
+            <litemage2>litemage_runner</litemage2>
+        </ignore_user_agents>
+        <blocks>
+            <litemage>
+                <class>Litespeed_Litemage_Block</class>
+            </litemage>
+        </blocks>
+        <helpers>
+            <litemage>
+                <class>Litespeed_Litemage_Helper</class>
+            </litemage>
+        </helpers>
+        <models>
+            <litemage>
+                <class>Litespeed_Litemage_Model</class>
+            </litemage>
+            <core>
+                <rewrite>
+                    <translate>Litespeed_Litemage_Model_Translate</translate>
+                    <layout_update>Litespeed_Litemage_Model_Layout_Update</layout_update>
+                </rewrite>
+            </core>
+        </models>
+        <events>
+            <cataloginventory_stock_item_save_after>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>purgeCatalogProductByStock</method>
+                    </litemage_purge>
+                </observers>
+            </cataloginventory_stock_item_save_after>
+            <!-- litemage own events -->
+            <litemage_purge_trigger>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>purgeTrigger</method>
+                    </litemage_purge>
+                </observers>
+            </litemage_purge_trigger>
+        </events>
+    </global>
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <litemage after="Mage_Adminhtml">Litespeed_Litemage_Adminhtml</litemage>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <litemage>
+                    <file>litemage.xml</file>
+                </litemage>
+            </updates>
+        </layout>
+        <acl>
+            <resources>
+                <admin>
+                    <children>
+                        <system>
+                            <children>
+                                <cache>
+                                    <children>
+                                        <litemage>
+                                            <title>LiteMage Cache Management</title>
+                                        </litemage>
+                                    </children>
+                                </cache>
+                                <config>
+                                    <children>
+                                        <litemage>
+                                            <title>LiteMage Cache Configuration</title>
+                                        </litemage>
+                                    </children>
+                                </config>
+                            </children>
+                        </system>
+                    </children>
+                </admin>
+            </resources>
+        </acl>
+        <events>
+            <controller_action_postdispatch_adminhtml_cache_flushAll>
+                <observers>
+                    <litemage_purge>
+                        <type>singleton</type>
+                        <class>litemage/observer_purge</class>
+                        <method>adminPurgeCache</method>
+                    </litemage_purge>
+                </observers>
+            </controller_action_postdispatch_adminhtml_cache_flushAll>
+            <controller_action_postdispatch_adminhtml_cache_flushSystem>
+                <observers>
+                    <litemage_purge>
+                        <type>singleton</type>
+                        <class>litemage/observer_purge</class>
+                        <method>adminPurgeCache</method>
+                    </litemage_purge>
+                </observers>
+            </controller_action_postdispatch_adminhtml_cache_flushSystem>
+            <controller_action_postdispatch_adminhtml_system_currency_saveRates>
+                <observers>
+                    <litemage_purge>
+                        <type>singleton</type>
+                        <class>litemage/observer_purge</class>
+                        <method>adminPurgeCurrency</method>
+                    </litemage_purge>
+                </observers>
+            </controller_action_postdispatch_adminhtml_system_currency_saveRates>
+            <!-- purge category cache after save -->
+            <catalog_category_save_commit_after>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>adminPurgeCatalogCategory</method>
+                    </litemage_purge>
+                </observers>
+            </catalog_category_save_commit_after>
+            <!-- purge product cache after save -->
+            <catalog_product_save_commit_after>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>adminPurgeCatalogProduct</method>
+                    </litemage_purge>
+                </observers>
+            </catalog_product_save_commit_after>
+            <!-- purge cms page cache after save -->
+            <cms_page_save_commit_after>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>adminPurgeCmsPage</method>
+                    </litemage_purge>
+                </observers>
+            </cms_page_save_commit_after>
+            <!-- purge all caches when module disabled -->
+            <admin_system_config_changed_section_litemage>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>adminConfigChangedSection</method>
+                    </litemage_purge>
+                </observers>
+            </admin_system_config_changed_section_litemage>
+            <!-- displays warning if license not enabled -->
+            <controller_action_predispatch_adminhtml_system_config_edit>
+                <observers>
+                    <litemage_purge>
+                        <class>litemage/observer_purge</class>
+                        <method>adminConfigEditSection</method>
+                    </litemage_purge>
+                </observers>
+            </controller_action_predispatch_adminhtml_system_config_edit>
+        </events>
+    </adminhtml>
+    <frontend>
+        <routers>
+            <litemage>
+                <use>standard</use>
+                <args>
+                    <module>Litespeed_Litemage</module>
+                    <frontName>litemage</frontName>
+                </args>
+            </litemage>
+        </routers>
+        <layout>
+            <updates>
+                <litemage>
+                    <file>litemage.xml</file>
+                </litemage>
+            </updates>
+        </layout>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>predispatchCheckControllerNoCache</method>
+                    </litemage_esi>
+                </observers>
+            </controller_action_predispatch>
+            <visitor_init>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>initNewVisitor</method>
+                    </litemage_esi>
+                </observers>
+            </visitor_init>
+            <core_layout_block_create_after>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>checkEsiBlock</method>
+                    </litemage_esi>
+                </observers>
+            </core_layout_block_create_after>
+            <controller_action_layout_generate_blocks_after>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>prepareInjection</method>
+                    </litemage_esi>
+                </observers>
+            </controller_action_layout_generate_blocks_after>
+            <http_response_send_before>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>beforeResponseSend</method>
+                    </litemage_esi>
+                </observers>
+            </http_response_send_before>
+            <customer_login>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeUserPrivateCache</method>
+                    </litemage_esi>
+                </observers>
+            </customer_login>
+            <customer_logout>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeUserPrivateCache</method>
+                    </litemage_esi>
+                </observers>
+            </customer_logout>
+            <sales_quote_save_after>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </sales_quote_save_after>
+            <wishlist_item_save_after>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </wishlist_item_save_after>
+            <wishlist_item_delete_after>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </wishlist_item_delete_after>
+            <catalog_product_compare_add_product>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </catalog_product_compare_add_product>
+            <catalog_product_compare_remove_product>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </catalog_product_compare_remove_product>
+            <catalog_product_compare_item_collection_clear>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </catalog_product_compare_item_collection_clear>
+            <catalog_controller_product_view>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>onCatalogProductView</method>
+                    </litemage_esi>
+                </observers>
+            </catalog_controller_product_view>
+            <cms_page_render>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>onCmsPageRender</method>
+                    </litemage_esi>
+                </observers>
+            </cms_page_render>
+            <poll_vote_add>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </poll_vote_add>
+            <core_session_abstract_add_message>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </core_session_abstract_add_message>
+            <checkout_onepage_controller_success_action>
+                <observers>
+                    <litemage_esi>
+                        <class>litemage/observer_esi</class>
+                        <method>purgeEsiCache</method>
+                    </litemage_esi>
+                </observers>
+            </checkout_onepage_controller_success_action>
+        </events>
+        <litemage>
+            <esiblock>
+                <!-- If you need to inject any other privately cached custom block groupings, 
+                you can add them here. <blocks> contains the block names defined in your 
+                layout files. All blocks that share the same purge events can be listed 
+                together in a single grouping. If their purge events are not being watched 
+                in the previous events section, you will also need to add a litemage esi 
+                observer for those events.
+                
+                This config file will be overwritten with upgrades to the LiteMage module. 
+                If you have made any modifications, please make sure to keep a copy -->
+                <welcome>
+                    <!-- blocks only purged by login/logout events, no purge_events configuration is required as login/logout will auto purge all private blocks -->
+                    <access>private</access>
+                    <blocks>T:Mage_Page_Block_Html_Welcome,welcome,litemage.jsvar,nickname$v</blocks>
+                    <!-- Marking a block as valueonly, denoted by the suffix “$v”, will only output 
+                    the blocks html value without the added html tags and comments when in debug mode. 
+                    The block will also not be highlighted when using the LITEMAGE_DEBUG=SHOWHOLES parameter -->
+                </welcome>
+                <cart>
+                    <access>private</access>
+                    <!-- Blocks can be set using class type, denoted by the prefix "T:". This will include all blocks that inherit this type in the grouping -->
+                    <blocks>T:Mage_Checkout_Block_Cart_Abstract</blocks>
+                    <purge_events>
+                        <sales_quote_save_after/>
+                    </purge_events>
+                </cart>
+                <toplinks>
+                    <access>private</access>
+                    <blocks>top.links</blocks>
+                    <purge_tags>cart, wishlist</purge_tags>
+                    <!-- This is a composite grouping. The purge events for the blocks in this grouping are 
+                    a combination of existing purge event sets from other groupings. By using purge_tags 
+                    to reference these other groupings, you do not need to redefine these purge events. 
+                    Different block name and additional purge tags can be defined in configuration screen. -->
+                </toplinks>
+                <compare>
+                    <access>private</access>
+                    <blocks>T:Mage_Catalog_Block_Product_Compare_Sidebar, T:Mage_Reports_Block_Product_Compared</blocks>
+                    <purge_events>
+                        <catalog_product_compare_add_product/>
+                        <catalog_product_compare_remove_product/>
+                        <catalog_product_compare_item_collection_clear/>
+                    </purge_events>
+                </compare>
+                <viewed>
+                    <access>private</access>
+                    <blocks>T:Mage_Reports_Block_Product_Viewed</blocks>
+                    <purge_events>
+                        <catalog_controller_product_view/>
+                    </purge_events>
+                </viewed>
+                <poll>
+                    <access>private</access>
+                    <blocks>T:Mage_Poll_Block_ActivePoll</blocks>
+                    <purge_events>
+                        <poll_vote_add/>
+                    </purge_events>
+                </poll>
+                <!-- messages is specially handled, cannot change the tag name here, has to be "messages" -->
+                <messages>
+                    <access>private</access>
+                    <blocks>T:Mage_Core_Block_Messages</blocks>
+                    <purge_events>
+                        <core_session_abstract_add_message/>
+                    </purge_events>
+                </messages>
+                <!-- Blocks only visible when logged in -->
+                <reorder>
+                    <access>private</access>
+                    <blocks>T:Mage_Sales_Block_Reorder_Sidebar</blocks>
+                    <purge_events>
+                        <sales_quote_save_after/>
+                        <checkout_onepage_controller_success_action/>
+                    </purge_events>
+                </reorder>
+                <wishlist>
+                    <access>private</access>
+                    <blocks>T:Mage_Wishlist_Block_Customer_Sidebar</blocks>
+                    <purge_events>
+                        <wishlist_item_save_after/>
+                        <wishlist_item_delete_after/>
+                    </purge_events>
+                </wishlist>
+                <!-- public blocks -->
+                    <!-- Some themes will use a variable in footer that is declared in the header, 
+                this causes the footer block to fail to generate. You can modify the 
+                template to generate the missing variable or simply choose to not punch 
+                a hole in footer (comment out the footer block).
+                
+                Making the footer a public block will speed up page generation and save some disk space  -->
+                <footer>
+                    <access>public</access>
+                    <blocks>footer</blocks>
+                </footer>
+            </esiblock>
+        </litemage>
+    </frontend>
+    <default>
+        <litemage>
+            <general>
+                <enabled>0</enabled>
+                <admin_ips>127.0.0.1</admin_ips>
+                <public_ttl>28800</public_ttl>
+                <private_ttl>1800</private_ttl>
+                <home_ttl>28800</home_ttl>
+                <track_viewed>0</track_viewed>
+                <diff_customergroup>0</diff_customergroup>
+                <diff_customergroup_set/>
+                <flush_prodcat>0</flush_prodcat>
+                <alt_esi_syntax>0</alt_esi_syntax>
+                <cache_tag_prefix>M</cache_tag_prefix>
+            </general>
+            <warmup>
+                <enable_warmup>0</enable_warmup>
+                <server_ip/>
+                <load_limit>5</load_limit>
+                <thread_limit>6</thread_limit>
+                <max_time>360</max_time>
+                <interval>21600</interval>
+                <priority>100</priority>
+                <multi_currency/>
+                <multi_custgroup/>
+                <autolist_interval>28800</autolist_interval>
+                <autolist_priority>300</autolist_priority>
+                <enable_autocollect>0</enable_autocollect>
+                <auto_collect_add>6</auto_collect_add>
+                <auto_collect_robot>1</auto_collect_robot>
+                <auto_collect_depth>2</auto_collect_depth>
+                <auto_collect_remove>0</auto_collect_remove>
+                <auto_collect_hours>48</auto_collect_hours>
+                <delta_depth>1</delta_depth>
+                <custlist/>
+            </warmup>
+            <default>
+                <!-- Full or partial match on controller full action name for cacheable routes. Space, return, and comma separated -->
+                <cache_routes><![CDATA[catalog cms catalogsearch_term_popular]]></cache_routes>
+                <!-- Full or partial match on controller full action name for non-cacheable routes within cacheable routes. Space, return, and comma separated -->
+                <nocache_subroutes><![CDATA[catalog_product_compare catalogsearch]]></nocache_subroutes>
+            </default>
+            <donotcache>
+                <!-- configured through Admin Panel, do not update here. Customized settings will be picked up from database -->
+                <cache_routes/>
+                <nocache_subroutes/>
+                <!-- Entire response cached based on routes, same content for all urls, such as "cms_index_noRoute" for 404 pages. Space, return, and comma separated. -->
+                <fullcache_routes><![CDATA[cms_index_noRoute]]></fullcache_routes>
+                <vars>no_cache</vars>
+                <urls/>
+                <welcome/>
+                <toplinks/>
+                <toplinkstag/>
+                <messages/>
+            </donotcache>
+            <fishpigwp>
+                <fpwp_cache>0</fpwp_cache>
+                <fpwp_ttl>28800</fpwp_ttl>
+                <fpwp_prefix/>
+            </fishpigwp>
+            <test>
+                <allow_ips/>
+                <debug>0</debug>
+                <delta_log>0</delta_log>
+            </test>
+        </litemage>
+    </default>
+    <crontab>
+        <jobs>
+            <litemage_warmup_cache>
+                <schedule>
+                    <cron_expr>2,12,22,32,42,52 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>litemage/observer_cron::warmCache</model>
+                </run>
+            </litemage_warmup_cache>
+            <litemage_crawl_delta>
+                <schedule>
+                    <cron_expr>*/5 * * * *</cron_expr>
+                </schedule>
+                <run>
+                    <model>litemage/observer_cron::crawlDelta</model>
+                </run>
+            </litemage_crawl_delta>
+        </jobs>
+    </crontab>
+</config>

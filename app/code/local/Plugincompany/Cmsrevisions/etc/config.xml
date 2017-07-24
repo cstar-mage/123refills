@@ -1,0 +1,124 @@
+<?xml version="1.0"?>
+<!--
+ *
+ * Created by:  Milan Simek
+ * Company:     Plugin Company
+ *
+ * LICENSE: http://plugin.company/docs/magento-extensions/magento-extension-license-agreement
+ *
+ * YOU WILL ALSO FIND A PDF COPY OF THE LICENSE IN THE DOWNLOADED ZIP FILE
+ *
+ * FOR QUESTIONS AND SUPPORT
+ * PLEASE DON'T HESITATE TO CONTACT US AT:
+ *
+ * SUPPORT@PLUGIN.COMPANY
+ *
+-->
+<config>
+    <modules>
+        <Plugincompany_Cmsrevisions>
+            <version>1.0.2</version>
+        </Plugincompany_Cmsrevisions>
+    </modules>
+    <global>
+        <models>
+            <plugincompany_cmsrevisions>
+                <class>Plugincompany_Cmsrevisions_Model</class>
+                <resourceModel>plugincompany_cmsrevisions_resource</resourceModel>
+            </plugincompany_cmsrevisions>
+            <plugincompany_cmsrevisions_resource>
+                <class>Plugincompany_Cmsrevisions_Model_Resource</class>
+                <entities>
+                    <page>
+                        <table>plugincompany_cms_page</table>
+                    </page>
+                    <block>
+                        <table>plugincompany_cms_block</table>
+                    </block>
+                </entities>
+            </plugincompany_cmsrevisions_resource>
+            <cms>
+                <rewrite>
+                    <block>Plugincompany_Cmsrevisions_Model_Cms_Block</block>
+                </rewrite>
+            </cms>
+        </models>
+        <blocks>
+            <plugincompany_cmsrevisions>
+                <class>Plugincompany_Cmsrevisions_Block</class>
+            </plugincompany_cmsrevisions>
+        </blocks>
+        <helpers>
+            <plugincompany_cmsrevisions>
+                <class>Plugincompany_Cmsrevisions_Helper</class>
+            </plugincompany_cmsrevisions>
+        </helpers>
+        <resources>
+            <plugincompany_cmsrevisions_setup>
+                <setup>
+                    <module>Plugincompany_Cmsrevisions</module>
+                </setup>
+            </plugincompany_cmsrevisions_setup>
+        </resources>
+    </global>
+    <adminhtml>
+        <events>
+            <cms_page_save_before>
+                <observers>
+                    <plugincompany_cmsrevisions>
+                        <type>model</type>
+                        <class>plugincompany_cmsrevisions/observer</class>
+                        <method>cmsPageSaveBefore</method>
+                    </plugincompany_cmsrevisions>
+                </observers>
+            </cms_page_save_before>
+            <cms_block_save_before>
+                <observers>
+                    <plugincompany_cmsrevisions>
+                        <type>model</type>
+                        <class>plugincompany_cmsrevisions/observer</class>
+                        <method>cmsBlockSaveBefore</method>
+                    </plugincompany_cmsrevisions>
+                </observers>
+            </cms_block_save_before>
+            <core_block_abstract_to_html_before>
+                <observers>
+                    <plugincompany_cmsrevisions>
+                        <type>model</type>
+                        <class>plugincompany_cmsrevisions/observer</class>
+                        <method>coreBlockAbstractToHtmlBefore</method>
+                    </plugincompany_cmsrevisions>
+                </observers>
+            </core_block_abstract_to_html_before>
+        </events>
+        <layout>
+            <updates>
+                <plugincompany_cmsrevisions>
+                    <file>plugincompany_cmsrevisions.xml</file>
+                </plugincompany_cmsrevisions>
+            </updates>
+        </layout>
+    </adminhtml>
+    <admin>
+        <routers>
+            <cmsrevisions>
+                <use>admin</use>
+                <args>
+                    <module>Plugincompany_Cmsrevisions_Adminhtml</module>
+                    <frontName>cmsrevisions</frontName>
+                </args>
+            </cmsrevisions>
+        </routers>
+    </admin>
+    <frontend>
+        <routers>
+            <previewcms>
+                <use>standard</use>
+                <args>
+                    <module>Plugincompany_Cmsrevisions_Previewcms</module>
+                    <frontName>previewcms</frontName>
+                </args>
+            </previewcms>
+        </routers>
+    </frontend>
+</config>

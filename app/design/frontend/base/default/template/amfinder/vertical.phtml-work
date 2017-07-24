@@ -1,0 +1,115 @@
+<?php  
+	$categories = Mage::getModel('catalog/category')->getCollection()
+		->addAttributeToSelect('*')//or you can just add some attributes
+		->addAttributeToFilter('level', 2)//2 is actually the first level
+		->addAttributeToFilter('is_active', 1);
+
+	$catelist=array();
+	foreach($categories as $category)
+	{
+		if($category->getId()==15 or $category->getId()==16 ){ continue; }
+		//echo "   <br> " . $category->getId().'---'.$category->getName();	
+		$catelist[$category->getId()]=$category->getName();
+	}
+
+ 	
+	$cat = Mage::getModel('catalog/category')->load(16);
+	$subcats = $cat->getChildren();
+
+ 	foreach(explode(',',$subcats) as $subCatid)
+    {
+		$_category = Mage::getModel('catalog/category')->load($subCatid);
+		if($_category->getIsActive()) 
+		{
+			//echo "   <br>bb " . $_category->getId().'---'.$_category->getName();	
+			$catelist[$_category->getId()]=$_category->getName();
+		}
+	}
+	
+?>	
+
+<form method="post">
+	<div class="amfinder-vertical" id="">
+		<h1>lnk &amp; Toner Search</h1>
+		<div class="formmaxban"> 
+			<div class="dropdown-title">Brand</div>
+			<div class="dropdown-element"> 			
+				<select placeholder="Printer Brand " name="finder[1]" id="finder1" style="width:150px" onchange="optionChange('finder1')">
+					<option value="0"> Printer Brand</option> 
+					<?php foreach($catelist as $key => $value): ?>
+						<option value="<?php echo $key ?>"><?php echo $value ?></option> 
+					<?php endforeach; ?>
+				</select> 
+			</div>
+			
+			<div class="dropdown-title">Series</div>
+			<div class="dropdown-element"> 
+				<select placeholder="Printer Series " name="finder[2]" id="finder-1--2" style="width:150px"> 
+					 
+				</select> 
+			</div>
+			
+			<div class="dropdown-title">Model</div>
+			<div class="dropdown-element"> 
+				<select placeholder="Printer Model" name="finder[3]" id="finder-1--3" style="width:150px"> 
+					<option value="0" label="Printer Model">Printer Model</option><
+					option value="15" label="ModelX">ModelX</option>
+				</select> 
+			</div>
+ 			
+		</div>	
+	</div>	
+</form>	
+
+
+<script type="text/javascript">
+	
+	function optionChange(value)
+		{
+			//if(value=='finder1')
+				
+			var optionvalue = jQuery(value + "option:selected").val();
+			alert(optionvalue); 
+			
+		}
+	
+	
+	jQuery(document).ready(function()		
+	{
+		
+		
+		
+		jQuery( ".target" ).change(function() {
+  			alert( "Handler for .change() called." );
+		});
+		
+		/*
+		jQuery('#loading-image').hide();
+		jQuery('.left_contain ul li:first-child a').trigger('click');
+		jQuery('.left_contain ul li a').on('click', function()
+			{						
+			jQuery('.left_contain ul li a').removeClass("active");
+			jQuery(this).addClass("active");
+			var head_name = jQuery(this).text(); 
+			jQuery('.right_contain p').html(head_name);
+			var value = jQuery(this).attr("value");
+			var cat_value = "8";
+			//alert(value);							
+			jQuery('#loading-image').show();
+			jQuery.ajax({
+				type: 'POST',
+				url: "http://r.123refills.com/brandfilter/index/index/",
+				data: ({id : value , cat_id : cat_value}),
+				success: function(res){
+					console.log(res);
+					jQuery('.right_contain ul ').html(res);
+				},
+				complete: function(){
+					jQuery('#loading-image').hide();
+				}
+			});  
+		}); */
+	});
+</script>
+
+

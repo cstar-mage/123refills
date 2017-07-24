@@ -1,0 +1,711 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * @category   Mage
+ * @package    Mage_Quotes
+ * @copyright  Copyright (c) 2004-2007 Irubin Consulting Inc. DBA Varien (http://www.varien.com)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ */
+-->
+<config>
+	<!-- <tabs>
+        <uploadtool translate="label" module="uploadtool">
+            <label>Diamond Extensions</label>
+            <sort_order>100</sort_order>
+        </uploadtool>
+    </tabs> -->
+    <sections>
+        <uploadtool translate="label" module="uploadtool">
+            <label>Diamond Config</label>
+            <tab>jewelerslink</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+				<email translate="label">
+                    <label>Diamond Request Form Email Options</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>50</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <recipient_email translate="label">
+                            <label>Admin Email</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-email</validate>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </recipient_email>
+                        <bcc_email translate="label">
+                            <label>Bcc Email</label>
+                            <frontend_type>text</frontend_type>
+                            <validate>validate-email</validate>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </bcc_email>
+                        <sender_email_identity translate="label">
+                            <label>Email Sender</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_identity</source_model>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </sender_email_identity>
+                        <email_template translate="label">
+                            <label>Email Template (Admin)</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_template>
+                        <email_template_user translate="label">
+                            <label>Email Template (User)</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_email_template</source_model>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </email_template_user>
+                    </fields>
+                </email>
+                
+                <allowtabs translate="label">
+                
+                    <label>Allow/Disallow tabs on Manage Diamonds</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>51</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+	                	<enabled_jewelerslink translate="label">
+	                        <label>Enable Jewelerslink: </label>
+	                        <comment>Display Jewelerslink Tab</comment>
+	                        <frontend_type>select</frontend_type>
+	                        <sort_order>10</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                    </enabled_jewelerslink>
+	                    
+	                    <enabled_rapnet translate="label">
+	                        <label>Enable Rapnet</label>
+	                        <comment>Display Rapnet Tab</comment>
+	                        <frontend_type>select</frontend_type>
+	                        <sort_order>20</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                    </enabled_rapnet>
+	                    
+	                    <enabled_polygon translate="label">
+	                        <label>Enable Polygon</label>
+	                        <comment>Display Polygon Tab</comment>
+	                        <frontend_type>select</frontend_type>
+	                        <sort_order>30</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                    </enabled_polygon>
+	                    
+	                    <enabled_google translate="label">
+	                        <label>Enable Google: </label>
+	                        <comment>Display Google Tab</comment>
+	                        <frontend_type>select</frontend_type>
+	                        <sort_order>40</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                    </enabled_google>
+	                    
+	                    <enabled_custom translate="label">
+	                        <label>Enable Custom</label>
+	                        <comment>Display Custom Tab</comment>
+	                        <frontend_type>select</frontend_type>
+	                        <sort_order>50</sort_order>
+	                        <show_in_default>1</show_in_default>
+	                        <show_in_website>1</show_in_website>
+	                        <show_in_store>1</show_in_store>
+	                        <source_model>adminhtml/system_config_source_yesno</source_model>
+	                    </enabled_custom>
+	                    
+                    </fields>
+                </allowtabs>
+				
+				<!-- No need to display in config, just add the possibilities to config.xml -->
+				<!-- <csv_title_possibilities translate="label">
+                    <label>All Possible CSV header titles while Importing (Comma Separated)</label>
+                    <sort_order>100</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <fields>         
+                        <lotno translate="label">
+                            <label>Lot Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>1</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lotno>
+                        <owner translate="label">
+                            <label>Owner</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </owner>
+						<shape translate="label">
+                            <label>Shape</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>3</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shape>
+						<carat translate="label">
+                            <label>Carat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </carat>
+						<color translate="label">
+                            <label>Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>5</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </color>
+						<clarity translate="label">
+                            <label>Clarity</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>6</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </clarity>
+						<cut translate="label">
+                            <label>Cut</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>7</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cut>
+						<culet translate="label">
+                            <label>Culet</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>8</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </culet>
+						<crown translate="label">
+                            <label>Crown</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>9</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </crown>
+						<pavilion translate="label">
+                            <label>Pavilion</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </pavilion>
+						<dimensions translate="label">
+                            <label>Dimensions</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>11</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </dimensions>
+                        <m1 translate="label">
+                            <label>Measure 1</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>12</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </m1>
+                        <m2 translate="label">
+                            <label>Measure 2</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>13</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </m2>
+                        <m3 translate="label">
+                            <label>Measure 3</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>14</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </m3>
+						<depth translate="label">
+                            <label>Depth</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>15</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </depth>
+						<tabl translate="label">
+                            <label>Tabl</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>16</sort_order>
+							<value></value>
+                            <show_in_default>14</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </tabl>
+						<polish translate="label">
+                            <label>Polish</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>17</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </polish>
+						<symmetry translate="label">
+                            <label>Symmetry</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>19</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </symmetry>
+						<fluorescence translate="label">
+                            <label>Fluorescence</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>20</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fluorescence>
+						<fluorescence_intensity translate="label">
+                            <label>Fluorescence Intensity</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>21</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fluorescence_intensity>
+						<girdle translate="label">
+                            <label>Girdle</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>22</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </girdle>
+						<girdle_thin translate="label">
+                            <label>Girdle Thin</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>23</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </girdle_thin>
+						<girdle_thik translate="label">
+                            <label>Girdle Thik</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>24</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </girdle_thik>
+						<fancycolor translate="label">
+                            <label>Fancy Color</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>26</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fancycolor>
+						<fancy_intensity translate="label">
+                            <label>Fancy Intensity</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>27</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fancy_intensity>
+						<fancy_overtone translate="label">
+                            <label>Fancy Overtone</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>28</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </fancy_overtone>
+						<price_per_carat translate="label">
+                            <label>Price per Carat</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>29</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </price_per_carat>
+						<cash_price translate="label">
+                            <label>Cash Price</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>29</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cash_price>
+						<rap_price translate="label">
+                            <label>Rapnet Price</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>29</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rap_price>
+						<rap_discount translate="label">
+                            <label>Rapnet Discount</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>29</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </rap_discount>
+						<totalprice translate="label">
+                            <label>Total Price</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>30</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </totalprice>
+						<lab translate="label">
+                            <label>Certificate / Lab</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>31</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </lab>
+                        <labratory_comments translate="label">
+                            <label>Cert Comments</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>31</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </labratory_comments>
+						<number_stones translate="label">
+                            <label>Number of Stones</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>32</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </number_stones>
+						<cert_number translate="label">
+                            <label>Cert Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>33</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </cert_number>
+						<stock_number translate="label">
+                            <label>Stock Number(Vendor)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>34</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </stock_number>
+						<make translate="label">
+                            <label>Make</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>35</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </make>
+						<city translate="label">
+                            <label>City</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>36</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </city>
+						<state translate="label">
+                            <label>State</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>37</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </state>
+						<country translate="label">
+                            <label>Country</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>38</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </country>
+						<image translate="label">
+                            <label>Cert Image</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>39</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </image>
+                        <availability translate="label">
+                            <label>Availability</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </availability>
+                        
+                        <clarity_char translate="label">
+                            <label>Clarity Characteristics</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </clarity_char>
+                        
+                        <inscription translate="label">
+                            <label>Inscription</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>41</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </inscription>
+                        <treatment translate="label">
+                            <label>Treatment</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>42</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </treatment>
+                        <key_to_symbols translate="label">
+                            <label>Key To Symbols</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>43</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </key_to_symbols>
+                       <shape_image translate="label">
+                            <label>Shape Image Url</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>44</sort_order>
+							<value></value>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                        </shape_image>
+                       
+					</fields>
+				</csv_title_possibilities> -->
+            </groups>
+        </uploadtool>
+        
+        <cronjobs>
+        	<groups>
+                <uploadtool translate="label">
+                    <label>Jewelerslink Diamond Import Crons</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>5</sort_order>
+                    <show_in_default>1</show_in_default>
+		            <show_in_website>0</show_in_website>
+		            <show_in_store>0</show_in_store>
+                    <fields>
+                    	<enabled_import translate="label">
+                            <label>Enable Diamond Import Cron</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled_import>
+                        <cron_expr_import translate="label">
+                            <label>Cron Expression (Diamond Import)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+				            <show_in_website>0</show_in_website>
+				            <show_in_store>0</show_in_store>
+                        </cron_expr_import>
+                        
+                        <enabled_sendreport translate="label">
+                            <label>Enable Send Report Cron</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>3</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled_sendreport>
+                        <cron_expr_sendreport translate="label">
+                            <label>Cron Expression (Send Report)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>4</sort_order>
+                            <show_in_default>1</show_in_default>
+				            <show_in_website>0</show_in_website>
+				            <show_in_store>0</show_in_store>
+                        </cron_expr_sendreport>
+                        
+                    </fields>
+                </uploadtool>
+                
+                <uploadtool_rapnet translate="label">
+                    <label>Rapnet Diamond Import Crons</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+		            <show_in_website>0</show_in_website>
+		            <show_in_store>0</show_in_store>
+                    <fields>
+                    	<enabled_import translate="label">
+                            <label>Enable Rapnet Import Cron</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled_import>
+                        <cron_expr_import translate="label">
+                            <label>Cron Expression (Rapnet Import)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+				            <show_in_website>0</show_in_website>
+				            <show_in_store>0</show_in_store>
+                        </cron_expr_import>
+
+                    </fields>
+                </uploadtool_rapnet>
+                
+                <uploadtool_polygon translate="label">
+                    <label>Polygon Diamond Import Crons</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>11</sort_order>
+                    <show_in_default>1</show_in_default>
+		            <show_in_website>0</show_in_website>
+		            <show_in_store>0</show_in_store>
+                    <fields>
+                    	<enabled_import translate="label">
+                            <label>Enable Polygon Import Cron</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>1</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </enabled_import>
+                        <cron_expr_import translate="label">
+                            <label>Cron Expression (Polygon Import)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>2</sort_order>
+                            <show_in_default>1</show_in_default>
+				            <show_in_website>0</show_in_website>
+				            <show_in_store>0</show_in_store>
+                        </cron_expr_import>
+
+                    </fields>
+                </uploadtool_polygon>
+                
+        	</groups>
+        </cronjobs>
+        
+    </sections>
+</config>

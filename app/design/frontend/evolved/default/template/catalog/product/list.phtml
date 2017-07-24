@@ -1,0 +1,408 @@
+
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list template
+ *
+ * @see Mage_Catalog_Block_Product_List
+ */
+/* @var $this Mage_Catalog_Block_Product_List */
+?>
+<script>
+jQuery(document).ready(function(){
+	jQuery(".category-products #two").click(function(){
+		jQuery(".products-grid li .product-image img").css("display","none");
+		jQuery(".products-grid li .product-image img.product_row_2").css("display","block");
+		jQuery(".products-grid li").css("width","45.864%");
+		jQuery(".products-grid > li:nth-child(3n+1)").css("clear","none").css("margin-right","3.7037%");
+		jQuery(".products-grid > li:nth-child(3n+3)").css("margin-right","3.7037%");
+		
+	});
+	jQuery(".category-products #three").click(function(){
+		jQuery(".products-grid li .product-image img").css("display","none");
+		jQuery(".products-grid li .product-image img.product_row_3").css("display","block");
+		jQuery(".products-grid li").css("width","30.864%");
+		jQuery(".products-grid > li:nth-child(2n+2),.products-grid > li:nth-child(4n+4)").css("margin-right","3.7037%");
+		jQuery(".products-grid > li:nth-child(3n+3)").css("margin-right","0");
+		
+	});
+	jQuery(".category-products #four").click(function(){
+		jQuery(".products-grid li .product-image img").css("display","none");
+		jQuery(".products-grid li .product-image img.product_row_4").css("display","block");
+		jQuery(".products-grid li").css("width","21.864%").css("clear","none");
+		jQuery(".products-grid > li:nth-child(3n+3),.products-grid > li:nth-child(2n+2)").css("margin-right","3.7037%");
+		jQuery(".products-grid > li:nth-child(4n+4)").css("margin-right","0");
+		
+	});
+});
+</script>
+
+<?php
+	//$theme = $this->getLayout()->createBlock('evolved/evolved')->getConfig();	
+	$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+	if(method_exists($evolvedmethod, 'getBlockConfig'))
+	{
+		$evolved_form_productlist_productlist = $evolvedmethod->getBlockConfig('evolved_form_productlist_productlist');
+		$theme = array_merge($evolved_form_productlist_productlist);
+	}
+	if(count($theme) == 0){ $theme = Mage::helper('evolved')->getThemeConfig(); }
+	
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+	
+	
+?>
+<?php if(!$_productCollection->count()): ?>
+<p class="note-msg"><?php echo $this->__('There are no products matching the selection.') ?></p>
+<?php else: ?>
+
+<?php $categoryMatched = Mage::getModel('catalogsearch/layer')->checkIfCategoryQueryMatch(); ?>
+<?php $productImageUrl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA)."catalog/product"; ?>
+<div class="category-products">
+
+    <?php echo $this->getToolbarHtml() ?>
+    
+    <?php if($categoryMatched && count($_productCollection) > 0): //this is only for category search ?>
+	<?php 
+	//Task: http://production.idealbrandmarketing.com/task_detail.php?ti=14135
+	//If user searches for printer brand name it should show the grouped printer products for that printer brand. Right now it goes straight to products.
+	$groupCollection = $_productCollection;
+	?>
+	<div class="grouped-search">
+		<ul>
+		<?php foreach ($groupCollection as $grouped): ?>
+			<?php 
+				$product = Mage::getModel('catalog/product')->load($grouped->getId());
+				$associatedProducts = $product->getTypeInstance(true)->getAssociatedProducts($product);
+				$groupImages = array();
+				$i = 0;
+				foreach ($associatedProducts as $associated) {
+					
+					$associated = Mage::getModel('catalog/product')->load($associated->getId());
+					
+					if( strpos(strtolower($associated->getName()), 'oem') !== false ) {
+						//TASK: http://production.idealbrandmarketing.com/task_detail.php?ti=14134
+						// 1. Images for group products that show in search this way should never be OEM product if there are other products especially remanufactured cartridges.
+						continue;
+					}
+					if($associated->getCartId() && $associated->getCartId() != '') {
+						$cartridgesImages[] = array(
+									//'image'=>$associated->getData('image_link'),
+									'image'=>$productImageUrl.$associated->getData('small_image'),
+									'url'=>$associated->getProductUrl(),
+									'name'=>$associated->getName()
+								);
+					} else {
+						$otherImages[] = array(
+								//'image'=>$associated->getData('image_link'),
+								'image'=>$productImageUrl.$associated->getData('small_image'),
+								'url'=>$associated->getProductUrl(),
+								'name'=>$associated->getName()
+						);
+					}
+					
+					
+					$i++;
+				}
+			?>
+	        <li class="search_list_item item printer">
+	                    <div class="product-image-box">
+	                    	<?php 
+	                    	$firstImage = "";
+	                    	$categoryIds = $product->getCategoryIds();
+	                    	if(count($categoryIds) ){
+	                    		$categoryId = end($categoryIds);
+	                    		$_category = Mage::getModel('catalog/category')->load($categoryId);
+	                    		if($_category->getThumbnail() && $_category->getThumbnail() != "") {
+	                    			$firstImage = Mage::getBaseUrl('media').'catalog/category/'.$_category->getThumbnail();
+	                    		}
+	                    	}
+	                    	
+	                    	if(!$firstImage) {
+	                    		$firstImage = $cartridgesImages[0]['image'];
+	                    	}
+	                    	?>
+	                        <a href="<?php echo $product->getProductUrl() ?>" title="" class="product-image">
+	                            <img class="catlist_product_image" src="<?php echo $firstImage ?>" alt="" width="141" height="auto">
+	                         </a>
+	                        <p class="sku"></p>
+	                    </div>
+	                    <div class="product-content">
+	                        <div class="info printer product-shop">
+	                            <?php 
+	                            $printerBrand = $product->getAttributeText('printer_brand');
+	                            $groupTitle = $product->getName();
+	                            if( strpos( $product->getName(), '/' ) !== false ) {
+	                            	$explodeName = explode('/',$groupTitle);
+	                            	$groupTitle = $explodeName[count($explodeName)-1]; // get name after last slash
+	                            }
+	                            $groupNameFinal = $printerBrand . " " . $groupTitle;
+	                            ?>
+	                            <h3 class="product-name">
+	                               <a href="<?php echo $product->getProductUrl() ?>" title="<?php echo $groupNameFinal ?>"><?php echo $groupNameFinal ?></a>
+	                            </h3>
+	                           
+	                        </div>
+	                        <div class="top-products">
+	                        	<?php $j = 0; foreach ($cartridgesImages as $groupImage): ?>
+	                        		<?php //if($j == 0) { $j++; continue; } // skip first one for repeat image ?>
+	                        		<?php if($j == 5) break; // limited items ?>
+		                          	<a href="<?php echo $groupImage['url'] ?>" title="<?php echo $groupImage['name'] ?>" class="product-image">
+		                          		<img style="margin-right: 10px" src="<?php echo $groupImage['image'] ?>" alt="<?php echo $groupImage['name'] ?>" width="65" height="65">
+		                          	</a>
+	                          	<?php $j++; endforeach; ?>
+	                          	
+	                          	<?php foreach ($otherImages as $groupImage): ?>
+	                          		<?php if($j == 5) break; // limited items ?>
+		                          	<a href="<?php echo $groupImage['url'] ?>" title="<?php echo $groupImage['name'] ?>" class="product-image">
+		                          		<img style="margin-right: 10px" src="<?php echo $groupImage['image'] ?>" alt="<?php echo $groupImage['name'] ?>" width="65" height="65">
+		                          	</a>
+	                          	<?php $j++; endforeach; ?>
+	                          	
+	                        </div>
+	                        <a href="<?php echo $product->getProductUrl() ?>" class="button add_to_cart"><span>Shop All Supplies</span></a>
+	                	</div>
+	                	
+	        </li>
+	       <?php endforeach; ?>
+	      </ul>
+	</div>
+    
+    <?php // List mode ?>
+    <?php elseif($this->getMode()!='grid'): ?>
+    
+    <?php $_iterator = 0; ?>
+    <ol class="products-list" id="products-list">
+    <?php foreach ($_productCollection as $_product): 
+	
+		$productimg = Mage::getModel('catalog/product')->load($_product->getId());//product id here
+foreach ($productimg->getMediaGalleryImages() as $image) {
+                     $imgURL = $image->getUrl();
+					 //echo "<pre>";print_r($image); 
+					 break;
+}  
+	
+	?>
+        <li class="item<?php if( ++$_iterator == sizeof($_productCollection) ): ?> last<?php endif; ?>">
+            <?php // Product Image ?>
+            <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName() ?>" class="product-image">
+                <?php $_imgSize = 300; ?>
+                <img id="product-collection-image-<?php echo $_product->getId(); ?>"
+                     src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->resize($_imgSize); ?>"
+                     alt="<?php echo $_product->getName() ?>" />
+                     
+                <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>" 
+                src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $image->getFile())->resize(300, 300); ?>" 
+                alt="<?php echo $_product->getName(); ?>" /><?php */?>
+            </a>
+            <?php // Product description ?>
+            <div class="product-shop">
+                <div class="f-fix">
+                    <div class="product-primary">
+                        <?php $_productNameStripped = $this->stripTags($_product->getName(), null, true); ?>
+                        <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped; ?>"><?php echo $_helper->productAttribute($_product, $_product->getName() , 'name'); ?></a></h2>
+                        
+                        <?php if($_product->getRatingSummary()): ?>
+                        <?php echo $this->getReviewsSummaryHtml($_product) ?>
+                        <?php endif; ?>
+
+                        <?php
+                            $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                            foreach($_nameAfterChildren as $_nameAfterChildName):
+                                $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                                $_nameAfterChild->setProduct($_product);
+                        ?>
+                            <?php echo $_nameAfterChild->toHtml(); ?>
+                        <?php endforeach; ?>
+                    </div>
+                    <div class="product-secondary">
+                        <?php echo $this->getPriceHtml($_product, true) ?>
+                    </div>
+                    <div class="product-secondary">
+                        <?php if($_product->isSaleable() && !$_product->canConfigure()): ?>
+                            <p class="action"><button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button></p>
+                        <?php elseif($_product->isSaleable()): ?>
+                            <p class="action"><a title="<?php echo $this->__('View Details') ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a></p>
+                        <?php else: ?>
+                            <p class="action availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                        <ul class="add-to-links">
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                    </div>
+                    <div class="desc std">
+                        <?php echo $_helper->productAttribute($_product, $_product->getShortDescription(), 'short_description') ?>
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_productNameStripped ?>" class="link-learn"><?php echo $this->__('Learn More') ?></a>
+                    </div>
+                </div>
+            </div>
+        </li>
+    <?php endforeach; ?>
+    </ol>
+    <script type="text/javascript">decorateList('products-list', 'none-recursive')</script>
+
+    <?php else: ?>
+
+    <?php // Grid Mode ?>
+
+    <?php $_collectionSize = $_productCollection->count() ?>
+    <?php $_columnCount = 3; //$this->getColumnCount(); ?>
+    <ul class="products-grid products-grid--max-<?php echo $_columnCount; ?>-col">
+        <?php $i=0; foreach ($_productCollection as $_product): 
+		
+				$productimg = Mage::getModel('catalog/product')->load($_product->getId());//product id here
+				foreach ($productimg->getMediaGalleryImages() as $image) {
+                     $imgURL = $image->getUrl();
+					 //echo "<pre>";print_r($image); 
+					 break;
+				}  
+		
+		?>
+            <?php /*if ($i++%$_columnCount==0): ?>
+            <?php endif*/ ?>
+            <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $_product->getName() ?>" class="product-image">
+                    <?php $_imgSize = 210; ?>
+                    <img id="product-collection-image-<?php echo $_product->getId(); ?>" class="product_row_2" style="display:none"
+                         src="<?php echo Mage::helper('catalog/image')->init($productimg, 'image', $productimg->getImage())->resize(350); ?>"
+                         alt="<?php echo $_product->getName() ?>" />
+
+                    <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>" class="product_row_2" style="display:none" 
+                    src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $image->getFile())->resize(350, 350); ?>" 
+                    alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" /><?php */?>
+                         
+                    <img id="product-collection-image-<?php echo $_product->getId(); ?>" class="product_row_3" 
+                         src="<?php echo Mage::helper('catalog/image')->init($productimg, 'image', $productimg->getImage())->resize(350); ?>"
+                         alt="<?php echo $_product->getName() ?>" />
+                         
+                    
+                    <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>" class="product_row_3" 
+                    src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $image->getFile())->resize(210,210); ?>" 
+                    alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" /><?php */?>     
+                    
+                    
+                    <img id="product-collection-image-<?php echo $_product->getId(); ?>" class="product_row_4" style="display:none"
+                         src="<?php echo Mage::helper('catalog/image')->init($productimg, 'image', $productimg->getImage())->resize(350); ?>"
+                         alt="<?php echo $_product->getName() ?>" />
+                         
+                    
+                    <?php /*?><img id="product-collection-image-<?php echo $_product->getId(); ?>" class="product_row_4" style="display:none" 
+                    src="<?php echo Mage::helper('catalog/image')->init($_product, 'image', $image->getFile())->resize(150, 150); ?>" 
+                    alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'image'), null, true) ?>" /><?php */?>     
+                    
+                    
+                </a>
+                <?php
+                if($theme['productlist_productlist_prodescription']=="hover")
+                { $infostyle = "hover"; }
+                elseif($theme['productlist_productlist_prodescription']=="static")
+                { $infostyle = "static"; }
+                ?>
+                <div class="product-info <?php echo $infostyle; ?>">
+					<?php
+						$pnam = $_helper->productAttribute($_product, $_product->getName(), 'name');
+						$pnamecount = strlen($pnam);
+						if($pnamecount > 100) {
+							$pnam = substr($pnam, 0, 100)."...";
+						}
+					?>      
+                    <h2 class="product-name"><a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $pnam; ?></a></h2>
+                    
+                    
+
+                    <?php
+                        $_nameAfterChildren = $this->getChild('name.after')->getSortedChildren();
+                        foreach($_nameAfterChildren as $_nameAfterChildName):
+                            $_nameAfterChild = $this->getChild('name.after')->getChild($_nameAfterChildName);
+                            $_nameAfterChild->setProduct($_product);
+                    ?>
+                        <?php echo $_nameAfterChild->toHtml(); ?>
+                    <?php endforeach; ?>
+                    <?php echo $this->getPriceHtml($_product, true) ?>
+                    
+                    <a title="<?php echo $this->__('Add to Cart') ?>" class="btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></a>
+                    
+                    <?php /* ?>
+                    <div class="sku"><span class="skulabel">sku#</span><span class="skuvalue"><?php echo $_product->getSku(); ?></span></div>
+                    <?php */ ?>
+                    <div class="actions">
+                    <?php /* ?>
+                        <?php if($_product->isSaleable() && !$_product->canConfigure()): ?>
+                            <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')"><span><span><?php echo $this->__('Add to Cart') ?></span></span></button>
+                        <?php elseif($_product->isSaleable()): ?>
+                            <a title="<?php echo $this->__('View Details') ?>" class="button" href="<?php echo $_product->getProductUrl() ?>"><?php echo $this->__('View Details') ?></a>
+                        <?php else: ?>
+                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                        <?php */ ?>
+                        <?php /* ?>
+                        <ul class="add-to-links">
+                            <?php if ($this->helper('wishlist')->isAllow()) : ?>
+                                <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><?php echo $this->__('Add to Wishlist') ?></a></li>
+                            <?php endif; ?>
+                            <?php if($_compareUrl=$this->getAddToCompareUrl($_product)): ?>
+                                <li><span class="separator">|</span> <a href="<?php echo $_compareUrl ?>" class="link-compare"><?php echo $this->__('Add to Compare') ?></a></li>
+                            <?php endif; ?>
+                        </ul>
+                        <?php */ ?>
+                    </div>
+                    
+
+                    <?php if($_product->getRatingSummary()): ?>
+                    <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                    <?php endif; ?>
+                    
+                </div>
+            </li>
+            <?php /*if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+            <?php endif*/ ?>
+        <?php endforeach ?>
+    </ul>
+    <script type="text/javascript">decorateGeneric($$('ul.products-grid'), ['odd','even','first','last'])</script>
+    <?php endif; ?>
+
+    <div class="toolbar-bottom">
+        <?php echo $this->getToolbarHtml() ?>
+    </div>
+</div>
+<?php endif; ?>
+
+<?php
+    //set product collection on after blocks
+    $_afterChildren = $this->getChild('after')->getSortedChildren();
+    foreach($_afterChildren as $_afterChildName):
+        $_afterChild = $this->getChild('after')->getChild($_afterChildName);
+        $_afterChild->setProductCollection($_productCollection);
+    ?>
+    <?php echo $_afterChild->toHtml(); ?>
+<?php endforeach; ?>

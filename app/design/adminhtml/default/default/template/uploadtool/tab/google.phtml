@@ -1,0 +1,82 @@
+<?php 
+$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+$magento_db = $resource['default_setup']['connection']['host'];
+$mdb_user = $resource['default_setup']['connection']['username'];
+$mdb_passwd = $resource['default_setup']['connection']['password'];
+$mdb_name = $resource['default_setup']['connection']['dbname'];
+
+//developm_magento
+$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+if (!$magento_connection)
+{
+	die('Unable to connect to the database');
+}
+@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+
+$table = Mage::getSingleton('core/resource')->getTableName('uploadtool_settings');
+$query = "SELECT * FROM `$table` where `field` = 'google_csv' LIMIT 1";
+
+$result = @mysql_db_query($mdb_name, $query) or die("Failed Query of ".$query);
+
+$GoogleCsv = "";
+$row = mysql_fetch_array($result);
+$GoogleCsv = $row['value'];
+
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Import From Google CSV Url</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="google" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+				        <td class="label"><label for="google_csv">Google CSV Url:</label></td>
+				    	<td class="value" colspan="2">
+				    		<ul>
+				    			<li>
+				        			<input type="text" class="input-text" value="<?php echo $GoogleCsv; ?>" name="settings[google_csv]" id="google_csv">
+				        		</li>
+					        	<li>
+				         			<button style="" onclick="editForm.submit()" class="scalable save" type="button" title="Save Url">
+				         				<span><span><span>Save Url</span></span></span>
+				         			</button>
+			         			</li>
+			         		</ul>
+				        </td>
+				    </tr>
+				    <tr>
+				    	<td class="label" colspan="3">&nbsp;</td>
+					</tr>
+					<tr>
+		        		<td class="label">
+			        		<button onclick="setLocation('<?php echo $this->getUrl("idealAdmin/uploadtool/getGoogleCsv"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Get Google CSV") ?>">
+			        			<span><span><span><?php echo $this->__("Get Google CSV") ?></span></span></span>
+			        		</button>
+		        		</td>
+		        		<td class="label">
+			        		<button onclick="setLocation('<?php echo $this->getUrl("idealAdmin/uploadtool/importGoogle"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Update RapNet Diamonds") ?>">
+			        			<span><span><span><?php echo $this->__("Import Google") ?></span></span></span>
+			        		</button>
+		        		</td>
+					
+						<td class="label">
+			        		<button onclick="setLocation('<?php echo $this->getUrl("idealAdmin/uploadtool/deleteDiamonds",array('source'=>'google')); ?>')" class="scalable delete" type="button" title="<?php echo $this->__("Delete Google Diamonds") ?>"><span><span><span><?php echo $this->__("Delete Google Diamonds") ?></span></span></span></button>
+		        		</td>
+					
+						<?php 
+						$path = Mage::getBaseDir("var") . DS ."import" . DS . "google" . DS;
+						
+						if($GoogleCsv && file_exists($path.$GoogleCsv.".csv")): ?>
+							<td class="label">
+				        		<button onclick="setLocation('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'var/import/google/'.$GoogleCsv.'.csv'; ?>')" class="scalable go" type="button" title="<?php echo $this->__("Download Google CSV") ?>"><span><span><span><?php echo $this->__("Download Google CSV") ?></span></span></span></button>
+			        		</td>
+						<?php endif; ?>
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div>

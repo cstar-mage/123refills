@@ -1,0 +1,8 @@
+===== 0.2.5 =====
+
+* Added events:
+  * ustorelocator_adminhtml_grid_prepare_columns
+  * ustorelocator_adminhtml_edit_prepare_form
+* Added cached helper->getLocation
+* Added permission for CMS > Store Locations
+* Added numbered markers

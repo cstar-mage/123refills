@@ -1,0 +1,629 @@
+ <script type="text/javascript">
+ jQuery(document).ready(function(){
+     jQuery("#inline_2").click(function() {
+			jQuery("#inline_content_2").toggle( "fast" );
+			jQuery("#inline_content_2").toggleClass("formopen");
+		});
+});
+ </script>
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Product view template
+ *
+ * @see Mage_Catalog_Block_Product_View
+ * @see Mage_Review_Block_Product_View
+ */
+?>
+<?php //$theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php 
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$evolved_form_productdetails_attribute_table_tab = $evolvedmethod->getBlockConfig('evolved_form_productdetails_attribute_table_tab');
+	$evolved_form_productdetails_attribute = $evolvedmethod->getBlockConfig('evolved_form_productdetails_attribute')['productdetails_tab_enable'];
+	$theme = array_merge($evolved_form_productdetails_attribute_table_tab);
+}
+if(count($theme) == 0){ 
+	$theme = Mage::helper('evolved')->getThemeConfig(); 
+	$evolved_form_productdetails_attribute = $theme['productdetails_tab_enable'];
+}
+?>
+<?php $_helper = $this->helper('catalog/output'); ?>
+<?php $_product = $this->getProduct(); ?>
+<script type="text/javascript">
+    var optionsPrice = new Product.OptionsPrice(<?php echo $this->getJsonConfig() ?>);
+</script>
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+<span id="loading-image" style="display: none;"></span>
+<div class="product-view">
+    <div class="product-essential">
+        <form action="<?php echo $this->getSubmitUrl($_product) ?>" method="post" id="product_addtocart_form"<?php if($_product->getOptions()): ?> enctype="multipart/form-data"<?php endif; ?>>
+            <?php echo $this->getBlockHtml('formkey') ?>
+            <div class="no-display">
+                <input type="hidden" name="product" value="<?php echo $_product->getId() ?>" />
+                <input type="hidden" name="related_product" id="related-products-field" value="" />
+            </div>
+			<?php //echo "<pre>"; print_r($_product); echo "</pre>";?>
+			<?php if( $_product->getTypeId() == 'grouped' ): ?>
+				<div class="main_grouped_product_detail">
+					<h1>
+						<?php 
+						$printerType = $_product->getAttributeText('printer_type');
+						if($printerType == 'Toner') {
+							$inkText = 'laser';
+						} else { // if type = Inkjet
+							$inkText = 'ink';
+						}
+						
+						$printerBrand = $_product->getAttributeText('printer_brand');
+						$groupTitle = $_product->getName();
+						if( strpos( $_product->getName(), '/' ) !== false ) {
+							$explodeName = explode('/',$groupTitle);
+							$groupTitle = $explodeName[count($explodeName)-1]; // get name after last slash
+						}
+						$groupNameFinal = $printerBrand . " " . $groupTitle . " ". $printerType;
+						?>
+						<?php echo $groupNameFinal; ?>
+						<?php //echo $_product->getResource()->getAttribute('printer_brand')->getFrontend()->getValue($_product); ?>
+						<?php //echo $_product->getResource()->getAttribute('printer_model')->getFrontend()->getValue($_product); ?>
+					</h1>
+					<?php //Add dynamic text to grid page Task: http://production.idealbrandmarketing.com/task_detail.php?ti=13179 ?>
+					<div class="short-description groupeddesc">
+						The <?php echo $printerBrand ?> <?php echo $groupTitle; ?> <?php echo $printerType ?> Printer can accept OEM <?php echo $inkText; ?> cartridges or remanufactured / compatible <?php echo $inkText; ?> cartridges. 
+						Our replacement <?php echo $printerBrand ?> <?php echo $groupTitle; ?> <?php echo $inkText; ?> cartridges and <?php echo $inkText; ?> refills are made to the highest quality standards, with attention focused on both print quality and print yield.
+					</div>
+					 
+					<div class="tooltipmain">
+							<h3>Add to My Printers</h3>
+							<p class="i">i</p>
+							<p class="tooltip">Save this printer to “My Printers” which is an accessible tab from the top of the page to allow you to quickly find items for orders and re-orders.</p>
+						</div>
+					
+					<?php /* ?>
+					<div class="short-description">
+						<div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'description') ?></div>
+					</div>
+					<?php */ ?>
+				</div>				
+				<?php /********************  For Group Product  ****** *************  ************/?>		
+			
+				<div class="only_group_product">
+					<?php echo $this->getChildHtml('product_type_data') ?>
+				</div>
+				
+				<?php /********************  End Group Product  ****** *************  ************/?>
+				
+			<?php else: ?>				
+			
+            <div class="product-img-box">
+                <div class="product-name">
+                    <h1><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></h1>
+                </div>
+                <?php echo $this->getChildHtml('media') ?>
+				<?php /*<div class="short-description">
+					<?php echo $_product->getDescription(); ?>
+				</div>	 */ ?>
+            </div>
+			<div class="product-right">
+	            <div class="product-shop">
+	                <div class="product-name">
+	                    <span class="h1"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name') ?></span>
+	                </div>
+	                <!--<div class="product-sku">
+	                    <span class="h1"><?php //echo $_helper->productAttribute($_product, $_product->getSku(), 'sku') ?></span>
+	                </div>-->
+	                
+					<div class="stock_check">
+							<?php // Check to see if the item is in stock 
+							if($_product->stock_item->is_in_stock == 1): 
+								echo $this->__('In Stock'); ?>
+
+							<?php else:?>
+								
+									<?php echo $this->__('Out Of stock'); ?>
+							<?php endif; ?>
+					</div>
+					
+					<?php echo $this->getReviewsSummaryHtml($_product, 'default', true) ?>
+					
+					<?php $clr= $_product->getResource()->getAttribute('product_color')->getFrontend()->getValue($_product); ?>
+				<style>	
+						.product_four_part .<?php echo $clr ; ?>::before {
+							background: <?php echo $clr ; ?>;
+							border-radius: 16px;
+							content: "";
+							height: 0;
+							margin-right: 5px;
+							padding-left: 25px;
+							width: 0;
+						}
+				</style>		
+						
+					
+					<div class="product_four_part">
+					<div class="page_yield"><h1><?php echo $_helper->productAttribute($_product, $_product->getYield(), 'yield') ?></h1><?php echo $this->__('Page Yield'); ?></div>
+					
+					
+					<div class="color"><h1 class="round_color  <?php echo $clr ; ?> "><?php 
+						
+						echo $clr; ?></h1></div>
+					
+					<div class="shelf_life"><?php echo $this->__('Shelf Life'); ?><h1><?php 
+						$optical= $_product->getResource()->getAttribute('shelflife')->getFrontend()->getValue($_product);
+						if($optical=='No'){ echo 'N/A'; } 
+						else { echo $optical; } ?></h1></div>
+
+					</div>
+					
+					<div class="line"></div>
+					
+
+	            </div>
+	            
+	            <div class="product_left_part">	            
+	            
+	                <div class="price-info">
+	                    <?php echo $this->getPriceHtml($_product); ?> 
+	                    <?php echo $this->getChildHtml('bundle_prices') ?>
+	                    <?php echo $this->getTierPriceHtml() ?>
+	                </div>
+						
+	                <div class="extra-info">
+	                    <?php //echo $this->getReviewsSummaryHtml($_product, 'default', false)?>
+	                    <?php //echo $this->getChildHtml('product_type_availability'); ?>
+	                </div>
+	
+	                <?php echo $this->getChildHtml('alert_urls') ?>
+	                
+	                
+	
+					<div class="add-to-cart-wrapper">
+						<?php //echo $this->getChildHtml('product_type_data') ?>
+						<?php echo $this->getChildHtml('extrahint') ?>
+		
+						<?php //if (!$_product->hasOptions()):?>
+						<?php if (!$_product['has_options']): ?>
+							<div class="add-to-box">
+								<?php if($_product->isSaleable()): ?>
+									<?php echo $this->getChildHtml('addtocart') ?>
+									
+									<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/calendar/calendar.js'; ?>"></script>
+									<script type="text/javascript" src="<?php echo $this->getBaseUrl().'js/calendar/calendar-setup.js'; ?>"></script>
+									<link type="text/css" href="<?php echo $this->getBaseUrl().'js/calendar/calendar-win2k-1.css'; ?>" rel="stylesheet" ></link>
+									<link rel="stylesheet" href="<?php echo $this->getSkinUrl(); ?>css/customcontactnew/customcontactnew.css" type="text/css"> 
+		
+		<!--
+									<div class="make-apointment">
+										<a class='inline_2' id="inline_2" > Inquire about this item</a>
+									</div>
+										<div class="messages_s" style="display: none; color:#009772; ">
+											<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('messages_s')->toHtml(); ?>
+											<b style="font-size:16px">Thank You For Your Inquiry
+											We will respond to you within 24 hours.
+											</b>
+									   </div>
+									<div class="apoinmt-form" id="inline_content_2" style="display:none;" >
+										<?php // echo $this->getLayout()->createBlock('customcontactnew/customcontactnew')->setTemplate('customcontactnew/customcontact_detail.phtml')->toHtml(); ?>
+										<?php //echo $this->getLayout()->createBlock('cms/block')->setBlockId('customcontact_new')->toHtml() ?> 
+									</div>
+							-->	    
+									
+									<?php /*if( $this->helper('wishlist')->isAllow() || $_compareUrl=$this->helper('catalog/product_compare')->getAddUrl($_product)): ?>
+										<span class="or"><?php echo $this->__('OR') ?></span>
+									<?php endif;*/ ?>
+								<?php endif; ?>
+								<?php //echo $this->getChildHtml('addto') ?>
+								<?php //echo $this->getChildHtml('sharing') ?>
+							</div>
+							<?php echo $this->getChildHtml('extra_buttons') ?>
+						<?php elseif (!$_product->isSaleable()): ?>
+							<div class="add-to-box">
+								<?php //echo $this->getChildHtml('addto') ?>
+								<?php //echo $this->getChildHtml('sharing') ?>
+							</div>
+						<?php endif; ?> 
+						<?php if($theme['productdetails_tab_attribute_option'] == 'outside'): ?>
+							<div class="pro_attribute">
+								 <?php echo $this->getChildHtml('additional') ?>
+							</div>
+						<?php endif; ?>
+					</div>
+					<?php $DiscountPrice=$_product->getFinalPrice()*95/100; ?>
+					<?php $priceDiscount = Mage::getModel('sales/order')->formatPricePrecision($DiscountPrice, 2); ?>	
+					<?php $discount = $_product->getFinalPrice()-$DiscountPrice; ?>
+					<?php $discount = Mage::getModel('sales/order')->formatPricePrecision($discount, 2); ?>	
+					<?php // echo strpos(strtolower($_product->getName()), 'oem'); ?>
+					<?php if( !(strpos(strtolower($_product->getName()), 'oem') !== false) ): ?>
+						<p class="disscount">Buy 3 or more for <?php echo $priceDiscount?> each (save an extra <?php echo $discount ?> each)</p>
+					<?php endif; ?> 
+				</div>
+	
+
+	            <?php //echo $this->getChildHtml('related_products') ?>
+	            
+	            <div class="product_right_part">
+	            <?php
+	            echo $this->getLayout()->createBlock('cms/block')->setBlockId('product_detail')->toHtml(); 
+	            ?>
+	            </div>
+	
+	            <div class="clearer"></div>
+	            
+	            <?php /*if ($_product->isSaleable() && $_product['has_options']):?>
+	                <?php echo $this->getChildChildHtml('container2', '', true, true) ?>
+	            <?php endif;*/?>
+	  				
+  				
+			   <!-- <div class="product-essential product-collateral toggle-content tabs">
+			        <?php /* if ($detailedInfoGroup = $this->getChildGroup('detailed_info', 'getChildHtml')):?>
+			            <dl id="collateral-tabs" class="collateral-tabs">
+			                <?php foreach ($detailedInfoGroup as $alias => $html):?>
+			                	<?php if(($alias == "additional") && ($theme['productdetails_tab_attribute_option'] == 'outside')): ?>
+			                	<?php continue; ?>
+			                	<?php else: ?>
+			                    <dt class="tab"><span><?php echo $this->escapeHtml($this->getChildData($alias, 'title')) ?></span></dt>
+			                    <dd class="tab-container">
+			                        <div class="tab-content"><?php echo $html ?></div>
+			                    </dd>
+			                    <?php endif; ?>
+			                <?php endforeach;?>
+			            </dl>
+			        <?php endif; */ ?>
+			    </div>-->
+			    
+			     
+	        </div>
+			
+			<?php endif; ?>
+		</form>
+		
+		<?php if( $_product->getTypeId() !== 'grouped' ): ?>
+			<?php /*return; ?>
+		<?php else: */?>	
+		<div class="description-compatible-printer-container">
+			<div class="product_last_part">
+				<h1>Description</h1> 
+				<div class="short-description">
+					<div class="std"><?php echo $_helper->productAttribute($_product, nl2br($_product->getDescription()), 'description') ?></div>
+				</div>
+				<div class="sku">
+					<span>Item #:<?php echo $_product->getSku(); ?></span>
+				</div>	 
+			</div>
+		   
+			<div class="product_last_part compatible_printers">
+				<?php $modelid=$_product->getPrinterModel() ;?>	
+		 		<?php $series=$_product->getPrinterSeries() ; ?>	
+ 				<div class="contain_part11">
+ 					
+					<?php $products = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('printer_brand', array('eq' => $_product->getPrinterBrand() ))->addAttributeToFilter('printer_model', array('in' => $modelid ))->distinct(TRUE); ?>				
+					<?php //$products->addAttributeToFilter('name', array('nlike' => 'OEM%')); ?>
+					
+					
+				<?php $groupedParentsIds = Mage::getResourceSingleton('catalog/product_link')->getParentIdsByChild($_product->getId(), Mage_Catalog_Model_Product_Link::LINK_TYPE_GROUPED); ?>
+				<?php $parents = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('entity_id', array('in'=>$groupedParentsIds))->getFirstItem(); ?>			
+				<?php $parentsid=$parents->getData('entity_id'); ?>
+				<?php if($parentsid): ?>
+					<?php $parentProduct=Mage::getModel('catalog/product')->load($parentsid); ?>
+					<?php $_associatedProducts = $parentProduct->getTypeInstance(true)->getAssociatedProducts($parentProduct); ?>
+					<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>	
+				<?php endif; ?> 	
+					
+				<?php 	
+						if ($_hasAssociatedProducts) 
+						{
+	
+							foreach ($_associatedProducts as $_item) 
+							{
+								$itemModel = Mage::getModel('catalog/product')->load($_item->getId());
+								if( strpos(strtolower($itemModel->getName()), 'oem') !== false ) 
+								{
+									$oemArray[] = $itemModel;
+								} else if( ((strpos(strtolower($itemModel->getName()), 'premium') !== false) || (strpos(strtolower($itemModel->getName()), 'cartridge'))) !== false && (!(strpos(strtolower($itemModel->getName()), 'refill kit') !== false))) {
+			
+										$cartridgesArray[$itemModel->getCartId()][] = $itemModel; // groups by cartId
+			
+								} else {
+										$otherRelated[] = $itemModel;
+								}
+							}
+						}	
+					
+					
+					?>
+					
+ 					<h1>Compatible Printers</h1>
+					<?php 
+						//$parentProduct
+						if($parentsid)
+						{	
+							$cats = $parentProduct->getCategoryIds();
+							if(count($cats) >  0)
+							{	
+							//print_r($cats[0]);
+
+							$category = Mage::getModel('catalog/category')->load($cats[0]);
+
+
+							$products = Mage::getModel('catalog/product')
+								->getCollection()
+								->addAttributeToSelect('*')
+								->addAttributeToFilter('type_id', array('eq' => 'grouped'))
+								->addCategoryFilter($category)
+								->addAttributeToFilter('printer_series', array('in' => $parentProduct->getPrinterSeries() ));
+							}
+						}	
+					?>
+					<?php // echo $products->getSelect() ?>
+						<?php $count=count($products->getData()); ?>
+						<?php if($count > 0): ?>
+						<?php foreach($products as $data ): ?>
+										<?php $url=$data->getProductUrl(); ?>
+										<?php $modelArray[$url]=$data->getAttributeText('printer_model');  ?>	
+						<?php endforeach; ?>	
+					
+						<ul>
+						<?php foreach($modelArray as $key=>$data): ?>
+ 							<?php echo "<li> <a href=". $key .">" . $data ."</a></li>"; ?>
+						<?php endforeach; ?>
+						</ul>
+						<?php else: ?>
+						
+							<?php echo "No Link"; ?>
+					
+						<?php endif;?>
+					
+				</div>
+				
+					<div class="contain_part11">
+ 					<h1>Compatible Cartridges</h1>
+						<?php $modelArray=array(); ?>
+						<?php foreach ($cartridgesArray as $cartId => $_cartIdItems): ?>
+								<?php foreach ($_cartIdItems as $record):  ?>	
+											<?php  //echo $_item->getEntityId(); ?>
+											<?php /*foreach($record->getAttributeText('printer_model') as $data ): ?>
+													<?php $url=$record->getProductUrl(); ?>
+													<?php $modelArray[$url]=$data;  ?>	
+											<?php endforeach;*/ ?>	
+										<?php $url=$record->getProductUrl(); ?>
+										<?php $modelArray[$url]=$record->getSku();  ?>	
+													
+								<?php endforeach; ?>
+							<?php endforeach; ?>
+					 
+						<ul>
+						<?php $modelArrayCount1=count($modelArray); ?>
+ 					
+					
+						<?php foreach($modelArray as $key=>$data): ?>
+ 							<?php echo "<li> <a href=". $key .">" . $data ."</a></li>"; ?>
+						<?php endforeach; ?>
+ 						
+							
+									
+						<?php $modelArray=array(); ?>
+	
+						 <?php foreach ($oemArray as $cartId => $_cartIdItems): ?>
+								<?php /*foreach($cartId->getAttributeText('printer_model') as $data ): ?>
+										<?php $url=$cartId->getProductUrl(); ?>
+										<?php $modelArray[$url]=$data;  ?>	
+								<?php endforeach;*/ ?>	
+								<?php $url=$record->getProductUrl(); ?>
+								<?php $modelArray[$url]=$record->getSku();  ?>
+						<?php endforeach; ?>
+					 	
+						<?php $modelArrayCount2=count($modelArray); ?>
+					 
+						<?php foreach($modelArray as $key=>$data): ?>
+ 							<?php echo "<li> <a href=". $key .">" . $data ."</a></li>"; ?>
+						<?php endforeach; ?>
+					</ul>	
+						
+					<?php if($modelArrayCount2==0 and  $modelArrayCount1==0 ): ?>	
+							<?php echo "No Link"; ?>	
+					<?php endif; ?>	
+						 
+				</div>
+			</div>
+		<?php endif; ?>
+		 
+		
+		 <?php // echo $this->getChildHtml('related_products') ?>
+		 
+		 
+	        <script type="text/javascript">
+	        //<![CDATA[
+				
+				function addProductsMultiple()
+				{
+
+						jQuery('.customqty').remove();
+						jQuery(".only_group_product .cartridge-slider").each(function()
+						{
+				   			super_group=Array();
+				   			jQuery(this).find('.jcarousel li').each(function(){
+					 			 var productid= parseInt(jQuery(this).find(".product .pid").val());
+					  			 var qtysslide = parseInt(jQuery(this).find(" .product .detail_container .qty-wrapper .slidemobile").val());
+					  			if(qtysslide > 0 )
+					  			{
+									 $val="<input type='hidden' class='customqty'  value='" + qtysslide +"' name='super_group["+productid+"]'>"; 
+									// alert($val);
+									jQuery('#product_addtocart_form .add-to-cart').append($val); 
+					  			}
+
+								});
+
+						});
+ 
+				}
+				
+				
+	            var productAddToCartForm = new VarienForm('product_addtocart_form');
+	            productAddToCartForm.submit = function(button, url) {
+            if (this.validator.validate()) {
+                var form = this.form;
+                var oldUrl = form.action;
+ 
+                if (url) {
+                   form.action = url;
+                }
+                var e = null;
+//Start of our new ajax code
+                if(!url){
+                    url = jQuery('#product_addtocart_form').attr('action');
+                }
+				
+				addProductsMultiple();
+				
+                var data = jQuery('#product_addtocart_form').serialize();
+                data += '&isAjax=1';   
+                jQuery('#loading-image').css('display','block');
+                try {
+                    jQuery.ajax({
+                          url: url,
+                          dataType: 'json',
+                          type : 'post',
+                          data: data,
+                          success: function(data){
+                                jQuery('#loading-image').css('display','none');
+                              //alert("dd");
+							jQuery('html, body').animate({scrollTop:jQuery('.main_grouped_product_detail').offset().top-80},'slow');    
+                           //jQuery('.add-to-cart').prepend('<div class="messages error">Product has been added to your shopping cart.</div>');
+                            jQuery(".add-to-cart ul").remove(); 
+                            
+                            if(data.status == 'SUCCESS')
+                            {   
+							    jQuery('#product_addtocart_form .messages').remove();	 
+                            	jQuery('.main_grouped_product_detail').after('<ul class="messages"><li class="success-msg"><ul><li><span>' + data.message + '</span></li></ul></li></ul>');
+                            	jQuery('.header-minicart .skip-cart').remove();	
+                            	if(jQuery('.block-cart')){
+                                    jQuery('.block-cart').replaceWith(data.sidebar);
+                                }
+                                if(jQuery('.header .links')){
+                                    jQuery('.header .links').replaceWith(data.toplink);
+                                }
+								
+                            }
+    						if(data.status == 'ERROR')
+							    jQuery('#product_addtocart_form  .messages').remove();	
+                            	jQuery('.main_grouped_product_detail').after('<ul class="messages"><li class="error-msg"><ul><li><span>' + data.message + '</span></li></ul></li></ul>');
+					            //alert(data.status + ": " + data.message);
+                          }
+                    });
+                } catch (e) {
+                }
+//End of our new ajax code
+                this.form.action = oldUrl;
+                if (e) {
+                    throw e;
+                }
+            }
+        }.bind(productAddToCartForm);
+	
+	            productAddToCartForm.submitLight = function(button, url){
+	                if(this.validator) {
+	                    var nv = Validation.methods;
+	                    delete Validation.methods['required-entry'];
+	                    delete Validation.methods['validate-one-required'];
+	                    delete Validation.methods['validate-one-required-by-name'];
+	                    // Remove custom datetime validators
+	                    for (var methodName in Validation.methods) {
+	                        if (methodName.match(/^validate-datetime-.*/i)) {
+	                            delete Validation.methods[methodName];
+	                        }
+	                    }
+	
+	                    if (this.validator.validate()) {
+	                        if (url) {
+	                            this.form.action = url;
+	                        }
+	                        this.form.submit();
+	                    }
+	                    Object.extend(Validation.methods, nv);
+	                }
+	            }.bind(productAddToCartForm);
+	        //]]>
+	        </script>
+    </div>
+
+	 	<?php if($_product->getTypeId() !== 'grouped'): ?>
+		
+		<div class="custom_associated_product cartridge-slider">
+			
+			<?php $groupedParentsIds = Mage::getResourceSingleton('catalog/product_link')->getParentIdsByChild($_product->getId(), Mage_Catalog_Model_Product_Link::LINK_TYPE_GROUPED); ?>
+			<?php $parents = Mage::getModel('catalog/product')->getCollection()->addAttributeToSelect('*')->addAttributeToFilter('entity_id', array('in'=>$groupedParentsIds))->getFirstItem(); ?>			
+			<?php $parentsid=$parents->getData('entity_id'); ?>
+			<?php if($parentsid): ?>
+				<?php $parentProduct=Mage::getModel('catalog/product')->load($parentsid); ?>
+				<?php $allRelatedProductIds = $parentProduct->getTypeInstance(true)->getAssociatedProducts($parentProduct); ?>
+				<?php $model = Mage::getModel('catalog/product'); 				?>
+				<?php if(count($allRelatedProductIds) > 0): ?>
+				<h3> Related Products </h3>
+				<div class="line"></div>
+				<div class="wrapper">					
+					<div class="jcarousel-wrapper">
+						<div class="jcarousel">
+							<ul>
+								<?php foreach ($allRelatedProductIds as $related):  ?>					
+									<?php $related = $related->getId();  ?>	
+									<?php if($related==$_product->getId()) continue; ?>
+									<?php $relatedProduct = Mage::getModel('catalog/product')->load($related);  ?>
+									
+									<li>
+										<?php // echo $relatedProduct->getProductUrl();?>
+										<div class="product">
+											<div class="product_image">
+												<a href="<?php echo $relatedProduct->getProductUrl()?>">
+													<img src="<?php echo $relatedProduct->getSmallImageLink();?>">
+												</a>	
+											</div>
+											<p class="product-name">
+												<a href="<?php echo $relatedProduct->getProductUrl()?>">
+													<?php echo $relatedProduct->getName();?>
+												</a>
+											</p>
+										</div>
+									</li>	
+								<?php endforeach; ?>							
+							</ul>
+						</div>
+					</div>
+					<a href="#" class="jcarousel-control-prev"></a>
+					<a href="#" class="jcarousel-control-next"></a>
+				</div>					
+				<?php endif; ?>
+			<?php endif; ?>
+		</div>	
+		<?php endif; ?>
+
+	<?php //echo $this->getChildHtml('product_recently_viewed') ?>
+	<?php //echo $this->getChildHtml('related_products'); ?>
+    <?php echo $this->getChildHtml('upsell_products') ?>
+    <?php echo $this->getChildHtml('product_additional_data') ?>
+
+</div>

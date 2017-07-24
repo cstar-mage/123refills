@@ -1,0 +1,383 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Grouped product data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ * @see Mage_Catalog_Block_Product_View_Type_Grouped
+ */
+?>
+<?php $this->setPreconfiguredValue(); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php $_associatedProducts = $this->getAssociatedProducts(); ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<?php echo $this->getChildHtml('product_type_data_extra') ?>
+<div class="grouped-items-table-wrapper">
+    <table class="data-table grouped-items-table" id="super-product-table">
+        <col />
+        <col />
+        <col width="1" />
+        <tbody>
+        <?php if ($_hasAssociatedProducts): ?>
+		<tr>
+                <td>
+					<div class="left_side">
+						<h3>Cartridges / Printers</h3>
+				    </div>
+					<div class="right_side top">
+						<div class="first">
+							<h3>Premium Brand</h3>
+						</div>
+						<div class="second">
+							<h3>value Brand</h3>
+						</div>
+					</div>	                    
+                </td>
+		</tr>
+        <?php foreach ($_associatedProducts as $_item): ?>
+        	
+        	<?php 
+			//Task: http://production.idealbrandmarketing.com/task_detail.php?ti=11288 
+			//1. OEM cartridges will never be in the grid, they will be in a slider below the grid like in the original mock-up
+			//the 2 rows under the grid, 1 is for OEM cartridges, the other is for everything else. so refill kits, bulk ink and anything else associated with that printer would go in that second row slider.
+			 ?>
+        	<?php if(strpos(strtolower($_item->getName()), 'oem') !== false  || strpos(strtolower($_item->getName()), 'refill kit') !== false ) continue; ?>
+        	<?php if(strpos(strtolower($_item->getName()), 'cartridge') !== false ): //grid is only for cartridge ?>
+            
+            <?php $_finalPriceInclTax = $this->helper('tax')->getPrice($_item, $_item->getFinalPrice(), true) ?>
+            <tr>		
+                <td>
+					<div class="left_side">
+						<div class="image">
+							<?php if ($_item->getThumbnailLink != '') : ?>	
+							<?php //echo "yes"; ?>
+								<img class="thumbnail"
+								 src="<?php echo $_item->getThumbnailLink ?>"
+								 <?php /*src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>" */?>
+								 alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+								 title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+							<?php else: ?>
+							<?php //echo "no"; ?>
+								<img class="thumbnail"
+								 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+								 alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+								 title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+							<?php endif; ?>	 
+						</div>						
+						 
+						<div class="name">
+							<p class="name-wrapper">								
+								<?php echo $this->escapeHtml($_item->getName()) ?>						
+								
+								<div class="clearer"></div>
+								<?php $Yield =  $this->escapeHtml($_item->getYield()); ?>
+								<?php if ($Yield) : ?>
+									<strong>Page Yield - </strong><?php echo $this->escapeHtml($_item->getYield()); ?>
+								<?php endif; ?>	
+								<div class="clearer"></div>
+								<?php 
+									$name = $this->escapeHtml($_item->getName());									
+									$domain = strpos($name, 'Replacement');
+									if ($domain !== false)  : ?>
+										<strong>Replaces - </strong><?php echo $name  ?>									
+										<div class="clearer"></div>						
+									<?php endif; ?>	
+								
+								<strong>Picture - </strong><?php								
+								$_itemModel = Mage::getModel('catalog/product')->load($_item->getId());
+								echo $_itemModel->getAttributeText('printer_brand');
+								?>
+							</p>														
+						</div>
+						
+						<?php $clr= $_item->getResource()->getAttribute('product_color')->getFrontend()->getValue($_item); ?>
+							<style>	
+									.only_group_product .left_side .<?php echo $clr ; ?>::before {
+										background: <?php echo $clr ; ?>;
+										border-radius: 16px;
+										content: "";
+									    height: 25px;
+										margin: 0 auto 5px;
+										padding-left: 25px;
+										width: 25px;
+										display: block;
+									}
+							</style>
+							<div class="color">
+								<h1 class="round_color  <?php echo $clr ; ?> ">
+								<?php echo $clr; ?></h1>
+							</div>
+					</div>
+					<div class="right_side">
+					<?php
+						$string = $this->escapeHtml($_item->getSku());
+						$pos = strpos($string, "-XR");
+						/*if ($pos !== false) {
+							print "found\n";
+						} else {
+							print "Not Found!\n";
+						}*/
+					?>					
+						<div class="first mobile">
+							<h3>Premium Brand</h3>
+							<?php if ($pos !== false) {		?>
+								<strong>Item # - </strong><?php echo $this->escapeHtml($_item->getSku());?>
+								<div class="clearer"></div>	
+								<?php echo $this->escapeHtml($_item->getPrice()) ?>	
+								<?php
+								//$_itemModel = Mage::getModel('catalog/product')->load($_item->getId());
+								//if ($_product->isSaleable()): ?>
+								<div class="add-to-cart">
+									<div class="qty-wrapper">
+										<?php if ($_item->isSaleable()) : ?>
+											
+											<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+											
+											<?php /*
+											<input type="button" class="inc_dec" value="-" id="minus1" /><input type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" id="super_group_<?php echo $_item->getId(); ?>" maxlength="12" value="<?php echo  $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" /><input class="inc_dec" type="button" value="+" id="add1" />  */?>
+											
+																				
+										<?php else: ?>
+											<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+										<?php endif; ?>
+									</div>
+								</div>									
+							<?php } ?>	
+						</div>
+						<div class="second mobile">
+							<h3>Value Brand</h3>
+							<?php if ($pos == false) {		?>
+								<strong>Item # - </strong><?php echo $this->escapeHtml($_item->getSku()) ?>
+								<div class="clearer"></div>
+								<?php echo $this->escapeHtml($_item->getPrice()) ?>
+								<?php 
+								//$_itemModel = Mage::getModel('catalog/product')->load($_item->getId());							
+								//if ($_product->isSaleable()): ?>
+								<div class="add-to-cart">
+									<div class="qty-wrapper">
+										<?php if ($_item->isSaleable()) : ?>
+											
+											<input id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="<?php echo $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" />
+											
+											<?php /*
+											<input type="button" class="inc_dec" value="-" id="minus1" /><input type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" id="super_group_<?php echo $_item->getId(); ?>" maxlength="12" value="<?php echo  $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" /><input class="inc_dec" type="button" value="+" id="add1" /> */?>
+											
+											
+										<?php else: ?>
+											<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+										<?php endif; ?>
+									</div>
+								</div>	
+							<?php } ?>	
+						</div>
+					</div>					
+                </td>
+                
+                <?php /* if ($this->getCanShowProductPrice($_product)): ?>
+                <td class="a-right">
+                    <?php if ($this->getCanShowProductPrice($_item)): ?>
+                    <?php echo $this->getPriceHtml($_item, true) ?>
+                    <?php echo $this->getTierPriceHtml($_item) ?>
+                    <?php endif; ?>
+                </td>
+                <?php endif; */?>
+            </tr>
+            <?php endif; ?>
+            
+        <?php endforeach; ?>
+        <?php else: ?>
+           <tr>
+               <td colspan="<?php if ($_product->isSaleable()): ?>4<?php else : ?>3<?php endif; ?>"><?php echo $this->__('No options of this product are available.') ?></td>
+           </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">decorateTable('super-product-table')</script>
+
+
+<div class="only-bgcolor">
+	<div class="price-and-add-to-cart">
+		<ul>
+			<li>
+				<div class="image">
+					<img src=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'wysiwyg/guarantee.png';?>">
+				</div>
+				<span class="text">360 Day Guarantee <br>Lifetime for Premium Brand </span>
+			</li>
+			<li>
+				<div class="image">
+					<img src=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'wysiwyg/free_ship.png';?>">
+				</div>
+				<span class="text">Free Shipping on <br>Oreders Over $49</span>
+			</li>
+			<li class="last">		
+				<p class="action">
+					<button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+						<span><span><?php echo $this->__('Add to Cart') ?></span></span>
+					</button>
+				</p>
+			</li>	
+		</ul>	
+	</div>
+</div>
+
+
+
+<?php $_itemModel = Mage::getModel('catalog/product')->load($_item->getId()); ?>
+<div class="cartridge-slider">
+	<h3> Original Cartridges for <?php echo $_product->getAttributeText('printer_model'); ?></h3>
+<div class="line"></div>
+	<div class="wrapper">
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<?php foreach ($_associatedProducts as $_item): ?>
+						<?php if(count($_associatedProducts) > 0): ?>        	
+							<?php //echo "<pre>"; print_r($_item); echo "</pre>";exit; ?>
+							<?php 
+							//Task: http://production.idealbrandmarketing.com/task_detail.php?ti=11288 
+							//1. OEM cartridges will never be in the grid, they will be in a slider below the grid like in the original mock-up
+							 ?>
+								<?php if(strpos(strtolower($_item->getName()), 'oem') !== false): ?>
+									<li>
+										<div class="product">
+										<?php //echo "Product URL " . $_url = Mage::helper('checkout/cart')->getAddUrl($_item); ?>
+											<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">
+												<?php /*<img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" /> */?>
+												<?php if ($_item->getThumbnailLink != '') : ?>	
+												<?php //echo "yes"; ?>
+													<img class="thumbnail"
+													 src="<?php echo $_item->getThumbnailLink ?>"
+													 <?php /*src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>" */?>
+													 alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+													 title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+												<?php else: ?>
+												<?php //echo "no"; ?>
+													<img class="thumbnail"
+													 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+													 alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+													 title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+											<?php endif; ?>
+											</a>
+											
+											<p class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></p>
+
+											<div class="product-details">
+												<?php echo $this->getPriceHtml($_item, true) ?>
+												
+												<div class="add-to-cart">
+													<?php if(!$_item->isGrouped()): ?>
+													<div class="qty-wrapper">            
+														<input type="button" class="inc_dec" value="-" id="minus1" /><input type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" id="super_group_<?php echo $_item->getId(); ?>" maxlength="12" value="<?php echo  $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" /><input class="inc_dec" type="button" value="+" id="add1" /> 
+													</div>
+													<?php endif; ?>													
+												</div>												
+												<div class="clear"></div>							
+											</div>													
+									</li>
+								<?php endif; ?>
+						<?php endif; ?>			
+					<?php endforeach; ?>	
+				</ul>
+			</div>			
+		</div>
+		<a href="#" class="jcarousel-control-prev"></a>
+		<a href="#" class="jcarousel-control-next"></a>
+	</div>
+</div>
+
+
+<div class="cartridge-slider">
+	<h3> Other Related Products for <?php echo $_product->getAttributeText('printer_model'); ?></h3>
+<div class="line"></div>
+	<div class="wrapper">
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<?php foreach ($_associatedProducts as $_item): ?>
+						<?php if(count($_associatedProducts) > 0): ?>        	
+							<?php //echo "<pre>"; print_r($_item); echo "</pre>";exit; ?>
+							<?php 
+							//Task: http://production.idealbrandmarketing.com/task_detail.php?ti=11288 
+							if(strpos(strtolower($_item->getName()), 'oem') !== false  || strpos(strtolower($_item->getName()), 'cartridge') !== false ) continue;
+							 ?>
+							<li>
+								<div class="product">
+								<?php //echo "Product URL " . $_url = Mage::helper('checkout/cart')->getAddUrl($_item); ?>
+									<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">
+										<?php /*
+										<img src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->resize(150) ?>" alt="<?php echo $this->htmlEscape($_item->getName()) ?>" /> 
+										*/ ?>
+										<?php if ($_item->getThumbnailLink != '') : ?>	
+											<?php //echo "yes"; ?>
+												<img class="thumbnail"
+												 src="<?php echo $_item->getThumbnailLink ?>"
+												 <?php /*src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>" */?>
+												 alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+												 title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+											<?php else: ?>
+											<?php //echo "no"; ?>
+												<img class="thumbnail"
+												 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+												 alt="<?php echo $this->escapeHtml($this->getImageLabel()) ?>"
+												 title="<?php echo $this->escapeHtml($this->getImageLabel()); ?>" />
+										<?php endif; ?>
+									</a>
+
+									<p class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></p>
+
+									<div class="product-details">
+										<?php echo $this->getPriceHtml($_item, true) ?>
+										
+										<div class="add-to-cart">
+											<?php if(!$_item->isGrouped()): ?>
+											<div class="qty-wrapper">            
+												<input type="button" class="inc_dec" value="-" id="minus1" /><input type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" id="super_group_<?php echo $_item->getId(); ?>" maxlength="12" value="<?php echo  $_item->getQty()*1 ?>" title="<?php echo $this->__('Qty') ?>" class="input-text qty" /><input class="inc_dec" type="button" value="+" id="add1" /> 
+											</div>
+											<?php endif; ?>													
+										</div>												
+										<div class="clear"></div>							
+									</div>													
+							</li>
+								
+						<?php endif; ?>			
+					<?php endforeach; ?>	
+				</ul>
+			</div>			
+		</div>
+		<a href="#" class="jcarousel-control-prev"></a>
+		<a href="#" class="jcarousel-control-next"></a>
+	</div>
+</div>
+
+<script type="text/javascript">
+jQuery(docuemnt).ready(function(){
+		jQuery('.jcarousel').jcarousel();
+	});
+});
+</script>

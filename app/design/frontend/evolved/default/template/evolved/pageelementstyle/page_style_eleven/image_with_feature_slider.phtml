@@ -1,0 +1,78 @@
+<?php //$theme = $this->getConfig(); ?>
+<?php 
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_eleven')['homepage_element_eleven_style'])
+{
+	$evolved_homepage_element_eleven_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_eleven')['homepage_element_eleven_style']);
+	$theme = array_merge($evolved_homepage_element_eleven_content);	
+}
+else 
+{
+	$theme = $this->getConfig();
+}
+?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<div id="homepage_element_11_show_image_with_feature_slider" class="home-main homepage_element_show_image_with_feature_slider"  <?php if($theme['homepage_element_eleven_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_eleven_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="home-main feature_main">
+<div class="sldr_blck">
+ <div class="left">
+  <a href="<?php echo $theme['homepage_element_11_show_image_with_feature_slider_one_link']; ?>" title="<?php echo $theme['homepage_element_11_show_image_with_feature_slider_one_title']; ?>" >
+		<?php $html = $processor->filter($theme['homepage_element_11_show_image_with_feature_slider_one_image']); ?>
+		<?php echo nl2br($html); ?>
+ </a>
+ </div>
+ <div class="right">
+
+<?php
+$theme = Ideal_Evolved_Block_Evolved::getConfig();
+//echo "category : ".$theme['homepage_featured_category'];
+$categoryId = $theme['homepage_element_11_image_with_featured_category_id']; // a category id that you can get from admin
+$category = Mage::getModel('catalog/category')->load($categoryId);
+$products = Mage::getModel('catalog/product')
+    ->getCollection()
+    ->addCategoryFilter($category)
+    ->load();
+?>
+
+  
+ <section class="slider">
+    <div class="flexslider">
+    	<h2 class="featuretitle">featured products</h2>
+        <ul class="slides">
+		<?php foreach($products as $products): ?>
+		<?php $products = Mage::getModel('catalog/product')->load($products->getId()); ?>
+            <li>
+                <a class="product-image" title="<?php echo $products->getName(); ?>" href="<?php echo $products->getProductUrl(); ?>">
+                                       
+                                        <img src="<?php echo $this->helper('catalog/image')->init($products, 'small_image')->resize(365,335) ?>"
+                </a>
+                <div class="product-info" style="min-height: 138px;">
+                    <h2 class="product-name"><a title="<?php echo $products->getName(); ?>" href="<?php echo $products->getProductUrl(); ?>"><?php echo $products->getName(); ?></a></h2>
+					<div class="product-desc"><?php echo $products->getShortDescription(); ?></div>
+				</div>
+            </li>
+			<?php endforeach; ?>
+        </ul>
+    </div>
+</section>
+<script type="text/javascript">
+	/*jQuery(function(){
+      SyntaxHighlighter.all();
+    });*/
+	jQuery(window).load(function(){
+		
+		jQuery('#homepage_element_11_show_image_with_feature_slider .flexslider').flexslider({
+        animation: "slide",
+        start: function(slider){
+        	jQuery('body').removeClass('loading');
+        	jQuery(window).resize();
+        }
+      });
+    });
+  </script>
+   </div>
+</div>
+</div>
+</div>

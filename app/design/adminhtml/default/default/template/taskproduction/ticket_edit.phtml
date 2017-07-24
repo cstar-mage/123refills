@@ -1,0 +1,110 @@
+<style>
+.taskproduction_edit_ticket_main h3.head-adminhtml-taskproduction { text-transform: uppercase; }
+.taskproduction_edit_ticket_main #taskproduction_fieldset #reply_comment_box { width: 312px; height: 200px; margin-bottom: 5px; }
+.taskproduction_edit_ticket_main #taskproduction_fieldset .status_box { margin-bottom: 5px; }
+.taskproduction_edit_ticket_main #taskproduction_fieldset .attachment { margin-bottom: 10px; }
+.taskproduction_edit_ticket_main .ticketnote_list { width: 100%;}
+.taskproduction_edit_ticket_main .ticketnote_list tr.odd { background: #fafafa; }
+.taskproduction_edit_ticket_main .ticketnote_list tr td { padding: 25px; }
+.taskproduction_edit_ticket_main .ticketnote_list .depertment_img { width: 70px; }
+.taskproduction_edit_ticket_main .ticketnote_list .depertment_name { width: 150px; }
+.taskproduction_edit_ticket_main .right { float: left; margin-left: 30px; }
+.taskproduction_edit_ticket_main .right .ticketnote_list td span.name { text-transform: capitalize; margin-bottom: 5px; display: block; }
+</style>
+<?php 
+$id = Mage::app()->getRequest()->getParam('task_id');
+
+$chtickettitle = curl_init();
+curl_setopt($chtickettitle, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($chtickettitle, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($chtickettitle, CURLOPT_POSTFIELDS, 'task_id='.$id.'&siteurl='.str_replace("www.","",$_SERVER['HTTP_HOST']));
+curl_setopt($chtickettitle, CURLOPT_URL,'http://production.idealbrandmarketing.com/magento/tasklist.php');
+$resulttickettitle=curl_exec($chtickettitle);
+curl_close($chtickettitle);
+
+
+$ch = curl_init();
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+curl_setopt($ch, CURLOPT_URL,'http://production.idealbrandmarketing.com/magento/task_status_list.php');
+$result=curl_exec($ch);
+curl_close($ch);
+
+?>
+<div class="taskproduction_edit_ticket_main">
+	<div class="content-header">
+		<h3 class="icon-head head-adminhtml-taskproduction">Ticket #<?php echo $id.'-'.json_decode($resulttickettitle, true)[0]['task_title']; ?></h3>
+	</div>
+	<div class="left">
+		<div class="entry-edit">
+			<div class="entry-edit-head taskproduction_open" style="margin: 2px 0px; cursor: pointer;">
+		    	<h4 class="icon-head head-edit-form fieldset-legend">Reply</h4>
+		    	<div class="form-buttons"></div>
+			</div>
+				<div class="fieldset " id="taskproduction_fieldset" style="display: block; margin-top: -2px;">
+		    		<div class="hor-scroll">
+		    			<form id="edit_reply_ticket_note_form" action="<?php echo $this->getUrl('*/*/editinsertClientReply', array('task_id' => $this->getRequest()->getParam('id'))); ?>" method="post" enctype="multipart/form-data">
+		    			    	<div><input name="form_key" type="hidden" value="<?php echo Mage::getSingleton('core/session')->getFormKey() ?>" /></div>
+		    			    	<input name="task_id" type="hidden" value="<?php echo $id; ?>" />
+		    			    	<textarea id="reply_comment_box" name="reply_comment_box"></textarea>
+				    			<div class="status_box">
+				    				<label for="status">Status: </label>
+				    				<select id="status_opt" name="status_box">
+				    					<option value="">Please Select</option>
+				    					<?php foreach(json_decode($result, true) as $statuskey => $statusvalue): ?>
+			    							<option value=<?php echo $statusvalue; ?>><?php echo $statusvalue; ?></option>
+			    					<?php endforeach; ?>
+			    				</select>
+			    				</div>
+				    			<div class="attachment">
+				    				<label for="attachment">Attachment: </label><br />
+				    				<input type="file" name="comment_img_box[]" id="comment_img_box[]" />
+				    			</div>
+				    			<div class="button_box">
+					    			<button id="submit" title="Add Reply" type="submit" class="scalable" style="" ><span><span><span>Add Reply</span></span></span></button>
+				    			</div>
+				    	</form>
+		 	   		</div>
+	    		</div>
+    	</div>
+    </div>
+    <?php 
+	    $chedittask = curl_init();
+	    curl_setopt($chedittask, CURLOPT_SSL_VERIFYPEER, false);
+	    curl_setopt($chedittask, CURLOPT_RETURNTRANSFER, true);
+	    curl_setopt($chedittask, CURLOPT_POSTFIELDS, 'task_id='.$id."&siteurl=".str_replace("www.","",$_SERVER['HTTP_HOST']));
+	    curl_setopt($chedittask, CURLOPT_URL,'http://production.idealbrandmarketing.com/magento/taskcomment.php');
+	    $resultedittask=curl_exec($chedittask);
+	    curl_close($chedittask);
+	    
+	    
+	    $chuserlist = curl_init();
+	    curl_setopt($chuserlist, CURLOPT_SSL_VERIFYPEER, false);
+	    curl_setopt($chuserlist, CURLOPT_RETURNTRANSFER, true);
+	    curl_setopt($chuserlist, CURLOPT_URL,'http://production.idealbrandmarketing.com/magento/userlist.php');
+	    $resultuserlist=curl_exec($chuserlist);
+	    curl_close($chuserlist);
+    ?>
+   	<div class="right">
+   		<table class="ticketnote_list">
+   			<tbody>
+   				<?php $count = 1; foreach(json_decode($resultedittask, true) as $resultedittaskkey => $resultedittaskvalue): ?>
+   				<tr class="<?php echo (($count%2)==0) ? 'even' : 'odd'; ?>">
+   					<td class="depertment_img"></td>
+   					<td class="depertment_name"><span class="name"><?php echo ($resultedittaskvalue['user_author'] != 0) ? json_decode($resultuserlist, true)[$resultedittaskvalue['user_author']] : 'success'; ?></span><span class="note_date"><?php echo $resultedittaskvalue['note_date_created']; ?></span></td>
+   					<td class="depertment_note">
+   						<span class="note"><?php echo $resultedittaskvalue['notes']; ?></span>
+   						<?php if($resultedittaskvalue['note_image']): ?>
+   								<span class="note_img">
+   								<?php foreach(unserialize($resultedittaskvalue['note_image']) as $note_image_all): ?>
+	   								<br /><a href="http://production.idealbrandmarketing.com/uploads/task_notes/<?php echo $resultedittaskvalue['task_id']; ?>/<?php echo $note_image_all; ?>" target="_blank"><img src="http://production.idealbrandmarketing.com/uploads/task_notes/<?php echo $resultedittaskvalue['task_id']; ?>/<?php echo $note_image_all; ?>" style="max-width:250px; " /></a>
+   								<?php endforeach; ?>
+   								</span>
+   						<?php endif; ?>
+   					</td>
+   				</tr>
+   			    <?php $count++; endforeach; ?>
+   			</tbody>
+   		</table>
+   	</div>
+</div>

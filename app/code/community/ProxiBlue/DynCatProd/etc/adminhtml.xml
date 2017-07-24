@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<config>
+    <acl>
+        <resources>
+            <admin>
+                <children>
+                    <system>
+                        <children>
+                            <config>
+                                <children>
+                                    <dyncatprod translate="title" module="dyncatprod">
+                                        <title>Dynamic Category Products</title>
+                                    </dyncatprod>
+                                </children>
+                            </config>
+                            <tools>
+                                <children>
+                                    <dyncatprod translate="title" module="dyncatprod">
+                                        <title>ProxiBlue Config Generator</title>
+                                        <children>
+                                            <rebuild translate="title" module="dyncatprod">
+                                                <title>Scheduled Rebuild List</title>
+                                            </rebuild>
+                                        </children>
+                                    </dyncatprod>
+                                </children>
+                            </tools>
+                        </children>
+                    </system>
+                </children>
+            </admin>
+        </resources>
+    </acl>
+    <menu>
+        <system>
+            <children>
+                <tools>
+                    <children>
+                        <dyncatprod>
+                            <title>Dynamic Category Rebuild Queues</title>
+                            <sort_order>9999</sort_order>
+                            <children>
+                                <rebuild translate="title">
+                                    <title>Product Attributes Queue</title>
+                                    <action>adminhtml/tools_info/type/view/rebuild</action>
+                                    <sort_order>9999</sort_order>
+                                </rebuild>
+                                <delaybuild translate="title">
+                                    <title>Delayed Category Queue</title>
+                                    <action>adminhtml/tools_info/type/view/delaybuild</action>
+                                    <sort_order>9999</sort_order>
+                                </delaybuild>
+                            </children>
+                        </dyncatprod>
+                    </children>
+                </tools>
+            </children>
+        </system>
+    </menu>
+</config>

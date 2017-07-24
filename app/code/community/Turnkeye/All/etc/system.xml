@@ -1,0 +1,50 @@
+<?xml version="1.0"?>
+<config>
+    <tabs>
+        <turnkeye_all translate="label" module="turnkeye_all">
+            <label>TurnkeyE Extensions</label>
+            <sort_order>350</sort_order>
+        </turnkeye_all>
+    </tabs>
+	<sections>
+		<turnkeye_all module="turnkeye_all">
+			<label>Information</label>
+			<tab>turnkeye_all</tab>
+            <class>turnkey-all-tab</class>
+			<frontend_type>text</frontend_type>
+			<sort_order>1000000</sort_order>
+			<show_in_default>1</show_in_default>
+			<show_in_website>1</show_in_website>
+			<show_in_store>0</show_in_store>
+			<groups>
+				<info>
+					<label>About</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>20</sort_order>
+                    <frontend_model>turnkeye_all/system_config_form_fieldset_about</frontend_model>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+                </info>
+				<modules>
+					<label>Installed Extensions</label>
+					<frontend_type>text</frontend_type>
+					<sort_order>30</sort_order>
+                    <frontend_model>turnkeye_all/system_config_form_fieldset_modules</frontend_model>
+					<show_in_default>1</show_in_default>
+					<show_in_website>0</show_in_website>
+					<show_in_store>0</show_in_store>
+                </modules>
+                <support>
+                    <label>Troubleshooting</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <frontend_model>turnkeye_all/system_config_form_fieldset_support</frontend_model>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>0</show_in_website>
+                    <show_in_store>0</show_in_store>
+                </support>
+            </groups>
+        </turnkeye_all>
+    </sections>
+</config>

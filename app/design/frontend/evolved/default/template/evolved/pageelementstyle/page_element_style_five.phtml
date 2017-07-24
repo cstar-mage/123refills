@@ -1,0 +1,708 @@
+<?php //$theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+<?php 
+
+/* $theme = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five');
+if(count($theme) == 0) {
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+} */
+
+$SQL="SELECT * FROM `evolved` WHERE `value` IS NOT NULL AND `type` IN ('evolved_homepage_element_five')";
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+$results = $write->fetchAll($SQL);
+$theme = array();
+
+foreach($results as $row){
+	$theme[$row['field']] = $row['value'];
+}
+
+if(count($theme) == 0) {
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+}
+
+$selectElement = $theme['homepage_element_five_style'];
+$selectElement_width = $theme['homepage_element_five_width_after'];
+
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+<script>
+jQuery(document).ready(function(){
+	
+	var elewidth = '<?php echo $selectElement_width; ?>';	
+	//var elewidth_enabled = '<?php //echo $selectElement_width_enabled; ?>' 
+	
+	if ( elewidth != "" || elewidth != 'undefined'){
+	jQuery(window).resize(function(){
+		var winwidth = jQuery( window ).width(); 
+		//alert(elewidth);
+		//alert(winwidth);
+		if ( elewidth == winwidth) //500=500
+		{ 
+		jQuery('#homepage_element_five_width_after').css("display","none");
+		}
+		if ( elewidth > winwidth) { //500>400	
+			var remwidth = '1'; 
+			
+			//if ( remwidth == elewidth_enabled){
+				 //jQuery('#homepage_element_five_width_after').css("display","block"); //}
+			//if ( remwidth != elewidth_enabled) {
+				jQuery('#homepage_element_five_width_after').css("display","none");
+				// }
+		}
+		if ( elewidth < winwidth) { //500<600
+			 	var remwidth = '0'; 
+				//if ( remwidth != elewidth_enabled) 				{
+					 //jQuery('#homepage_element_five_width_after').css("display","none");
+					 // }
+			//if ( remwidth == elewidth_enabled) {
+				 jQuery('#homepage_element_five_width_after').css("display","block"); 
+			//}
+			
+		}
+	});
+	}
+	
+	});
+</script>
+
+<div id="homepage_element_five_width_after">
+
+<?php if($selectElement == "homepage_element_5_1920_by_480_banner"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<div class="home-main-full-banner" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_one">
+		<div class="desktop">
+			<?php $homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_one_style_image']);?>
+			<?php if($theme['homepage_element_5_one_style_link']): ?>
+				<a target="<?php echo ($theme['homepage_element_5_one_style_target']=="") ? "_self" : $theme['homepage_element_5_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_one_style_title']; ?>" >
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+				</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="mobile">
+			<?php $homepage_element_5_img_one_mobile = $processor->filter($theme['homepage_element_5_one_mobile_style_image']);?>
+			<?php if($theme['homepage_element_5_one_mobile_style_link']): ?>
+				<a target="<?php echo ($theme['homepage_element_5_one_mobile_style_target']=="") ? "_self" : $theme['homepage_element_5_one_mobile_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_one_mobile_style_link']; ?>" title="<?php echo $theme['homepage_element_5_one_mobile_style_title']; ?>" >
+					<?php echo nl2br($homepage_element_5_img_one_mobile); ?>
+				</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one_mobile); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_1920_by_800_banner"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php $homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_two_style_image']);?>
+	<div class="home-main-full-banner" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_two">
+		<div class="desktop">	
+		<?php if($theme['homepage_element_5_two_style_link']): ?>
+			<a target="<?php echo ($theme['homepage_element_5_two_style_target']=="") ? "_self" : $theme['homepage_element_5_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_two_style_title']; ?>" >
+				<?php echo nl2br($homepage_element_5_img_two); ?>
+			</a>
+		<?php else: ?>
+				<?php echo nl2br($homepage_element_5_img_two); ?>
+		<?php endif; ?>
+		</div>
+		<div class="mobile">
+			<?php $homepage_element_5_img_two_mobile = $processor->filter($theme['homepage_element_5_two_mobile_style_image']);?>
+			<?php if($theme['homepage_element_5_two_mobile_style_link']): ?>
+				<a target="<?php echo ($theme['homepage_element_5_two_mobile_style_target']=="") ? "_self" : $theme['homepage_element_5_two_mobile_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_two_mobile_style_link']; ?>" title="<?php echo $theme['homepage_element_5_two_mobile_style_title']; ?>" >
+					<?php echo nl2br($homepage_element_5_img_two_mobile); ?>
+				</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two_mobile); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_30_70_boxes_full_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_three_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_three_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_three_three_style_image']);
+	?>
+	<div class="home-main-full-banner" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_three">
+		<div class="left">
+			<?php if($theme['homepage_element_5_three_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_three_one_style_target']=="") ? "_self" : $theme['homepage_element_5_three_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_three_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_three_one_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+			<?php if($theme['homepage_element_5_three_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_three_two_style_target']=="") ? "_self" : $theme['homepage_element_5_three_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_three_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_three_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+		</div>
+		<div class="right">
+			<?php if($theme['homepage_element_5_three_three_style_link']): ?>
+				<a target="<?php echo ($theme['homepage_element_5_three_three_style_target']=="") ? "_self" : $theme['homepage_element_5_three_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_three_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_three_three_style_title']; ?>" >
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+				</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_70_30_boxes_full_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_four_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_four_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_four_three_style_image']);
+	?>
+<div class="home-main-full-banner" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+<div class="page_element_four">
+	<div class="left">
+			<?php if($theme['homepage_element_5_four_one_style_link']): ?>
+				<a target="<?php echo ($theme['homepage_element_5_four_one_style_target']=="") ? "_self" : $theme['homepage_element_5_four_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_four_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_four_one_style_title']; ?>" >
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+				</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+	</div>
+	<div class="right">	
+			<?php if($theme['homepage_element_5_four_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_four_two_style_target']=="") ? "_self" : $theme['homepage_element_5_four_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_four_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_four_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+			<?php if($theme['homepage_element_5_four_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_four_three_style_target']=="") ? "_self" : $theme['homepage_element_5_four_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_four_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_four_three_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+	</div>
+</div>
+</div>
+<?php elseif($selectElement == "homepage_element_5_33_percentage_640_by_400_three_boxes_full_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_five_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_five_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_five_three_style_image']);
+	?>
+	<div class="home-main-full-banner" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_five">
+		<div class="center">
+			<?php if($theme['homepage_element_5_five_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_five_one_style_target']=="") ? "_self" : $theme['homepage_element_5_five_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_five_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_five_one_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_five_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_five_two_style_target']=="") ? "_self" : $theme['homepage_element_5_five_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_five_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_five_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_five_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_five_three_style_target']=="") ? "_self" : $theme['homepage_element_5_five_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_five_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_five_three_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_25_percentage_480_by_400_four_boxes_full_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_six_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_six_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_six_three_style_image']);
+	$homepage_element_5_img_four = $processor->filter($theme['homepage_element_5_six_four_style_image']);
+	?>
+	<div class="home-main-full-banner" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_six">
+		<div class="center">
+			<?php if($theme['homepage_element_5_six_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_six_one_style_target']=="") ? "_self" : $theme['homepage_element_5_six_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_six_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_six_one_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_six_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_six_two_style_target']=="") ? "_self" : $theme['homepage_element_5_six_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_six_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_six_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_six_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_six_three_style_target']=="") ? "_self" : $theme['homepage_element_5_six_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_six_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_six_three_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_six_four_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_six_four_style_target']=="") ? "_self" : $theme['homepage_element_5_six_four_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_six_four_style_link']; ?>" title="<?php echo $theme['homepage_element_5_six_four_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_four); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_four); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_33_percentage_346_by_170_three_boxes_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+		<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_seven_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_seven_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_seven_three_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_seven">
+		<div class="center">
+			<?php if($theme['homepage_element_5_seven_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_seven_one_style_target']=="") ? "_self" : $theme['homepage_element_5_seven_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_seven_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_seven_one_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_seven_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_seven_two_style_target']=="") ? "_self" : $theme['homepage_element_5_seven_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_seven_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_seven_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_seven_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_seven_three_style_target']=="") ? "_self" : $theme['homepage_element_5_seven_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_seven_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_seven_three_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_33_percentage_346_by_346_three_boxes_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_eight_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_eight_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_eight_three_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_eight">
+		<div class="center">
+			<?php if($theme['homepage_element_5_eight_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_eight_one_style_target']=="") ? "_self" : $theme['homepage_element_5_eight_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_eight_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_eight_one_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_eight_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_eight_two_style_target']=="") ? "_self" : $theme['homepage_element_5_eight_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_eight_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_eight_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_eight_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_eight_three_style_target']=="") ? "_self" : $theme['homepage_element_5_eight_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_eight_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_eight_three_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_33_percentage_346_by_346_three_boxes_middle_updown_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php $html_img_one = $processor->filter($theme['homepage_element_5_nine_one_style_image']);
+		$html_img_two_up = $processor->filter($theme['homepage_element_5_nine_two_up_style_image']);
+		$html_img_two_down = $processor->filter($theme['homepage_element_5_nine_two_down_style_image']);
+		$html_img_three = $processor->filter($theme['homepage_element_5_nine_three_style_image']);
+		?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_nine">
+		<div class="center">
+			<?php if($theme['homepage_element_5_nine_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_nine_one_style_target']=="") ? "_self" : $theme['homepage_element_5_nine_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_nine_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_nine_one_style_title']; ?>" >
+						<?php echo nl2br($html_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($html_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<div class="up">
+				<?php if($theme['homepage_element_5_nine_two_up_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_nine_two_up_style_target']=="") ? "_self" : $theme['homepage_element_5_nine_two_up_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_nine_two_up_style_link']; ?>" title="<?php echo $theme['homepage_element_5_nine_two_up_style_title']; ?>" >
+							<?php echo nl2br($html_img_two_up); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_two_up); ?>
+				<?php endif; ?>
+			</div>
+			<div class="down">
+				<?php if($theme['homepage_element_5_nine_two_down_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_nine_two_down_style_target']=="") ? "_self" : $theme['homepage_element_5_nine_two_down_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_nine_two_down_style_link']; ?>" title="<?php echo $theme['homepage_element_5_nine_two_down_style_title']; ?>" >
+							<?php echo nl2br($html_img_two_down); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_two_down); ?>
+				<?php endif; ?>
+			</div>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_nine_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_nine_three_style_target']=="") ? "_self" : $theme['homepage_element_5_nine_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_nine_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_nine_three_style_title']; ?>" >
+						<?php echo nl2br($html_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($html_img_three); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_33_percentage_346_by_346_three_boxes_leftright_updown_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php 
+	$html_img_one_up = $processor->filter($theme['homepage_element_5_ten_one_up_style_image']);
+	$html_img_one_down = $processor->filter($theme['homepage_element_5_ten_one_down_style_image']);
+	$html_img_two = $processor->filter($theme['homepage_element_5_ten_two_style_image']);
+	$html_img_three_up = $processor->filter($theme['homepage_element_5_ten_three_up_style_image']);
+	$html_img_three_down = $processor->filter($theme['homepage_element_5_ten_three_down_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_ten">
+		<div class="center">
+			<div class="up">
+				<?php if($theme['homepage_element_5_ten_one_up_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_ten_one_up_style_target']=="") ? "_self" : $theme['homepage_element_5_ten_one_up_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_ten_one_up_style_link']; ?>" title="<?php echo $theme['homepage_element_5_ten_one_up_style_title']; ?>" >
+							<?php echo nl2br($html_img_one_up); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one_up); ?>
+				<?php endif; ?>
+			</div>
+			<div class="down">
+				<?php if($theme['homepage_element_5_ten_one_down_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_ten_one_down_style_target']=="") ? "_self" : $theme['homepage_element_5_ten_one_down_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_ten_one_down_style_link']; ?>" title="<?php echo $theme['homepage_element_5_ten_one_down_style_title']; ?>" >
+							<?php echo nl2br($html_img_one_down); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one_down); ?>
+				<?php endif; ?>
+			</div>
+		</div>
+		<div class="center">
+				<?php if($theme['homepage_element_5_ten_two_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_ten_two_style_target']=="") ? "_self" : $theme['homepage_element_5_ten_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_ten_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_ten_two_style_title']; ?>" >
+							<?php echo nl2br($html_img_two); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_two); ?>
+				<?php endif; ?>
+		</div>
+		<div class="center">
+			<div class="up">
+				<?php if($theme['homepage_element_5_ten_three_up_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_ten_three_up_style_target']=="") ? "_self" : $theme['homepage_element_5_ten_three_up_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_ten_three_up_style_link']; ?>" title="<?php echo $theme['homepage_element_5_ten_three_up_style_title']; ?>" >
+							<?php echo nl2br($html_img_three_up); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_three_up); ?>
+				<?php endif; ?>
+			</div>
+			<div class="down">
+				<?php if($theme['homepage_element_5_ten_three_down_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_ten_three_down_style_target']=="") ? "_self" : $theme['homepage_element_5_ten_three_down_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_ten_three_down_style_link']; ?>" title="<?php echo $theme['homepage_element_5_ten_three_down_style_title']; ?>" >
+							<?php echo nl2br($html_img_three_down); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_three_down); ?>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_50_percentage_522_by_170_two_boxes_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php 
+	$html_img_one = $processor->filter($theme['homepage_element_5_eleven_one_style_image']);
+	$html_img_two = $processor->filter($theme['homepage_element_5_eleven_two_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+		<div class="page_element_eleven">
+			<div class="center">
+				<?php if($theme['homepage_element_5_eleven_one_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_eleven_one_style_target']=="") ? "_self" : $theme['homepage_element_5_eleven_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_eleven_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_eleven_one_style_title']; ?>" >
+							<?php echo nl2br($html_img_one); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one); ?>
+				<?php endif; ?>
+			</div>
+			<div class="center">
+				<?php if($theme['homepage_element_5_eleven_two_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_eleven_two_style_target']=="") ? "_self" : $theme['homepage_element_5_eleven_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_eleven_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_eleven_two_style_title']; ?>" >
+							<?php echo nl2br($html_img_two); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_two); ?>
+				<?php endif; ?>
+			</div>
+		</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_50_percentage_522_by_346_two_boxes_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php 
+	$html_img_one = $processor->filter($theme['homepage_element_5_twelve_one_style_image']);
+	$html_img_two = $processor->filter($theme['homepage_element_5_twelve_two_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_twelve">
+		<div class="center">
+				<?php if($theme['homepage_element_5_twelve_one_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_twelve_one_style_target']=="") ? "_self" : $theme['homepage_element_5_twelve_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_twelve_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_twelve_one_style_title']; ?>" >
+							<?php echo nl2br($html_img_one); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one); ?>
+				<?php endif; ?>
+		</div>
+		<div class="center">
+				<?php if($theme['homepage_element_5_twelve_two_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_twelve_two_style_target']=="") ? "_self" : $theme['homepage_element_5_twelve_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_twelve_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_twelve_two_style_title']; ?>" >
+							<?php echo nl2br($html_img_two); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_two); ?>
+				<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_1050_by_170_banner"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php $html_img_one = $processor->filter($theme['homepage_element_5_thirteen_one_style_image']); ?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_thirteen">
+		<div class="center">
+				<?php if($theme['homepage_element_5_thirteen_one_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_thirteen_one_style_target']=="") ? "_self" : $theme['homepage_element_5_thirteen_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_thirteen_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_thirteen_one_style_title']; ?>" >
+							<?php echo nl2br($html_img_one); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one); ?>
+				<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_1050_by_346_banner"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php $html_img_one = $processor->filter($theme['homepage_element_5_fourteen_one_style_image']); ?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_fourteen">
+		<div class="center">
+				<?php if($theme['homepage_element_5_fourteen_one_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_fourteen_one_style_target']=="") ? "_self" : $theme['homepage_element_5_fourteen_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_fourteen_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_fourteen_one_style_title']; ?>" >
+							<?php echo nl2br($html_img_one); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one); ?>
+				<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_33_percentage_left_50_percentage_right_boxes_right_updown_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php $html_img_one = $processor->filter($theme['homepage_element_5_fifthteen_one_style_image']);
+	$html_img_two = $processor->filter($theme['homepage_element_5_fifthteen_two_up_style_image']);
+	$html_img_three = $processor->filter($theme['homepage_element_5_fifthteen_two_down_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_fifthteen">
+	<div class="center">
+				<?php if($theme['homepage_element_5_fifthteen_one_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_fifthteen_one_style_target']=="") ? "_self" : $theme['homepage_element_5_fifthteen_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_fifthteen_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_fifthteen_one_style_title']; ?>" >
+							<?php echo nl2br($html_img_one); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_one); ?>
+				<?php endif; ?>
+	</div>
+	<div class="center">
+				<?php if($theme['homepage_element_5_fifthteen_two_up_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_fifthteen_two_up_style_target']=="") ? "_self" : $theme['homepage_element_5_fifthteen_two_up_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_fifthteen_two_up_style_link']; ?>" title="<?php echo $theme['homepage_element_5_fifthteen_two_up_style_title']; ?>" >
+							<?php echo nl2br($html_img_two); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_two); ?>
+				<?php endif; ?>
+				<?php if($theme['homepage_element_5_fifthteen_two_down_style_link']): ?>
+						<a target="<?php echo ($theme['homepage_element_5_fifthteen_two_down_style_target']=="") ? "_self" : $theme['homepage_element_5_fifthteen_two_down_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_fifthteen_two_down_style_link']; ?>" title="<?php echo $theme['homepage_element_5_fifthteen_two_down_style_title']; ?>" >
+							<?php echo nl2br($html_img_three); ?>
+						</a>
+				<?php else: ?>
+						<?php echo nl2br($html_img_three); ?>
+				<?php endif; ?>
+	</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_25_percentage_258_by_170_four_boxes_width"): ?>
+<?php 
+$evolved_homepage_element_five_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_five')['homepage_element_five_style']);
+$theme = array_merge($theme,$evolved_homepage_element_five_content);
+?>
+	<?php
+	$homepage_element_5_img_one = $processor->filter($theme['homepage_element_5_sixteen_one_style_image']);
+	$homepage_element_5_img_two = $processor->filter($theme['homepage_element_5_sixteen_two_style_image']);
+	$homepage_element_5_img_three = $processor->filter($theme['homepage_element_5_sixteen_three_style_image']);
+	$homepage_element_5_img_four = $processor->filter($theme['homepage_element_5_sixteen_four_style_image']);
+	?>
+	<div class="home-main" <?php if($theme['homepage_element_five_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_five_style_margintop']."px"; ?>" <?php endif; ?>>
+	<div class="page_element_sixteen">
+		<div class="center">
+			<?php if($theme['homepage_element_5_sixteen_one_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_sixteen_one_style_target']=="") ? "_self" : $theme['homepage_element_5_sixteen_one_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_sixteen_one_style_link']; ?>" title="<?php echo $theme['homepage_element_5_sixteen_one_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_one); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_one); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_sixteen_two_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_sixteen_two_style_target']=="") ? "_self" : $theme['homepage_element_5_sixteen_two_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_sixteen_two_style_link']; ?>" title="<?php echo $theme['homepage_element_5_sixteen_two_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_two); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_two); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_sixteen_three_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_sixteen_three_style_target']=="") ? "_self" : $theme['homepage_element_5_sixteen_three_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_sixteen_three_style_link']; ?>" title="<?php echo $theme['homepage_element_5_sixteen_three_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_three); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_three); ?>
+			<?php endif; ?>
+		</div>
+		<div class="center">
+			<?php if($theme['homepage_element_5_sixteen_four_style_link']): ?>
+					<a target="<?php echo ($theme['homepage_element_5_sixteen_four_style_target']=="") ? "_self" : $theme['homepage_element_5_sixteen_four_style_target'] ; ?>" href="<?php echo $theme['homepage_element_5_sixteen_four_style_link']; ?>" title="<?php echo $theme['homepage_element_5_sixteen_four_style_title']; ?>" >
+						<?php echo nl2br($homepage_element_5_img_four); ?>
+					</a>
+			<?php else: ?>
+					<?php echo nl2br($homepage_element_5_img_four); ?>
+			<?php endif; ?>
+		</div>
+	</div>
+	</div>
+<?php elseif($selectElement == "homepage_element_5_show_newarrival_product"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('catalog/product_new')->setTemplate('evolved/tabs/new.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_special_product"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/special.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_bestsellers_product"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/bestsellers.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_mostviewed_product"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/mostviewed.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_featured_product"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/pageelementstyle/page_style_five/featuredTabs.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_brand_manager"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('brandmanager/brandmanager')->setTemplate('evolved/pageelementstyle/page_style_five/homepage-brand.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_slideshow_banner"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('slideshow/slideshow')->setTemplate('evolved/pageelementstyle/page_style_five/nearbysliderbanner.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_diamondrow"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_style_five/homepage_diamondrequest.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_textrow"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_style_five/home-text_row.phtml')->toHtml(); ?>
+<?php elseif($selectElement == "homepage_element_5_show_image_with_feature_slider"): ?>
+		<?php echo Mage::app()->getLayout()->createBlock('evolved/evolved')->setTemplate('evolved/pageelementstyle/page_style_five/image_with_feature_slider.phtml')->toHtml(); ?>
+<?php endif; ?>
+<?php 	//echo "<pre>"; print_r($theme); exit;?>
+</div>

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <diamondrequest_index_index>
+        <reference name="root">
+       		<action method="setTemplate">
+                <template>page/1column.phtml</template>                
+            </action>
+        </reference>
+       	<reference name="head">
+      		<action method="addCss"><stylesheet>css/diamondrequest/diamondrequest.css</stylesheet></action>        
+      		<action method="setTitle"><title>Diamond Request</title></action>  		
+		</reference>
+        <reference name="content">
+            <block type="diamondrequest/diamondrequest" name="diamondrequest" template="diamondrequest/diamondrequest.phtml" />
+        </reference>
+    </diamondrequest_index_index>
+</layout> 

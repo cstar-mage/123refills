@@ -1,0 +1,10 @@
+config:
+  default/mswebdesign_customordernumber/invoice/padding_length: 5
+  default/mswebdesign_customordernumber/invoice/prefix: XXX
+  default/mswebdesign_customordernumber/invoice/number: 960
+tables:
+  eav/entity_store:
+    - entity_type_id: 6
+      store_id: 0
+      increment_prefix: XXX
+      increment_last_id: XXX00012

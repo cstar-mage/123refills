@@ -1,0 +1,22 @@
+<style type="text/css">
+.custombuttons td { padding: 5px 2px; }
+</style>
+<table class="custombuttons">
+	<tr>
+		<td>
+			<button onclick="setLocation('<?php echo $this->getUrl('adminhtml/jewelryshare/getUpdateCSV', array('_current'=>true)); ?>')" class="scalable save" type="button" title="Get Update CSV">
+				<span><span><span>Get Update CSV</span></span></span>
+			</button>
+		</td>
+		<td>
+			<button onclick="window.open('<?php echo $this->getUrl('adminhtml/jewelryshare/updateJewelry', array('_current'=>true)); ?>')" class="scalable save" type="button" title="Update Products">
+				<span><span><span>Update Products</span></span></span>
+			</button>
+		</td>
+		<td>
+			<button onclick="setLocation('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_WEB).'var/import/jewelerslink_update.csv'; ?>')" class="scalable save" type="button" title="Download Update CSV">
+				<span><span><span>Download Update CSV</span></span></span>
+			</button>
+		</td>
+	</tr>
+</table>

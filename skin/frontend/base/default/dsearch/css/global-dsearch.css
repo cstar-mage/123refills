@@ -1,0 +1,185 @@
+@font-face {
+    font-family: 'economicabold';
+    src: url('fonts/economica-bold-otf-webfont.eot');
+    src: url('fonts/economica-bold-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-bold-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-bold-otf-webfont.woff') format('woff'),
+         url('fonts/economica-bold-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-bold-otf-webfont.svg#economicabold') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'economicaitalic';
+    src: url('fonts/economica-italic-otf-webfont.eot');
+    src: url('fonts/economica-italic-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-italic-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-italic-otf-webfont.woff') format('woff'),
+         url('fonts/economica-italic-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-italic-otf-webfont.svg#economicaitalic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'economicabold_italic';
+    src: url('fonts/economica-bolditalic-otf-webfont.eot');
+    src: url('fonts/economica-bolditalic-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-bolditalic-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-bolditalic-otf-webfont.woff') format('woff'),
+         url('fonts/economica-bolditalic-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-bolditalic-otf-webfont.svg#economicabold_italic') format('svg');
+    font-weight: normal;
+    font-style: normal;
+
+}
+@font-face {
+    font-family: 'economica';
+    src: url('fonts/economica-regular-otf-webfont.eot');
+    src: url('fonts/economica-regular-otf-webfont.eot?#iefix') format('embedded-opentype'),
+         url('fonts/economica-regular-otf-webfont.woff2') format('woff2'),
+         url('fonts/economica-regular-otf-webfont.woff') format('woff'),
+         url('fonts/economica-regular-otf-webfont.ttf') format('truetype'),
+         url('fonts/economica-regular-otf-webfont.svg#economicaregular') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+:focus{ outline:0 !important;}
+.pt5{padding-top:5px;}
+.pt10{padding-top:10px;}
+.pt15{padding-top:15px;}
+.pt20{padding-top:20px;}
+.pt100{padding-top:100px;}
+.pb5{padding-bottom:5px;}
+.pb10{padding-bottom:10px;}
+.pb15{padding-bottom:15px;}
+.pb20{padding-bottom:20px;}
+.pl0{padding-left:0;}
+.pr0{padding-right:0;}
+.main {padding: 0 0 80px;max-width: 1170px; background: #fffffe;}
+.ds-container{font-family:economica !important;font-size:16px}
+.ds-container table th, .ds-container table td{font-family:economica !important;}
+ul.dsearch-main-tabs li a {
+  display: block !important;
+  font-size: 22px;
+  text-align: left !important;
+  text-transform: uppercase;
+  /*border-bottom:none !important;*/
+}
+ul.dsearch-main-tabs li .badge {
+  background-color: #999;
+  border-radius: 30px;
+  font-size: 18px;
+  font-weight: 100;
+  min-width: 30px;
+  font-family:economica !important;
+}
+.ds-container .keep-open, .ds-container .dropup{display: inline-block !important;}
+
+.ds-container label{font-family:economica !important;font-size: 14px;}
+.ds-container table{font-family:economica !important;font-size: 16px;}
+.tab-content table{text-transform: uppercase;}
+.ds-container b,.ds-container strong {font-family:economicabold !important;font-weight: 100;}
+.fixed-table-container thead th .sortable{padding-bottom: 16px;padding-right:8px; background-position: center bottom;}
+.ds-container .nav-tabs > li > a{border-color:#c2c2c2 !important;}
+.ds-container .nav-tabs > li > a:hover{border-color:#c2c2c2;}
+/*ODD*/#results_table tr:nth-child(2n+1),#recentlyview_table tr:nth-child(2n+1){background-color: #ffffff;}
+/*EVEN*/#results_table tr:nth-child(2n),#recentlyview_table tr:nth-child(2n){background-color: #f9f9f9;}
+/*HOVER*/#results_table > tbody > tr:hover > td, #recentlyview_table > tbody > tr:hover > td{background-color: #f5f5f5;}
+.li-clearer {float: left !important;width: 100% !important;}
+#share_search,#refresh_search,.link-hide,.compare-viewlink,.compare-deletelink{color:#fff !important;}
+/*Default THEME settings*/
+
+.product-shape li a {min-width:60px;min-height:65px;padding:60px 2px 10px; font-size: 12px;text-transform:uppercase;}
+.product-shape li.special-shape a {min-width:70px;min-height:150px;margin-top:5px;padding:100px 2px 10px; font-size: 12px;}
+
+.product-shape li.active a, .product-specialshape li.active a {background-color: #d2daed;color: #000;}
+.ds-container .noUi-connect{background-color: #d2daed;}
+.ds-container .panel-heading{background-color: #d2daed;}
+.color_switcher,.shape_switcher {background-color: #eee379;box-shadow: 0 2px 3px #999;color: #000;font-size: 16px;padding: 2px 10px;display:block;}
+.nav-tabs > li.active > a, .nav-tabs > li.active > a:focus, .nav-tabs > li.active > a:hover{background-color: #d2daed;}
+.tab-content .fixed-table-header{background-color: #d2daed;}
+.btn-viewdiamond{background-color: #d2daed;}
+.fixed-table-container thead th .both{background-image:url("../image/asc_desc.png");background-position:center 0;}
+.fixed-table-container thead th .asc.both{background-image:url("../image/asc.png");background-position:center 0;}
+.fixed-table-container thead th .desc.both{background-image:url("../image/desc.png");background-position:center 0;}
+ul.option_slider{border:1px solid #dedede; border-width:1px 0;}
+ul.option_slider li{background:#fff;cursor:pointer;border-radius:17px 0px;margin: 2px 0;}
+ul.option_slider li.active{background:#d2daed;}
+/*Default THEME settings ENDS*/
+.slider_pipes {margin: 0;position: relative;width: 100%;}
+.slider_pipes li {
+  border-right: 1px solid #fff;
+  height: 22px;
+  position: absolute;
+  top: -22px;
+  z-index: 1;
+}
+.slider_values {float: left;font-size: 14px;width: 100%;}
+.slider_values span {float: left;margin: 0;text-align: center;font-family:economica !important;}
+.slider-data.form-inline input{width:100px;}
+.ul-reports li{float:left; width:33%;}
+.adv-search-panel h4.panel-title{position: relative;}
+.adv-search-panel h4 a.adv_search_lnk{line-height: 32px;text-decoration:none;letter-spacing:1px}
+.adv-search-panel form{right:0px;position:absolute;top:0}
+.adv-search-panel form .form-group{font-size: 14px;}
+.adv-search-panel form .form-group input{margin-top:0;}
+.adv-search-panel form .input-group{ margin-left:20px;}
+.adv-search-panel form .input-group #stock_number{height:34px;}
+/*
+.detail-view .list-group-item{padding:5px 15px;}
+.detail-view .list-group-item > .badge {background:none;color: #666;font-size: 14px;font-family: economicabold;font-weight: 100;}
+*/
+.viewdetails {border:1px solid #c2c2c2;min-height:637px;padding: 15px;border-width:0 1px 1px 1px;}
+.viewdetails .list-group-item{padding:5px 10px;border-color:#c2c2c2; font-size: 14px;}
+.viewdetails .list-group-item > .badge {background:none;color: #000;font-size: 14px;font-family: economicabold !important;font-weight: 100;}
+
+.tab-content table th.bs-checkbox div.th-inner input{display:none;}
+.fixed-table-pagination .pagination-detail{display:none;}
+@media (max-width: 991px) {
+	.text-center-sm{text-align:center;}
+}
+.diamondsearch-index-index button, .diamondsearch-index-index input, .diamondsearch-index-index select, .diamondsearch-index-index table, .diamondsearch-index-index textarea, .diamondsearch-index-index a.adv_search_lnk {font-family: economica;}
+/* TESTING */
+
+/* CHANGING DEFAULT BOOTSTRAP */
+.fixed-table-container thead th, .fixed-table-container tbody td{border-left:none;}
+.fixed-table-container{border-top:none;}
+.shape .nav > li > a:focus,.shape .nav > li > a:hover, .dsearch-main-tabs.nav > li > a:focus,.dsearch-main-tabs.nav > li > a:hover {background-color: inherit;text-decoration: inherit;}
+.ds-container .pagination > .active > a, .pagination > .active > a:focus, .ds-container .pagination > .active > a:hover, .ds-container .pagination > .active > span, .ds-container .pagination > .active > span:focus, .ds-container .pagination > .active > span:hover{background-color: #ddd;border-color: #ddd;color:inherit;}
+/*Making modal window centered*/
+	.modal {text-align: center;}
+	@media screen and (min-width: 768px) { .modal:before {display: inline-block;vertical-align: middle;content: " ";height: 100%;}}
+	.modal-dialog {display: inline-block;text-align: left;vertical-align: middle;}
+/*END Making modal window centered*/
+/* ENDS CHANGING DEFAULT BOOTSTRAP */
+.diamondsearch-index-index .ds-container .btn-addtocart{background-color: #000000;color: #fff;}
+.diamondsearch-index-index .ds-container .btn-viewdetail{background-color: #fff;color: #000;border:1px solid #000;}
+/* FOR GRID VIEW ONLY */
+.ds-container .grid-view .diamonds-control{background-color: #444;}
+.ds-container .grid-view .diamonds-control label {color: #fff;font-weight: normal;}
+.ds-container .grid-view .diamonds-control a.item-view {background-position:center -12px;display: inline-block;height: 22px;width: 25px;}
+.ds-container .grid-view .diamonds-control #show_s2{background-image:url("../image/s2.png");}
+.ds-container .grid-view .diamonds-control #show_s3{background-image:url("../image/s3.png");}
+.ds-container .grid-view .diamonds-control #show_s4{background-image:url("../image/s4.png");}
+.ds-container .grid-view .diamonds-control .btn-sortdir{color:#555 !important}
+.ds-container .grid-view .diamonds-control .btn-sortdir[data-dir="asc"] i:before{content:"\e093"}
+.ds-container .grid-view .diamonds-control .btn-sortdir[data-dir="desc"] i:before{content:"\e094"}
+.ds-container .grid-view .itm-clr{clear:both;height:1px;}
+.ds-container .grid-view .item .diam-image{min-height:280px;position:relative;}
+.ds-container .grid-view .item .diam-image span {background: #fff;bottom: 30%;color: #900 !important;font-size: 12px; left: 0; position: absolute; right: 0;}
+.ds-container .grid-view .item .shape-name{text-transform:uppercase;}
+.ds-container .grid-view .item .info{font-family: economicabold;}
+.ds-container .grid-view .item .diam-price{color: #090;font-size:20px;}
+.ds-container .grid-view .item .diam-wishlist{position:absolute; top:15px; right:15px; z-index:15;display:none;}
+.ds-container .grid-view .item:hover .diam-wishlist{display:block;}
+.ds-container .grid-view .item .diam-wishlist a{font-size: 26px;}
+.ds-container #diamGridVideoModal.modal {z-index: 9999;}
+/* from custom.css */
+.grid-view .item .btn-addtocart{color: #fff !important;}
+@media (max-width: 991px) {
+ul.dsearch-main-tabs li a {font-size: 18px;}
+.text-left-sm{text-align:left;}
+.grid-view .item .diam-image{min-height: 340px;text-align: center;}
+.grid-view .item .diam-image img{display:inline !important;}
+}
+/* ENDS FOR GRID VIEW ONLY */

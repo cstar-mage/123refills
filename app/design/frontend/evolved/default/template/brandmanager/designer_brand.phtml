@@ -1,0 +1,82 @@
+<script>
+(function ($) {
+
+    window.addRule = function (selector, styles, sheet) {
+
+        if (typeof styles !== "string") {
+            var clone = "";
+            for (var style in styles) {
+                var val = styles[style];
+
+                style = style.replace(/([A-Z])/g, "-$1").toLowerCase(); // convert to dash-case
+                clone += style + ":" + (style === "content" ? '"' + val + '"' : val) + "; ";
+            }
+            styles = clone;
+        }
+
+        sheet = sheet || document.styleSheets[0];
+
+        if (sheet.insertRule) sheet.insertRule(selector + " {" + styles + "}", sheet.cssRules.length);
+        else if (sheet.addRule) sheet.addRule(selector, styles);
+
+        return this;
+
+    };
+
+    if ($) {
+        $.fn.addRule = function (styles, sheet) {
+            addRule(this.selector, styles, sheet);
+            return this;
+        };
+    }
+
+}(window.jQuery));
+jQuery(document).ready(function(){
+	jQuery(window).resize(function(){
+		//console.log( jQuery(".designer ul li").width() );
+		var liheight = ((285*jQuery(".designer ul li,.cms-designer .designer.square ul li").width())/288);
+		//console.log( "width : " + jQuery(".designer ul li").width() + " height : " + liheight );
+		//jQuery(".designer.square ul li:before").css("height",liheight+"px");
+		jQuery(".cms-designer .designer.square ul li:before").addRule({
+			height: liheight+"px"
+		});
+	});
+	jQuery(window).resize();
+});
+</script>
+<?php
+if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_form_designer'))
+{
+	$theme = Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_form_designer');
+}
+else
+{
+	$theme = $this->getLayout()->createBlock('evolved/evolved')->getConfig();	
+}
+//echo $theme['evolved_designer_style'];
+if($theme['evolved_designer_style']=='square')
+{
+	$stylenamecls = 'square';
+}
+else {
+	$stylenamecls = 'rectangle';
+}
+$bannerCollection = $this->getBrandCollection();
+//echo "<pre>";
+?>
+
+<div class="designer <?php echo $stylenamecls; ?>">
+	<ul>
+		<?php foreach ($bannerCollection as $banner): ?>
+		<li>
+				<a href="<?php echo $banner['weblink'];?>">
+					
+					<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']?>" title="<?php echo $banner['title']?>" alt="<?php echo $banner['title']?>" align="middle"/>				
+					<?php /* ?>
+						<img src="<?php echo resizeImg($banner['filename'],245, 245); ?><?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $banner['filename']?>" title="<?php echo $banner['title']?>" alt="<?php echo $banner['title']?>" align="middle"/>
+					<?php */ ?>
+				</a>
+				 </li>
+		<?php endforeach; ?>
+	</ul>
+</div>

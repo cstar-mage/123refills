@@ -1,0 +1,118 @@
+/* Real Person jQuery plugin styles v2.0.1. */
+.realperson-challenge {
+	  background: none repeat scroll 0 0 #e2e2e2;
+    border-radius: 2px;
+    color: #000000;
+    display: block;
+    float: left;
+    min-width: 180px;
+    min-height: 30px;
+    margin-bottom:5px;
+}
+.realperson-text {
+	     display: block;
+    float: left;
+    font-family: "Courier New",monospace !important;
+    font-size: 5px;
+    font-weight: bold;
+    letter-spacing: -1px;
+    line-height: 3px;
+    margin-top: 5px;
+    min-width: 150px;
+    text-align: center;
+	
+}
+.realperson-regen {
+	  background: url("arw.png") no-repeat scroll left top rgba(0, 0, 0, 0) !important;
+    cursor: pointer;
+    float: left;
+    font-size: 12px;
+    height: 25px;
+    padding-top: 4px;
+    text-align: center;
+    width: 25px;
+}
+.realperson-disabled {
+	opacity: 0.5;
+	filter: Alpha(Opacity=50);
+}
+.realperson-disabled .realperson-regen {
+	cursor: default;
+}
+
+.contacts-index-index #contactForm .buttons-set .input-box {
+    float: left;
+    margin-top: 0;
+    padding: 0;
+}
+.contacts-index-index .buttons-set .realperson-challenge {
+    background: #e2e2e2 none repeat scroll 0 0;
+    border: 1px solid #ccc;
+    float: left;
+    height: 36px;
+    min-width: 150px;
+    padding-top: 3px;
+}
+
+.contacts-index-index .buttons-set button {
+    font-size: 14px;
+}
+.contacts-index-index .buttons-set .is-realperson {
+    background: none repeat scroll 0 0 #e2e2e2;
+    border: 1px solid #ccc;
+    float: left;
+    height: 36px;
+    margin-left: 5px;
+    width: 85px !important;
+}
+.contacts-index-index .buttons-set .realperson-text {
+    float: left;
+    width: 130px;
+}
+.contacts-index-index .buttons-set .realperson-text {
+    float: left;
+    width: 130px;
+}
+.contacts-index-index .realperson-regen {
+    background: url("arw.png") no-repeat scroll left top rgba(0, 0, 0, 0) !important;
+    cursor: pointer;
+    float: left;
+    font-size: 0;
+    height: 25px;
+    padding-top: 4px;
+    text-align: center;
+    width: 25px;
+}
+.Contact_frm .buttons-set .validation-advice {
+    float: left;
+}
+@media only screen and (max-width: 870px){
+#contactForm .buttons-set {  float: right;  margin: 0;  width: 100%;}
+#contactForm .input-box {  width: 73%;}
+#contactForm .buttons-set .input-box {  width: 65%;}
+}
+@media only screen and (max-width: 599px){
+.contacts-index-index .buttons-set {  max-width: 100%;}
+}
+@media only screen and (max-width: 440px){
+.Contact_frm .buttons-set .button {  clear: both;}
+.contacts-index-index #contactForm .buttons-set .input-box {  float: right;  margin-bottom: 10px;  padding: 0;}
+#contactForm .buttons-set .input-box {  width: 100%;}
+.contacts-index-index .buttons-set .realperson-challenge{float: right;}
+.contacts-index-index .buttons-set .is-realperson{float: right;  margin-right: 5px;}
+ 
+}
+/* @media only screen and (max-width:414px){
+.contacts-index-index #contactForm label {    width: 100%;}
+.contacts-index-index #contactForm .input-box {    width: 100%;}
+} */
+@media only screen and (max-width:414px){
+ .contacts-index-index #contactForm label {    width: 100%;}
+.contacts-index-index #contactForm .input-box {    width: 100%;} 
+.contacts-index-index .buttons-set .is-realperson {    width: 47% !important;}
+.Contact_frm .buttons-set .button {    width: 100%;}
+.contacts-index-index .buttons-set .realperson-challenge {    float: left;    max-width: 100%;    width: 100%;}
+.contacts-index-index .buttons-set .is-realperson {    width: 100% !important;    margin: 0;}
+.contacts-index-index .buttons-set .realperson-text {    float: left;    width: 130px;    margin-left: 20%;}
+}
+  

@@ -1,0 +1,3 @@
+changed for category group product search
+Task: http://production.idealbrandmarketing.com/task_detail.php?ti=14135
+If user searches for printer brand name it should show the grouped printer products for that printer brand. Right now it goes straight to products.

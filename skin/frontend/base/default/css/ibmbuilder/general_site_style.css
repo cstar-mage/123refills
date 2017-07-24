@@ -1,0 +1,200 @@
+@import url(https://fonts.googleapis.com/css?family=Raleway:400,100,200,300,300italic,400italic,500,600,700,800,900);
+/*font-family: 'Raleway', sans-serif;*/
+@import url(https://fonts.googleapis.com/css?family=Lato:400,100,300,300italic,400italic,700,900);
+/*font-family: 'Lato', sans-serif;*/
+@import url(https://fonts.googleapis.com/css?family=Playfair+Display:400,400italic);
+/*font-family: 'Playfair Display', serif;*/
+@import url(https://fonts.googleapis.com/css?family=Open+Sans:400,300,400italic,600,700,800);
+/*font-family: 'Open Sans', sans-serif;*/
+.block_wrapper {
+    clear:both;
+    position: relative;
+}
+.block_wrapper h1,
+.block_wrapper .page-title h1,
+.block_wrapper .product-name h1, 
+.block_wrapper .product-name .h1 {
+    font-family: 'Raleway', sans-serif; 
+    font-weight: 400;
+    display: block;
+    color: #515151;
+    line-height: 1.15em;
+    letter-spacing: 0.03em;
+    font-size: 33px;
+    border-bottom: 0;
+    text-align:left;
+}
+.block_wrapper h1 strong {
+    font-weight: 500;
+}
+.block_wrapper h2 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 500;
+    font-size: 23px;
+}
+.block_wrapper h3, 
+.block_wrapper .block-title h3 {
+    font-size: 20px;
+    font-family: 'Raleway', sans-serif;
+    font-weight: 400;
+    letter-spacing: 0.1em;
+    line-height: 1em;
+    margin-bottom: 15px;
+}
+.block_wrapper h5 {
+    font-family: 'Raleway', sans-serif;
+    text-transform: uppercase;
+    font-size: 14px;
+    font-weight: 500;
+}
+.block_wrapper h4 {
+    font-family: 'Raleway', sans-serif;
+    font-weight: 600;
+    font-size: 18px;
+    margin: 0;
+}
+
+.block_wrapper .container
+{
+    margin: 0 auto;
+    max-width: 480px;
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+}
+.block_wrapper .container:after, .row:after {
+    clear: both;
+    content: '.';
+    display: block;
+    height: 0;
+    visibility: hidden;
+}
+.block_wrapper .row
+{
+    margin-left: -10px;
+    margin-right: -10px;
+}
+.block_wrapper .col
+{
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.block_wrapper hr {
+    max-width: 175px;
+    color: #515151;
+    margin: 0 auto;
+    border: 1px solid;
+    height:0;
+}
+.block_wrapper p {
+    color: #515151;
+    font-family: 'Raleway', sans-serif;
+    font-style: normal;
+    line-height: 1.2em;
+    font-size: 16px;
+    letter-spacing: 0.01em;
+    padding-bottom: 1.2em;
+    text-align:left;
+}
+.block_wrapper p:last-of-type{
+    padding-bottom:0;
+}
+.block_wrapper img {
+    max-width: 100%;
+    margin: 0 auto;
+}
+
+.block_wrapper .ibm_button {
+    font-family: 'Raleway', sans-serif; 
+    font-weight: 500;
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid #515151;
+    background: transparent;
+    color: #515151;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+}
+
+.block_wrapper .ibm_button:hover {
+    color: #fff;
+    background: #515151;
+    text-decoration: none;
+}
+
+.block_wrapper .ibm_button_alt {
+    font-family: 'Raleway', sans-serif; 
+    font-weight: 500;
+    display: inline-block;
+    padding: 12px 20px;
+    border: 1px solid #515151;
+    background: #515151;
+    color: #fff;
+    text-transform: uppercase;
+    text-decoration: none;
+    font-size: 15px;
+    letter-spacing: -0.02em;
+}  
+.block_wrapper .ibm_button_alt:hover {
+    background: transparent;
+    color: #515151;
+    text-decoration: none;
+}
+.block_wrapper .block-title {
+    border: none;
+}
+.block_wrapper a {
+    font-family: 'Raleway', sans-serif; 
+}
+
+@media screen and (min-width: 480px) {
+    .block_wrapper .container {
+        max-width: 767px;
+    }
+    .block_wrapper h3, 
+    .block_wrapper .block-title h3 {
+        font-size: 30px;
+    }
+}
+@media screen and (min-width: 767px) {
+    .block_wrapper .container {
+        max-width: 1024px;
+    }
+    .block_wrapper h3, 
+    .block_wrapper .block-title h3  {
+        font-size: 32px;
+    }
+    .block_wrapper p {
+        font-size: 18px;
+        line-height: 1.2em;
+    }
+}
+@media screen and (min-width: 1024px) {
+    .block_wrapper .container {
+        max-width: 1240px;
+    }
+    .block_wrapper h1 {
+        font-size: 82px;
+    }
+    .block_wrapper h2{
+        font-size: 36px;
+    }
+    .block_wrapper h3{
+        font-size: 36px;
+    }
+    .block_wrapper h4  {
+        font-size: 25px;
+    }
+    .block_wrapper h5{
+        font-size: 19px;
+    }
+    
+}
+@media screen and (min-width: 1280px) {
+
+}

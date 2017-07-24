@@ -1,0 +1,47 @@
+<div id="popupoverlay">&nbsp;</div>
+<div id="popupquestion">
+<a class="popupclose" onclick="popquetionclose();" href="javascript:;"><img src="<?php echo $this->getskinUrl('dolphin/productqa/images/pop-close.png')?>"></a>
+ <?php $current_product = Mage::registry('current_product'); ?>
+<h4><?php echo $this->__('Ask Question About '). $current_product->getSku();?></h4>
+<?php $current_product = Mage::registry('current_product'); ?>
+			<form method="post" action="<?php echo $this->getUrl('productqa/index/post/') ?>" id="productqaform">
+            		<input type="hidden" name="product_sku" value="<?php echo $current_product->getSku(); ?>"  />
+            		<input type="hidden" name="product_url" value="<?php echo $this->helper('core/url')->getCurrentUrl(); ?>"  />
+            		<ul class="form-list">
+                    <li>
+                    	<div class="field">
+                            <label for="name" class="required"><em>*</em><?php echo Mage::helper('productqa')->__('Name') ?></label>
+                            <div class="input-box">
+                                <input name="name" id="name" title="<?php echo Mage::helper('productqa')->__('Name') ?>" value="<?php echo $this->htmlEscape($this->helper('contacts')->getUserName()) ?>" class="input-text required-entry" type="text" />
+               	             </div>
+               			</div>
+                    </li>                  
+                    <li>
+                        <div class="field">
+                            <label for="email" class="required"><em>*</em><?php echo Mage::helper('productqa')->__('Email') ?></label>
+                            <div class="input-box">
+                                <input name="email" id="email" title="<?php echo Mage::helper('productqa')->__('Email') ?>" value="<?php echo $this->htmlEscape($this->helper('productqa')->getUserEmail()) ?>" class="input-text required-entry validate-email" type="text" />
+                            </div>
+                        </div>
+					</li>
+                    	<li>
+                        <div class="field">
+                        <label for="name" class="required"><em>*</em><?php echo Mage::helper('productqa')->__('Question') ?></label>
+                        <div class="input-box">
+                            <input name="question" id="question" title="<?php echo Mage::helper('productqa')->__('Question') ?>" class="input-text required-entry" type="text" />
+                        </div>
+                    </div>
+                    </li>
+                  </ul>  
+                   <div class="buttons-set">
+        <p class="required"><?php echo Mage::helper('productqa')->__('* Required Fields') ?></p>     
+        <button type="submit" title="<?php echo Mage::helper('productqa')->__('Submit') ?>" class="button"><span><span><?php echo Mage::helper('productqa')->__('Submit') ?></span></span></button>
+    </div>  
+            </form>
+     <script type="text/javascript">
+//<![CDATA[
+    var productqaform = new VarienForm('productqaform', true);
+//]]>
+</script>   
+     </div>    
+            

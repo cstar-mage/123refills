@@ -1,0 +1,113 @@
+<?php
+class Ideal_Seeitperson_IndexController extends Mage_Core_Controller_Front_Action
+{
+	const XML_PATH_EMAIL_RECIPIENT  = 'contacts/email/recipient_email';	
+    public function indexAction()
+    {
+    	
+    	/*
+    	 * Load an object by id 
+    	 * Request looking like:
+    	 * http://site.com/seeitperson?id=15 
+    	 *  or
+    	 * http://site.com/seeitperson/id/15 	
+    	 */
+    	/* 
+		$seeitperson_id = $this->getRequest()->getParam('id');
+
+  		if($seeitperson_id != null && $seeitperson_id != '')	{
+			$seeitperson = Mage::getModel('seeitperson/seeitperson')->load($seeitperson_id)->getData();
+		} else {
+			$seeitperson = null;
+		}	
+		*/
+		
+		 /*
+    	 * If no param we load a the last created item
+    	 */ 
+    	/*
+    	if($seeitperson == null) {
+			$resource = Mage::getSingleton('core/resource');
+			$read= $resource->getConnection('core_read');
+			$seeitpersonTable = $resource->getTableName('seeitperson');
+			
+			$select = $read->select()
+			   ->from($seeitpersonTable,array('seeitperson_id','title','content','status'))
+			   ->where('status',1)
+			   ->order('created_time DESC') ;
+			   
+			$seeitperson = $read->fetchRow($select);
+		}
+		Mage::register('seeitperson', $seeitperson);
+		*/
+
+			
+		$this->loadLayout();     
+		$this->renderLayout();
+    }
+   
+public function personpostAction()
+	{//echo "hi";
+	//exit;
+	//echo $this->getRequest()->getPost('email');
+		//echo "<pre>"; print_r($post); exit;
+	
+		if ($data = $this->getRequest()->getPost()) {
+				
+			$post = $this->getRequest()->getPost();
+			
+			
+			
+			$model = Mage::getModel('seeitperson/seeitperson');
+			$model->setData($data)
+			->setId($this->getRequest()->getParam('id'));
+
+			try {
+					if ($model->getCreatedTime == NULL || $model->getUpdateTime() == NULL) {
+						$model->setCreatedTime(now())
+						->setUpdateTime(now());
+					} else {
+						$model->setUpdateTime(now());
+					}
+				} catch (Exception $e) {
+					
+				}
+			
+				$model->save();
+				
+				
+			//$to = Mage::getStoreConfig(self::XML_PATH_EMAIL_RECIPIENT);
+				$mail_html = "";
+			$mail_html .="Product Sku :".$post['psku'];
+			$mail_html .="\nName :".$post['name'];
+			$mail_html .="\nEmail :".$post['email'];
+			$mail_html .="\nZipCode :".$post['zip_code'];
+			$mail_html .="\nPhone :".$post['phone'];
+			$mail_html .="\nComments :".$post['comments'];
+				
+			
+				/*$mail = Mage::getModel('core/email');
+				$mail->setToName('jewelrydemo.com');
+				$mail->setToEmail('support@idealbrandmarketing.com');
+				$mail->setBody($mail_html);
+				$mail->setSubject('See Item In Person Request');
+				$mail->setFromEmail('support@idealbrandmarketing.com');
+				$mail->setFromName('jewelrydemo.com');
+				$mail->setType('html');*/
+				
+				$mail = new Zend_Mail();
+				$mail->setBodyText($mail_html);
+				$mail->setFrom($post['email'], Mage::getStoreConfig('trans_email/ident_general/name')." - ".$post['name']);
+				//$mail->addTo('support@idealbrandmarketing.com', 'Jewelrydemo See Item In Person Request');
+				$mail->addTo(Mage::getStoreConfig(self::XML_PATH_EMAIL_RECIPIENT), Mage::getStoreConfig('trans_email/ident_general/name').' See Item In Person Request');
+				//$mail->addBcc('support@idealbrandmarketing.com');
+				//$mail->addTo('info@losangelesdiamondseller.com', 'Some Recipient');
+				$mail->setSubject('See Item In Person Request');
+				
+			try {
+				$mail->send();				
+			}catch (Exception $e) {				
+			}
+		}
+	}
+}

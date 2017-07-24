@@ -1,0 +1,1520 @@
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     rwd_default
+ * @copyright   Copyright (c) 2014 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+
+/**
+ * Grouped product data template
+ *
+ * @see Mage_Catalog_Block_Product_View_Media
+ * @see Mage_Catalog_Block_Product_View_Type_Grouped
+ */
+?>
+
+<?php $this->setPreconfiguredValue(); ?>
+<?php $_product = $this->getProduct(); ?>
+<?php $_associatedProducts = $this->getAssociatedProducts(); ?>
+<?php $_hasAssociatedProducts = count($_associatedProducts) > 0; ?>
+<?php echo $this->getChildHtml('product_type_data_extra') ?>
+
+<?php 
+$cartridgesArray = array();
+$oemArray = array();
+$otherRelated = array();
+
+//Task: http://production.idealbrandmarketing.com/task_detail.php?ti=11288
+//1. OEM cartridges will never be in the grid, they will be in a slider below the grid like in the original mock-up
+//the 2 rows under the grid, 1 is for OEM cartridges, the other is for everything else. so refill kits, bulk ink and anything else associated with that printer would go in that second row slider.
+//Task: There are premium cartridges that should be in the grid in the Premium column.  http://production.idealbrandmarketing.com/task_detail.php?ti=12942
+$premiumAvailable = false; 
+if ($_hasAssociatedProducts) {
+	foreach ($_associatedProducts as $_item) {
+		$itemModel = Mage::getModel('catalog/product')->load($_item->getId());
+		if( strpos(strtolower($itemModel->getName()), 'oem') !== false ) {
+			$oemArray[] = $itemModel;
+		} 
+		//Task: Multipacks need to be included in grid : Please include multipack cartridges in grid. Anything with a Cart ID needs to be in the grid. http://production.idealbrandmarketing.com/task_detail.php?ti=13541 
+		//else if(((strpos(strtolower($itemModel->getName()), 'premium') !== false) || (strpos(strtolower($itemModel->getName()), 'cartridge'))) !== false && (!(strpos(strtolower($itemModel->getName()), 'refill kit') !== false))) {
+		else if($itemModel->getCartId() != '') {
+			$string = $this->escapeHtml($_item->getSku());
+			$premium = ((strpos(strtolower($string), "-xr") !== false) || (strpos(strtolower($_item->getName()), "premium") !== false));
+			
+			if($premium) {
+				$cartridgesArray[$itemModel->getCartId()]['premium'] = $itemModel; // groups by cartId
+				$premiumAvailable = true;
+			} else {
+				$cartridgesArray[$itemModel->getCartId()]['value'] = $itemModel; // groups by cartId
+			}
+			
+		} else { 
+			$otherRelated[] = $itemModel;
+		}
+	}
+}
+
+?>
+
+<div class="grouped-items-table-wrapper">
+    <table class="data-table grouped-items-table" id="super-product-table">
+        <col />
+        <col />
+        <col width="1" />
+        <tbody>
+        <?php //echo "<pre>"; print_r($cartridgesArray); echo "</pre>"; ?>
+        <?php if (count($cartridgesArray) > 0): ?>
+		
+		<tr>
+                <td style="padding: 0;">
+					<table style="width: 100%; border: 1px solid silver;">
+						<tr class="mobile_tab">
+						<?php 
+							$printerType = $_product->getAttributeText('printer_type');
+							
+							if($printerType == 'Toner') {
+								$inkText = 'laser';
+							} else { // if type = Inkjet
+								$inkText = 'ink';
+							}
+							
+							$printerBrand = $_product->getAttributeText('printer_brand');
+							$groupTitle = $_product->getName();
+							if( strpos( $_product->getName(), '/' ) !== false ) {
+								$explodeName = explode('/',$groupTitle);
+								$groupTitle = $explodeName[count($explodeName)-1]; // get name after last slash
+							}
+							
+							$groupNameFinal = $printerBrand . " " . $groupTitle . " ". $printerType;
+							
+							
+						?>
+						
+							<td><h3><?php echo $groupNameFinal; ?> Cartridges</h3></td>
+							
+							  
+							<?php if($premiumAvailable == true): ?>
+								<td class="premium_brand"><h3>Premium Brand</h3><span>100% Made in USA <br/>Lifetime Guarantee</span></td>
+							<?php endif; ?>
+							<td class="value_brand"><h3>value Brand</h3><span>Great value <br/>365 Day Guarantee</span></td>
+						</tr>
+					</table>
+					<div class="left_side top">
+						<h3><?php echo $groupNameFinal; ?> Cartridges</h3>
+				    </div>
+					<div class="right_side top">
+						
+						<?php if($premiumAvailable == true): ?>
+						<div class="first"> 
+							<h3>Premium Brand</h3>
+							<p class="i">i</p>
+							<p class="tooltip">Our Premium, 100% Made in the USA cartridges come with a Lifetime Guarantee and lifetime support.</p>
+							<span>100% Made in the USA. Lifetime Guarantee.</span> 
+						</div>
+						<?php endif; ?>
+						<div class="second">
+							<h3>value Brand</h3>
+							<p class="i">i</p>
+							<p class="tooltip">Our Value Brand cartridges come with a 1 Year Guarantee and support.</p>
+							<span>Great value 365 Day Guarantee</span>
+						</div>
+					</div>	                    
+                </td>
+		</tr>
+        <?php foreach ($cartridgesArray as $cartId => $_cartIdItems): ?>
+
+        	<?php //echo "<pre>"; print_r($_cartIdItems); exit; ?>
+        	<?php foreach ($_cartIdItems as $_type => $_item):  ?>
+        	
+        	<?php if(isset($cartridgesArray[$cartId]['premium']) && isset($cartridgesArray[$cartId]['value']) && $_type == 'premium') continue; // merged premium into same value row ?>
+        	
+            <?php $_finalPriceInclTax = $this->helper('tax')->getPrice($_item, $_item->getFinalPrice(), true) ?>
+            
+            <tr>		
+                <td>
+					<div class="left_side">
+						<div class="image">
+							<?php $headers = get_headers($_item->getImageLink());
+								$ser503 = substr($headers[0], 9, 3); 
+							?>
+							<?php if ($_item->getImageLink() != '' && $ser503 == '200') : ?>	
+								<img class="thumbnail value_image"
+								 src="<?php echo $_item->getImageLink() ?>"
+								 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+								 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+								 
+								<?php if(isset($cartridgesArray[$cartId]['premium'])): 
+									$_itemPremium = $cartridgesArray[$cartId]['premium']; ?>
+										 <img class="thumbnail premium_image"
+										 src="<?php echo $_itemPremium->getImageLink() ?>"
+										 alt="<?php echo $this->escapeHtml($_itemPremium->getName()) ?>"
+										 title="<?php echo $this->escapeHtml($_itemPremium->getName()); ?>" style="display: none;" />
+								 <?php endif; ?>
+							<?php else: ?>
+								<img class="thumbnail"
+								 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+								 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+								 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+							<?php endif; ?>	 
+							
+							<?php $clr= $_item->getResource()->getAttribute('product_color')->getFrontend()->getValue($_item); ?>
+							<style>	
+									.only_group_product .right_side .<?php echo $clr ; ?>::before {
+										background: <?php echo $clr ; ?>;
+										border-radius: 16px;
+										content: "";
+									    height: 25px;
+										margin: 0 auto 5px;
+										padding-left: 25px;
+										width: 25px;
+										display: block;
+									}
+							</style>
+							<div class="color mobile">
+								<?php $pieces = explode(",", $clr);?>
+								<?php //count($pieces); ?>
+								<?php if($clr=='Color' or (count($pieces) > 1 ) ): ?>
+									<h1 class="  round_color  multi <?php echo $clr ; ?>    ">
+										<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>multi-color1.png">
+									</h1>	
+								<?php else: ?>	
+									<h1 class="round_color  <?php echo $clr ; ?> ">
+	
+									<?php echo $clr; ?></h1>
+								<?php endif; ?>
+							</div> 
+						</div>						
+						<div class="name">
+							<p class="name-wrapper">	
+								<?php echo $this->escapeHtml($_item->getName()) ?>
+								<div class="clearer"></div>
+								<p class="page_yeild">
+									<?php $Yield =  $this->escapeHtml($_item->getYield()); ?>
+									<?php if ($Yield) : ?>
+										<span>Page Yield - </span><?php echo $this->escapeHtml($_item->getYield()); ?>
+									<?php endif; ?>	
+								</p>
+								<div class="clearer"></div>
+								<p class="replace">
+								<?php 
+									$name = $this->escapeHtml($_item->getName());									
+									$domain = strpos($name, 'Replacement');
+									if ($domain !== false)  : ?>
+										<span>Replaces - </span><?php echo $name  ?>									
+										<div class="clearer"></div>						
+									<?php endif; ?>
+								</p>
+								<p class="picture_brand">	
+									<span>Picture - </span> <?php if ($_type != 'premium'): ?> Value Brand <?php else: ?> Premium Brand <?php endif; ?>
+								</p>	
+								<?php /* ?>	
+								<p class="picture_brand">
+								<span>Cart Id - </span> <?php echo $_item->getCartId(); ?>	
+								</p>	
+								<?php */ ?>						
+							</p>
+							<?php /********************** New Added************************/ ?>
+							<?php if($premiumAvailable == true): ?>
+							<div class="first mobile Premium_Brand mobile_premimum" >			
+								<?php if ($_type == 'premium') { ?>								
+									<span>Item # - </span><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+									<div class="clearer"></div>
+									<div class="detail_container">
+										<?php echo $this->getPriceHtml($_item, true) ?>							
+										<div class="add-to-cart">
+											<div class="qty-wrapper">
+												<?php if ($_item->isSaleable()) : ?>
+													<input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="mdecreqty(<?php echo $_item->getId(); ?>)"/>
+													<input onChange="changegrptextmobile(<?php echo $_item->getId(); ?>)" id="msuper_group_<?php echo $_item->getId(); ?>" onChange="" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" currpropricemobile="<?php echo $_item->getFinalPrice();?>"/>
+													<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="mincreqty(<?php echo $_item->getId(); ?>)" />											
+												<?php else: ?>
+													<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+												<?php endif; ?>
+											</div>
+										</div>
+									</div>
+									<script type="text/javascript">
+									var typingTimer;                //timer identifier
+									var doneTypingInterval = 2000;  //time in ms, 5 second for example
+
+									//on keyup, start the countdown
+									 jQuery('#msuper_group_<?php echo $_item->getId()?>').on('keyup', function () {
+									  clearTimeout(typingTimer);
+									  typingTimer = setTimeout(doneTypingMobile, doneTypingInterval);
+									});
+
+									//on keydown, clear the countdown 
+									 jQuery('#msuper_group_<?php echo $_item->getId()?>').on('keydown', function () {
+									  clearTimeout(typingTimer);
+									});
+									</script>
+								<?php } else if(isset($cartridgesArray[$cartId]['premium'])) { ?>
+									<?php $_itemPremium = $cartridgesArray[$cartId]['premium']; ?>
+									<strong>Item # - </strong><a href="<?php echo $_itemPremium->getProductUrl(); ?>"><?php echo $this->escapeHtml($_itemPremium->getSku()) ?></a>
+									<div class="clearer"></div>
+									<!--<div class="detail_container">-->
+										<?php echo $this->getPriceHtml($_itemPremium, true) ?>							
+										<div class="add-to-cart">
+											<div class="qty-wrapper">
+												<?php if ($_itemPremium->isSaleable()) : ?>
+												   	<input type="button" value="-" id="minus_<?php echo $_itemPremium->getId(); ?>" onClick="mdecreqty(<?php echo $_itemPremium->getId(); ?>)"/>
+														<input onChange="changegrptextmobile(<?php echo $_itemPremium->getId(); ?>)" id="msuper_group_<?php echo $_itemPremium->getId(); ?>" onChange="" type="text" pattern="\d*" name="super_group[<?php echo $_itemPremium->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" currpropricemobile="<?php echo $_itemPremium->getFinalPrice();?>"/>
+													<input type="button" value="+" id="add_<?php echo $_itemPremium->getId(); ?>" onClick="mincreqty(<?php echo $_itemPremium->getId(); ?>)" />
+												   <script type="text/javascript">
+														var typingTimer;                //timer identifier
+														var doneTypingInterval = 2000;  //time in ms, 5 second for example
+					
+														//on keyup, start the countdown
+													jQuery('#msuper_group_<?php echo $_itemPremium->getId()?>').on('keyup', function () {
+														  clearTimeout(typingTimer);
+														  typingTimer = setTimeout(doneTypingMobile, doneTypingInterval);
+														});
+					
+														//on keydown, clear the countdown 
+														jQuery('#msuper_group_<?php echo $_itemPremium->getId()?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														</script>
+												<?php else: ?>
+													<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+												<?php endif; ?>
+											</div>
+										</div>
+									<!--</div>-->
+									
+									 
+									
+								<?php } ?>	
+							</div>
+							<?php endif; ?>
+							
+							<div class="second mobile Value_Brand mobile-value" >
+								
+								<?php if ($_type != 'premium') { ?>
+									<span>Item # - </span><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+									<div class="clearer"></div>
+									<!--<div class="detail_container">-->
+										<?php echo $this->getPriceHtml($_item, true) ?>								
+										<div class="add-to-cart">
+											<div class="qty-wrapper">
+												<?php if ($_item->isSaleable()) : ?>
+												   <input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="mdecreqty(<?php echo $_item->getId(); ?>)"/>
+														<input onChange="changegrptextmobile(<?php echo $_item->getId(); ?>)" id="msuper_group_<?php echo $_item->getId(); ?>" onChange="" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" currpropricemobile="<?php echo $_item->getFinalPrice();?>"/>
+													<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="mincreqty(<?php echo $_item->getId(); ?>)" />
+												 <script type="text/javascript">
+														var typingTimer;                //timer identifier
+														var doneTypingInterval = 2000;  //time in ms, 5 second for example
+					
+														//on keyup, start the countdown
+														jQuery('#msuper_group_<?php echo $_item->getId()?>').on('keyup', function () {
+														  clearTimeout(typingTimer);
+														  typingTimer = setTimeout(doneTypingMobile, doneTypingInterval);
+														});
+					
+														//on keydown, clear the countdown 
+														jQuery('#msuper_group_<?php echo $_item->getId()?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														</script>
+													
+												<?php else: ?>
+													<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+												<?php endif; ?>
+											</div>
+										</div>	
+									<!--</div>-->
+								<?php } ?>	
+							</div>
+							<?php /********************** End of New Added************************/ ?>
+							
+						</div>
+						
+						<?php $clr= $_item->getResource()->getAttribute('product_color')->getFrontend()->getValue($_item); ?>
+							<style>	
+									.only_group_product .left_side .<?php echo $clr ; ?>::before {
+										background: <?php echo $clr ; ?>;
+										border-radius: 16px;
+										content: "";
+									    height: 25px;
+										margin: 0 auto 5px;
+										padding-left: 25px;
+										width: 25px;
+										display: block;
+									}
+							</style>
+							<div class="color desktop">
+								<?php $pieces = explode(",", $clr);?>
+								<?php //count($pieces); ?>
+								<?php if($clr=='Color' or (count($pieces) > 1 ) ): ?>
+									<h1 class="  round_color  multi <?php echo $clr ; ?>    ">
+										<img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) ?>multi-color1.png">
+									</h1>	
+								<?php else: ?>	
+									<h1 class="round_color  <?php echo $clr ; ?> ">
+	
+									<?php echo $clr; ?></h1>
+								<?php endif; ?>
+							</div>
+					</div>
+					<div class="right_side content">			
+						<?php if($premiumAvailable == true): ?>
+						<div class="first mobile Premium_Brand 2" >			
+							<?php if ($_type == 'premium') { ?>								
+								<strong>Item # - </strong><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+								<div class="clearer"></div>
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>							
+									<div class="add-to-cart">
+										<div class="qty-wrapper">
+											<?php if ($_item->isSaleable()) : ?>
+                                                     <input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="decreqty(<?php echo $_item->getId(); ?>)"/>
+													<input onChange="changegrptext(<?php echo $_item->getId(); ?>)" id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" currproprice="<?php echo $_item->getFinalPrice();?>"/>
+													<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="increqty(<?php echo $_item->getId(); ?>)" />
+											      <script type="text/javascript">
+													var typingTimer;                //timer identifier
+													var doneTypingInterval = 2000;  //time in ms, 5 second for example
+				
+													//on keyup, start the countdown
+													jQuery('#super_group_<?php echo $_item->getId() ?>').on('keyup', function () {
+													  clearTimeout(typingTimer);
+													  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+													});
+				
+													//on keydown, clear the countdown 
+													jQuery('#super_group_<?php echo $_item->getId() ?>').on('keydown', function () {
+													  clearTimeout(typingTimer);
+													});
+													</script>
+											<?php else: ?>
+												<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+											<?php endif; ?>
+										</div>
+									</div>
+								</div>
+							<?php } else if(isset($cartridgesArray[$cartId]['premium'])) { ?>
+								<?php $_itemPremium = $cartridgesArray[$cartId]['premium']; ?>
+								<p class="product_sku">
+									<span>Item # - </span><a href="<?php echo $_itemPremium->getProductUrl(); ?>"><?php echo $this->escapeHtml($_itemPremium->getSku()) ?></a>
+								</p>	
+								<div class="clearer"></div>
+								<!--<div class="detail_container">-->
+									<?php echo $this->getPriceHtml($_itemPremium, true) ?>							
+									<div class="add-to-cart">
+										<div class="qty-wrapper">
+											<?php if ($_itemPremium->isSaleable()) : ?>
+											        <input type="button" value="-" id="minus_<?php echo $_itemPremium->getId(); ?>" onClick="decreqty(<?php echo $_itemPremium->getId(); ?>)"/>
+													<input  onChange="changegrptext(<?php echo $_itemPremium->getId(); ?>)"  id="super_group_<?php echo $_itemPremium->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_itemPremium->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" currproprice="<?php echo $_itemPremium->getFinalPrice();?>"/>
+													<input type="button" value="+" id="add_<?php echo $_itemPremium->getId(); ?>" onClick="increqty(<?php echo $_itemPremium->getId(); ?>)" />
+													 <script type="text/javascript">
+														var typingTimer;                //timer identifier
+														var doneTypingInterval = 2000;  //time in ms, 5 second for example
+					
+														//on keyup, start the countdown
+														jQuery('#super_group_<?php echo $_itemPremium->getId() ?>').on('keyup', function () {
+														  clearTimeout(typingTimer);
+														  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+														});
+					
+														//on keydown, clear the countdown 
+														jQuery('#super_group_<?php echo $_itemPremium->getId() ?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														</script>
+											<?php else: ?>
+												<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+											<?php endif; ?>
+										</div>
+									</div>
+								<!--</div>-->
+								
+							 
+								
+							<?php } ?>	
+						</div>
+						<?php endif; ?>
+						
+						<div class="second mobile Value_Brand 2" <?php  if ($_type != 'premium')  { echo "not_salable"; } ?>  >
+							
+							<?php if ($_type != 'premium') { ?>
+								<p class="product_sku">
+								<span>Item # - </span><a href="<?php echo $_item->getProductUrl(); ?>"><?php echo $this->escapeHtml($_item->getSku()) ?></a>
+								</p>
+								<div class="clearer"></div>
+								<!--<div class="detail_container">-->
+									<?php echo $this->getPriceHtml($_item, true) ?>								
+									<div class="add-to-cart">
+										<div class="qty-wrapper">
+											<?php if ($_item->isSaleable()) : ?>
+												    <input type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="decreqty(<?php echo $_item->getId(); ?>)"/>
+													<input  onChange="changegrptext(<?php echo $_item->getId(); ?>)"  id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus" currproprice="<?php echo $_item->getFinalPrice();?>"/>
+													<input type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="increqty(<?php echo $_item->getId(); ?>)" />
+													 <script type="text/javascript">
+														var typingTimer;                //timer identifier
+														var doneTypingInterval = 2000;  //time in ms, 5 second for example
+					
+														//on keyup, start the countdown
+														jQuery('#super_group_<?php echo $_item->getId() ?>').on('keyup', function () {
+														  clearTimeout(typingTimer);
+														  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+														});
+					
+														//on keydown, clear the countdown 
+														jQuery('#super_group_<?php echo $_item->getId() ?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														</script>
+												 
+											<?php else: ?>
+												<p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+											<?php endif; ?>
+										</div>
+									</div>	
+								<!--</div>-->
+							<?php } ?>	
+						</div>
+					</div>					
+                </td>
+            </tr>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+        <?php else: ?>
+           <tr>
+               <td class="nocategory" colspan="<?php if ($_product->isSaleable()): ?>4<?php else : ?>3<?php endif; ?>"><?php echo $this->__('No cartridges of this printer are available.') ?></td>
+           </tr>
+        <?php endif; ?>
+        </tbody>
+    </table>
+</div>
+<script type="text/javascript">decorateTable('super-product-table')</script>
+
+
+<div class="only-bgcolor">
+	<div class="price-and-add-to-cart">
+		<ul>			
+			<li>
+				<div class="image">
+					<img src=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'wysiwyg/guarantee.png';?>">
+				</div>
+				<span class="text">1 Year Guarantee for Value Brand<br>Lifetime Guarantee for Premium Brand</span>
+			</li>
+			<li>
+				<div class="image">
+					<img src=" <?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).'wysiwyg/free_ship.png';?>">
+				</div>
+				<span class="text">Free Shipping on <br>Orders Over $49</span>
+			</li>			
+			<li class="last">
+				<div class="price_details">
+					<?php if ($this->getCanShowProductPrice($_product)): ?>                
+						<?php if ($this->getCanShowProductPrice($itemModel)): ?>
+						<h3>Subtotal: </h3><?php //echo $this->getPriceHtml($itemModel, true)?>
+						<p id="finalspecial-price" class="special-price">
+						        <span id="dollarthis" class="price" >$</span>
+                                <span class="price" id="product-price-all" finalattprice = "0">0</span>
+                       </p>
+						<?php //echo $this->getTierPriceHtml($itemModel) ?>
+						<?php endif; ?>                
+					<?php endif; ?>
+				</div>
+				<p class="action ">
+					<button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+						<span><span><?php echo $this->__('Add to Cart') ?></span></span>
+					</button>
+				</p>
+			</li>	
+		</ul>	
+	</div>
+</div> 
+
+
+<?php $_itemModel = Mage::getModel('catalog/product')->load($_item->getId()); ?>
+
+<div class="cartridge-slider">	
+	<div class="line  cartridge_slidersline" style='display:none'></div>
+	<h3> Original Cartridges for <?php echo $_product->getAttributeText('printer_brand'); ?> <?php echo $_product->getAttributeText('printer_model'); ?></h3>
+	<div class="line"></div>
+	<?php if(count($oemArray) == 0): ?>
+		<p><?php echo $this->__('No OEM cartridges for this printer model are available at this time.') ?></p>
+	<?php endif; ?>
+	
+	<?php if(count($oemArray) > 0): ?>
+	<div class="wrapper">
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<?php foreach ($oemArray as $_item): ?> 
+						<li>
+							<div class="product">
+								<div class="pro_img">
+									<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">									
+										<?php if ($_item->getSmallImageLink() != '') : ?>										
+											<img class="thumbnail"
+											 src="<?php echo $_item->getSmallImageLink() ?>"
+											 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+											 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+										<?php else: ?>
+											<img class="thumbnail"
+											 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+											 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+											 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+									<?php endif; ?>
+									</a>
+								</div>	
+								
+								<p class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></p>
+	
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>
+									
+									<div class="add-to-cart">
+										<?php if(!$_item->isGrouped()): ?>
+										<div class="qty-wrapper">            
+										             <input class="desktopdecrpt" type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="decreqty(<?php echo $_item->getId(); ?>)"/>
+											         <input class="mobiledecrpt" type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="mdecreqty(<?php echo $_item->getId(); ?>)"/>
+													<input   onChange="changegrptext(<?php echo $_item->getId(); ?>)"  id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus slidedesktop" currproprice="<?php echo $_item->getFinalPrice();?>"/>
+                                                     <input   onChange="changegrptextmobile(<?php echo $_item->getId(); ?>)"  id="msuper_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus slidemobile" currpropricemobile="<?php echo $_item->getFinalPrice();?>"/>
+													<input class="desktopincre" type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="increqty(<?php echo $_item->getId(); ?>)" />
+													<input class="mobiledecrpt" type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="mincreqty(<?php echo $_item->getId(); ?>)" />
+													 <script type="text/javascript">
+														var typingTimer;                //timer identifier
+														var doneTypingInterval = 2000;  //time in ms, 5 second for example
+					
+														//on keyup, start the countdown
+													    jQuery('#super_group_<?php echo $_item->getId() ?>').on('keyup', function () {
+														  clearTimeout(typingTimer);
+														  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+														});
+														jQuery('#msuper_group_<?php echo $_item->getId() ?>').on('keyup', function () {
+															  clearTimeout(typingTimer);
+															  typingTimer = setTimeout(doneTypingMobile, doneTypingInterval);
+															});
+														//on keydown, clear the countdown 
+														jQuery('#msuper_group_<?php echo $_item->getId() ?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														//on keydown, clear the countdown 
+														jQuery('#super_group_<?php echo $_item->getId() ?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														</script>
+												 
+											<?php // echo $this->getChildHtml('addtocart') ?>
+										</div>
+										
+										<div class='add-to-cart'>
+											<a urldata="<?php echo Mage::helper('checkout/cart')->getAddUrl($_item); ?>" onClick="callmeplease(this,<?php echo $_item->getId() ?>)" id="cartupdateme" href='javascript:void(0)'>Add To Cart</a>
+										</div>	
+										
+										<?php endif; ?>													
+									</div>												
+									<div class="clear"></div>							
+								</div>
+							</div>
+						</li>
+						
+					 
+					<?php endforeach; ?>	
+				</ul>
+			</div>
+		</div>		
+		<a href="#" class="jcarousel-control-prev"></a>
+		<a href="#" class="jcarousel-control-next"></a>		
+	</div>
+   <?php endif; ?>
+	
+</div>
+ 
+<?php if(count($otherRelated) > 0): ?>
+<div class="cartridge-slider">
+	<div class="line"></div>
+	<h3> Other Related Products for <?php echo $_product->getAttributeText('printer_brand'); ?> <?php echo $_product->getAttributeText('printer_model'); ?></h3>
+	<?php if(count($otherRelated) == 0): ?>
+		<?php echo $this->__('Other related items not found.') ?>
+	<?php endif; ?>
+	<div class="line"></div>
+
+	
+	
+	<div class="wrapper">
+		<div class="jcarousel-wrapper">
+			<div class="jcarousel">
+				<ul>
+					<?php foreach ($otherRelated as $_item): ?>
+						<li>
+							<div class="product">
+								<div class="pro_img">
+									<a href="<?php echo $_item->getProductUrl() ?>" title="<?php echo $this->htmlEscape($_item->getName()) ?>" class="product-image">
+										<?php if ($_item->getSmallImageLink() != '') : ?>	
+												<img class="thumbnail"
+												 src="<?php echo $_item->getSmallImageLink() ?>"
+												 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+												 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+											<?php else: ?>
+												<img class="thumbnail"
+												 src="<?php echo $this->helper('catalog/image')->init($_item, 'thumbnail')->constrainOnly(true)->resize(150, 150); ?>"
+												 alt="<?php echo $this->escapeHtml($_item->getName()) ?>"
+												 title="<?php echo $this->escapeHtml($_item->getName()); ?>" />
+										<?php endif; ?>
+									</a>
+								</div>
+	
+								<p class="product-name"><a href="<?php echo $_item->getProductUrl() ?>"><?php echo $this->htmlEscape($_item->getName()) ?></a></p>
+	
+								<div class="detail_container">
+									<?php echo $this->getPriceHtml($_item, true) ?>
+									
+									<div class="add-to-cart">
+										<?php if(!$_item->isGrouped()): ?>
+										<div class="qty-wrapper">            											
+											         <input class="desktopdecrpt" type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="decreqty(<?php echo $_item->getId(); ?>)"/>
+											         <input class="mobiledecrpt" type="button" value="-" id="minus_<?php echo $_item->getId(); ?>" onClick="mdecreqty(<?php echo $_item->getId(); ?>)"/>
+													<input   onChange="changegrptext(<?php echo $_item->getId(); ?>)"  id="super_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus slidedesktop" currproprice="<?php echo $_item->getFinalPrice();?>"/>
+													<input   onChange="changegrptextmobile(<?php echo $_item->getId(); ?>)"  id="msuper_group_<?php echo $_item->getId(); ?>" type="text" pattern="\d*" name="super_group[<?php echo $_item->getId() ?>]" maxlength="12" value="0" title="<?php echo $this->__('Qty') ?>" class="input-text qty plusminus slidemobile" currpropricemobile="<?php echo $_item->getFinalPrice();?>"/>
+													<input class="desktopincre" type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="increqty(<?php echo $_item->getId(); ?>)" />
+													<input class="mobiledecrpt" type="button" value="+" id="add_<?php echo $_item->getId(); ?>" onClick="mincreqty(<?php echo $_item->getId(); ?>)" />
+													 <script type="text/javascript">
+														var typingTimer;                //timer identifier
+														var doneTypingInterval = 2000;  //time in ms, 5 second for example
+														//on keyup, start the countdown
+														jQuery('#super_group_<?php echo $_item->getId() ?>').on('keyup', function () {
+														  clearTimeout(typingTimer);
+														  typingTimer = setTimeout(doneTyping, doneTypingInterval);
+														});
+														jQuery('#msuper_group_<?php echo $_item->getId() ?>').on('keyup', function () {
+															  clearTimeout(typingTimer);
+															  typingTimer = setTimeout(doneTypingMobile, doneTypingInterval);
+															});
+														//on keydown, clear the countdown 
+														jQuery('#msuper_group_<?php echo $_item->getId() ?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														jQuery('#super_group_<?php echo $_item->getId() ?>').on('keydown', function () {
+														  clearTimeout(typingTimer);
+														});
+														</script>
+											<?php // echo $this->getChildHtml('addtocart') ?>
+										</div>
+											<div class='add-to-cart'>
+															<a urldata="<?php echo Mage::helper('checkout/cart')->getAddUrl($_item); ?>" onClick="callmeplease(this,<?php echo $_item->getId() ?>)" id="cartupdateme" href='javascript:void(0)'>Add To Cart</a>
+											</div>
+										
+										<?php endif; ?>													
+									</div>												
+									<div class="clear"></div>							
+								</div>
+							</div>
+						</li>
+					<?php endforeach; ?>	
+				</ul>
+			</div>
+		</div>		
+		<a href="#" class="jcarousel-control-prev"></a>
+		<a href="#" class="jcarousel-control-next"></a>		
+	</div>
+
+	<div class="only-bgcolor desktop">
+		<div class="price-and-add-to-cart">
+			<ul>
+				<li class="mobile">	
+					<div class="price_details">
+						<?php if ($this->getCanShowProductPrice($_product)): ?>                
+							<?php if ($this->getCanShowProductPrice($itemModel)): ?>
+							 <h3>Subtotal: </h3><?php //echo $this->getPriceHtml($itemModel, true)?>
+								<p id="finalspecial-price-mobile" class="special-price">
+								        <span id="dollarthis-mobile" class="price" >$</span>
+		                                <span class="price" id="product-price-all-mobile" finalattprice-mobile = "0">0</span>
+		                       </p>
+							<?php endif; ?>                
+						<?php endif; ?>
+					  
+					</div>
+					<p class="action">
+						<button type="button" title="Add to Cart" class="button btn-cart" onclick="productAddToCartForm.submit(this)">
+							<span><span><?php echo $this->__('Add to Cart') ?></span></span>
+						</button>
+					</p>
+				</li>
+			</ul>
+		</div>
+	</div>	
+   
+</div>
+ <?php endif; ?>	
+	
+<script type="text/javascript">
+jQuery(document).ready(function(){
+	if(jQuery('.jcarousel').length > 0) {
+		jQuery('.jcarousel').jcarousel(); 
+	}
+});
+	
+function showHideProducts( )
+{	
+	
+	jQuery('#super-product-table tr td').not(jQuery('.mobile_tab td')).css('display','block');
+	if(jQuery( "#super-product-table" ).hasClass( "value_brand_table" ))
+	{	
+		//alert('val');
+		jQuery(".value_brand_table .left_side .name" ).each(function( i ) 
+		{
+				var htmllength=jQuery(this).find('.second .add-to-cart  .qty-wrapper').length;
+				//alert(jQuery(this).find('.add-to-cart .qty-wrapper').length);
+				 
+				if(htmllength==0 )
+				{
+				  jQuery(this).parent().parent().css('display','none');
+				}
+				  
+		 });	 	
+		  
+	}	
+	else
+	{
+		//alert('pre');
+		jQuery(".premimum_brand_table .left_side .name" ).each(function( i ) 
+		{
+				var htmllength=jQuery(this).find('.mobile_premimum .add-to-cart  .qty-wrapper').length;
+				//alert(jQuery(this).find('.add-to-cart .qty-wrapper').length);
+				 
+				if(htmllength==0)
+				{
+				  jQuery(this).parent().parent().css('display','none');
+				}
+				 
+				  		
+
+		 });
+		
+		
+	}
+	
+	
+	 
+}	
+	
+function callmeplease(obje,divid)
+{
+  var oldurl = jQuery(obje).attr("urldata");
+  var qtym =  parseInt(jQuery("#msuper_group_"+divid).val()); 
+  var qtyd =  parseInt(jQuery("#super_group_"+divid).val());
+  var updurl ="";
+  if(qtym > 0)
+  {
+	  updurl = oldurl+"qty/"+qtym;
+  }
+  else if(qtyd > 0)
+  {
+	  updurl = oldurl+"qty/"+qtyd;
+	  }
+  else {
+  alert("Please Select Qty");
+  }
+ window.location.href=updurl;
+}
+function increqty(idofdiv)
+{
+	    var cval = 0
+	    cval = parseInt(jQuery("#super_group_"+idofdiv).val()); 
+		cval++;
+		jQuery("#super_group_"+idofdiv).val(parseInt(cval));
+		changegrptext(idofdiv);
+ 
+}
+function decreqty(idofdiv)
+{
+	var cval1 =0;
+	 
+	cval1 = parseInt(jQuery("#super_group_"+idofdiv).val());
+	if (cval1 != 0 ){
+		cval1 = cval1-1;
+		jQuery("#super_group_"+idofdiv).val(parseInt(cval1));
+	}
+	changegrptext(idofdiv);
+}
+function mincreqty(idofdiv)
+{
+	var cval = 0
+	  cval = parseInt(jQuery("#msuper_group_"+idofdiv).val());  
+	cval++;
+	jQuery("#msuper_group_"+idofdiv).val(parseInt(cval));
+	changegrptextmobile();
+}
+function mdecreqty(idofdiv)
+{
+	var cval1 =0;
+	 cval1 = parseInt(jQuery("#msuper_group_"+idofdiv).val());
+	 if (cval1 != 0 ){
+		 cval1 = cval1-1;
+	    jQuery("#msuper_group_"+idofdiv).val(parseInt(cval1)); 
+	 } 
+	 changegrptextmobile();
+}
+function changegrptext(idofdiv)
+{
+    var total=0;
+    var totalslide=0;
+    var totalslide3=0;
+    var prices=0;
+    var slideprice=0;
+    var slideprice3=0;
+    var qtys=0;
+    var pricesslide=0;
+    var qtysslide=0;
+    var qtysslide3=0;
+    jQuery(".right_side.content .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+    	slideprice3 = parseFloat(jQuery(this).attr("currproprice"));
+    	qtysslide3= parseInt(jQuery(this).val());
+    	totalslide3= totalslide3 + (slideprice3 * qtysslide3);
+ 	   });
+    
+      jQuery(".right_side.content .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+	   prices = parseFloat(jQuery(this).attr("currproprice"));
+	   qtys= parseInt(jQuery(this).val());
+	   total= total + (prices * qtys);
+	   });
+
+   jQuery(".only_group_product .cartridge-slider").each(function(){
+	   jQuery(this).find('.jcarousel li').each(function(){
+		   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus").attr("currproprice"));
+		   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus").val());
+		   totalslide= totalslide + (pricesslide * qtysslide);
+	   });
+	   });
+      var finaltotal = total + totalslide + totalslide3;
+      finaltotal =    parseFloat(finaltotal).toFixed(2);
+      jQuery("#finalspecial-price  #product-price-all").attr("finalattprice",finaltotal);
+	  jQuery("#finalspecial-price  #product-price-all").text(finaltotal);
+      if(finaltotal > 0) {jQuery("#dollarthis").show();}
+   
+}
+function changegrptextmobile(idofdiv)
+{
+	 var total=0;
+	    var totalslide=0;
+	    var prices=0;
+	    var slideprice=0;
+	    var qtys=0;
+	    var pricesslide=0;
+	    var qtysslide=0;
+	    var prices3=0;
+	    var qtys3=0;
+	    var total3=0;
+	     jQuery(".left_side  .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+				   prices = parseFloat(jQuery(this).attr("currpropricemobile"));
+				   qtys= parseInt(jQuery(this).val());
+				   total= total + (prices * qtys);
+		   });
+	     jQuery(".left_side  .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+			   prices3 = parseFloat(jQuery(this).attr("currpropricemobile"));
+			   qtys3= parseInt(jQuery(this).val());
+			   total3= total3 + (prices3 * qtys3);
+	   });
+	     jQuery(".only_group_product .cartridge-slider").each(function(){
+					     jQuery(this).find('.jcarousel li').each(function(){
+							   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").attr("currpropricemobile"));
+							   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").val());
+							   totalslide= totalslide + (pricesslide * qtysslide);
+					   });
+		   });
+	      var finaltotal = total + totalslide + total3;
+	      finaltotal =    parseFloat(finaltotal).toFixed(2);
+	       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").attr("finalattprice-mobile",finaltotal);
+	       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").text(finaltotal);
+	       if(finaltotal > 0) {jQuery("#dollarthis-mobile").show();}
+	       
+}
+function doneTypingMobile() {
+    var total=0;
+    var totalslide=0;
+    var prices=0;
+    var slideprice=0;
+    var qtys=0;
+    var pricesslide=0;
+    var qtysslide=0;
+    var prices3=0;
+    var qtys3=0;
+    var total3=0;
+      jQuery(".left_side  .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+	   prices = parseFloat(jQuery(this).attr("currpropricemobile"));
+	    qtys= parseInt(jQuery(this).val());
+	   total= total + (prices * qtys);
+	   });
+      jQuery(".left_side  .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+   	   prices3 = parseFloat(jQuery(this).attr("currpropricemobile"));
+   	    qtys3= parseInt(jQuery(this).val());
+   	   total3= total3 + (prices3 * qtys3);
+   	   });
+     jQuery(".only_group_product .cartridge-slider").each(function(){
+	     jQuery(this).find('.jcarousel li').each(function(){
+		   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").attr("currpropricemobile"));
+		   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").val());
+		   totalslide= totalslide + (pricesslide * qtysslide);
+	   });
+	   });
+      var finaltotal = total + totalslide + total3;
+      finaltotal =    parseFloat(finaltotal).toFixed(2);
+       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").attr("finalattprice-mobile",finaltotal);
+       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").text(finaltotal);
+       if(finaltotal > 0) {jQuery("#dollarthis-mobile").show();}
+      
+}
+function doneTyping() {
+	   var total=0;
+	       var totalslide=0;
+	       var totalslide3=0;
+	       var prices=0;
+	       var slideprice=0;
+	       var slideprice3=0;
+	       var qtys=0;
+	       var pricesslide=0;
+	       var qtysslide=0;
+	       var qtysslide3=0;
+	       jQuery(".right_side.content .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+	       	slideprice3 = parseFloat(jQuery(this).attr("currproprice"));
+	       	qtysslide3= parseInt(jQuery(this).val());
+	       	totalslide3= totalslide3 + (slideprice3 * qtysslide3);
+	    	   });
+	       
+	         jQuery(".right_side.content .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+	   	   prices = parseFloat(jQuery(this).attr("currproprice"));
+	   	   qtys= parseInt(jQuery(this).val());
+	   	   total= total + (prices * qtys);
+	   	   });
+
+	      jQuery(".only_group_product .cartridge-slider").each(function(){
+	   	   jQuery(this).find('.jcarousel li').each(function(){
+	   		   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus").attr("currproprice"));
+	   		   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus").val());
+	   		   totalslide= totalslide + (pricesslide * qtysslide);
+	   	   });
+	   	   });
+	         var finaltotal = total + totalslide + totalslide3;
+	         finaltotal =    parseFloat(finaltotal).toFixed(2);
+	         jQuery("#finalspecial-price  #product-price-all").attr("finalattprice",finaltotal);
+	   	  jQuery("#finalspecial-price  #product-price-all").text(finaltotal);
+	         if(finaltotal > 0) {jQuery("#dollarthis").show();}
+	       
+	}
+jQuery(document).ready(function(){
+
+	 
+	jQuery('.input-text.qty.plusminus.slidemobile').css('display','none');
+	jQuery('.input-text.qty.plusminus.slidedesktop').css('display','in-block');
+	
+	jQuery('.desktopdecrpt').css('display','inline-block');
+	jQuery('.mobiledecrpt').css('display','none');
+
+	jQuery('.desktopincre').css('display','inline-block');
+	jQuery('.mobiledecrpt').css('display','none');
+	var width = jQuery(window).width();
+
+
+	if ( width <= 752) {
+		jQuery('input.input-text.qty[id^="super_group_"]').attr("disabled", "disabled"); 
+		jQuery('input.input-text.qty[id^="msuper_group_"]').removeAttr('disabled');
+      }
+	else{
+		jQuery('input.input-text.qty[id^="msuper_group_"]').attr("disabled", "disabled"); 
+		jQuery('input.input-text.qty[id^="super_group_"]').removeAttr("disabled"); 
+		}
+	//console.log(width);	
+	if ( width <= 752){
+		
+		
+		
+		jQuery('#super-product-table').addClass('premimum_brand_table');
+		showHideProducts();
+		
+		<?php if($premiumAvailable == true): ?>
+			jQuery('.mobile_tab td.value_brand').removeClass("active");
+			jQuery('.mobile_tab td.premium_brand').addClass("active");	
+			jQuery('#super-product-table .Premium_Brand').css('display','block');
+			jQuery('#super-product-table .Value_Brand').css('display','none');
+		<?php else: ?>
+			jQuery('.mobile_tab td.value_brand').addClass("active");
+			jQuery('#super-product-table .Value_Brand').css('display','block');
+		    var test;
+		<?php endif; ?>
+		
+		jQuery('.input-text.qty.plusminus.slidemobile').css('display','inline-block');
+		jQuery('.input-text.qty.plusminus.slidedesktop').css('display','none');
+
+		jQuery('.desktopincre').css('display','none');
+		jQuery('.mobiledecrpt').css('display','inline-block');
+		
+		jQuery('.desktopdecrpt').css('display','none');
+		jQuery('.mobiledecrpt').css('display','inline-block');
+		//jQuery('.only_group_product .right_side.content').addClass('toggle');
+		jQuery('.only-bgcolor').addClass('sticky');	
+		/** for mobile toggle premium and brand value*/		
+		jQuery('.mobile_tab td.premium_brand').on('click',function() {				
+			jQuery('.mobile_tab td.value_brand').removeClass("active");
+			jQuery('.mobile_tab td.premium_brand').addClass("active");	
+			jQuery('#super-product-table .Premium_Brand').css('display','block');
+			jQuery('#super-product-table .Value_Brand').css('display','none');
+			
+			jQuery('#super-product-table .image .value_image').css('display','none');
+			jQuery('#super-product-table .image .premium_image').css('display','block');
+			
+			jQuery('#super-product-table').removeClass('value_brand_table');
+			jQuery('#super-product-table').addClass('premimum_brand_table');
+			showHideProducts();
+			 
+			
+			 
+			
+			
+		});
+
+		jQuery('.mobile_tab td.value_brand').on('click',function() {				  
+			jQuery('.mobile_tab td.premium_brand').removeClass("active");
+			jQuery('.mobile_tab td.value_brand').addClass("active");	
+			jQuery('#super-product-table .Premium_Brand').css('display','none');
+			jQuery('#super-product-table .Value_Brand').css('display','block');  
+			// jQuery('#super-product-table tr td').not(jQuery('.mobile_tab td')).css('display','block');
+			jQuery('#super-product-table .image .premium_image').css('display','none');
+			jQuery('#super-product-table .image .value_image').css('display','block');
+			jQuery('#super-product-table').removeClass('premimum_brand_table');
+			jQuery('#super-product-table').addClass('value_brand_table');
+			showHideProducts(); 
+			
+		}); 
+	}
+	if( width > 752){
+		//jQuery('.only_group_product .right_side.content').removeClass('toggle');
+		jQuery('.only-bgcolor').removeClass('sticky');	
+		jQuery('.input-text.qty.plusminus.slidemobile').css('display','none');	
+		jQuery('.input-text.qty.plusminus.slidedesktop').css('display','inline-block');	
+
+		jQuery('.desktopincre').css('display','inline-block');
+		jQuery('.mobiledecrpt').css('display','none');
+		
+		jQuery('.desktopdecrpt').css('display','inline-block');
+		jQuery('.mobiledecrpt').css('display','none');
+	}
+});
+	
+
+
+jQuery(window).resize(function(){
+
+	var width = jQuery(window).width();
+
+	if ( width <= 752) {
+		jQuery('input.input-text.qty[id^="super_group_"]').attr("disabled", "disabled"); 
+		jQuery('input.input-text.qty[id^="msuper_group_"]').removeAttr('disabled');
+      }
+	else{
+		jQuery('input.input-text.qty[id^="msuper_group_"]').attr("disabled", "disabled"); 
+		jQuery('input.input-text.qty[id^="super_group_"]').removeAttr("disabled"); 
+		}
+	
+	//console.log(width);	
+	if ( width <= 752) {
+		
+		 
+
+		<?php if($premiumAvailable == true): ?>
+			//jQuery('.mobile_tab td.value_brand').addClass("active");	
+			//jQuery('#super-product-table .Value_Brand').css('display','block');  
+		<?php endif; ?>
+		
+		showHideProducts();
+		
+		//jQuery('#super-product-table').addClass('premimum_brand_table');
+		if(jQuery('.mobile_tab .premium_brand').hasClass('active'))
+		{
+		   jQuery('#super-product-table').removeClass('value_brand_table');
+		   jQuery('#super-product-table').addClass('premimum_brand_table');
+		   jQuery('#super-product-table .image .value_image').css('display','none');
+		   jQuery('#super-product-table .image .premium_image').css('display','block');	
+		}
+		else 
+		{
+		   jQuery('#super-product-table .image .premium_image').css('display','none');
+		   jQuery('#super-product-table .image .value_image').css('display','block');	
+		   jQuery('#super-product-table').removeClass('premimum_brand_table');
+		   jQuery('#super-product-table').addClass('value_brand_table');
+
+		} 
+		
+		
+		if((!jQuery('.mobile_tab td.value_brand').hasClass("active")) && (!jQuery('.mobile_tab td.premium_brand').hasClass("active"))) {
+			jQuery('.mobile_tab td.value_brand').removeClass("active");
+			jQuery('.mobile_tab td.premium_brand').addClass("active");	
+			jQuery('#super-product-table .Premium_Brand').css('display','block');
+			jQuery('#super-product-table .Value_Brand').css('display','none');
+
+			jQuery('.only-bgcolor').addClass('make-sticky');	
+			
+			/** for mobile toggle premium and brand value*/		
+			
+			jQuery('.mobile_tab td.premium_brand').on('click',function() {				
+				jQuery('.mobile_tab td.value_brand').removeClass("active");
+				jQuery('.mobile_tab td.premium_brand').addClass("active");	
+				jQuery('#super-product-table .Premium_Brand').css('display','block');
+				jQuery('#super-product-table .Value_Brand').css('display','none');
+				jQuery('#super-product-table .image .value_image').css('display','none');
+				jQuery('#super-product-table .image .premium_image').css('display','block');
+				jQuery('#super-product-table').removeClass('value_brand_table');
+				jQuery('#super-product-table').addClass('premimum_brand_table');
+				showHideProducts();
+				 
+		});
+
+			jQuery('.mobile_tab td.value_brand').on('click',function() {				  
+				jQuery('.mobile_tab td.premium_brand').removeClass("active");
+				jQuery('.mobile_tab td.value_brand').addClass("active");	
+				jQuery('#super-product-table .Premium_Brand').css('display','none');
+				jQuery('#super-product-table .Value_Brand').css('display','block');  
+				//jQuery('#super-product-table tr td').not(jQuery('.mobile_tab td')).css('display','block');
+				jQuery('#super-product-table .image .premium_image').css('display','none');
+				jQuery('#super-product-table .image .value_image').css('display','block');
+				jQuery('#super-product-table').removeClass('premimum_brand_table');
+				jQuery('#super-product-table').addClass('value_brand_table');
+				showHideProducts();
+				 
+			});
+		}
+	}
+
+	if( width > 752){
+		//jQuery('.only_group_product .right_side.content').removeClass('toggle');
+		jQuery('.mobile_tab td.value_brand').removeClass("active");
+		jQuery('.mobile_tab td.premium_brand').removeClass("active");	
+		jQuery('#super-product-table .Premium_Brand').css('display','block');
+		jQuery('#super-product-table .Value_Brand').css('display','block');
+		
+		jQuery('.only-bgcolor').removeClass('sticky');		
+	}
+
+	function callmeplease(obje,divid)
+	{
+	  var oldurl = jQuery(obje).attr("urldata");
+	  var qtym =  parseInt(jQuery("#msuper_group_"+divid).val()); 
+	  var qtyd =  parseInt(jQuery("#super_group_"+divid).val());
+	  var updurl ="";
+	  if(qtym > 0)
+	  {
+		  updurl = oldurl+"qty/"+qtym;
+	  }
+	  else if(qtyd > 0)
+	  {
+		  updurl = oldurl+"qty/"+qtyd;
+		  }
+	  else {
+	  alert("Please Select Qty");
+	  }
+	 window.location.href=updurl;
+	}
+	function increqty(idofdiv)
+	{
+		    var cval = 0
+		    cval = parseInt(jQuery("#super_group_"+idofdiv).val()); 
+			cval++;
+			jQuery("#super_group_"+idofdiv).val(parseInt(cval));
+			changegrptext(idofdiv);
+	 
+	}
+	function decreqty(idofdiv)
+	{
+		var cval1 =0;
+		 
+		 cval1 = parseInt(jQuery("#super_group_"+idofdiv).val());
+		 if (cval1 != 0 ){
+			 cval1 = cval1-1;
+		  jQuery("#super_group_"+idofdiv).val(parseInt(cval1));
+		 }
+		 changegrptext(idofdiv);
+	}
+	function mincreqty(idofdiv)
+	{
+		var cval = 0
+		  cval = parseInt(jQuery("#msuper_group_"+idofdiv).val());  
+		cval++;
+		jQuery("#msuper_group_"+idofdiv).val(parseInt(cval));
+		changegrptextmobile();
+	}
+	function mdecreqty(idofdiv)
+	{
+		var cval1 =0;
+		 cval1 = parseInt(jQuery("#msuper_group_"+idofdiv).val());
+		 if (cval1 != 0 ){
+			 cval1 = cval1-1;
+		    jQuery("#msuper_group_"+idofdiv).val(parseInt(cval1)); 
+		 } 
+		 changegrptextmobile();
+	}
+	function changegrptext(idofdiv)
+	{
+	    var total=0;
+	    var totalslide=0;
+	    var totalslide3=0;
+	    var prices=0;
+	    var slideprice=0;
+	    var slideprice3=0;
+	    var qtys=0;
+	    var pricesslide=0;
+	    var qtysslide=0;
+	    var qtysslide3=0;
+	    jQuery(".right_side.content .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+	    	slideprice3 = parseFloat(jQuery(this).attr("currproprice"));
+	    	qtysslide3= parseInt(jQuery(this).val());
+	    	totalslide3= totalslide3 + (slideprice3 * qtysslide3);
+	 	   });
+	    
+	      jQuery(".right_side.content .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+		   prices = parseFloat(jQuery(this).attr("currproprice"));
+		   qtys= parseInt(jQuery(this).val());
+		   total= total + (prices * qtys);
+		   });
+
+	   jQuery(".only_group_product .cartridge-slider").each(function(){
+		   jQuery(this).find('.jcarousel li').each(function(){
+			   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus").attr("currproprice"));
+			   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus").val());
+			   totalslide= totalslide + (pricesslide * qtysslide);
+		   });
+		   });
+	      var finaltotal = total + totalslide + totalslide3;
+	      finaltotal =    parseFloat(finaltotal).toFixed(2);
+	      jQuery("#finalspecial-price  #product-price-all").attr("finalattprice",finaltotal);
+		  jQuery("#finalspecial-price  #product-price-all").text(finaltotal);
+	      if(finaltotal > 0) {jQuery("#dollarthis").show();}
+	   
+	}
+	function changegrptextmobile(idofdiv)
+	{
+		 var total=0;
+		    var totalslide=0;
+		    var prices=0;
+		    var slideprice=0;
+		    var qtys=0;
+		    var pricesslide=0;
+		    var qtysslide=0;
+		    var prices3=0;
+		    var qtys3=0;
+		    var total3=0;
+		     jQuery(".left_side  .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+					   prices = parseFloat(jQuery(this).attr("currpropricemobile"));
+					   qtys= parseInt(jQuery(this).val());
+					   total= total + (prices * qtys);
+			   });
+		     jQuery(".left_side  .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+				   prices3 = parseFloat(jQuery(this).attr("currpropricemobile"));
+				   qtys3= parseInt(jQuery(this).val());
+				   total3= total3 + (prices3 * qtys3);
+		   });
+		     jQuery(".only_group_product .cartridge-slider").each(function(){
+						     jQuery(this).find('.jcarousel li').each(function(){
+								   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").attr("currpropricemobile"));
+								   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").val());
+								   totalslide= totalslide + (pricesslide * qtysslide);
+						   });
+			   });
+		      var finaltotal = total + totalslide + total3;
+		      finaltotal =    parseFloat(finaltotal).toFixed(2);
+		       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").attr("finalattprice-mobile",finaltotal);
+		       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").text(finaltotal);
+		       if(finaltotal > 0) {jQuery("#dollarthis-mobile").show();}
+		       
+	}
+	function doneTypingMobile() {
+	    var total=0;
+	    var totalslide=0;
+	    var prices=0;
+	    var slideprice=0;
+	    var qtys=0;
+	    var pricesslide=0;
+	    var qtysslide=0;
+	    var prices3=0;
+	    var qtys3=0;
+	    var total3=0;
+	      jQuery(".left_side  .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+		   prices = parseFloat(jQuery(this).attr("currpropricemobile"));
+		    qtys= parseInt(jQuery(this).val());
+		   total= total + (prices * qtys);
+		   });
+	      jQuery(".left_side  .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+	   	   prices3 = parseFloat(jQuery(this).attr("currpropricemobile"));
+	   	    qtys3= parseInt(jQuery(this).val());
+	   	   total3= total3 + (prices3 * qtys3);
+	   	   });
+	     jQuery(".only_group_product .cartridge-slider").each(function(){
+		     jQuery(this).find('.jcarousel li').each(function(){
+			   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").attr("currpropricemobile"));
+			   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus.slidemobile").val());
+			   totalslide= totalslide + (pricesslide * qtysslide);
+		   });
+		   });
+	      var finaltotal = total + totalslide + total3;
+	      finaltotal =    parseFloat(finaltotal).toFixed(2);
+	       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").attr("finalattprice-mobile",finaltotal);
+	       jQuery("#finalspecial-price-mobile  #product-price-all-mobile").text(finaltotal);
+	       if(finaltotal > 0) {jQuery("#dollarthis-mobile").show();}
+	      
+	}
+	function doneTyping() {
+		   var total=0;
+		       var totalslide=0;
+		       var totalslide3=0;
+		       var prices=0;
+		       var slideprice=0;
+		       var slideprice3=0;
+		       var qtys=0;
+		       var pricesslide=0;
+		       var qtysslide=0;
+		       var qtysslide3=0;
+		       jQuery(".right_side.content .first .qty-wrapper .input-text.qty.plusminus").each(function(){
+		       	slideprice3 = parseFloat(jQuery(this).attr("currproprice"));
+		       	qtysslide3= parseInt(jQuery(this).val());
+		       	totalslide3= totalslide3 + (slideprice3 * qtysslide3);
+		    	   });
+		       
+		         jQuery(".right_side.content .second .qty-wrapper .input-text.qty.plusminus").each(function(){
+		   	   prices = parseFloat(jQuery(this).attr("currproprice"));
+		   	   qtys= parseInt(jQuery(this).val());
+		   	   total= total + (prices * qtys);
+		   	   });
+
+		      jQuery(".only_group_product .cartridge-slider").each(function(){
+		   	   jQuery(this).find('.jcarousel li').each(function(){
+		   		   pricesslide = parseFloat(jQuery(this).find(".detail_container .input-text.qty.plusminus").attr("currproprice"));
+		   		   qtysslide= parseInt(jQuery(this).find(".detail_container .input-text.qty.plusminus").val());
+		   		   totalslide= totalslide + (pricesslide * qtysslide);
+		   	   });
+		   	   });
+		         var finaltotal = total + totalslide + totalslide3;
+		         finaltotal =    parseFloat(finaltotal).toFixed(2);
+		         jQuery("#finalspecial-price  #product-price-all").attr("finalattprice",finaltotal);
+		   	  jQuery("#finalspecial-price  #product-price-all").text(finaltotal);
+		         if(finaltotal > 0) {jQuery("#dollarthis").show();}
+		       
+		}
+});
+	
+
+
+function isScrolledIntoView(elem)
+{
+    var docViewTop = jQuery(window).scrollTop();
+    var docViewBottom = docViewTop + jQuery(window).height();
+    var elemTop = jQuery(elem).offset().top;
+    var elemBottom = elemTop + jQuery(elem).height();
+    return ((elemBottom >= docViewTop) && (elemTop <= docViewBottom) && (elemBottom <= docViewBottom) && (elemTop >= docViewTop));
+}
+
+
+var scroll=false;
+var width = jQuery(window).width();
+	
+jQuery(window).scroll(function() {    
+    
+    
+    if(isScrolledIntoView( jQuery('.testi_date')) || isScrolledIntoView(jQuery('.testi_author')) || isScrolledIntoView(jQuery('.testi_details')) || isScrolledIntoView(jQuery('.testimonial')) || isScrolledIntoView(jQuery('.footer-container'))  || isScrolledIntoView(jQuery('.footer-bot-blk')) )
+    {
+      	 jQuery('.footer-bot-blk').addClass('margin_added'); 
+      	 jQuery('.only-bgcolor.desktop.sticky').addClass('now');
+	 	 if(width <= 420 )
+		 {
+			 jQuery('.footer-container').css('padding-bottom','115px');
+		 }
+			//jQuery(".cartridge-slider .sticky").appendTo(".footer-bot-blk");	
+        	 	 
+    }
+	else
+	{
+		if(scroll==true)
+		{
+			//jQuery(".footer-bot-blk .sticky").appendTo(".cartridge-slider");
+			scroll=false;
+		}
+		 jQuery('.footer-bot-blk').removeClass('margin_added');
+         jQuery('.only-bgcolor.desktop.sticky').removeClass('now');
+	} 
+  
+});	
+	
+	
+	/*
+jQuery(window).scroll(function(e){ 
+  var $el = jQuery('.sticky'); 
+  var hT = jQuery('.only-bgcolor.desktop.sticky').offset().top;
+  
+  var isPositionFixed = ($el.css('position') == 'fixed');
+  if (jQuery(this).scrollTop() > hT && !isPositionFixed){ 
+		if ( !jQuery( this ).hasClass( 'now' ) ) {
+			jQuery('.only-bgcolor.desktop.sticky').addClass('now');
+		}
+		if ( !jQuery( this ).hasClass( 'margin_added' ) ) {
+			jQuery('.footer-bot-blk').addClass('margin_added');
+		}
+    //jQuery('.sticky').css({'position': 'fixed', 'bottom': '0px'}); 
+  }
+  
+  if (jQuery(this).scrollTop() < hT && isPositionFixed) {
+		if ( jQuery( '.only-bgcolor.desktop.sticky' ).hasClass( 'now' ) ) {
+			jQuery('.only-bgcolor.desktop.sticky').removeClass('now');  
+		}
+		if ( jQuery( '.footer-bot-blk' ).hasClass( 'margin_added' ) ) {
+			jQuery('.footer-bot-blk').removeClass('margin_added');
+		}
+    //jQuery('.sticky').css({'position': 'static', 'bottom': '0px'}); 
+  } 
+});
+	*/
+	
+/*	
+jQuery(window).scroll(function() { 
+	var hT = jQuery('.only-bgcolor.desktop.sticky').offset().top;
+	var hH = jQuery('.only-bgcolor.desktop.sticky').outerHeight();
+	var wH = jQuery(window).height();
+	var wS = jQuery(this).scrollTop();
+	//var now_offset = jQuery('.only-bgcolor.desktop.sticky.now').offset().top;
+    //console.log(wS > (hT+hH-wH));
+	
+	console.log('----');
+	console.log('offset ht---' +hT );
+	console.log('offset hh---' +hH );
+	console.log('offset wh---' +wH );
+	console.log('offse ws---' +wS );
+	console.log('----');
+	
+	//console.log('offset---' +now_offset );	
+	if (wS > (hT+hH-wH)){ console.log('set')
+		if ( !jQuery( this ).hasClass( 'now' ) ) {
+			jQuery('.only-bgcolor.desktop.sticky').addClass('now');
+		}
+		if ( !jQuery( this ).hasClass( 'margin_added' ) ) {
+			jQuery('.footer-bot-blk').addClass('margin_added');
+		}
+	}
+	if(wS < (hT+hH+wH)) {  console.log('unset');
+		if ( jQuery( '.only-bgcolor.desktop.sticky' ).hasClass( 'now' ) ) {
+			jQuery('.only-bgcolor.desktop.sticky').removeClass('now');  
+		}
+		if ( jQuery( '.footer-bot-blk' ).hasClass( 'margin_added' ) ) {
+			jQuery('.footer-bot-blk').removeClass('margin_added');
+		}
+	}
+});*/
+</script>

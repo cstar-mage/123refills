@@ -1,0 +1,67 @@
+<?php 
+$_htmlId      = $this->getElement()->getHtmlId();
+$_htmlClass   = $this->getElement()->getClass();
+$_htmlName    = $this->getElement()->getName();
+$_readonly    = $this->getElement()->getReadonly();
+
+//$collection = Mage::registry('diamondsearch_data')->getColorSlider();//->setOrder('sortorder', 'ASC');
+
+
+//$collection = unserialize(Mage::getStoreConfig("diamondsearch/shape_settings/shape_available"));
+$slidername = "shape1";
+$_counter = 0;
+?>
+
+<?php 
+
+$collection = Mage::getModel('stud/carat')->getCollection();
+                          
+
+?>
+
+<tr>
+    <td class="label"><?php echo $this->getElement()->getLabel() ?></td>
+    <td colspan="10" class="grid <?php echo $slidername ?>slider">
+        <table id="attribute-options-table-<?php echo $slidername ?>" class="dynamic-grid diamondsearch-slider" cellspacing="0" cellpadding="0"><tbody>
+            <tr class="headings">
+                <th><?php echo $this->__('Carat Weight') ?></th>
+                <th><button id="add_new_option_button_<?php echo $slidername ?>" title="Add Option" type="button" class="scalable add"><span><span><span><?php echo $this->__('Add Option') ?></span></span></span></button></th>
+            </tr>
+<?php foreach ($collection as $_item): 
+
+?>
+<tr class="option-row diamondsearch-slider-<?php echo $slidername ?>slider" id="<?php echo $slidername ?>slider-row-<?php echo $_counter?>">
+    <td><input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][caratweight]" value="<?php echo $_item['caratweight'] ?>" class="input-text" type="text"></td>
+
+   
+   
+    <td class="a-left" id="<?php echo $slidername ?>_delete_button_container_option_<?php echo $_counter ?>'">
+        <input name="<?php echo $_htmlName; ?>[value][option_<?php echo $_counter ?>][id]" value="<?php echo $_item['id'] ?>" type="hidden">
+        <input id="<?php echo $slidername ?>-delete-row-<?php echo $_counter ?>" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_<?php echo $_counter ?>]" value=""/>
+        <button onclick="removeRow(this)" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button>
+    </td>
+</tr>
+<?php
+    $_counter++;
+    endforeach;
+?>
+</tbody></table>
+
+<script type="text/javascript">//<![CDATA[
+
+
+var _<?php echo $slidername ?>form_html_row = '<tr class="option-row diamondsearch-slider-<?php echo $slidername ?>slider" id="<?php echo $slidername ?>slider-row-{{id}}"><td><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][caratweight]" value="" class="input-text" type="text"></td><td class="a-left" id="<?php echo $slidername ?>_delete_button_container_option_{{id}}"><input name="<?php echo $_htmlName; ?>[value][option_{{id}}][id]" value="" type="hidden"><input id="<?php echo $slidername ?>-delete-row-{{id}}" type="hidden" class="delete-flag" name="<?php echo $_htmlName; ?>[delete][option_{{id}}]" value=""/><button onclick="removeRow(this)" title="Delete" type="button" class="scalable delete delete-option"><span><span><span>Delete</span></span></span></button></td></tr>';
+
+var _<?php echo $slidername ?>slider_counter = <?php echo $_counter?>;
+
+$('add_new_option_button_<?php echo $slidername ?>').observe('click', function(){
+    $('attribute-options-table-<?php echo $slidername ?>').insert(_<?php echo $slidername ?>form_html_row.replace(/\{\{id\}\}/ig, _<?php echo $slidername ?>slider_counter));
+    _<?php echo $slidername ?>slider_counter++;
+});
+
+removeRow = function(el) {
+    jQuery(el).closest("tr").remove()        
+}
+//]]></script>
+    </td>
+</tr>

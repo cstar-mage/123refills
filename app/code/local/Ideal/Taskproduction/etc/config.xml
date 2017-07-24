@@ -1,0 +1,146 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Taskproduction>
+            <version>0.1.0</version>
+        </Ideal_Taskproduction>
+    </modules>
+    <frontend>
+        <routers>
+            <taskproduction>
+                <use>standard</use>
+                <args>
+                    <module>Ideal_Taskproduction</module>
+                    <frontName>taskproduction</frontName>
+                </args>
+            </taskproduction>
+        </routers>
+        <layout>
+            <updates>
+                <taskproduction>
+                    <file>taskproduction.xml</file>
+                </taskproduction>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<taskproduction>
+				<use>admin</use>
+				<args>
+					<module>Ideal_Taskproduction</module>
+					<frontName>taskproduction</frontName>
+				</args>
+			</taskproduction>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <taskproduction after="Mage_Adminhtml">Ideal_Taskproduction_Adminhtml</taskproduction>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    
+    <adminhtml>
+		<menu>
+			<taskproduction module="taskproduction">
+				<title>Tickets</title>
+				<sort_order>71</sort_order>   
+				<action>adminhtml/taskproduction</action>    
+				<!-- children>
+					<items module="taskproduction">
+						<title>Manage Taskproductions</title>
+						<sort_order>0</sort_order>
+						<action>taskproduction/adminhtml_taskproduction</action>
+					</items>
+				</children>  -->
+			</taskproduction>
+		</menu>
+		<acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<!--<Ideal_Taskproduction>
+							<title>Taskproduction Module</title>
+							<sort_order>10</sort_order>
+						</Ideal_Taskproduction>-->
+						<taskproduction module="taskproduction">
+							<title>Tickets</title>
+							<sort_order>71</sort_order>               
+							<children>
+								<items module="taskproduction">
+									<title>Manage Taskproductions</title>
+									<sort_order>0</sort_order>
+									<action>taskproduction/adminhtml_taskproduction</action>
+								</items>
+							</children>
+						</taskproduction>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		<layout>
+			<updates>
+				<taskproduction>
+					<file>taskproduction.xml</file>
+				</taskproduction>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <!-- 
+        <models>
+            <taskproduction>
+                <class>Ideal_Taskproduction_Model</class>
+                <resourceModel>taskproduction_mysql4</resourceModel>
+            </taskproduction>
+            <taskproduction_mysql4>
+                <class>Ideal_Taskproduction_Model_Mysql4</class>
+                <entities>
+                    <taskproduction>
+                        <table>ideal_taskproduction</table>
+                    </taskproduction>
+                </entities>
+            </taskproduction_mysql4>
+        </models>
+        <resources>
+            <taskproduction_setup>
+                <setup>
+                    <module>Ideal_Taskproduction</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </taskproduction_setup>
+            <taskproduction_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </taskproduction_write>
+            <taskproduction_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </taskproduction_read>
+        </resources>
+         -->
+        <blocks>
+            <taskproduction>
+                <class>Ideal_Taskproduction_Block</class>
+            </taskproduction>
+        </blocks>
+        <helpers>
+            <taskproduction>
+                <class>Ideal_Taskproduction_Helper</class>
+            </taskproduction>
+        </helpers>
+    </global>
+</config>

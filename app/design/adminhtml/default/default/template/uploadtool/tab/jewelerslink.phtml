@@ -1,0 +1,67 @@
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Step 1. Download Diamond List</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="rapnet" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td>
+						<label style="display: block; margin-bottom: 10px;" for="remove_images">Connect to Jewelers Link and Download a csv of all diamonds for your selected vendors,prices will be increased during this step.if there is error at this step please check your username and password.</label>
+						<button onclick="setLocation('<?php echo $this->getUrl("idealAdmin/uploadtool/getList"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Get JewelersLink List") ?>"><span><span><span><?php echo $this->__("Get JewelersLink List") ?></span></span></span></button>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div>
+
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Step 2. Update Diamond List</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="rapnet" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td>
+						<label style="display: block; margin-bottom: 10px;" for="remove_images">Diamonds on your website will now be updated with the new list. You will see the update immediately.</label>
+						<button onclick="setLocation('<?php echo $this->getUrl("idealAdmin/uploadtool/updateDiamonds"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Update JewelersLink Diamonds") ?>"><span><span><span><?php echo $this->__("Update JewelersLink Diamonds") ?></span></span></span></button>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div>
+  
+  
+ <div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">Step 3. Image processor</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="rapnet" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+				<tbody>
+					<tr>
+						<td>
+						<label style="display: block; margin-bottom: 10px;" for="remove_images">This step will analyze all links provided by vendors and post sample photos in place of missing images or broken links.</label>
+						<button onclick="setLocation('<?php echo $this->getUrl("idealAdmin/Diamondsearch/filterDiamondsImages"); ?>')" class="scalable go" type="button" title="<?php echo $this->__("Filter Diamonds Images") ?>"><span><span><span><?php echo $this->__("Repair Images") ?></span></span></span></button>
+						</td>	
+					</tr>
+				</tbody>
+			</table>
+	    </div>
+	</div>
+</div> 
+ 
+
+   
+		

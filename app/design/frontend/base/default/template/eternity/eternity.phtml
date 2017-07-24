@@ -1,0 +1,661 @@
+<link href="<?php echo $this->getskinUrl('eternity/page.css');?>" rel="stylesheet" type="text/css">
+<script type="text/javascript">
+ jQuery(window).load(function () {
+ 	jQuery.get("<?php echo $this->getUrl('eternity/index/priceupdate'); ?>",function(data){ var dataarr = data.split("|");document.getElementById("divPrice").innerHTML="<b>$"+dataarr[0]+"</b>"; document.getElementById("info").innerHTML="<b>"+jQuery('#metalvalue').val()+" ETERNITY BAND</b><br> VERY GOOD/EXCELLENT CUT • "+ jQuery('#qualityvalue').val() +" QUALITY <br>"+ dataarr[1] + " " +jQuery('#shapevalue').val() + " Diamonds • " + dataarr[2] + " total carat weight" ; jQuery('#eternity_price').val(dataarr[0]);});	
+ });
+
+ function priceupdate(shape)
+ { 
+	 jQuery('#shapevalue').val(shape);
+	 jQuery(document).ready(function(){
+		  var jQueryitems = jQuery('.shapes>.shape');
+		  jQueryitems.click(function() {
+		   jQueryitems.removeClass('selected');
+		   jQuery(this).addClass('selected');
+		  });
+	  });	  
+	  /* jQuery('#divCarats>.carats>div').removeClass();
+	  jQuery('#divCarats>.carats>div').addClass(shape);  */
+	  	  
+	  var dshape =jQuery('#shapevalue').val();
+	  var dcarat =jQuery('#caratvalue').val();
+	  var dquality =jQuery('#qualityvalue').val();
+	  var dmetal =jQuery('#metalvalue').val();
+	  if(dmetal == "18K White Gold")
+	  {
+		  dmetal = "18k_gold";
+	  }
+	  else if(dmetal == "14K White Gold")
+	  {
+		  dmetal = "14k_gold";
+	  }
+	  var dringsize =jQuery("#sizes").val();	
+	  
+	  //var topimage = "<?php echo $this->getskinUrl('eternity/images/" + dshape + "_top_" + dcarat + "_open.png'); ?>";
+	 // var sideimage = "<?php echo $this->getskinUrl('eternity/images/" + dshape + "_side_" + dcarat + "_open.png'); ?>";
+	  
+	// jQuery('.eTopImage').attr('src', topimage);
+	 //jQuery('.eSideImage').attr('src', sideimage);
+	  	
+	  jQuery.post("<?php echo $this->getUrl('eternity/index/priceupdate'); ?>",{ 
+	  		shape:dshape,
+			carat: dcarat, 
+			quality: dquality, 
+			metal_type: dmetal, 
+			ring_size:dringsize, 
+		},
+		function(data){ 
+		
+			var dataarr = data.split("|");
+			jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+			jQuery('#eternity_price').val(dataarr[0]);
+			document.getElementById("info").innerHTML="<b>"+jQuery('#metalvalue').val()+" ETERNITY BAND</b><br> VERY GOOD/EXCELLENT CUT • "+ jQuery('#qualityvalue').val() +" QUALITY <br>"+ dataarr[1] + " " +jQuery('#shapevalue').val() + " Diamonds • " + dataarr[2] + " total carat weight" ;
+		}
+	  );
+	 
+ }
+ 
+  jQuery(document).ready(function(){
+	   jQuery('.carats>div>.carat').click(function() {
+	   jQuery('.carats>div>.carat').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+	  
+	  jQuery('#divQualities>.qualities>.quality').click(function() {
+	   jQuery('#divQualities>.qualities>.quality').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+	  
+	  jQuery('#divMetalTypes>.metaltypes>.metaltype').click(function() {
+	   jQuery('#divMetalTypes>.metaltypes>.metaltype').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+	  
+	  jQuery('#divStyles>.styles>.style').click(function() {
+	   jQuery('#divStyles>.styles>.style').removeClass('selected');
+	   jQuery(this).addClass('selected');
+      });
+	  
+  });
+  function setcarat(carat)
+  {
+	  jQuery('#caratvalue').val(carat);
+	  var dshape =jQuery('#shapevalue').val();
+	  var dcarat =jQuery('#caratvalue').val();
+	  var dquality =jQuery('#qualityvalue').val();
+	  var dmetal =jQuery('#metalvalue').val();
+	  if(dmetal == "18K White Gold")
+	  {
+		  dmetal = "18k_gold";
+	  }
+	  else if(dmetal == "14K White Gold")
+	  {
+		  dmetal = "14k_gold";
+	  }
+	  var dringsize =jQuery("#sizes").val();	
+	  
+	 // var topimage = "<?php //echo $this->getskinUrl('eternity/images/" + dshape + "_top_" + dcarat + "_open.png'); ?>";
+	  //var sideimage = "<?php //echo $this->getskinUrl('eternity/images/" + dshape + "_side_" + dcarat + "_open.png'); ?>";
+	  
+	 //jQuery('.eTopImage').attr('src', topimage);
+	 //jQuery('.eSideImage').attr('src', sideimage);
+	  	
+	  jQuery.post("<?php echo $this->getUrl('eternity/index/priceupdate'); ?>",{ 
+	  		shape:dshape,
+			carat: dcarat, 
+			quality: dquality, 
+			metal_type: dmetal, 
+			ring_size:dringsize, 
+		},
+		function(data){ 
+			var dataarr = data.split("|");
+			jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+			jQuery('#eternity_price').val(dataarr[0]);
+			document.getElementById("info").innerHTML="<b>"+jQuery('#metalvalue').val()+" ETERNITY BAND</b><br> VERY GOOD/EXCELLENT CUT • "+ jQuery('#qualityvalue').val() +" QUALITY <br>"+ dataarr[1] + " " +jQuery('#shapevalue').val() + " Diamonds • " + dataarr[2] + " total carat weight" ;
+		}
+	 );
+	  
+	 
+  }
+  function setquality(quality)
+  {
+	  jQuery('#qualityvalue').val(quality);
+	  var dshape =jQuery('#shapevalue').val();
+	  var dcarat =jQuery('#caratvalue').val();
+	  var dquality =jQuery('#qualityvalue').val();
+	  var dmetal =jQuery('#metalvalue').val();
+	  if(dmetal == "18K White Gold")
+	  {
+		  dmetal = "18k_gold";
+	  }
+	  else if(dmetal == "14K White Gold")
+	  {
+		  dmetal = "14k_gold";
+	  }
+	  var dringsize =jQuery("#sizes").val();	
+	  	
+	  jQuery.post("<?php echo $this->getUrl('eternity/index/priceupdate'); ?>",{ 
+	  		shape:dshape,
+			carat: dcarat, 
+			quality: dquality, 
+			metal_type: dmetal, 
+			ring_size:dringsize, 
+		},
+		function(data){ 
+			var dataarr = data.split("|");
+			jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+			jQuery('#eternity_price').val(dataarr[0]);
+			document.getElementById("info").innerHTML="<b>"+jQuery('#metalvalue').val()+" ETERNITY BAND</b><br> VERY GOOD/EXCELLENT CUT • "+ jQuery('#qualityvalue').val() +" QUALITY <br>"+ dataarr[1] + " " +jQuery('#shapevalue').val() + " Diamonds • " + dataarr[2] + " total carat weight" ;
+		}
+	  );
+	 
+  }
+  function setMetalType(Metal)
+  {
+		  jQuery('#metalvalue').val(Metal);
+		  var dshape =jQuery('#shapevalue').val();
+		  var dcarat =jQuery('#caratvalue').val();
+		  var dquality =jQuery('#qualityvalue').val();
+		  var dmetal =jQuery('#metalvalue').val();
+		  
+		  if(dmetal == "18K White Gold")
+		  {
+			  dmetal = "18k_gold";
+		  }
+		  else if(dmetal == "14K White Gold")
+		  {
+			  dmetal = "14k_gold";
+		  }
+		  var dringsize =jQuery("#sizes").val();	
+			
+		  jQuery.post("<?php echo $this->getUrl('eternity/index/priceupdate'); ?>",{ 
+		  		shape:dshape,
+				carat: dcarat, 
+				quality: dquality, 
+				metal_type: dmetal, 
+				ring_size:dringsize, 
+			},
+			function(data){ 
+				var dataarr = data.split("|");
+				jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+				jQuery('#eternity_price').val(dataarr[0]);
+				document.getElementById("info").innerHTML="<b>"+jQuery('#metalvalue').val()+" ETERNITY BAND</b><br> VERY GOOD/EXCELLENT CUT • "+ jQuery('#qualityvalue').val() +" QUALITY <br>"+ dataarr[1] + " " +jQuery('#shapevalue').val() + " Diamonds • " + dataarr[2] + " total carat weight" ;
+			}
+		  );	
+  }
+  function setSize(size)
+  {
+	  var dcarat =jQuery('#caratvalue').val();
+	  var dquality =jQuery('#qualityvalue').val();
+	  var dmetal =jQuery('#metalvalue').val();
+	  var dshape =jQuery('#shapevalue').val();
+	  	  
+	  if(dmetal == "18K White Gold")
+	  {
+		  dmetal = "18k_gold";
+	  }
+	  else if(dmetal == "14K White Gold")
+	  {
+		  dmetal = "14k_gold";
+	  }
+	  var dringsize =jQuery("#sizes").val();	
+		
+	  jQuery.post("<?php echo $this->getUrl('eternity/index/priceupdate'); ?>",{ 
+	  		shape:dshape,
+			carat: dcarat, 
+			quality: dquality, 
+			metal_type: dmetal, 
+			ring_size:dringsize, 
+		},
+		function(data){ 
+			var dataarr = data.split("|");
+			jQuery("#divPrice").html("<b>$"+dataarr[0]+"</b>");
+			jQuery('#eternity_price').val(dataarr[0]);
+			document.getElementById("info").innerHTML="<b>"+jQuery('#metalvalue').val()+" ETERNITY BAND</b><br> VERY GOOD/EXCELLENT CUT • "+ jQuery('#qualityvalue').val() +" QUALITY <br>"+ dataarr[1] + " " +jQuery('#shapevalue').val() + " Diamonds • " + dataarr[2] + " total carat weight" ;
+		}
+	  );
+  }
+  
+  function Changestyle(style)
+  {
+	   jQuery('#stylevalue').val(style);
+  }
+  </script>
+<div class="eternity_wrapper">
+<div id="messages_product_view"><?php echo $this->getMessagesBlock()->toHtml() ?></div>
+	<div class="eternity-main-title">
+		<h1>Eternity band Builder</h1>
+		<p>Create your own custom eternity band..</p>
+	</div>
+<form name="eternity_builder" action="<?php echo $this->getUrl();?>eternity/index/addtocart" method="post" id='eternity_builder'>
+<div class="eternity-container">
+  <div id="dnn_ContentPane" class="clear"><a name="3358"></a>
+    <div id="dnn_ctr3358_ContentPane">
+      <!-- Start_Module_3358 -->
+      <div id="dnn_ctr3358_ModuleContent" class="OWSContent">
+        <div id="lxT3358"></div>
+      </div>
+      <!-- End_Module_3358 -->
+    </div>
+    <a name="1536"></a>
+    <div id="dnn_LeftPane" class="left-image-wrapper float half"><a name="3311"></a>
+      <div id="dnn_ctr3311_ContentPane">
+        <!-- Start_Module_3311 -->
+        <div id="dnn_ctr3311_ModuleContent" class="DNN_HTMLContent">
+          <div id="dnn_ctr3311_HtmlModule_lblContent" class="Normal">
+<?php /*?><div class="image-row" id="eternity_top" style="position: relative;">&nbsp;<img style="display: inline;" src="<?php echo $this->getskinUrl('eternity/images/Round_top_0.05ct_open.png'); ?>" class="eTopImage"></div><?php */ ?>
+<div class="image-row" id="eternity_side" style="position: relative;">&nbsp;<img style="display: inline;" src="<?php echo $this->getskinUrl('eternity/images/Round_side_0.05ct_open.png'); ?>" class="eSideImage"></div>
+</div>
+        </div>
+        <!-- End_Module_3311 -->
+      </div>
+<div class="eternity-thumbnail">
+	<div class="eternity-thumbnail-col first">
+		<img src="<?php echo $this->getskinUrl('eternity/images/thumbnail_img.jpg'); ?>" class="thumbimage">
+	</div>
+	<div class="eternity-thumbnail-col">
+		<img src="<?php echo $this->getskinUrl('eternity/images/thumbnail_img.jpg'); ?>" class="thumbimage">
+	</div>
+	<div class="eternity-thumbnail-col">
+		<img src="<?php echo $this->getskinUrl('eternity/images/thumbnail_img.jpg'); ?>" class="thumbimage">
+	</div>
+	<div class="eternity-thumbnail-col last">
+		<img src="<?php echo $this->getskinUrl('eternity/images/thumbnail_img.jpg'); ?>" class="thumbimage">
+	</div>
+	<div class="clear"></div>
+</div>
+    </div>
+    <div id="dnn_RightPane" class="float half"><a name="3310"></a>
+      <div id="dnn_ctr3310_ContentPane">
+        <!-- Start_Module_3310 -->
+        <div id="dnn_ctr3310_ModuleContent" class="OWSContent">
+          <link media="screen" rel="stylesheet" href="diamond-eternity-rings.aspx_files/colorbox.css">     
+          <div id="lxT3310">
+            <div class="selector">
+              <div class="sbox" id="placeholders">
+              <div class="eternity-row">
+                <div class="eternity-title">Select your diamond shape</div>
+                <input type="hidden" value="Round" id="shapevalue" name="shapevalue" />
+                <div id="divShapes">
+                  <div class="shapes">
+                    <div style="width: 20%;" class="shape selected" id="shape0">
+                      <div class="ern">
+                        <div class="sh shape1" onclick="priceupdate('Round');">
+                          <div class="txt">&nbsp;</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 20%;" class="shape" id="shape1">
+                      <div class="ern bar">
+                        <div class="sh shape3" onclick="priceupdate('Emerald');">
+                          <div class="txt">&nbsp;</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 20%;" class="shape" id="shape2">
+                      <div class="ern bar">
+                        <div class="sh shape6" onclick="priceupdate('Radiant');">
+                          <div class="txt">&nbsp;</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 20%;" class="shape" id="shape3">
+                      <div class="ern bar">
+                        <div class="sh shape7" onclick="priceupdate('Princess');">
+                          <div class="txt">&nbsp;</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 20%;" class="shape" id="shape4">
+                      <div class="ern bar">
+                        <div class="sh shape10" onclick="priceupdate('Asscher');">
+                          <div class="txt">&nbsp;</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="eternity-row">
+                <div class="eternity-title">choose Carat weight per diamond</div>
+                <input type="hidden" value="0.05ct" id="caratvalue" name="caratvalue" />
+                <div id="divCarats">
+                  <div class="carats">
+                  	 <div class="Round">
+                        <div style="width: 12%;" class="carat selected" id="rcarat0">
+                          <div class="ern">
+                            <div class="ct ct1c5" onclick="setcarat('0.05ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 12%;" class="carat" id="rcarat1">
+                          <div class="ern bar">
+                            <div class="ct ct1c10" onclick="setcarat('0.10ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 12%;" class="carat" id="rcarat2">
+                          <div class="ern bar">
+                            <div class="ct ct1c15" onclick="setcarat('0.15ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 12%;" class="carat" id="rcarat3">
+                          <div class="ern bar">
+                            <div class="ct ct1c20" onclick="setcarat('0.20ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 12%;" class="carat" id="rcarat4">
+                          <div class="ern bar">
+                            <div class="ct ct1c25" onclick="setcarat('0.25ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 12%;" class="carat" id="rcarat5">
+                          <div class="ern bar">
+                            <div class="ct ct1c33" onclick="setcarat('0.33ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 12%;" class="carat" id="rcarat6" >
+                          <div class="ern bar">
+                            <div class="ct ct1c40" onclick="setcarat('0.40ct');"></div>
+                          </div>
+                        </div>
+                        <div style="width: 16%;" class="carat" id="rcarat7">
+                          <div class="ern bar">
+                            <div class="ct ct1c50" onclick="setcarat('0.50ct');"></div>
+                          </div>
+                        </div>
+                     </div>                 
+                  </div>
+                </div>
+                </div>
+                <div class="eternity-row">
+                <div class="eternity-title">Choose Quality</div>
+                <input type="hidden" value="F VS2" id="qualityvalue" name="qualityvalue" />
+                <div id="divQualities">
+                  <div class="qualities">
+                    <div style="width: 33.3%;" class="quality selected" id="style0">
+                      <div class="ern">
+                        <div class="qt" onclick="setquality('F VS2');">
+                          <div class="txt">F VS2</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 33.3%;" class="quality" id="style1">
+                      <div class="ern bar">
+                        <div class="qt" onclick="setquality('G SI1');">
+                          <div class="txt">G SI1</div>
+                        </div>
+                      </div>
+                    </div>
+                        <div style="width: 33.3%;" class="quality" id="style1">
+                      <div class="ern bar">
+                        <div class="qt" onclick="setquality('JK IND');">
+                          <div class="txt">JK IND</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <?php /*?>
+                <div class="eternity-row">
+                <div class="eternity-title">Metal Type:</div>
+                <input type="hidden" value="platinum" id="metalvalue" name="metalvalue" />
+                <div id="divMetalTypes">
+                  <div class="metaltypes">
+                  <div style="width:34%;" class="metaltype selected" id="style0">
+                      <div class="ern">
+                        <div class="qt" onclick="setMetalType('14K White Gold');">
+                          <div class="txt">14K White Gold</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width:33%;" class="metaltype" id="style0">
+                      <div class="ern bar">
+                        <div class="qt" onclick="setMetalType('platinum');">
+                          <div class="txt">Platinum</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width:33%;" class="metaltype" id="style1">
+                      <div class="ern bar">
+                        <div class="qt" onclick="setMetalType('18K White Gold');">
+                          <div class="txt">18K White Gold</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                <div class="eternity-row">
+                <div class="eternity-title">Style:</div>
+                <input type="hidden" value="Open Gallery" id="stylevalue" name="stylevalue" />
+                <div id="divStyles">
+                  <div class="styles">
+                    <div style="width: 50%;" class="style selected" id="style0">
+                      <div class="ern">
+                        <div class="st" onclick="Changestyle('Open Gallery');">
+                          <div class="txt">Open Gallery</div>
+                        </div>
+                      </div>
+                    </div>
+                    <div style="width: 50%;" class="style" id="style1">
+                      <div class="ern bar">
+                        <div class="st" onclick="Changestyle('U Prongs');">
+                          <div class="txt">U Prongs</div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                </div>
+                
+                <?php */ ?>
+                <div class="eternity-row">
+                <div id="divSizes">
+                
+                  <select class="metalvalue typesize" id="metalvalue" onchange="setMetalType(this.options[this.selectedIndex].value);" name="metalvalue">
+                    <option value="">Select Metal Type</option>
+                    <option value="14K White Gold">14K White Gold</option>
+                    <option value="14K Yellow Gold">14K Yellow Gold</option>
+                    <option value="14K Rose Gold">14K Rose Gold</option>
+                    <option value="18K White Gold">18K White Gold</option>
+                    <option value="18K Yellow Gold">18K Yellow Gold</option>
+                    <option value="18K Rose Gold">18K Rose Gold</option>
+                    <option value="Platinum">Platinum</option>
+                  </select>
+                  
+                   <select class="sizes typesize" id="sizestyle" name="sizestyle">
+                        <option value="">Select Setting Style</option>
+                        <option value="Bezel Setting">Bezel Setting</option>
+                        <option value="Bar Set Band Ring">Bar Set Band Ring</option>
+                        <option value="Channel Setting">Channel Setting</option>
+                        <option value="Gemstone">Gemstone</option>
+                        <option value="Multi-row">Multi-row</option>
+                        <option value="Pave">Pave</option>
+                        <option value="Prong Setting">Prong Setting</option>
+                        <option value="Semi-eternity">Semi-eternity</option>
+                        <option value="Thread & Grain">Thread & Grain</option>
+                        
+                        
+                  </select>
+                                  
+                  <select class="sizes typesize last" id="sizes" onchange="setSize(this.options[this.selectedIndex].value);" name="sizes">
+                    <option value="">Select Ring Size</option>
+                    <option value="3.5">3.5</option>
+                    <option value="3.75">3.75</option>
+                    <option value="4">4</option>
+                    <option value="4.25">4.25</option>
+                    <option value="4.5">4.5</option>
+                    <option value="4.75">4.75</option>
+                    <option value="5">5</option>
+                    <option value="5.25">5.25</option>
+                    <option value="5.5">5.5</option>
+                    <option value="5.75">5.75</option>
+                    <option value="6">6</option>
+                    <option value="6.25">6.25</option>
+                    <option value="6.5">6.5</option>
+                    <option value="6.75">6.75</option>
+                    <option value="7">7</option>
+                    <option value="7.25">7.25</option>
+                    <option value="7.5">7.5</option>
+                    <option value="7.75">7.75</option>
+                    <option value="8">8</option>
+                  </select>
+                  
+                </div>
+                </div>
+                <input type="hidden" name="process" id="process" value="" />
+                <div class="clear"></div>
+              </div>
+            </div>
+            <!--<div class="selector padtop">
+              <div class="sbox">
+                <div class="buttons">
+                  <div class="btn">
+                    <div class="bt add">
+                      <div class="etn">
+                        <button type="submit"><div class="txt">Add to Wishlist</div></button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btn" onclick="Creator.emailRing();">
+                    <div class="bt email bar">
+                      <div class="etn">
+                        <a href="javascript:;" onclick="ringcreator();"><div class="txt">E-Mail This Ring</div></a>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="btn" onclick="Creator.selectRing();">
+                    <div class="bt buy bar">
+                      <div class="etn">
+                        <div class="txt">Select this Ring</div>
+                      </div>
+                    </div>
+                  </div>
+                  <div style="clear:both;"></div>
+                </div>
+              </div>
+            </div>-->
+            <div id="ajTarget" style="display:none;"></div>
+          </div>
+        </div>
+        <!-- End_Module_3310 -->
+      </div>
+    </div>
+    <div id="dnn_LeftPane2" class="float half DNNEmptyPane"></div>
+    <div id="dnn_RightPane2" class="float half DNNEmptyPane"></div>
+    <div class="clear"></div>
+  </div>
+  <div class="eternity-main-title"><h1></h1></div>
+		<input type="hidden" name="eternity_price" id="eternity_price" value="" />
+		<div id="info"></div>
+		<div id="divPrice"></div>
+  <div class="add_to_cartbutton">
+		<a href="javascript:;" onclick="document.eternity_builder.submit();">Add to cart</a>
+		<a href="javascript:;" onclick="addtowhishlist();">Add to wishlist</a>
+        <a target="_parent" onClick="jQuery('.col-inquiry').slideToggle('fast');" title="INQUIRE" href="javascript:">Inquire</a>
+	</div>
+
+</div>
+<div class="clear"></div>
+</form>
+            <div class="col-inquiry" style="display:none;">
+          <ul class="list-unstyled cut">
+            <div class="diamond_request_form">
+              <form action="<?php echo Mage::getUrl('eternity/index/post'); ?>" method="post" id="frmRequestForInfo">
+              
+                <input type="hidden" value="<?php echo Mage::helper('core/url')->getCurrentUrl(); ?>" name="current_url" />
+                <div class="field">
+                <label class="required" for="firstname"><em>*</em>NAME</label>
+                  <div class="input-box">
+                    <input type="text" value="" name="firstname" id="firstname" class="required-entry" />
+                  </div>
+                </div>
+                <!-- 																<div class="field"> --> 
+                <!-- 																	<label class="required" for="lastname">Last Name<em>&nbsp;*</em></label> --> 
+                <!-- 																	<div class="input-box"> --> 
+                <!-- 																		<input type="text" value="" name="lastname" id="lastname" class="required-entry" /> --> 
+                <!-- 																	</div> --> 
+                <!-- 																</div> -->
+                <div class="field">
+                  <label class="required" for="email"><em>*</em>EMAIL</label>
+                  <div class="input-box">
+                    <input type="text" value="" name="email" id="email" class="required-entry" />
+                  </div>
+                </div>
+                <div class="field">
+                <label class="required" for="phone"><em>*</em>PHONE</label>
+                  <div class="input-box">
+                    <input type="text" value="" name="phone" id="phone" class="required-entry" />
+                  </div>
+                </div>
+                <div class="field">
+                	<label class="required" for="comments"><em>*</em>COMMENTS</label>
+                  <div class="input-box">
+                    <textarea rows="10" cols="20" name="comments" id="comments" class="required-entry"></textarea>
+                  </div>
+                </div>
+                <div class="buttons-set">
+                  <button type="submit" name="send_request" class="button"><span><span>Submit</span></span> </button>
+                </div>
+               <?php /* ?> <p class="required  requ_message" style='display: none'>*&nbsp;Required Information</p> <?php */ ?>
+              </form>
+				<script type="text/javascript">
+                //<![CDATA[
+                var frmRequestForInfo = new VarienForm('frmRequestForInfo', true);
+                //]]>;
+                </script> 
+            </div>
+          </ul>
+        </div>
+
+</div>
+
+
+<div class="hidden">
+	<script type="text/javascript">
+		<!--//--><![CDATA[//><!--
+			var images = new Array()
+			function preload() {
+				for (i = 0; i < preload.arguments.length; i++) {
+					images[i] = new Image()
+					images[i].src = preload.arguments[i]
+				}
+			}	
+			function ringcreator()
+			{
+				document.getElementById("process").value = "emailring";				
+				document.eternity_builder.submit();
+			}
+
+			function addtowhishlist(){
+				document.getElementById("process").value = "whishlist";				
+				document.eternity_builder.submit();
+			}
+			
+		//--><!]]>
+		
+	</script>
+</div>
+
+
+<style type="text/css">
+	.eternity-row{margin-bottom: 20px;}
+	.eternity-title {background:<?php echo Mage::getStoreConfig("eternity/general_settings/eternitycolor");?>;}
+.sbox .add_to_cart121 a, .shapes .selected, .carats .selected, .qualities .selected, .qualities .selected, .qualities .selected, .sizes, .add_to_cartbutton a, .metalvalue{background: <?php echo Mage::getStoreConfig("eternity/general_settings/eternitycolor");?>;}	
+
+</style>
+
+
+<style type="text/css">
+	.eternity-title {color:<?php echo Mage::getStoreConfig("eternity/general_settings/eternityactivefontcolor");?>;}
+.shape.selected .sh, .carat.selected .ct, .qualities .color.selected .txt, .sizes, .typesize, .qualities .selected .txt, .add_to_cartbutton a, .main-container .main .add_to_cartbutton a{color: <?php echo Mage::getStoreConfig("eternity/general_settings/eternityactivefontcolor");?>;
+}	
+.add_to_cartbutton a:hover, .main-container .main .add_to_cartbutton a:hover,
+.add_to_cartbutton a, .main-container .main .add_to_cartbutton a { color:#393939;font-size: 14px;    width: 160px;
+}
+</style>
+
+<style type="text/css">
+.shape .sh, .carat .ct, .quality .txt{color: <?php echo Mage::getStoreConfig("eternity/general_settings/eternityfontcolor");?>;}	
+
+</style>

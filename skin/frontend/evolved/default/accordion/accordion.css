@@ -1,0 +1,106 @@
+/*
+ * Accordionza jQuery Plugin
+ * Copyright 2010, Geert De Deckere <geert@idoe.be>
+ */
+
+#accordion1 {
+	color:#3A3A3A;
+	height:513px;
+	list-style:none;
+	margin:20px auto;
+	overflow:scroll;
+	padding:0;
+	width:980px;
+}
+#accordion1 li {
+	height:512px;
+	position:relative; margin:0;
+}
+#accordion1 .slide_handle {
+	background:url(images/handles.png);
+	bottom:0;
+	cursor:pointer;
+	left:0;
+	position:absolute;
+	top:0;
+	width:30px;
+}
+#accordion1 .slide2 .slide_handle { background-position:-30px 0; }
+#accordion1 .slide3 .slide_handle { background-position:-60px 0; }
+#accordion1 .slide4 .slide_handle { background-position:-90px 0; }
+#accordion1 .slide5 .slide_handle { background-position:-120px 0; }
+
+#accordion1 .slide_handle div {
+	/*background:url(images/arrows.gif);*/
+	bottom:16px;
+	height:7px;
+	left:16px;
+	position:absolute;
+	width:7px;
+}
+#accordion1 .slide_opened .slide_handle { cursor:default; }
+#accordion1 .slide_opened .slide_handle div { background-position:0 -7px; }
+#accordion1 .slide_content {
+	bottom:0;
+	left:30px; /* Matches the width of .slide_handle */
+	position:absolute;
+	right:0;
+	top:0;
+	padding:25px 30px;
+	background:#fff;
+}
+#accordion1 .slide_content a img { border:0; }
+#accordion1 .slide_caption {
+	background:url(images/black-30pct.png); /* You could use rgba instead, but that means less browser support */
+	bottom:0;
+	left:0;
+	padding:10px 20px;
+	position:absolute;
+	right:0;
+	/* To change the height of the caption, set the captionHeight option in script.js */
+}
+#accordion1 .slide_caption_toggle {
+	cursor:pointer;
+	height:10px;
+	left:0;
+	position:absolute;
+	right:0;
+	top:0;
+}
+#accordion1 .slide_caption_toggle div {
+	background:url(images/toggle-caption.png) no-repeat 50% -10px;
+	height:100%;
+}
+#accordion1 .slide_caption_toggle:hover { background:url(images/black-30pct.png); }
+#accordion1 .slide_caption_collapsed .slide_caption_toggle div { background-position:50% 0; }
+#accordion1 a {
+	background:none;
+	color:#fff;
+	text-shadow:0 1px 0 #333;
+}
+#accordion1 a:hover { text-decoration:none; }
+
+/* Diamond Education Page */
+.category-education,
+.cms-diamond-education { font-family:"Arial"; font-size:12px; color:#3a3a3a; } 
+.category-education h3,
+.cms-diamond-education h3 { font-size:16px; font-weight:bold; }
+.category-education h4,
+.cms-diamond-education h4 { font-size:12px; font-weight:bold; text-transform:uppercase; }
+.category-education img,
+.cms-diamond-education img { float:left; padding:10px; }
+.category-education img.right,
+.cms-diamond-education img.right { float:right; }
+.category-education p.half,
+.cms-diamond-education  p.half { width:60%; }
+
+.category-education .carat,
+.cms-diamond-education .carat { float:left; background:#fff url(../images/carat_bottom.jpg) right bottom no-repeat !important; padding-bottom:100px !important; }
+.category-education .clarity,
+.cms-diamond-education .clarity { float:left; padding-left:100px !important; background:#fff url(../images/clarity_left_bg.jpg) 10px 0 no-repeat !important; }
+.category-education .shape ul,
+.cms-diamond-education .shape ul { list-style-type:none; }
+.category-education .shape ul li,
+.cms-diamond-education .shape ul li { display:block; float:left; padding:0px; height:140px !important; width:170px !important; }
+.category-education .shape ul li img,
+.cms-diamond-education .shape ul li img { padding:0px !important; }

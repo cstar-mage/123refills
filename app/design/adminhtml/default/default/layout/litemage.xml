@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * LiteMage
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see https://opensource.org/licenses/GPL-3.0 .
+ *
+ * @package   LiteSpeed_LiteMage
+ * @copyright  Copyright (c) 2015-2016 LiteSpeed Technologies, Inc. (https://www.litespeedtech.com)
+ * @license     https://opensource.org/licenses/GPL-3.0 
+ */
+-->
+
+<layout version="0.1.0">
+    <adminhtml_cache_index>
+        <reference name="content">
+            <block type="litemage/adminhtml_cache_management" name="litemage.cache.management" template="litemage/cache_management.phtml" after="cache.additional" />
+        </reference>
+    </adminhtml_cache_index>
+    <adminhtml_catalog_product_edit>
+        <reference name="content">
+            <block type="litemage/adminhtml_itemSave" name="litemage_prodsave" template="litemage/product_save.phtml"  before="-"></block>
+        </reference>
+    </adminhtml_catalog_product_edit>
+    <adminhtml_catalog_category_edit>
+        <reference name="content">
+            <block type="litemage/adminhtml_itemSave" name="litemage_catsave" template="litemage/category_save.phtml"  before="-"></block>
+        </reference>
+    </adminhtml_catalog_category_edit>
+    
+    
+</layout>

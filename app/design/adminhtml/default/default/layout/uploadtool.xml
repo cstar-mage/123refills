@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+
+<layout version="1.0.0">
+	<adminhtml_diamondinquiries_index>
+		<reference name="content">
+            <block type="uploadtool/adminhtml_diamondinquiries" name="diamondinquiries" />
+        </reference>
+	</adminhtml_diamondinquiries_index>
+</layout>
+

@@ -1,0 +1,14 @@
+<?php $theme = $this->getConfig(); ?>
+<?php 
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor();
+?>
+
+<?php if($theme['homepage_element_3_textrow_enabled'] == 1): ?>
+	<div class="home-info" <?php if($theme['homepage_element_three_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_three_style_margintop']."px"; ?>" <?php endif; ?>>
+    	<div class="textrow">
+		<?php $html = $processor->filter($theme['homepage_element_3_textrow_style_image']); ?>
+		<?php echo nl2br($html); ?>
+        </div>
+	</div>
+<?php endif; ?>

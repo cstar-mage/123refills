@@ -1,0 +1,75 @@
+<?php 
+$evolvedmethod = new Ideal_Evolved_Block_Evolved();
+if(method_exists($evolvedmethod, 'getBlockConfig'))
+{
+	$theme = $evolvedmethod->getBlockConfig('evolved_form_social');
+}
+if(count($theme) == 0){ $theme = Mage::helper('evolved')->getThemeConfig(); }
+
+$socialexplode = explode("/",$theme['social_icons_theme']);
+$socialexplodearr = explode(".",$socialexplode[1]);
+
+$helper = Mage::helper('cms');
+$processor = $helper->getPageTemplateProcessor(); ?>
+<div class="social_media_only">
+	<div class="links link-s footer-social">
+	    	<?php $extensions = array('.jpg','.jpeg','.gif','.png'); ?>
+	    	<div class="content">
+				<ul class="followus social_icons_<?php echo $socialexplodearr[0]; ?>">
+				
+				<?php if($theme['social_facebook_url'] && $theme['social_facebook_url'] != ""): ?>
+					<li><a class="facebook" href="<?php echo $theme['social_facebook_url']; ?>" target="_blank">facebook</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_twitter_url'] && $theme['social_twitter_url'] != ""): ?>
+					<li><a class="twitter" href="<?php echo $theme['social_twitter_url']; ?>" target="_blank">twitter</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_pinterest_url'] && $theme['social_pinterest_url'] != ""): ?>
+					<li><a class="pinterest" href="<?php echo $theme['social_pinterest_url']; ?>" target="_blank">pinterest</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_instagram_url'] && $theme['social_instagram_url'] != ""): ?>
+					<li><a class="instagram" href="<?php echo $theme['social_instagram_url']; ?>" target="_blank">instagram</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_foursquare_url'] && $theme['social_foursquare_url'] != ""): ?>
+					<li><a class="foursquare" href="<?php echo $theme['social_foursquare_url']; ?>" target="_blank">foursquare</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_fancy_url'] && $theme['social_fancy_url'] != ""): ?>
+					<li><a class="fancy" href="<?php echo $theme['social_fancy_url']; ?>" target="_blank">fancy</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_polyvore_url'] && $theme['social_polyvore_url'] != ""): ?>
+					<li><a class="polyvore" href="<?php echo $theme['social_polyvore_url']; ?>" target="_blank">polyvore</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_yelp_url'] && $theme['social_yelp_url'] != ""): ?>
+					<li><a class="yelp" href="<?php echo $theme['social_yelp_url']; ?>" target="_blank">yelp</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_youtube_url'] && $theme['social_youtube_url'] != ""): ?>
+					<li><a class="youtube" href="<?php echo $theme['social_youtube_url']; ?>" target="_blank">youtube</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_gplus_url'] && $theme['social_gplus_url'] != ""): ?>
+					<li><a class="gplus" href="<?php echo $theme['social_gplus_url']; ?>" target="_blank">gplus</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_linkedin_url'] && $theme['social_linkedin_url'] != ""): ?>
+					<li><a class="linkedin" href="<?php echo $theme['social_linkedin_url']; ?>" target="_blank">linkedin</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_tumbler_url'] && $theme['social_tumbler_url'] != ""): ?>
+					<li><a class="tumbler" href="<?php echo $theme['social_tumbler_url']; ?>" target="_blank">tumbler</a></li>
+				<?php endif; ?>
+				
+				<?php if($theme['social_custom_image'] && $theme['social_custom_image'] != "" && $theme['social_custom_url'] && $theme['social_custom_url'] != ""): ?>
+						<li><a class="custom_social" href="<?php echo $theme['social_custom_url']; ?>" target="_blank"><img src="<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA) . $theme['social_custom_image'];?>"/></a></li>
+				<?php endif; ?>
+				
+			</ul>
+		</div>
+	</div>
+</div>

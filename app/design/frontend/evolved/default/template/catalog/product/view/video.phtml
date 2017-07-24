@@ -1,0 +1,8 @@
+<?php
+    $_helper = $this->helper('catalog/output');
+    $_product = $this->getProduct();
+	if($_product->getVideo())
+	{
+		echo $_product->getVideo();
+	}
+?>

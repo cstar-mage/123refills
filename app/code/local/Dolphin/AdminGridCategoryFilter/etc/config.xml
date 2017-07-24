@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Dolphin_AdminGridCategoryFilter>
+            <version>0.0.0.1</version>
+        </Dolphin_AdminGridCategoryFilter>
+    </modules>
+    <global>
+        <models>
+            <admingridcategoryfilter>
+                <class>Dolphin_AdminGridCategoryFilter_Model</class>
+            </admingridcategoryfilter>
+        </models>
+        <helpers>
+            <admingridcategoryfilter>
+                <class>Dolphin_AdminGridCategoryFilter_Helper</class>
+            </admingridcategoryfilter>
+        </helpers>
+        <blocks>
+            <admingridcategoryfilter>
+                <class>Dolphin_AdminGridCategoryFilter_Block</class>
+            </admingridcategoryfilter>
+        </blocks>
+    </global>
+    <adminhtml>
+        <events>
+            <core_block_abstract_prepare_layout_before>
+                <observers>
+                    <admingridcategoryfilter>
+                        <class>admingridcategoryfilter/observer</class>
+                        <method>addCategoryFilterToProductGrid</method>
+                    </admingridcategoryfilter>
+                </observers>
+            </core_block_abstract_prepare_layout_before>
+        </events>
+    </adminhtml>
+</config>

@@ -1,0 +1,121 @@
+<?php //$theme = Ideal_Evolved_Block_Evolved::getConfig(); ?>
+
+
+<?php 
+$SQL="SELECT * FROM `evolved` WHERE `value` IS NOT NULL AND `type` IN ('homepage_element_4_show_featured_product')";
+$write = Mage::getSingleton('core/resource')->getConnection('core_write');
+$results = $write->fetchAll($SQL);
+$theme = array();
+
+foreach($results as $row){
+	$theme[$row['field']] = $row['value'];
+}
+
+if(count($theme) == 0) {
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+}
+$featured_product_desc = array(
+		'homepage_element_4_show_featured_product_name_enabled' => $theme['homepage_element_4_show_featured_product_name_enabled'],
+		'homepage_element_4_show_featured_product_price_enabled' => $theme['homepage_element_4_show_featured_product_price_enabled'],
+		'homepage_element_4_show_featured_product_visible_product' => $theme['homepage_element_4_show_featured_product_visible_product'],
+		'homepage_element_4_show_featured_product_button_text' => $theme['homepage_element_4_show_featured_product_button_text'],
+		'homepage_element_4_show_featured_product_button_image_size_width' => $theme['homepage_element_4_show_featured_product_button_image_size_width'],
+		'homepage_element_4_show_featured_product_button_image_size_height' => $theme['homepage_element_4_show_featured_product_button_image_size_height'],
+		'homepage_element_4_show_featured_product_button_url' => $theme['homepage_element_4_show_featured_product_button_url'],
+		'homepage_element_4_featured_category_id' => $theme['homepage_element_4_featured_category_id']
+);
+
+/* if(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_four')['homepage_element_four_style'])
+{
+	$evolved_homepage_element_four_content = Ideal_Evolved_Block_Evolved::getBlockConfig(Ideal_Evolved_Block_Evolved::getBlockConfig('evolved_homepage_element_four')['homepage_element_four_style']);
+	$theme = array_merge($evolved_homepage_element_four_content);	
+	$featured_product_desc = array(
+			'homepage_element_4_show_featured_product_name_enabled' => $theme['homepage_element_4_show_featured_product_name_enabled'],
+			'homepage_element_4_show_featured_product_price_enabled' => $theme['homepage_element_4_show_featured_product_price_enabled'],
+			'homepage_element_4_show_featured_product_visible_product' => $theme['homepage_element_4_show_featured_product_visible_product'],
+			'homepage_element_4_show_featured_product_button_text' => $theme['homepage_element_4_show_featured_product_button_text'],
+			'homepage_element_4_show_featured_product_button_image_size_width' => $theme['homepage_element_4_show_featured_product_button_image_size_width'],
+			'homepage_element_4_show_featured_product_button_image_size_height' => $theme['homepage_element_4_show_featured_product_button_image_size_height'],
+			'homepage_element_4_show_featured_product_button_url' => $theme['homepage_element_4_show_featured_product_button_url'],
+			'homepage_element_4_featured_category_id' => $theme['homepage_element_4_featured_category_id']
+	);	
+}
+else 
+{
+	$theme = Ideal_Evolved_Block_Evolved::getConfig();
+} */
+?>
+<?php //if(!$theme['homepage_tabs_enabled']) return; ?>
+<?php 
+if($theme['homepage_element_4_show_featured_product_newarrival_title'] == "") { $theme['homepage_element_4_show_featured_product_newarrival_title'] = "New Arrival"; }
+if($theme['homepage_element_4_show_featured_product_featured_title'] == "") { $theme['homepage_element_4_show_featured_product_featured_title'] = "Featured"; }
+if($theme['homepage_element_4_show_featured_product_special_title'] == "") { $theme['homepage_element_4_show_featured_product_special_title'] = "Special"; }
+if($theme['homepage_element_4_show_featured_product_bestsellers_title'] == "") { $theme['homepage_element_4_show_featured_product_bestsellers_title'] = "Best Sellers"; }
+if($theme['homepage_element_4_show_featured_product_mostviewed_title'] == "") { $theme['homepage_element_4_show_featured_product_mostviewed_title'] = "Most Viewed"; }
+$activeTabs = array();
+if($theme['homepage_element_4_newarrival_enabled']==1) $activeTabs[$theme['homepage_element_4_show_featured_product_newarrival_title']] = Mage::app()->getLayout()->createBlock('catalog/product_new')->setData('featured_product_desc',$featured_product_desc)->setTemplate('evolved/pageelementstyle/page_style_four/tabs/new.phtml')->toHtml();
+//if($theme['homepage_tabs_featured_enabled']) $activeTabs['Featured_bk'] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setTemplate('evolved/tabs/featured_bk1.phtml')->toHtml();
+if($theme['homepage_element_4_featured_enabled']==1) $activeTabs[$theme['homepage_element_4_show_featured_product_featured_title']] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setData('featured_product_desc',$featured_product_desc)->setTemplate('evolved/pageelementstyle/page_style_four/tabs/featured.phtml')->toHtml();
+if($theme['homepage_element_4_special_enabled']==1) $activeTabs[$theme['homepage_element_4_show_featured_product_special_title']] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setData('featured_product_desc',$featured_product_desc)->setTemplate('evolved/pageelementstyle/page_style_four/tabs/special.phtml')->toHtml();
+if($theme['homepage_element_4_bestsellers_enabled']==1) $activeTabs[$theme['homepage_element_4_show_featured_product_bestsellers_title']] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setData('featured_product_desc',$featured_product_desc)->setTemplate('evolved/pageelementstyle/page_style_four/tabs/bestsellers.phtml')->toHtml();
+if($theme['homepage_element_4_mostviewed_enabled']==1) $activeTabs[$theme['homepage_element_4_show_featured_product_mostviewed_title']] = Mage::app()->getLayout()->createBlock('catalog/product_list')->setData('featured_product_desc',$featured_product_desc)->setTemplate('evolved/pageelementstyle/page_style_four/tabs/mostviewed.phtml')->toHtml();
+?>
+
+<?php if(count($activeTabs) > 0): ?>
+<div class="home-main featured-tabs homepage_element_4_featured-tabs toggle-content product-collateral tabs" <?php if($theme['homepage_element_four_style_margintop']): ?> style="margin-top: <?php echo $theme['homepage_element_four_style_margintop']."px"; ?>" <?php endif; ?>>
+	<hr class="hr_line" />
+	<dl id="collateral-tabs" class="collateral-tabs">
+		<?php foreach($activeTabs as $title => $template): ?>
+			<dt class="tab"><span id="<?php echo "homepage_element_4_".str_replace(" ","_",$title); ?>"><?php echo $title ?></span></dt>
+			<dd class="tab-container <?php echo "homepage_element_4_".str_replace(" ","_",$title); ?>">
+				<div class="tab-content">
+					<?php echo $template; ?>
+				</div>
+				
+				<?php if($theme['homepage_element_4_show_featured_product_category_link'])
+					
+				{
+					
+					$cat= Mage::getModel('catalog/category')->load($theme['homepage_element_4_featured_category_id']);
+					$caturl = $cat->getUrl();
+					
+					?>
+						<div class="featured_category_link">
+						<a href="<?php echo $caturl; ?>"><?php echo $theme['homepage_element_4_show_featured_product_featured_title']; ?></a>
+						</div> <?php 
+				}
+					?>
+			</dd>
+		<?php endforeach; ?>
+	</dl>
+	
+</div>
+<?php endif; ?>
+<!-- 
+<script> 
+jQuery(document).ready(function(){
+	jQuery(".homepage_element_4_featured-tabs .toggle-tabs li span,.homepage_element_4_featured-tabs .collateral-tabs dt.tab").click(function(){
+		jQuery(window).resize();
+			jQuery(".homepage_element_4_featured-tabs .tab-container.current").css("display","none");
+			var tab_title = jQuery(this).attr("id");
+			var tab_text = tab_title.replace(' ','_');
+			jQuery("." + tab_text).fadeIn(1000);		
+	});
+});
+</script>  -->
+<script> 
+jQuery(document).ready(function(){
+	jQuery(".homepage_element_4_featured-tabs .toggle-tabs li span").click(function(){
+		jQuery(window).resize();
+			jQuery(".homepage_element_4_featured-tabs .tab-container").hide();
+			var tab_title = jQuery(this).attr("id");
+			var tab_text = tab_title.replace(' ','_');
+			jQuery("." + tab_text).show();		
+		
+	});
+	jQuery(".homepage_element_4_featured-tabs .collateral-tabs .tab span").click(function(){
+		jQuery(window).resize();
+		jQuery(this).parent().next().slideToggle();
+	});
+});
+</script>

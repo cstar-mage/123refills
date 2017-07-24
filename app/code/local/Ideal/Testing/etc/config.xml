@@ -1,0 +1,76 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+         <Ideal_Testing>
+            <version>0.0.1</version>
+        </Ideal_Testing>
+    </modules>
+ 
+    <global>    	
+    	<blocks>
+            <testing>
+                <class>Ideal_Testing_Block</class>
+            </testing>
+        </blocks>
+        <helpers>
+            <testing>
+                <class>Ideal_Testing_Helper</class>
+            </testing>
+        </helpers> 
+         <models>
+            <testing>
+                <class>Ideal_Testing_Model</class>
+            </testing>
+        </models>  
+        <resources>
+            <add_category_attribute>
+                <setup>
+                    <module>Ideal_Testing</module>
+                    <class>Mage_Catalog_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </add_category_attribute>
+            <add_category_attribute_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </add_category_attribute_write>
+            <add_category_attribute_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </add_category_attribute_read>
+        </resources>   
+        <events>
+            <adminhtml_cms_page_edit_tab_content_prepare_form>
+                <observers>
+                    <ideal_testing_page_edit_tab_content>
+                        <type>singleton</type>
+                        <class>Ideal_Testing_Model_Observer</class>
+                        <method>cmsField</method>
+                    </ideal_testing_page_edit_tab_content>
+                </observers>
+            </adminhtml_cms_page_edit_tab_content_prepare_form>
+        </events>     
+    </global>   
+    <!--  <adminhtml>  
+     	<layout>
+            <updates>
+                <ideal_testing module="ideal_testing">
+                    <file>testing.xml</file>
+                </ideal_testing>
+            </updates>
+        </layout>
+     </adminhtml>   -->
+     <frontend>
+        <layout>
+            <updates>
+                <testing>
+                    <file>testing.xml</file>
+                </testing>
+            </updates>
+        </layout>
+    </frontend>
+</config>

@@ -1,0 +1,118 @@
+<script>
+jQuery(document).ready(function(){
+	jQuery(window).resize(function(){
+			jQuery("#esns_box_layer").css("top", (jQuery(window).height()/2 - jQuery("#esns_box_layer").height()/2) + "px");
+			//jQuery("#esns_box_layer").css("left", (jQuery(window).width()/2 - jQuery("#esns_box_layer").width()/2) + "px");
+	});
+		jQuery("#esns_box_layer").css("top", (jQuery(window).height()/2 - jQuery("#esns_box_layer").height()/2) + "px");
+	//jQuery("#esns_box_layer").css("left", (jQuery(window).width()/2 - jQuery("#esns_box_layer").width()/2) + "px");
+});
+</script>
+<?php 
+$theme = Ideal_Evolved_Block_Evolved::getConfig();
+$currentdate = date('m/d/Y', strtotime(Mage::getModel('core/date')->date('m/d/Y')));
+$coupon_from = date('m/d/Y', strtotime($theme['newsletter_coupon_date_from']));;
+?>
+<?php if($theme['newsletter_popup_enable'] == "on"): ?>
+<style>
+#esns_box_layer{	
+	background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$theme['newsletter_background_image_desktop']; ?>') no-repeat scroll 0 0 #fff;
+}
+@media screen and (max-width: 991px) {	
+	#esns_box_layer	{		
+		background: url('<?php echo Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA).$theme['newsletter_background_image_mobile']; ?>') no-repeat  scroll 0 0 #fff;	
+		width: 490px;
+		height: auto;
+	}
+}
+@media screen and (max-width: 771px) {	
+	#esns_box_layer	{		
+		background: none no-repeat  scroll 0 0 #fff;	
+		width: 95%;
+		height: auto;
+	}
+}
+</style>
+<?php
+if ($this->isActivePopUp()):
+?><!-- <style>#esns_box_layer{	background: url('http://www.jewelrydemo.com/media/evolved/Lighthouse.jpg');	background-size: 100%;	background-repeat: no-repeat;}@media screen and (max-width: 771px) {	#esns_box_layer	{		background: url('http://www.jewelrydemo.com/media/evolved/Penguins.jpg');		background-size: 100%;		background-repeat: no-repeat;	}}</style> -->
+<script type="text/javascript">
+    <?php if (is_numeric($this->getCookieLifeTime())): ?>
+    EsNewsSubscribers.setCookieLiveTime(<?php echo $this->getCookieLifeTime(); ?>);
+    <?php endif; ?>
+    <?php if ($this->getCookieName()): ?>
+    EsNewsSubscribers.setCookieName('<?php echo $this->getCookieName(); ?>');
+    <?php endif; ?>
+    EsNewsSubscribers.setBaseUrl('<?php echo $this->getBaseUrl(); ?>');
+</script>
+<div id="esns_background_layer">
+    <?php if ($this->getTheme() == 'default'): ?>
+    <div id="esns_box_layer">
+        <div id="esns_box_close"></div> 
+			<div class="main_popup">
+				<div class="left_block">
+					<div id="esns_box_title">
+						<?php if ($this->getFirstTitle()): ?>
+						<?php /* ?>
+						<div id="esns_box_block_1">
+						   <?php echo $this->getFirstTitle() ?>
+						</div>
+						<?php */ ?>
+						<?php endif; ?>
+						<?php if ($this->getSecondTitle()): ?>
+						<div id="esns_box_block_2">
+							<?php echo $this->getSecondTitle() ?>
+						</div>
+						<?php endif; ?>
+					</div>
+					<?php if ($this->getText()): ?>
+					<div class="esns_box_lines"></div>
+					<div id="esns_box_block_3">
+						<?php if($coupon_from < $currentdate): ?>
+							hiiiiiiiiiiii
+						<?php endif; ?>
+						<?php echo $this->getText() ?>
+					</div>
+					<?php endif; ?>
+					<div class="esns_box_lines"></div>
+					<div id="esns_box_subscribe">
+						<div id="esns_box_subscribe_response_error"></div>
+						<div id="esns_box_subscribe_response_success"></div>
+						<div id="esns_box_subscribe_form">
+							<div id="esns_box_subscribe_input"><input onclick="if(this.value=='<?php echo $this->__('Email'); ?>') this.value=''" onblur="if(this.value=='') this.value='<?php echo $this->__('Email'); ?>'" id="esns_email" name="subscribe_email" value="<?php echo $this->__('Enter your email'); ?>" type="text"></div>
+							<div id="esns_box_subscribe_submit"><a href="javascript:void(0)" id="esns_submit" ><?php echo $this->__('Subscribe'); ?></a></div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<label class="popup-bottom-notice"><input type="checkbox"><span class="notice-text">Don’t show this popup again</span></label>
+    </div>
+    <?php elseif($this->getTheme() == 'label'): ?>
+    <div id="esns_box_layer" class="tl">
+        <div id="esns_box_close"></div>
+	        <div class="left_block">
+	        	<?php /* ?>
+		       <div id="esns_box_block_1">
+		            <?php echo $this->getFirstTitle() ?>
+		       </div>
+		       <?php */ ?>
+		       <div id="esns_box_block_2">
+		            <?php echo $this->getSecondTitle() ?>
+		       </div>
+		        <div id="esns_box_block_3">
+		            <?php echo $this->getText() ?>
+		        </div>
+		        <div id="esns_box_subscribe">
+		            <div id="esns_box_subscribe_response_error"></div>
+		            <div id="esns_box_subscribe_response_success"></div>
+		            <div id="esns_box_subscribe_form">
+		                <div id="esns_box_subscribe_input"><input onclick="if(this.value=='<?php echo $this->__('Email'); ?>') this.value=''" onblur="if(this.value=='') this.value='<?php echo $this->__('Email'); ?>'" id="esns_email" name="subscribe_email" value="<?php echo $this->__('Email'); ?>" type="text"></div>
+		                <div id="esns_box_subscribe_submit"><a href="javascript:void(0)" id="esns_submit" ><?php echo $this->__('Subscribe'); ?></a></div>
+		            </div>
+		        </div>
+		    </div>
+    </div>
+    <?php endif; ?>
+</div>
+<?php endif; ?>
+<?php endif; ?>

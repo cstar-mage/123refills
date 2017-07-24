@@ -1,0 +1,136 @@
+<?php  ?>
+		<script type="text/javascript">
+		jQuery(function () {
+			jQuery(".toolbar_block select").selectbox();
+			jQuery( ".toolbar_block select" ).each(function( index ) {
+				  jQuery( this ).next(".sbHolder").css("width",jQuery( this ).width() + "px");
+			});
+		});
+		</script>
+<?php  ?> 
+<?php
+/**
+ * Magento
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Academic Free License (AFL 3.0)
+ * that is bundled with this package in the file LICENSE_AFL.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/afl-3.0.php
+ * If you did not receive a copy of the license and are unable to
+ * obtain it through the world-wide-web, please send an email
+ * to license@magentocommerce.com so we can send you a copy immediately.
+ *
+ * DISCLAIMER
+ *
+ * Do not edit or add to this file if you wish to upgrade Magento to newer
+ * versions in the future. If you wish to customize Magento for your
+ * needs please refer to http://www.magentocommerce.com for more information.
+ *
+ * @category    design
+ * @package     base_default
+ * @copyright   Copyright (c) 2012 Magento Inc. (http://www.magentocommerce.com)
+ * @license     http://opensource.org/licenses/afl-3.0.php  Academic Free License (AFL 3.0)
+ */
+?>
+<?php
+/**
+ * Product list toolbar
+ *
+ * @see Mage_Catalog_Block_Product_List_Toolbar
+ */
+$theme = Ideal_Evolved_Block_Evolved::getConfig();
+?>
+<?php if($this->getCollection()->getSize()): ?>
+<div class="toolbar alldropdown">
+    <div class="pager">	
+	<?php if($theme['productlist_grid_enable_item_count'] == 'yes'): ?>
+		<div class="amount toolbar_block">
+			<div class="amount_content">
+				<?php if($this->getLastPageNum()>1): ?>
+					<?php echo $this->__('Items %s to %s of %s total', $this->getFirstNum(), $this->getLastNum(), $this->getTotalNum()) ?>
+				<?php else: ?>
+					<strong><?php echo $this->__('%s Item(s)', $this->getTotalNum()) ?></strong>
+				<?php endif; ?>
+			</div>
+		</div>
+	<?php endif; ?>
+	<?php /* if($theme['productlist_grid_enable_image_size'] == 'yes'): ?>
+		<div class="toolbarimgsize toolbar_block">
+			<div class="toolbarimgsize_content">
+				<label class="img_size">Image Size:</label>
+				<span id="two" class="number">2</span>
+				<span id="three" class="number">3</span>
+				<span id="four" class="number">4</span>
+			</div>
+		</div>
+	<?php endif; */  ?>
+	<?php if($theme['productlist_grid_enable_sortby'] == 'yes'): ?>
+        <div class="sort-by toolbar_block">
+	        <div class="sort_by_content">
+        		<label><?php echo $this->__('Sort by') ?>:</label>
+                <?php /* $count = 1; ?>
+                <?php foreach($this->getAvailableOrders() as $_key=>$_order): ?>
+                    <a href="<?php echo $this->getOrderUrl($_key, 'asc') ?>"<?php if($this->isOrderCurrent($_key)): ?> class="active"<?php endif; ?>>
+							<?php echo $_order; ?>
+					</a>
+					<?php if($count!=sizeof($this->getAvailableOrders())):?><span class="pipe">|</span><?php endif?>
+                    <?php $count++; ?>
+                <?php endforeach;  */ ?>
+                
+                <select onchange="setLocation(this.value)">
+		            <?php foreach($this->getAvailableOrders() as $_key=>$_order): ?>
+		                <option value="<?php echo $this->getOrderUrl($_key, 'asc') ?>"<?php if($this->isOrderCurrent($_key)): ?> selected="selected"<?php endif; ?>>
+		                    <?php echo $this->__($_order) ?>
+		                </option>
+		            <?php endforeach; ?>
+                </select>
+	        </div>
+        </div>
+	<?php endif; ?>
+
+	<?php /*  ?>
+	<?php if($theme['productlist_grid_enable_show_perpage'] == 'yes'): ?>
+	  	<div class="limiter toolbar_block">
+            <label><?php echo $this->__('Show') ?></label>
+            <select onchange="setLocation(this.value)" style="font-family:Arial; font-size:11px; width:45px;">
+            <?php foreach ($this->getAvailableLimit() as  $_key=>$_limit): ?>
+                <option value="<?php echo $this->getLimitUrl($_key) ?>"<?php if($this->isLimitCurrent($_key)): ?> selected="selected"<?php endif ?>>
+                    <?php echo $_limit ?>
+                </option>
+            <?php endforeach; ?>
+            </select> <?php echo $this->__('per page') ?>
+        </div> 
+    <?php endif; ?>
+    <?php */ ?>
+	
+		<?php if($theme['productlist_grid_enable_pagination'] == 'yes'): ?>
+		
+		 <?php echo $this->getPagerHtml()  ?>
+
+	<?php endif; ?>
+   </div>
+
+    <?php if( $this->isExpanded() ): ?>
+<?php /*?>    <div class="sorter">
+        <?php if( $this->isEnabledViewSwitcher() ): ?>
+        <p class="view-mode">
+            <?php $_modes = $this->getModes(); ?>
+            <?php if($_modes && count($_modes)>1): ?>
+            <label><?php echo $this->__('View as') ?>:</label>
+            <?php foreach ($this->getModes() as $_code=>$_label): ?>
+                <?php if($this->isModeActive($_code)): ?>
+                    <strong title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php echo $_label ?></strong>&nbsp;
+                <?php else: ?>
+                    <a href="<?php echo $this->getModeUrl($_code) ?>" title="<?php echo $_label ?>" class="<?php echo strtolower($_code); ?>"><?php echo $_label ?></a>&nbsp;
+                <?php endif; ?>
+            <?php endforeach; ?>
+            <?php endif; ?>
+        </p>
+        <?php endif; ?>
+    
+    </div><?php */?>
+    <?php endif; ?>
+</div>
+<?php endif ?>

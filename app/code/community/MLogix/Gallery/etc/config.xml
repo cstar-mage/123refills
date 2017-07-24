@@ -1,0 +1,168 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <MLogix_Gallery>
+            <version>0.1.0</version>
+        </MLogix_Gallery>
+    </modules>
+    <frontend>
+        <routers>
+            <gallery>
+                <use>standard</use>
+                <args>
+                    <module>MLogix_Gallery</module>
+                    <frontName>gallery</frontName>
+                </args>
+            </gallery>
+        </routers>
+        <layout>
+            <updates>
+                <gallery>
+                    <file>gallery.xml</file>
+                </gallery>
+            </updates>
+        </layout>
+    </frontend>
+    <!-- <admin>
+        <routers>
+			<gallery>
+				<use>admin</use>
+				<args>
+					<module>MLogix_Gallery</module>
+					<frontName>gallery</frontName>
+				</args>
+			</gallery>
+        </routers>
+    </admin> -->
+    <admin>
+	    <routers>
+	        <adminhtml>
+	            <args>
+	                <modules>
+	                    <gallery after="Mage_Adminhtml">MLogix_Gallery_Adminhtml</gallery>
+	                </modules>
+	            </args>
+	        </adminhtml>
+	    </routers>
+	</admin>
+    
+    <adminhtml>
+		<menu>			
+			<cms>
+				<children>
+					<gallery module="gallery">
+						<title>Gallery</title>
+						<sort_order>21</sort_order>    
+						<action>adminhtml/gallery</action>           
+						<!-- <children>
+							<items module="gallery">
+								<title>Manage Items</title>
+								<sort_order>0</sort_order>
+								<action>gallery/adminhtml_gallery</action>
+							</items>
+						</children>  -->
+					</gallery>
+				</children>
+			</cms>
+		</menu>
+		
+		<!-- <acl>
+			<resources>
+				<all>
+					<title>Allow Everything</title>
+				</all>
+				<admin>
+					<children>
+						<gallery translate="title" module="gallery">
+							<title>Gallery Module</title>
+							<sort_order>10</sort_order>
+							<children>
+								<items module="gallery">
+									<title>Manage Items</title>
+								</items>
+							</children>
+						</gallery>
+					</children>
+				</admin>
+			</resources>
+		</acl> -->
+		<acl>
+		 <resources>
+		       <admin>
+		           <children>
+					 			<cms>
+									<children>
+										<gallery module="gallery">
+											<title>Gallery</title>
+											<sort_order>21</sort_order>    
+											<action>gallery/adminhtml_gallery</action>           
+											<!-- <children>
+												<items module="gallery">
+													<title>Manage Items</title>
+													<sort_order>0</sort_order>
+													<action>gallery/adminhtml_gallery</action>
+												</items>
+											</children>  -->
+										</gallery>			
+									</children>
+								</cms>
+					</children>
+				</admin>
+			</resources>
+		</acl>
+		
+		<layout>
+			<updates>
+				<gallery>
+					<file>gallery.xml</file>
+				</gallery>
+			</updates>
+		</layout>
+    </adminhtml>   
+    <global>
+        <models>
+            <gallery>
+                <class>MLogix_Gallery_Model</class>
+                <resourceModel>gallery_mysql4</resourceModel>
+            </gallery>
+            <gallery_mysql4>
+                <class>MLogix_Gallery_Model_Mysql4</class>
+                <entities>
+                    <gallery>
+                        <table>gallery</table>
+                    </gallery>
+                </entities>
+            </gallery_mysql4>
+        </models>
+        <resources>
+            <gallery_setup>
+                <setup>
+                    <module>MLogix_Gallery</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </gallery_setup>
+            <gallery_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </gallery_write>
+            <gallery_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </gallery_read>
+        </resources>
+        <blocks>
+            <gallery>
+                <class>MLogix_Gallery_Block</class>
+            </gallery>
+        </blocks>
+        <helpers>
+            <gallery>
+                <class>MLogix_Gallery_Helper</class>
+            </gallery>
+        </helpers>
+    </global>
+</config>

@@ -1,0 +1,65 @@
+<?php 
+$resource = Mage::getConfig()->getNode('global/resources')->asArray();
+$magento_db = $resource['default_setup']['connection']['host'];
+$mdb_user = $resource['default_setup']['connection']['username'];
+$mdb_passwd = $resource['default_setup']['connection']['password'];
+$mdb_name = $resource['default_setup']['connection']['dbname'];
+
+//developm_magento
+$magento_connection = @mysql_connect($magento_db, $mdb_user, $mdb_passwd);
+if (!$magento_connection)
+{
+	die('Unable to connect to the database');
+}
+@mysql_select_db($mdb_name, $magento_connection) or die ("Database not found.");
+
+$table = Mage::getSingleton('core/resource')->getTableName('uploadtool_settings');
+$query = "SELECT * FROM `$table`";
+
+$result = @mysql_db_query($mdb_name, $query) or die("Failed Query of ".$query);
+
+$username = "";
+$password = "";
+
+while($row = mysql_fetch_array($result))
+{
+	if($row['field'] == 'rapnet_username') {
+		$username = $row['value'];
+	}
+	
+	if($row['field'] == 'rapnet_password') {
+		$password = $row['value'];
+	}	
+}
+?>
+<div class="entry-edit">
+    <div class="entry-edit-head">
+	    <h4 class="icon-head head-edit-form fieldset-legend">RapNet Settings</h4>
+	    <div class="form-buttons"></div>
+	</div>
+	<div id="uploadtool_settings" class="fieldset">
+		<div class="hor-scroll">
+			<table cellspacing="0" class="form-list">
+			<tbody>
+				
+				<input type="hidden" value="1" name="rapnet_settings">
+				
+				<tr>
+			        <td class="label"><label for="rapnet_username">RapNet Username:</label></td>
+			    	<td class="value">
+			        	<input type="text" class="input-text" value="<?php echo $username; ?>" name="settings[rapnet_username]" id="rapnet_username">            
+			        </td>
+			    </tr>
+			    
+			    <tr>
+			        <td class="label"><label for="rapnet_password">RapNet Password:</label></td>
+			    	<td class="value">
+			        	<input type="password" class="input-text" value="<?php echo $password; ?>" name="settings[rapnet_password]" id="rapnet_password">            
+			        </td>
+			    </tr>
+
+			</tbody>
+			</table>
+	    </div>
+	</div>
+</div>

@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<config>
+    <modules>
+        <Ideal_Cronjobs>
+            <version>1.0.0</version>
+        </Ideal_Cronjobs>
+    </modules>
+    
+    <adminhtml>
+	    <acl>
+	        <resources>
+	        	<all>
+					<title>Allow Everything</title>
+				</all>
+	            <admin>
+	                <children>
+	                    <system>
+	                        <children>
+	                            <config>
+	                                <children>
+	                                    <cronjobs>
+	                                        <title>Ideal - Scheduled Jobs</title>
+	                                    </cronjobs>
+	                                </children>
+	                            </config>
+	                        </children>
+	                    </system>
+	                </children>
+	            </admin>
+	        </resources>
+	    </acl>
+    </adminhtml>
+    
+    <global>
+    	<blocks>
+            <cronjobs>
+                <class>Ideal_Cronjobs_Block</class>
+            </cronjobs>
+        </blocks>
+        <models>
+	        <cronjobs>
+	            <class>Ideal_Cronjobs_Model</class>
+	        </cronjobs>
+        </models>
+        <helpers>
+            <cronjobs>
+                <class>Ideal_Cronjobs_Helper</class>
+            </cronjobs>
+        </helpers>
+    </global>
+
+    <crontab>
+        <jobs>
+            <ideal_sitemapgenerate_cron>
+            	<schedule>
+                    <config_path>cronjobs/sitemap/cron_expr</config_path>
+                </schedule>
+                <run>
+                    <model>cronjobs/observer::generateSitemaps</model>
+                </run>
+            </ideal_sitemapgenerate_cron>
+            
+            <ideal_logcleanup_cron>
+            	<schedule>
+                    <config_path>cronjobs/logcleanup/cron_expr</config_path>
+                </schedule>
+                <run>
+                    <model>cronjobs/observer::cleanLogs</model>
+                </run>
+            </ideal_logcleanup_cron>
+            
+            <ideal_applycatalogrules_cron>
+            	<schedule>
+                    <config_path>cronjobs/applycatalogrules/cron_expr</config_path>
+                </schedule>
+                <run>
+                    <model>cronjobs/observer::applycatalogrulesCron</model>
+                </run>
+            </ideal_applycatalogrules_cron>
+            
+            <ideal_reindex_cron>
+            	<schedule>
+                    <config_path>cronjobs/reindex/cron_expr</config_path>
+                </schedule>
+                <run>
+                    <model>cronjobs/observer::reindexCron</model>
+                </run>
+            </ideal_reindex_cron>
+        </jobs>
+    </crontab>
+    
+    <default>
+        <cronjobs>
+            <sitemap>
+                <enabled>1</enabled>
+                <cron_expr>0 1 * * *</cron_expr>
+            </sitemap>
+            <logcleanup>
+            	<enabled>1</enabled>
+            	<cron_expr>5 1 * * *</cron_expr>
+            </logcleanup>
+            <applycatalogrules>
+            	<enabled>1</enabled>
+            	<cron_expr>10 1 * * *</cron_expr>
+            </applycatalogrules>
+           	<reindex>
+            	<enabled>1</enabled>
+            	<cron_expr>15 1 * * *</cron_expr>
+            </reindex>
+        </cronjobs>
+    </default>  
+</config>

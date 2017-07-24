@@ -1,0 +1,134 @@
+
+<?php //return; ?>
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('videogallery'); ?>/css/jquery.jscrollpane_api.css" media="all" />
+<link rel="stylesheet" type="text/css" href="<?php echo $this->getSkinUrl('videogallery'); ?>/css/playlistBottom_buttons.css" />
+<!--[if lte IE 8 ]><link rel="stylesheet" type="text/css" href="css/ie.css" /><![endif]-->
+        
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/New/jquery-1.11.2.min.js"></script>
+<script type="text/javascript">
+	jQuery.noConflict();
+</script>
+      <script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/New/jquery.address.js"></script>
+      <script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/New/jquery.dotdotdot-1.5.1.js"></script>
+      <script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/New/froogaloop.js"></script>
+      <script type="text/javascript" src="<?php echo $this->getSkinUrl('videogallery'); ?>/js/New/jquery.vbyv.min.js"></script>
+<script type="text/javascript">
+		var hap_player;  		
+		jQuery(document).ready(function($) {
+			 var yvgb_settings = {
+				/* componentFixedSize: true/false. Responsive = false, fixed = true */
+				componentFixedSize: false,
+				/* playlistPosition: bottom/right (default thumbnail position) */
+				playlistPosition:'bottom',
+				/* scrollType: buttons / scroll  */
+				scrollType: 'buttons',
+				
+				/* DEEPLINKING SETTINGS */
+			    /* useDeeplink: true, false */
+				useDeeplink:false,
+				/* startUrl: deeplink start url, enter playlist 'div' attribute data-address + video div data-address (two levels). Or just playlist 'div' data-address (single level). */
+				startUrl: 'playlist11/youtube_single1',
+				
+				/* NO DEEPLINKING SETTINGS */
+				/*activePlaylist: enter element 'id' attributte, or leave empty for none like this: activePlaylist:'' */
+				activePlaylist:'playlist11',
+				/*activeItem: video number to start with (-1 = none, 0 = first, 1 = second, 2 = third ...etc) */
+				activeItem:0,
+				
+				/* DEFAULTS */
+				/*defaultVolume: 0-1 */
+				defaultVolume:0.5,
+				/*autoPlay: true/false (video autoplay). Default false on mobile. */
+				autoPlay:true,
+				/* loopingOn: loop playlist on end, true/false */
+				loopingOn:true,
+				/* randomPlay: random play in playlist, true/false */
+				randomPlay:false,
+				/*autoAdvanceToNextVideo: true/false */
+				autoAdvanceToNextVideo:true,
+				/* autoOpenPlaylist: open playlist on start (true/false) */
+				autoOpenPlaylist: true,
+				/* closePlaylistOnVideoSelect: close playlist on video select */
+				closePlaylistOnVideoSelect: false,
+				
+				ytAppId:'AIzaSyB9B10Yb3KQKginhe0hbHRYyHjTdplJRI8'/* youtube api key: https://developers.google.com/youtube/registering_an_application */
+			
+			}	
+			hap_player = jQuery('#componentWrapper').vbyv(yvgb_settings);
+			
+		 });
+		
+				
+		/*function initDemo($){
+			
+			if(isMobile){
+				jQuery('#api_panel').remove();
+				jQuery('.toggle_panel').remove();
+				return;	
+			}
+			
+			api_panel = jQuery('#api_panel').css('display', 'block');
+			api_panel.css('right', -api_panel.outerWidth(true)-20+'px');
+			
+			toggle_api_panel = jQuery('.toggle_panel').css({cursor:'pointer', display:'block'}).bind('click', function(){
+				if(api_panel_opened){
+					api_panel.stop().animate({ 'right': -api_panel.outerWidth(true)-20+'px'},  {duration: 'fast', complete: function(){
+						api_panel.css('display','none');
+					}});
+					toggle_api_panel.removeClass().addClass('toggle_panel');
+					api_panel_opened=false;	
+				}else{
+					api_panel.css('display','block').stop().animate({ 'right': 41+'px'},  {duration: 'fast'});
+					toggle_api_panel.removeClass().addClass('toggle_panel_close');
+					api_panel_opened=true;
+				}
+				return false;	
+			});
+			api_panel_inited=true;
+		}*/
+	
+</script>
+<!-- wrapper for the whole component -->
+<div id="componentWrapper">         
+             <div class="mediaWrapper">
+                 <div class="youtubeHolder"></div>	
+                 <div class="vimeoHolder"></div>
+             </div>
+             
+             <!-- holder for thumbnails (delete this whole div completely to hide the playlist!) -->
+             <div class="thumbHolder">
+             	<div class="playlistControls">
+                	<div class="advance_controls">
+                        <div class="playlist_prev"></div>
+                        <div class="playlist_toggle"></div>
+                        <div class="playlist_next"></div>
+                    </div>
+                    <div class="playlist_switch"></div>
+                </div>	
+           	    <div class="thumbContainer"><div class="thumbInnerContainer"></div></div>	
+                <div class="thumbBackward"></div>	
+            	<div class="thumbForward"></div>	
+             </div>
+              
+          	 <div class="mediaPreloader"></div>
+             
+             <div class="componentPlaylist">             
+                  <div id='playlist11' data-address="playlist11">
+                     <!-- single video 
+                     data-path: video id
+                     -->
+                      <div class="playlistNonSelected" data-address="youtube_single1" data-type="youtube_single" data-path="eqkDFa9ZLCE"></div>
+                     <div class="playlistNonSelected" data-address="youtube_single2" data-type="youtube_single" data-path="LgMZmV1MR1E"></div>
+                     <div class="playlistNonSelected" data-address="youtube_single3" data-type="youtube_single" data-path="DvZ3YV34Km8"></div>
+                      <div class="playlistNonSelected" data-address="youtube_single4" data-type="youtube_single" data-path="_pAhVhHn_aE"></div>
+                     <div class="playlistNonSelected" data-address="youtube_single5" data-type="youtube_single" data-path="SC67qMJ_CrI"></div>
+                     
+                     
+                 <!--    <div class="playlistNonSelected" data-address="youtube_single1" data-type="youtube_single" data-path="eqkDFa9ZLCE"></div>
+                     <div class="playlistNonSelected" data-address="youtube_single2" data-type="youtube_single" data-path="LgMZmV1MR1E"></div>
+                     <div class="playlistNonSelected" data-address="youtube_single3" data-type="youtube_single" data-path="DvZ3YV34Km8"></div>
+                      <div class="playlistNonSelected" data-address="youtube_single4" data-type="youtube_single" data-path="_pAhVhHn_aE"></div>
+                     <div class="playlistNonSelected" data-address="youtube_single5" data-type="youtube_single" data-path="SC67qMJ_CrI"></div>  -->
+                  </div>
+            </div>                
+</div>

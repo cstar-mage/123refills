@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<config>
+	  <tabs>
+		<emizen translate="label" module="salesautoassign">
+            <label>Emizen</label>
+            <sort_order>0</sort_order>
+        </emizen>
+	  </tabs>
+	  <sections>
+		<emizen  translate="label" module="salesautoassign">                    
+		<label>Sales Auto Assign</label>
+		<tab>emizen</tab>
+		<frontend_type>text</frontend_type>
+		<sort_order>0</sort_order>
+		<show_in_default>1</show_in_default>
+		<show_in_website>1</show_in_website>
+		<show_in_store>1</show_in_store>            
+					<groups>
+				      <emizen translate="label"> 
+					 <label>Sales Auto Assign</label>
+					  <frontend_type>text</frontend_type>
+					  <sort_order>0</sort_order>
+					  <show_in_default>1</show_in_default>
+					  <show_in_website>1</show_in_website>
+					  <show_in_store>1</show_in_store>
+				       <fields>
+                          <general translate="label">
+                            <label>Enable</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                          </general>
+					   </fields>
+					   </emizen>
+					</groups>
+		</emizen>
+	  </sections>
+</config>

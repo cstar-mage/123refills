@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Ideal_Coupon>
+            <active>true</active>
+            <codePool>local</codePool>
+        </Ideal_Coupon>
+    </modules>
+</config>

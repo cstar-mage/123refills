@@ -1,0 +1,117 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <Turnkeye_Testimonial>
+            <version>1.1.2</version>
+        </Turnkeye_Testimonial>
+    </modules>
+
+    <global>
+        <models>
+            <turnkeye_testimonial>
+                <class>Turnkeye_Testimonial_Model</class>
+                <resourceModel>turnkeye_testimonial_mysql4</resourceModel>
+            </turnkeye_testimonial>
+            <turnkeye_testimonial_mysql4>
+                <class>Turnkeye_Testimonial_Model_Mysql4</class>
+                <entities>
+                    <testimonial>
+                        <table>turnkeye_testimonial</table>
+                    </testimonial>
+                </entities>
+            </turnkeye_testimonial_mysql4>
+        </models>
+
+        <blocks>
+            <turnkeye_testimonial>
+                <class>Turnkeye_Testimonial_Block</class>
+            </turnkeye_testimonial>
+        </blocks>
+
+        <helpers>
+            <turnkeye_testimonial>
+                <class>Turnkeye_Testimonial_Helper</class>
+            </turnkeye_testimonial>
+        </helpers>
+
+        <resources>
+            <turnkeye_testimonial_setup>
+                <setup>
+                    <module>Turnkeye_Testimonial</module>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </turnkeye_testimonial_setup>
+            <turnkeye_testimonial_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </turnkeye_testimonial_write>
+            <turnkeye_testimonial_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </turnkeye_testimonial_read>
+        </resources>
+    </global>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <turnkeye_testimonial after="Mage_Adminhtml">Turnkeye_Testimonial_Adminhtml</turnkeye_testimonial>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <turnkeye_testimonial>
+                    <file>turnkeye_testimonial.xml</file>
+                </turnkeye_testimonial>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Turnkeye_Testimonial>
+                    <files>
+                        <default>Turnkeye_Testimonial.csv</default>
+                    </files>
+                </Turnkeye_Testimonial>
+            </modules>
+        </translate>
+    </adminhtml>
+
+    <frontend>
+        <routers>
+            <turnkeye_testimonial>
+                <use>standard</use>
+                <args>
+                    <module>Turnkeye_Testimonial</module>
+                    <frontName>testimonials</frontName>
+                </args>
+            </turnkeye_testimonial>
+        </routers>
+        <layout>
+            <updates>
+                <turnkeye_testimonial>
+                    <file>turnkeye_testimonial.xml</file>
+                </turnkeye_testimonial>
+            </updates>
+        </layout>
+        <translate>
+            <modules>
+                <Turnkeye_Testimonial>
+                    <files>
+                        <default>Turnkeye_Testimonial.csv</default>
+                    </files>
+                </Turnkeye_Testimonial>
+            </modules>
+        </translate>
+    </frontend>
+</config>

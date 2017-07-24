@@ -1,0 +1,192 @@
+<?php
+/**
+ * LiteMage
+ *
+ * NOTICE OF LICENSE
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ *  You should have received a copy of the GNU General Public License
+ *  along with this program.  If not, see https://opensource.org/licenses/GPL-3.0 .
+ *
+ * @package   LiteSpeed_LiteMage
+ * @copyright  Copyright (c) 2015-2016 LiteSpeed Technologies, Inc. (https://www.litespeedtech.com)
+ * @license     https://opensource.org/licenses/GPL-3.0
+ */
+
+if ($this->canShowButton()):
+	$lmhelper = Mage::helper('litemage/data');
+?>
+<br/>
+<div class="content-header">
+    <table cellspacing="0">
+        <tr>
+            <td><h3><?php echo $lmhelper->__('LiteMage Cache Management (LiteSpeed Web Server)') ?></h3></td>
+         </tr>
+    </table>
+</div>
+<?php if (!$this->isCacheAvailable()) {
+    echo '<div><ul class="messages">
+        <li class="error-msg">LiteMage extension requires Configuration and Layouts cache types to be enabled. It will not function properly with these settings disabled.
+        </li></ul></div>';
+}
+
+
+if ($stats = $this->getCacheStatistics()) {
+	?>
+
+<div class="grid"><div><table cellspacing="0" class="data">
+    <tr class="headings">
+		<th class="no-link a-center"><?php echo $lmhelper->__('LiteMage Cache Statistics')
+				. '<br>' . $lmhelper->__('Current Plan'); ?>
+		</th>
+		<th class="no-link a-right"><?php echo $lmhelper->__('Public Cache Hits')
+				. ' <br>' . $lmhelper->__('Private Cache Hits'); ?></th>
+		<th class="no-link a-right"><?php echo $lmhelper->__('Full Page Hits')
+				. '<br>' . $lmhelper->__('Partial Page Hits'); ?></th>
+		<th class="no-link a-right"><?php echo $lmhelper->__('LiteMage Cached Objects') . '<br>' . $lmhelper->__('Not Cached (Limited by Plan)'); ?></th>
+	</tr>
+	<?php
+		//$buf = (($i % 2) == 0) ? '<tr class="even">' : '<tr>';
+		$limitedCount = $stats['LITEMAGE_LIMITED'] > 0 ? ('<span class="bold emph">' . $stats['LITEMAGE_LIMITED'] . '</span>') : 0;
+		$buf = '<tr class="even"><td class="a-center emph">' . $stats['plan'] . '<br>(' . $stats['plan_desc']
+				. ') <div class="a-right field-tooltip"><div>Available Plans:<hr>LiteMage Starter (1,500 publicly cached objects)<br>LiteMage Standard (25,000 publicly cached objects)<br>LiteMage Unlimited</div></div></td>'
+				. '<td class="a-right">' . $stats['PUB_HITS']
+				. ' <div class="a-left field-tooltip"><div>Number of requests that hit public cache since last flush all</div></div><br>'
+				. $stats['PVT_HITS']
+				. '  <div class="a-left field-tooltip"><div>Number of requests that hit private cache since last flush all</div></div></td>'
+				. '<td class="a-right">' . $stats['FULLPAGE_HITS']
+				. ' <div class="a-left field-tooltip"><div>Number of requests fully served from cache (no PHP invoked) since last flush all</div></div><br>'
+				. $stats['PARTIAL_HITS']
+				. ' <div class="a-left field-tooltip"><div>Number of requests partially served from cache (some data retrieved from Magento) since last flush all</div></div></td>'
+				. '<td class="a-right">' . $stats['LITEMAGE_OBJS']
+				. ' <div class="a-left field-tooltip"><div>Current LiteMage cached object count</div></div><br>'
+				. $limitedCount
+				. ' <div class="a-left field-tooltip"><div>Number of requests not served from cache due to plan limitation. You can upgrade your LiteMage plan if this value is not zero.</div></div></td>'
+				. "</tr>\n";
+		echo $buf;
+
+	?>
+
+		</table>
+	</div></div>
+<?php
+}
+?>
+<table class="form-list">
+    <tr>
+        <td class="scope-label">
+            <button onclick="setLocation('<?php echo $this->getPurgeUrl('All')?>')" type="button" class="scalable"><span><?php echo $lmhelper->__('Flush All LiteMage Cache') ?></span></button>
+        </td>
+        <td class="scope-label">
+            <?php echo $lmhelper->__('All cache storage.')?>
+        </td>
+    </tr>
+</table>
+<form action="<?php echo $this->getPurgeUrl('Tag')?>" method="post" id="litemage_purgeTag">
+<?php echo $this->getBlockHtml('formkey')?>
+<table class="form-list">
+    <tr>
+        <td class="scope-label">
+            <button type="submit" class="scalable"><span><?php echo $lmhelper->__('Flush LiteMage Cache By IDs') ?></span></button>
+        </td>
+        <td class="scope-label">
+            <select name="tag_types" class="required-entry select local-validation">
+                <option value="P"><?php echo $lmhelper->__('Product IDs')?></option>
+                <option value="C"><?php echo $lmhelper->__('Category IDs')?></option>
+                <option value="G"><?php echo $lmhelper->__('CMS Page IDs')?></option>
+				<option value="S"><?php echo $lmhelper->__('Store IDs')?></option>
+            </select>
+        </td>
+        <td class="scope-label">
+            <input type="text" name="purge_tag" class="input-text required-entry" style="width:150px"/>
+        </td>
+        <td class="scope-label">
+            <?php echo $lmhelper->__('Specify one or more IDs (integer numbers) separated by spaces. (Under normal operation, related pages will automatically be purged when saving changes to an item through the Admin Panel.)')?>
+        </td>
+    </tr>
+</table>
+</form>
+<form action="<?php echo $this->getPurgeUrl('Url')?>" method="post" id="litemage_purgeUrl">
+<?php echo $this->getBlockHtml('formkey')?>
+<table class="form-list">
+    <tr>
+        <td class="scope-label">
+            <button type="submit" class="scalable"><span><?php echo $lmhelper->__('Flush LiteMage Cache By URL') ?></span></button>
+        </td>
+        <td class="scope-label">
+            <input type="text" name="purge_url" class="input-text required-entry" style="width:350px"/>
+        </td>
+        <td class="scope-label">
+            <?php echo $lmhelper->__('Specify a relative URL starting with /.')?>
+        </td>
+    </tr>
+</table>
+</form>
+<br/>
+<?php echo $this->getChildHtml();
+
+if ($status = $this->getCrawlerStatus()) : ?>
+<form method="get" action="<?php echo $this->getPurgeUrl('Refresh')?>" id="litemage_crawlstatus">
+<div class="content-header">
+    <table class="form-list" cellspacing="0">
+        <tr>
+            <td><h3><?php echo $lmhelper->__('LiteMage Crawler Warm-up Status') ?> <button type="submit" class="scalable"><span><?php echo $lmhelper->__('Refresh') ?></span></button></h3></td>
+         </tr>
+		 <tr><td class="scope-label">
+			 <?php echo $lmhelper->__('You can click Reset All button or Reset links below to restart a crawler queue.') ;
+			 if ($status['lastupdate']) {
+				 echo ' Crawler status updated on ' . $status['lastupdate'] . '. ' . $status['endreason']; 
+			 }
+			 ?>
+			</td></tr>
+    </table>
+</div>
+</form>
+
+<div class="grid"><div class="hor-scroll"><table cellspacing="0" >
+    <tr class="headings">
+		<th class="no-link a-center"><?php echo $lmhelper->__('Warm-up List')
+				. '<br><a href="' . $status['url_reset'] . '" class="form-button" title="Click to reset all crawler queues">' . $lmhelper->__('Reset All') . '</a>'; ?>
+		</th>
+		<th class="no-link"><?php echo $lmhelper->__('Store Name') . ' (' . $lmhelper->__('default currency') . ')<br>' . $lmhelper->__('Base URL') . '<br>' . $lmhelper->__('Custom URL List File Path'); ?></th>
+		<th class="no-link a-right"><?php echo $lmhelper->__('Prioirty') . '<br>' . $lmhelper->__('Run Interval (secs)')
+				. '<br>' . $lmhelper->__('Public TTL (secs)'); ?>
+		</th>
+		<th class="no-link a-center"><?php echo $lmhelper->__('Last Round Finish Time') . '<br>' . $lmhelper->__('Generate Time | Finish Time') . '<br>' . $lmhelper->__('Last Query Time'); ?></th>
+		<th class="no-link"><?php echo $lmhelper->__('Environment - Cookie Vary Options') . '<br>' . $lmhelper->__('Current Cookie Vary'); ?></th>
+		<th class="no-link a-right"><?php echo $lmhelper->__('Current Position') . ' | ' . $lmhelper->__('List Size') . '<br>' . $lmhelper->__('Total Queried')
+				. '<br>' . $lmhelper->__('Current Status'); ?></th>
+	</tr>
+	<?php
+	$i = 0;
+	foreach ($status['stores'] as $s) {
+		++$i;
+		$buf = (($i % 2) == 0) ? '<tr class="even">' : '<tr>';
+		$buf .= '<td class="a-center">' . $s['id'] . ' <a title="Click to see URL list details" target="_blank" class="field-tooltip" href="' . $status['url_details'] . '?list=' . $s['id']
+				. '"> </a><br/> <a href="' . $status['url_reset'] . '?list=' . $s['id'] . '" title="Click to reset this crawler queue">' . $lmhelper->__('Reset') . '</a></td>'
+				. '<td>' . $s['store_name']. ' ('. $s['default_curr'] . ')<br>'. $s['baseurl'] . '<br>' . $s['file'] . '</td>'
+				. '<td class="a-right">' . $s['priority'] . '<br>' . $s['interval'] . '<br>' . $s['ttl'] . '</td>'
+				. '<td class="a-center">' . $s['lastendtime'] . '<br>' . $s['gentime'] . ' | ' . $s['endtime'] . '<br>' . $s['lastquerytime'] . '</td>'
+				. '<td>' . $s['env'] . '<br>' . $s['curvary'] . '</td>'
+				. '<td class="a-right">Current Position: ' . $s['curpos'] . '  |  List Size: ' . $s['listsize'] . ' <br>Total Queried:  '. $s['queried'] . '<br>' . $s['tmpmsg'] . '</td>'
+				. "</tr>\n";
+		echo $buf;
+	}
+	?>
+	</table></div>
+</div>
+
+<?php endif;
+
+endif;
+
+?>

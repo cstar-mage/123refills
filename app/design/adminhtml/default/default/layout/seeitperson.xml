@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <adminhtml_seeitperson_index>
+        <reference name="content">
+            <block type="seeitperson/adminhtml_seeitperson" name="seeitperson" />
+        </reference>
+    </adminhtml_seeitperson_index>
+</layout>

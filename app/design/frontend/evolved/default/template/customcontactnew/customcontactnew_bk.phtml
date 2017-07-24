@@ -1,0 +1,238 @@
+<link type="text/css" href="<?php echo $this->getSkinUrl('colorbox/colorbox.css')?>" rel="stylesheet" ></link>
+<script type="text/javascript" src="<?php echo $this->getSkinUrl('colorbox/jquery.colorbox.js')?>"></script>
+<?php //echo "<pre>"; print_r($_POST);"</pre>";?>
+<script> 
+jQuery(window).load(function(){	 
+jQuery(".inline2").colorbox({inline:true, width:"784", height:"381",scrolling:false});
+		jQuery(".inlineheader").colorbox({inline:true, width:"784", height:"381",scrolling:false});
+	var returnvalue = 0;
+	returnvalue = jQuery(".messages .success-msg ul li span").text();	
+	if(returnvalue == 1){
+		
+			jQuery.colorbox({open:true,href:"http://www.cutcarat.com/custom-contact-success",iframe:true, width:"30%", height:"39%",scrolling: false});
+		}
+	else if(returnvalue == 2){
+		
+		jQuery.colorbox({open:true,href:"http://www.cutcarat.com/custom-contact-failure",iframe:true, width:"30%", height:"39%",scrolling: false});
+	}
+}); 
+</script>
+
+<?php
+$postData = Mage::app()->getRequest()->getPost(); 
+$prodname = $postData['prodname'];
+$prodsku = $postData['prodsku'];
+$producturl = $postData['producturl']; 
+?>
+
+<div id="messages_product_view" style="display: none;"><?php echo $this->getMessagesBlock()->getGroupedHtml() ?></div>
+
+<div class="custmain customcontactnewmain">
+
+<div class="cutitle"> 
+
+<h1>Get Started Now</h1>
+
+</div>
+
+
+<div class="line"></div>
+
+<div class="customfrm">
+
+<div class="fieldset">
+
+	<?php /*?><h2 class="legend">Personal Information</h2><?php */?>
+
+	<form id="contactForm" name="contactForm" method="post" action="<?php echo $this->getFormActionUrl()?>" enctype="multipart/form-data">
+
+		<input type="hidden" name="productname" id="productname" value="<?php echo $prodname ?>" />
+
+        <input type="hidden" name="productsku" id="productsku" value="<?php echo $prodsku ?>" />
+        
+        <input type="hidden" name="producturl" id="producturl" value="<?php echo $producturl ?>" />
+        <div class="cutitle"> 
+
+<h3>Do You Like Any Of These Designs?</h3>
+<div class="field big">
+<div class="input-box ckeckboxes">
+							<?php $mediaurl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring10.jpg" alt="Ring1"/></div><span class="ring1 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput" value="ring1" class="chks" /><label for="checkboxInput"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring9.jpg" alt="Ring2"/></div><span class="ring2 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput2" value="ring2" class="chks"/><label for="checkboxInput2"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring8.jpg" alt="Ring3"/></div><span class="ring3 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput3" value="ring3" class="chks"/><label for="checkboxInput3"></label></span></div>
+						
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring7.jpg" alt="Ring4"/></div><span class="ring4 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput4" value="ring4" class="chks"/><label for="checkboxInput4"></label></span></div>
+						
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring6.jpg" alt="Ring5"/></div><span class="ring5 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput5" value="ring5" class="chks"/><label for="checkboxInput5"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring5.jpg" alt="Ring6"/></div><span class="ring6 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput6" value="ring6" class="chks"/><label for="checkboxInput6"></label></span></div>
+						
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring4.jpg" alt="Ring7"/></div><span class="ring7 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput7" value="ring7" class="chks"/><label for="checkboxInput7"></label></span></div>
+						
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring3.jpg" alt="Ring8"/></div><span class="ring8 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput8" value="ring8" class="chks"/><label for="checkboxInput8"></label></span></div>
+						
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring2.jpg" alt="Ring9"/></div><span class="ring9 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput9" value="ring9" class="chks"/><label for="checkboxInput9"></label></span></div>
+						
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/ring1.jpg" alt="Ring10"/></div><span class="ring10 ringchk"><input type="checkbox" name="rings[]" id="checkboxInput10" value="ring10" class="chks"/><label for="checkboxInput10"></label></span></div>
+						
+						</div></div>
+
+</div>
+
+		<ul class="form-list">
+
+			<li class="fields">
+
+				<div>
+					
+					<div class="field big"> <!--lilbig-->
+
+				        <label for="stonetype">Is There a Diamond Shape You Have in Mind?</label>
+
+				        <div class="input-box ckeckboxes">
+
+						<?php $mediaurl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/round.png" alt="Round"/></div><span>Round</span>
+                        <span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype" value="Round" class="chks" /><label for="stonetype"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/princess.png" alt="Princess"/></div><span>Princess</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype1" value="Princess" class="chks"/><label for="stonetype1"></label></span></div>
+                        
+                        <div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/cushion.png" alt="Cushion"/></div><span>Cushion</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype2" value="Cushion" class="chks"/><label for="stonetype2"></label></span></div>
+                        
+                        <div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/asscher.png" alt="Asscher"/></div><span>Asscher</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype3" value="Asscher" class="chks"/><label for="stonetype3"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/emerald.png" alt="Emerald"/></div><span>Emerald</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype4" value="Emerald" class="chks"/><label for="stonetype4"></label></span></div>
+						</div>						 <div class="input-box ckeckboxe-s">
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/radiant.png" alt="Radiant"/></div><span>Radiant</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype5" value="Radiant" class="chks"/><label for="stonetype5"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/oval.png" alt="Oval"/></div><span>Oval</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype6" value="Oval" class="chks"/><label for="stonetype6"></label></span></div>
+                        
+                        <div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/pear.png" alt="Pear"/></div><span>Pear</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype7" value="Pear" class="chks"/><label for="stonetype7"></label></span></div>
+                        
+                        <div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/marquise.png" alt="Marquise" style="width:79px;"/></div><span>Marquise</span><span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype8" value="Marquise" class="chks"/><label for="stonetype8"></label></span></div>
+
+						<div class="ckcs"><div class="imgbxs"><img src="<?php echo $mediaurl ?>images/shape/heart.png" alt="Heart" style="width:120px;"/></div><span>Heart</span>
+                        <span class="dia"><input type="checkbox" name="stonetype[]" id="stonetype9" value="Heart" class="chks"/><label for="stonetype9"></label></span></div>
+
+						
+				           
+				        </div>
+
+				    </div>
+					
+					<div class="field bi-g">
+					
+						<label class="stonetype" for="stonetype">What Metal Color Do You Prefer?</label>
+						
+						<div class="input-box ckeckboxes">
+							<?php $mediaurl = Mage::getBaseUrl(Mage_Core_Model_Store::URL_TYPE_MEDIA); ?>
+
+						<div class="ckc-s"><div class="imgbx-s"><img src="<?php echo $mediaurl ?>images/shape/whgold.jpg" alt="Round"/></div><span>white gold / platinum</span><span class="mtl"><input type="checkbox" name="metalcolors[]" id="metalcolors" value="White Gold / Platinum" class="chks" /><label for="metalcolors"></label></span></div>
+
+						<div class="ckc-s"><div class="imgbx-s"><img src="<?php echo $mediaurl ?>images/shape/gold.jpg" alt="Princess"/></div><span>yellow gold</span><span class="mtl"><input type="checkbox" name="metalcolors[]" id="metalcolors2" value="Yellow Gold" class="chks"/><label for="metalcolors2"></label></span></div>
+
+						<div class="ckc-s"><div class="imgbx-s"><img src="<?php echo $mediaurl ?>images/shape/rosegold.jpg" alt="Emerald"/></div><span>rose gold</span><span class="mtl"><input type="checkbox" name="metalcolors[]" id="metalcolors3" value="Rose Gold" class="chks"/><label for="metalcolors3"></label></span></div>
+						
+						</div>
+						
+					</div>
+					
+					<div class="field-s">
+					    <div class="field">
+	
+					        <label class="required name" for="name">First Name</label>
+	
+					        <div class="input-box text">
+	
+					            <input type="text" class="input-text required-entry" title="First Name" value="" name="fname" id="fname">
+	
+					        </div>
+	
+					    </div>
+						
+						<div class="field">
+	
+					        <label class="required name" for="name">Last Name</label>
+	
+					        <div class="input-box text">
+	
+					            <input type="text" class="input-text required-entry" title="Last Name" value="" name="lname" id="lname">
+	
+					        </div>
+	
+					    </div>
+						
+						
+					    <div class="field"> 
+	
+					        <label class="required name" for="email">Email Address</label>
+	
+					        <div class="input-box text">
+	
+					            <input type="text" class="input-text validate-email required-entry" title="Email" value="" name="email" id="email">
+	
+					        </div>
+	
+					    </div>
+					</div>
+				</div>
+
+			</li>
+			
+			<li class="splline">
+				<div class="splline-text">
+				<label >Don'T see a design you like?</label>
+				<span>Upload your own images</span>
+				</div>
+				<div class="clearer" style="">
+
+				    <div class="field imgsel">
+
+				        <div class="input-box">
+
+				            <input type="file" name="image_1" id="image1" class="spc"/>
+
+				            <input type="file" name="image_2" id="image2" class="spc"/>
+
+				            <input type="file" name="image_3" id="image3" class="spc"/> 
+
+				        </div>
+
+				    </div>
+					
+				</div>
+
+			</li>
+			
+		</ul>
+
+		<div class="buttons-set">
+
+            <?php /* ?><p class="required">* Required Fields</p><?php */ ?>
+
+            <button class="custsub" title="Submit" type="submit"><span><span>Submit</span></span></button>
+
+        </div>
+
+	</form>
+
+</div>
+
+</div>
+
+</div>
+
+<script type="text/javascript">
+
+//<![CDATA[
+
+    var contactForm = new VarienForm('contactForm', true);
+
+//]]>
+
+</script>
+

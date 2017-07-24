@@ -1,0 +1,3 @@
+http://production.idealbrandmarketing.com/task_detail.php?ti=14193
+created new attribute for this custom sort order "internal_category_sort"
+this will be applicable for default sort for search result only.

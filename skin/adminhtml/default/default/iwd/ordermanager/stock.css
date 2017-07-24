@@ -1,0 +1,86 @@
+.iwd-om-inventory {color:#3a3f4a; display:block; font-size:12px; min-height:50px; padding:2px; text-decoration:none;}
+.iwd-om-inventory:hover {text-decoration:none; font-weight:900; color:#3a3f4a;}
+.iwd-om-inventory.before-init {color: #6b6b6b;}
+.iwd-om-inventory.before-init:hover {color: #6b6b6b;}
+.iwd-om-inventory .marker {display:inline-block; width:16px;}
+
+
+.stocks-assign .om-iwd-modal-dialog {max-width:900px; min-width:566px; margin:0 auto;}
+.stocks-assign .om-iwd-modal-content {top:106px; width:100%;}
+.stocks-assign .om-iwd-modal-body {padding:9px 50px 39px;}
+.stocks-assign .assign-stock-table table td,
+.stocks-assign .assign-stock-table table th {box-sizing:content-box; font-size:11px; text-align:center; padding:5px 4px 2px 4px; white-space:nowrap; word-wrap:break-word; border-width:0 1px 1px 0; border-color:#b7b7b7; border-style:solid;}
+.stocks-assign .assign-stock-table table td {padding:5px 0; min-width:43px; max-width:43px; width:43px;}
+.stocks-assign .assign-stock-table table th {padding-top:4px; text-transform:uppercase; border-top-width:1px;}
+.stocks-assign .assign-stock-table table .odd {background-color:#ebebeb;}
+.stocks-assign .assign-stock-table table .even {background-color:#ffffff;}
+.stocks-assign .assign-stock-table table .last {border-right:none;}
+.stocks-assign .assign-stock-table table td {padding:0; margin:0; height:28px;}
+.stocks-assign .assign-stock-table table td.input input {border:none; background:initial; text-align:center; width:100%; padding:0; margin:0; height:100%}
+.stocks-assign .assign-stock-table .table-title {left:2px; top:-30px;  margin:2px;  position:absolute; border:1px solid black; padding:1px; background:#ffffff;}
+.stocks-assign .assign-stock-table .table-title .table-title-wrapper {border:1px solid black; height:20px; padding:2px; font-weight:bold; line-height:20px; font-size:14px;}
+.stocks-assign .assign-stock-table .products-table {width:198px; float:left; border-left:1px solid #b7b7b7;}
+.stocks-assign .assign-stock-table .products-table td,
+.stocks-assign .assign-stock-table .products-table th {box-sizing:initial;}
+.stocks-assign .assign-stock-table .products-table .headings th {text-transform:none;}
+.stocks-assign .assign-stock-table .products-table td {font-size:11px; line-height:28px;}
+.stocks-assign .assign-stock-table .products-table td.product-name {text-align:left; padding:0 5px 0 10px;}
+.stocks-assign .assign-stock-table .stocks-table {overflow-x:scroll;}
+.stocks-assign .assign-stock-table .stocks-table table {border-right:1px solid #b7b7b7;}
+.stocks-assign .assign-stock-table .stocks-table th {max-width:80px; overflow:hidden; min-width:80px; width:80px; text-overflow:ellipsis;}
+
+.stocks-assign .assign-stock-table .footer-actions {clear:both; width:100%; text-transform:capitalize; }
+.stocks-assign .assign-stock-table .footer-actions .actions {float:right; margin-top:25px;}
+.stocks-assign .assign-stock-table .footer-actions .legend {float:left; margin-top:25px;}
+.stocks-assign .assign-stock-table .footer-actions .legend ul {float:left; border:1px solid #b7b7b7; padding:4px 10px; margin-right:14px;}
+.stocks-assign .assign-stock-table .footer-actions .legend li {list-style:none; line-height:20px; display:inline; font-size:11px;}
+.stocks-assign .assign-stock-table .footer-actions .legend li .marker {margin:0 6px 0 16px; display:inline-block;}
+.stocks-assign .assign-stock-table .footer-actions .legend li:first-child .marker {margin-left:0;}
+
+.iwd-om-inventory .fa-check, .stocks-assign .fa-check, .stocks-assign .legend-assigned {color:#04a300;}
+.iwd-om-inventory .fa-arrow-down, .stocks-assign .fa-arrow-down,
+.iwd-om-inventory .fa-times, .stocks-assign .fa-times, .stocks-assign .legend-not-assigned {color:#ff0000;}
+.stocks-assign .legend-in-stock {color:#016aff;}
+.stocks-assign .legend-out-stock {color:#ffa800;}
+.stocks-assign .legend-not-applicable {color:#676767; }
+
+.stocks-assign .assigned td {background:#deffd0; }
+.stocks-assign input.qty_in_stock {border:none; background:initial; text-align:center; width:100%; padding:0; margin:0; cursor:default; height:100%;}
+
+.stocks-assign tr.headings {background:url(img/sort_row_bg.gif) 0 50% repeat-x;}
+.stocks-assign .header-werehouse {font-weight:900; margin-left:198px; line-height:24px; width:600px; background:url(img/sort_row_bg.gif) 0 50% repeat-x; text-align: center; font-size:11px; height:23px; border:1px solid #b7b7b7; border-bottom:none}
+.stocks-assign .overflow {overflow:hidden; display:block; height:100%; text-overflow:ellipsis;}
+
+.iwd_om_stock_tooltip {position:relative;}
+.iwd_om_stock_tooltip:hover:after {left:103%; width:auto; background:#333; background:rgba(0,0,0,.8); border-radius:5px; bottom:0; color:#fff; content:attr(title); padding:0 4px; position:absolute; z-index:98;}
+.iwd_om_stock_tooltip:hover:before {left:100%; border:solid; border-color:transparent #333; border-width:6px 6px 6px 0; bottom:7px; content:""; right:0; position:absolute; z-index:99;}
+
+.iwd_om_stock_tooltip2 {position:relative; cursor:pointer;}
+.iwd_om_stock_tooltip2 .hint {display:none;}
+.iwd_om_stock_tooltip2:hover .hint {
+    left:140%; width:auto; height:40px; line-height:40px; border:5px solid rgba(0,0,0,0.05); background:#ffffff; top:0; color:#000000; word-wrap:normal;
+    white-space:nowrap; padding:0 10px; position:absolute; z-index:98; -webkit-background-clip: padding-box; background-clip:padding-box; display:block;
+}
+.last-column .iwd_om_stock_tooltip2:hover .hint {right:140%; left:inherit;}
+
+.om-iwd-modal-content.warehouses-3 .footer-actions .legend ul:first-child {margin-bottom:15px;}
+.om-iwd-modal-content.warehouses-3 .footer-actions .legend {max-width: 300px;}
+.om-iwd-modal-content.warehouses-3 .footer-actions .actions {margin-top:78px;}
+.om-iwd-modal-content.warehouses-3 {width:567px;}
+
+.om-iwd-modal-content.warehouses-4 .footer-actions .legend ul:first-child {margin-bottom:15px;}
+.om-iwd-modal-content.warehouses-4 .footer-actions .actions {margin-top:30px;}
+.om-iwd-modal-content.warehouses-4 {width:656px;}
+
+.om-iwd-modal-content.warehouses-5 {width:745px;}
+.om-iwd-modal-content.warehouses-5 {width:835px;}
+
+.actions button {padding: 3px 7px;}
+
+a.inherit {text-transform:inherit; color:inherit; text-decoration:inherit;}
+.no-display {display:none;}
+.clear {clear:both;}
+
+
+
+

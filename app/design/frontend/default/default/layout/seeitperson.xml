@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="0.1.0">
+    <default>
+    </default>
+    <seeitperson_index_index>
+        <reference name="content">
+            <block type="seeitperson/seeitperson" name="seeitperson" template="seeitperson/seeitperson.phtml" />
+        </reference>
+    </seeitperson_index_index>
+</layout> 

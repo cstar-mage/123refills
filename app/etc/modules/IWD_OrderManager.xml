@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<config>
+    <modules>
+        <IWD_OrderManager>
+            <active>true</active>
+            <codePool>community</codePool>
+            <depends>
+                <Mage_Adminhtml />
+                <Mage_CatalogInventory />
+                <Mage_Sales />
+            </depends>
+        </IWD_OrderManager>
+    </modules>
+</config>

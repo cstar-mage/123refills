@@ -1,0 +1,312 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the Open Software License (OSL 3.0)
+ * that is bundled with this package in the file LICENSE.txt.
+ * It is also available through the world-wide-web at this URL:
+ * http://opensource.org/licenses/osl-3.0.php
+ *
+ * @category   Mswebdesign
+ * @package    Mswebdesign_Mswebdesign_CustomOrderNumber
+ * @copyright  Copyright (c) 2013 münster-webdesign.net (http://www.muenster-webdesign.net)
+ * @license    http://opensource.org/licenses/osl-3.0.php  Open Software License (OSL 3.0)
+ * @author     Christian Grugel <cgrugel@muenster-webdesign.net>
+ */
+-->
+<config>
+    <sections>
+        <mswebdesign_customordernumber translate="label" module="mswebdesign_customordernumber">
+            <label>Custom Order Number</label>
+            <tab>sales</tab>
+            <frontend_type>text</frontend_type>
+            <sort_order>100</sort_order>
+            <show_in_default>1</show_in_default>
+            <show_in_website>1</show_in_website>
+            <show_in_store>1</show_in_store>
+            <groups>
+                <order translate="label" module="mswebdesign_customordernumber">
+                    <label>Order Numbers</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>10</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <increment_per_store translate="label comment">
+                            <label>Increment Per Store</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </increment_per_store>
+                        <prefix translate="label comment">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <!-- <validate>validate-order-number-prefix</validate> -->
+                        </prefix>
+                        <date_prefix translate="label comment">
+                            <label>Date Prefix</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mswebdesign_customordernumber/adminhtml_system_config_source_dateprefix</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Prefix numbers by date: [date_prefix][number]]]></comment>
+                        </date_prefix>
+                        <date_prefix_reset_enabled translate="label comment">
+                            <label>Reset On Date Change</label>
+                            <depends>
+                                <date_prefix>Y</date_prefix>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Reset the numbering when the date prefix changes (e.g., the year changing from 2012 to 2013)]]></comment>
+                        </date_prefix_reset_enabled>
+                        <padding_length translate="label comment">
+                            <label>Padding Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                            <comment><![CDATA[An ID of 1 with a padding of 4 will be 0001]]></comment>
+                        </padding_length>
+                        <number translate="label">
+                            <label>Default Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                        </number>
+                    </fields>
+                </order>
+                <invoice translate="label" module="mswebdesign_customordernumber">
+                    <label>Invoice Numbers</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>20</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <increment_per_store translate="label comment">
+                            <label>Increment Per Store</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </increment_per_store>
+                        <prefix translate="label comment">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <!-- <validate>validate-order-number-prefix</validate> -->
+                        </prefix>
+                        <date_prefix translate="label comment">
+                            <label>Date Prefix</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mswebdesign_customordernumber/adminhtml_system_config_source_dateprefix</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Prefix numbers by date: [date_prefix][number]]]></comment>
+                        </date_prefix>
+                        <date_prefix_reset_enabled translate="label comment">
+                            <label>Reset On Date Change</label>
+                            <depends>
+                                <date_prefix>Y</date_prefix>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Reset the numbering when the date prefix changes (e.g., the year changing from 2012 to 2013)]]></comment>
+                        </date_prefix_reset_enabled>
+                        <padding_length translate="label comment">
+                            <label>Padding Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                            <comment><![CDATA[An ID of 1 with a padding of 4 will be 0001]]></comment>
+                        </padding_length>
+                        <number translate="label">
+                            <label>Default Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                        </number>
+                    </fields>
+                </invoice>
+                <shipment translate="label" module="mswebdesign_customordernumber">
+                    <label>Shipment Numbers</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>30</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <increment_per_store translate="label comment">
+                            <label>Increment Per Store</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </increment_per_store>
+                        <prefix translate="label comment">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <!-- <validate>validate-order-number-prefix</validate> -->
+                        </prefix>
+                        <date_prefix translate="label comment">
+                            <label>Date Prefix</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mswebdesign_customordernumber/adminhtml_system_config_source_dateprefix</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Prefix numbers by date: [date_prefix][number]]]></comment>
+                        </date_prefix>
+                        <date_prefix_reset_enabled translate="label comment">
+                            <label>Reset On Date Change</label>
+                            <depends>
+                                <date_prefix>Y</date_prefix>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Reset the numbering when the date prefix changes (e.g., the year changing from 2012 to 2013)]]></comment>
+                        </date_prefix_reset_enabled>
+                        <padding_length translate="label comment">
+                            <label>Padding Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                            <comment><![CDATA[An ID of 1 with a padding of 4 will be 0001]]></comment>
+                        </padding_length>
+                        <number translate="label">
+                            <label>Default Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                        </number>
+                    </fields>
+                </shipment>
+                <creditmemo translate="label" module="mswebdesign_customordernumber">
+                    <label>Credit Memo Numbers</label>
+                    <frontend_type>text</frontend_type>
+                    <sort_order>40</sort_order>
+                    <show_in_default>1</show_in_default>
+                    <show_in_website>1</show_in_website>
+                    <show_in_store>1</show_in_store>
+                    <fields>
+                        <increment_per_store translate="label comment">
+                            <label>Increment Per Store</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>0</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </increment_per_store>
+                        <prefix translate="label comment">
+                            <label>Prefix</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>10</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>1</show_in_store>
+                            <!-- <validate>validate-order-number-prefix</validate> -->
+                        </prefix>
+                        <date_prefix translate="label comment">
+                            <label>Date Prefix</label>
+                            <frontend_type>select</frontend_type>
+                            <source_model>mswebdesign_customordernumber/adminhtml_system_config_source_dateprefix</source_model>
+                            <sort_order>20</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Prefix numbers by date: [date_prefix][number]]]></comment>
+                        </date_prefix>
+                        <date_prefix_reset_enabled translate="label comment">
+                            <label>Reset On Date Change</label>
+                            <depends>
+                                <date_prefix>Y</date_prefix>
+                            </depends>
+                            <frontend_type>select</frontend_type>
+                            <source_model>adminhtml/system_config_source_yesno</source_model>
+                            <sort_order>30</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <comment><![CDATA[Reset the numbering when the date prefix changes (e.g., the year changing from 2012 to 2013)]]></comment>
+                        </date_prefix_reset_enabled>
+                        <padding_length translate="label comment">
+                            <label>Padding Length</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                            <comment><![CDATA[An ID of 1 with a padding of 4 will be 0001]]></comment>
+                        </padding_length>
+                        <number translate="label">
+                            <label>Default Number</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>50</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>0</show_in_website>
+                            <show_in_store>0</show_in_store>
+                            <validate>validate-digits</validate>
+                        </number>
+                    </fields>
+                </creditmemo>
+            </groups>
+        </mswebdesign_customordernumber>
+    </sections>
+</config>

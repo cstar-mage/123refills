@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<layout version="1.0.0">
+
+	<adminhtml_testimonial_index>
+		<reference name="content">
+			<block type="turnkeye_testimonial/adminhtml_testimonial" name="testimonial" />
+		</reference>
+	</adminhtml_testimonial_index>
+
+</layout>

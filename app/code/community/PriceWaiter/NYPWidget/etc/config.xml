@@ -1,0 +1,199 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+ Copyright 2013-2015 Price Waiter, LLC
+
+ Licensed under the Apache License, Version 2.0 (the "License");
+ you may not use this file except in compliance with the License.
+ You may obtain a copy of the License at
+
+     http://www.apache.org/licenses/LICENSE-2.0
+
+ Unless required by applicable law or agreed to in writing, software
+ distributed under the License is distributed on an "AS IS" BASIS,
+ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ See the License for the specific language governing permissions and
+ limitations under the License.
+-->
+<config>
+
+    <modules>
+        <PriceWaiter_NYPWidget>
+            <version>2.1.4</version>
+        </PriceWaiter_NYPWidget>
+    </modules>
+
+    <global>
+        <models>
+            <nypwidget>
+                <class>PriceWaiter_NYPWidget_Model</class>
+                <resourceModel>nypwidget_mysql4</resourceModel>
+            </nypwidget>
+            <nypwidget_mysql4>
+                <class>PriceWaiter_NYPWidget_Model_Mysql4</class>
+                <entities>
+                    <category>
+                        <table>nypwidget_category</table>
+                    </category>
+                    <order>
+                        <table>nypwidget_orders</table>
+                    </order>
+                </entities>
+            </nypwidget_mysql4>
+            <nypwidget_category>
+                <class>PriceWaiter_NYPWidget_Model_Category</class>
+                <resourceModel>nypwidget_mysql4_category</resourceModel>
+            </nypwidget_category>
+            <nypwidget_mysql4_category>
+                <class>PriceWaiter_NYPWidget_Model_Mysql4_Category</class>
+            </nypwidget_mysql4_category>
+        </models>
+        <helpers>
+            <nypwidget>
+                <class>PriceWaiter_NYPWidget_Helper</class>
+            </nypwidget>
+        </helpers>
+        <blocks>
+            <nypwidget>
+                <class>PriceWaiter_NYPWidget_Block</class>
+            </nypwidget>
+        </blocks>
+        <resources>
+            <nypwidget_setup>
+                <setup>
+                    <module>PriceWaiter_NYPWidget</module>
+                    <class>PriceWaiter_NYPWidget_Model_Resource_Eav_Mysql4_Setup</class>
+                </setup>
+                <connection>
+                    <use>core_setup</use>
+                </connection>
+            </nypwidget_setup>
+            <nypwidget_write>
+                <connection>
+                    <use>core_write</use>
+                </connection>
+            </nypwidget_write>
+            <nypwidget_read>
+                <connection>
+                    <use>core_read</use>
+                </connection>
+            </nypwidget_read>
+        </resources>
+        <events>
+            <adminhtml_catalog_category_tabs>
+                <observers>
+                    <adminhtml_catalog_category_tabs_pricewaiter>
+                        <type>model</type>
+                        <class>nypwidget/observer</class>
+                        <method>addTab</method>
+                        <args></args>
+                    </adminhtml_catalog_category_tabs_pricewaiter>
+                </observers>
+            </adminhtml_catalog_category_tabs>
+            <catalog_category_prepare_save>
+                <observers>
+                    <catalog_category_prepare_save_pricewaiter>
+                        <type>model</type>
+                        <class>nypwidget/observer</class>
+                        <method>saveCategory</method>
+                        <args></args>
+                    </catalog_category_prepare_save_pricewaiter>
+                </observers>
+            </catalog_category_prepare_save>
+        </events>
+    </global>
+
+    <frontend>
+        <layout>
+            <updates>
+                <nypwidget>
+                    <file>pricewaiter.xml</file>
+                </nypwidget>
+            </updates>
+        </layout>
+        <routers>
+            <nypwidget>
+                <use>standard</use>
+                <args>
+                    <module>PriceWaiter_NYPWidget</module>
+                    <frontName>pricewaiter</frontName>
+                </args>
+            </nypwidget>
+        </routers>
+    </frontend>
+
+    <adminhtml>
+        <layout>
+            <updates>
+                <nypwidget>
+                    <file>pricewaiter.xml</file>
+                </nypwidget>
+            </updates>
+        </layout>
+    </adminhtml>
+
+    <admin>
+        <routers>
+            <adminhtml>
+                <args>
+                    <modules>
+                        <PriceWaiter_NYPWidget after="Mage_Adminhtml">PriceWaiter_NYPWidget</PriceWaiter_NYPWidget>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
+
+    <default>
+        <pricewaiter>
+            <configuration>
+                <enabled>0</enabled>
+                <log>1</log>
+            </configuration>
+            <customer_groups>
+                <disable>0</disable>
+                <group_select>0</group_select>
+            </customer_groups>
+            <conversion_tools>
+                <enabled>1</enabled>
+                <customer_group_disable>0</customer_group_disable>
+                <disable_by_category>1</disable_by_category>
+            </conversion_tools>
+            <appearance>
+                <display_size>1</display_size>
+                <display_color>5F82D4</display_color>
+                <display_hover_color>739DFF</display_hover_color>
+            </appearance>
+            <customer_interaction>
+                <send_welcome_email>0</send_welcome_email>
+                <send_new_order_email>0</send_new_order_email>
+            </customer_interaction>
+            <categories>
+                <disable_by_category>1</disable_by_category>
+            </categories>
+        </pricewaiter>
+        <payment>
+            <nypwidget>
+                <active>1</active>
+                <model>nypwidget/paymentMethod</model>
+                <order_status>pricewaiter_processing</order_status>
+                <title>PriceWaiter Payment</title>
+                <payment_action>authorize</payment_action>
+                <allowspecific>0</allowspecific>
+            </nypwidget>
+        </payment>
+        <carriers>
+            <nypwidget>
+                <active>1</active>
+                <allowed_methods>delivery</allowed_methods>
+                <methods>delivery</methods>
+                <allowspecific>0</allowspecific>
+                <model>PriceWaiter_NYPWidget_Model_Carrier_ShippingMethod</model>
+                <name>PriceWaiter Shipping Method</name>
+                <title>PriceWaiter Shipping Method</title>
+                <type>O</type>
+                <handling_type>F</handling_type>
+            </nypwidget>
+        </carriers>
+    </default>
+
+</config>

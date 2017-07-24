@@ -1,0 +1,149 @@
+<?php
+/**
+ * @see IWD_OrderManager_Block_Adminhtml_Cataloginventory_Product
+ */
+?>
+
+<div class="content-header">
+<table cellspacing="0">
+    <tr>
+        <td style="width:50%;"><h3 class="icon-head head-products"><?php echo Mage::helper('catalog')->__('Stocks for Products') ?></h3></td>
+        <td class="a-right">
+            <?php echo $this->getButtonsHtml() ?>
+        </td>
+    </tr>
+</table>
+</div>
+<?php if (!$this->isSingleStoreMode()): ?>
+    <?php echo $this->getChildHtml('store_switcher');?>
+<?php endif;?>
+<div>
+    <?php echo $this->getGridHtml() ?>
+</div>
+
+
+<script>
+    //<![CDATA[
+    dataGrid = {};
+
+    function cataloginventoryProductGridUpdate()
+    {
+        var url = "<?php echo Mage::helper('adminhtml')->getUrl('adminhtml/cataloginventory_product/save'); ?>";
+        $('messages').update('');
+
+        new Ajax.Request(url, {
+            method:'post',
+            parameters: dataGrid,
+            onSuccess: function(transport) {
+                dataGrid = {};
+                closeIt();
+                $('messages').update(transport.responseText);
+            },
+            onFailure: function() {
+                $('messages').update('<ul class="messages"><li class="error-msg"><ul><li><span>Something went wrong</span></li></ul></li></ul>');
+                closeIt();
+            }
+        });
+    }
+
+    function qtyChanged(item)
+    {
+        var value = item.value.trim();
+        value = (value == '') ? 0 : parseFloat(value);
+        item.value = isNaN(value) ? 0 : value;
+
+        dataGrid[item.name] = item.value;
+        var checkbox = $$('input[name="' + item.name.replace("qty", "is_in_stock") + '"]')[0];
+        checkbox.checked = (item.value > 0) ? 1 : 0;
+        dataGrid[checkbox.name] = checkbox.checked ? 1 : 0;
+
+        var productId = item.getAttribute('data-product-id');
+
+        var changes = 0.0;
+        $$('.inventory_qty').each(function(i) {
+            changes += (parseFloat(i.value) - parseFloat(i.getAttribute('value')));
+        });
+
+        var totalQty = $('inventory_qty_default_' + productId);
+
+        totalQty.setValue(parseFloat(totalQty.value) + changes);
+
+        dataGrid[totalQty.name] = totalQty.value;
+        checkbox = $$('input[name="' + totalQty.name.replace("qty", "is_in_stock") + '"]')[0];
+        checkbox.checked = (totalQty.value > 0) ? 1 : 0;
+        dataGrid[checkbox.name] = checkbox.checked ? 1 : 0;
+
+        item.writeAttribute("value", item.value);
+
+        closeIt();
+    }
+
+    function qtyChangedDefault(item)
+    {
+        var value = item.value.trim();
+        value = (value == '') ? 0 : parseFloat(value);
+        item.value = isNaN(value) ? 0 : value;
+
+        dataGrid[item.name] = item.value;
+        item.writeAttribute("value", item.value);
+        var checkbox = $$('input[name="' + item.name.replace("qty", "is_in_stock") + '"]')[0];
+        checkbox.checked = (item.value > 0) ? 1 : 0;
+        dataGrid[checkbox.name] = checkbox.checked ? 1 : 0;
+
+        closeIt();
+    }
+
+    function stockCheckbox(element){
+        dataGrid[element.name] = element.checked ? 1 : 0;
+
+        var item = $$('input[name="' + element.name.replace("is_in_stock", "qty") + '"]')[0];
+        dataGrid[item.name] = item.value;
+    }
+
+    Event.observe(window, 'load', function() {
+
+        Event.observe(document, 'click', function(e){
+            var element = e.toElement;
+
+            if(element.hasClassName('inventory_qty')){
+                element.select();
+            }
+
+            if(element.hasClassName('inventory_qty_default')){
+                element.select();
+            }
+
+            if(element.hasClassName('is-in-stock')){
+                stockCheckbox(element);
+            }
+        });
+
+        Event.observe(document, 'change', function(e){
+            var element = e.target;
+            if(element.hasClassName('inventory_qty')){
+                qtyChanged(element);
+            }
+
+            if(element.hasClassName('inventory_qty_default')){
+                qtyChangedDefault(element);
+            }
+        });
+
+        closeIt();
+    });
+
+    function closeIt() {
+        if(Object.keys(dataGrid).length !== 0){
+            window.onbeforeunload = function(e) {return "Some changes were not applied.";};
+        } else {
+            window.onbeforeunload = true;
+        }
+    }
+    //]]>
+</script>
+
+<style>
+    #cataloginventoryStockGrid_table td.editable input.input-text {width: 40px !important;}
+    #cataloginventoryStockGrid_table td.editable label {font-size:10px !important;}
+    #cataloginventoryStockGrid_table td.editable label input {margin-right:3px;}
+</style>

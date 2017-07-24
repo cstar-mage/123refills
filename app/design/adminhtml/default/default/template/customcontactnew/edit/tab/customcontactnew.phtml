@@ -1,0 +1,69 @@
+<style>
+table tr td{
+	padding-left:20px;	
+}
+</style>
+ <?php 
+		 	$resource = new Mage_Core_Model_Resource();
+			$read = $resource->getConnection('core_read');
+		 	$id = $this->getRequest()->getParam('id');
+		 	$query = "select * from customcontactnew where customcontact_id = '".$id."'";
+			$result =  $read->fetchAll($query); 
+			$baseurl = Mage::getBaseUrl();	
+			
+			/* echo "<pre>";
+			print_r($result);
+			exit; */
+			
+		 ?>
+<table cellspacing="1" cellpadding="1" border="1" align="center" width="100%">
+	<?php foreach($result as $data):  ?>
+	<tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('ID'); ?> </td>
+        <td width="40%"> <?php echo $data['customcontact_id']; ?> </td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Name'); ?> </td>
+        <td width="40%">  <?php echo $data['name']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('E-mail'); ?> </td>
+        <td width="40%">  <?php echo $data['email']; ?> </td>
+    </tr>
+    <!--
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Zip Code'); ?> </td>
+        <td width="40%">  <?php echo $data['zipcode']; ?> </td>
+    </tr>
+	-->
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Phone Number'); ?> </td>
+        <td width="40%">  <?php echo $data['phone']; ?> </td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Request Comments'); ?> </td>
+        <td width="40%">  <?php echo $data['comments']; ?> </td>
+    </tr>
+    <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Interested In'); ?> </td>
+        <td width="40%">  <?php echo $data['interestedin']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Contact Preference'); ?> </td>
+        <td width="40%">  <?php echo $data['contactpreference']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Appointment Date'); ?> </td>
+        <td width="40%">  <?php echo $data['appointmentdate']; ?> </td>
+    </tr>
+     <tr>
+    	<td width="20%" style="font-weight:bold;"><?php echo $this->__('Appointment Time'); ?> </td>
+        <td width="40%">  <?php echo $data['appointmenttime']; ?> </td>
+    </tr>
+    
+    
+      
+   
+    
+    <?php endforeach; ?>
+</table>

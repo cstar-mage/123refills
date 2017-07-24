@@ -1,0 +1,72 @@
+<?xml version="1.0"?>
+<config>
+  <modules>
+    <Dolphin_Customeroverride>
+      <version>0.1.0</version>
+    </Dolphin_Customeroverride>
+  </modules>
+  <frontend>
+    <routers>
+      <customeroverride>
+        <use>standard</use>
+          <args>
+            <module>Dolphin_Customeroverride</module>
+            <frontName>customeroverride</frontName>
+          </args>
+      </customeroverride>
+    </routers>
+  </frontend>
+  <global>
+	   <models>
+            <dolphin_customeroverride>
+                <class>Dolphin_Customeroverride_Model</class>
+            </dolphin_customeroverride>
+        </models>
+        
+	  <events>
+            <customer_login>
+                <observers>
+                    <dolphin_customeroverride_customer_login>
+                        <type>model</type>
+                        <class>dolphin_customeroverride/observer</class>
+                        <method>customerLogin</method>
+                    </dolphin_customeroverride_customer_login>
+                </observers>
+            </customer_login>
+            
+            <customer_register_success>
+                <observers>
+                    <dolphin_customeroverride_customer_register_success>
+                        <type>model</type>
+                        <class>dolphin_customeroverride/observer</class>
+                        <method>customerCreate</method>
+                    </dolphin_customeroverride_customer_register_success>
+                </observers>
+            </customer_register_success>
+            
+        </events>
+         
+		<rewrite>        
+            <dolphin_customeroverride_customer_accountcontroller>
+                <from><![CDATA[#^/customer/account/#]]></from> <!-- Mage_Customer_AccountController  -->
+                <to>/customeroverride/customer_account/</to> <!-- Dolphin_Customeroverride_Customer_AccountController  -->
+            </dolphin_customeroverride_customer_accountcontroller>
+		</rewrite>
+    <helpers>
+      <customeroverride>
+        <class>Dolphin_Customeroverride_Helper</class>
+      </customeroverride>
+    </helpers>
+  </global>
+  <admin>
+	<routers>
+	  <customeroverride>
+	    <use>admin</use>
+		<args>
+		  <module>Dolphin_Customeroverride</module>
+		  <frontName>admin_customeroverride</frontName>
+		</args>
+	  </customeroverride>
+	</routers>
+  </admin>
+</config> 
